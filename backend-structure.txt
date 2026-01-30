@@ -1,0 +1,70 @@
+As a senior engineer, here is the architectural blueprint I recommend:
+1. The Core Tech Stack
+
+    Language/Runtime: Node.js with TypeScript. This maintains type safety between your current frontend types and your backend models.
+
+    Database: PostgreSQL. You have relational data (Institutions linked to Jobs, Users linked to Applications). PostgreSQL is the industry standard for reliability. Use Prisma or Drizzle as your ORM.
+
+    Cache: Redis. Crucial for storing prayer times, session data, and the high-frequency notification updates your app requires.
+
+    Search: Meilisearch or Elasticsearch. While Gemini is great for semantic search, a dedicated search engine will handle high-volume keyword filtering in the Institution Directory much faster.
+
+2. Micro-Module Architecture
+
+Don't build a monolithic block. Structure your backend into logical modules:
+
+    Auth Module: Use JWT (JSON Web Tokens) with refresh token rotation. Implement distinct registration flows for USER and INSTITUTION. Institutions should require a "Pending" status until verified by an Admin.
+
+    Institution Module: Manage profiles, verification status, and geographical data (Division/District/Upazila).
+
+    Career Hub Module: A job board engine. Needs a "soft delete" feature and an application tracking system (ATS) for Institutions.
+
+    Islamic Utilities Module: Centralized API for Prayer Times (based on Bangladesh coordinates), Hijri date conversion, and Zakat calculation logic.
+
+    Fatwa & AI Module: This is where you move your Gemini API logic. Never call Gemini directly from the frontend in production (to protect your API key). Create a proxy service that handles rate limiting and content moderation.
+
+3. Database Schema Strategy (ERD)
+
+You’ll need these primary tables:
+
+    Users: (id, email, password_hash, role, profile_id)
+
+    Institutions: (id, owner_id, name, location_coords, type, is_verified)
+
+    Jobs: (id, institution_id, title, status, verified_by_admin)
+
+    Applications: (id, job_id, user_id, status_enum)
+
+    Resources: (id, title, file_url, category, downloads_count)
+
+4. File Storage
+
+Since you have a Calligraphy Gallery and Knowledge Hub (PDFs):
+
+    Use AWS S3 or Google Cloud Storage for the physical files.
+
+    Use Cloudinary for image transformations (e.g., automatically generating the grayscale "minimalist" thumbnails you're using in the UI).
+
+5. AI & Moderation Workflow
+
+Bangladesh is a sensitive region for religious content. Your backend should implement a Multi-Layer Moderation Pipeline:
+
+    Level 1 (Deterministic): Regex filters for prohibited keywords.
+
+    Level 2 (AI): Send content to Gemini with a system prompt to detect sectarian hate speech or misinformation.
+
+    Level 3 (Human): Flagged content enters an Admin Queue for manual approval.
+
+6. Deployment in Bangladesh
+
+    CDN: Use Cloudflare. It has excellent nodes in Dhaka/Chittagong, which will significantly reduce latency for users on mobile networks.
+
+    Hosting: Deploy on DigitalOcean or AWS (Singapore Region) for the best balance of cost and proximity to Bangladesh.
+
+Next Steps for Implementation:
+
+    Protect the API Key: Move your process.env.API_KEY logic to a Node.js/Express server.
+
+    Convert dataService.ts: Change the localStorage calls to fetch() calls to your new API.
+
+    Real-time Notifications: Replace the window.dispatchEvent logic with WebSockets (Socket.io) so users get "Job Applied" or "Fatwa Answered" alerts instantly without refreshing.
