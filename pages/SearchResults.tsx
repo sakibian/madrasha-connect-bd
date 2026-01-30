@@ -8,7 +8,7 @@ import {
   ShoppingBag, 
   BookOpen, 
   MessageCircle,
-  ArrowRight
+  ArrowUpRight
 } from 'lucide-react';
 
 const SearchResults: React.FC = () => {
@@ -30,9 +30,9 @@ const SearchResults: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-4">
-        <Loader2 size={48} className="text-emerald-700 animate-spin" />
-        <p className="text-gray-500 font-medium">এআই আপনার জন্য ফলাফল খুঁজছে...</p>
+      <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-8">
+        <Loader2 size={48} className="animate-spin" />
+        <div className="caps-label">এআই ফলাফল খুঁজছে...</div>
       </div>
     );
   }
@@ -46,90 +46,64 @@ const SearchResults: React.FC = () => {
     results.posts.length;
 
   return (
-    <div className="space-y-8 animate-fadeIn">
-      <div className="border-b pb-4">
-        <h1 className="text-2xl font-bold text-gray-800">
-          "<span className="text-emerald-700">{query}</span>" এর জন্য ফলাফল
+    <div className="space-y-12 animate-fadeIn">
+      <div className="space-y-4 border-b border-gray-100 pb-12">
+        <div className="caps-label text-gray-400">Search Results</div>
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+          "<span className="text-bd-green">{query}</span>" এর জন্য ফলাফল।
         </h1>
-        <p className="text-sm text-gray-500 mt-1">{totalResults}টি মিল পাওয়া গেছে</p>
+        <p className="text-sm font-bold text-gray-500">{totalResults}টি মিল পাওয়া গেছে।</p>
       </div>
 
-      {totalResults === 0 && (
-        <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200">
-          <p className="text-gray-400">দুঃখিত, কোনো ফলাফল পাওয়া যায়নি। অন্য কিছু লিখে চেষ্টা করুন।</p>
+      {totalResults === 0 ? (
+        <div className="py-40 text-center space-y-6 bg-gray-50 border border-gray-100">
+           <p className="text-xl text-gray-500 font-medium">দুঃখিত, কোনো ফলাফল পাওয়া যায়নি।</p>
+           <Link to="/" className="text-sm font-bold border-b-2 border-black pb-1">অন্য কিছু লিখে চেষ্টা করুন</Link>
         </div>
-      )}
+      ) : (
+        <div className="space-y-24">
+          {/* Jobs Results */}
+          {results.jobs.length > 0 && (
+            <section className="space-y-8">
+               <h2 className="text-2xl font-bold flex items-center gap-3">
+                  <Briefcase size={20} /> নিয়োগ বিজ্ঞপ্তি
+               </h2>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-1 bg-gray-100 minimal-border">
+                  {results.jobs.map((job: any) => (
+                    <Link to="/professional" key={job.id} className="bg-white p-8 flex justify-between items-center group hover:bg-black hover:text-white transition-all">
+                      <div className="space-y-1">
+                        <h3 className="text-xl font-bold">{job.title}</h3>
+                        <p className="text-sm text-gray-500 group-hover:text-gray-400 font-medium">{job.institution}</p>
+                      </div>
+                      <ArrowUpRight size={20} className="text-gray-300 group-hover:text-white" />
+                    </Link>
+                  ))}
+               </div>
+            </section>
+          )}
 
-      {/* Jobs Results */}
-      {results.jobs.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-            <Briefcase size={20} className="text-emerald-700" /> নিয়োগ বিজ্ঞপ্তি
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {results.jobs.map((job: any) => (
-              <Link to="/professional" key={job.id} className="bg-white p-4 rounded-xl border border-gray-100 hover:border-emerald-300 transition-all flex justify-between items-center group">
-                <div>
-                  <h3 className="font-bold text-gray-800 group-hover:text-emerald-700">{job.title}</h3>
-                  <p className="text-xs text-gray-500">{job.institution}</p>
-                </div>
-                <ArrowRight size={18} className="text-gray-300 group-hover:text-emerald-700 transition-colors" />
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Marketplace Results */}
-      {results.products.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-            <ShoppingBag size={20} className="text-amber-600" /> মার্কেটপ্লেস পণ্য
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {results.products.map((prod: any) => (
-              <Link to="/marketplace" key={prod.id} className="bg-white p-3 rounded-xl border border-gray-100 hover:shadow-md transition-all text-center group">
-                <img src={prod.image} className="w-full h-24 object-cover rounded-lg mb-2" />
-                <h3 className="text-xs font-bold text-gray-800 group-hover:text-emerald-700 truncate">{prod.name}</h3>
-                <p className="text-[10px] text-emerald-700 font-bold mt-1">{prod.isFree ? 'ফ্রি' : `৳ ${prod.price}`}</p>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Resources Results */}
-      {results.resources.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-            <BookOpen size={20} className="text-blue-600" /> জ্ঞান ও শিক্ষা রিসোর্স
-          </h2>
-          <div className="space-y-2">
-            {results.resources.map((res: any) => (
-              <Link to="/knowledge" key={res.id} className="block bg-white p-4 rounded-xl border border-gray-100 hover:bg-blue-50 transition-all">
-                <p className="text-sm font-bold text-gray-800">{res.title}</p>
-                <p className="text-[10px] text-blue-600 font-bold uppercase">{res.type}</p>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Community Results */}
-      {results.posts.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-            <MessageCircle size={20} className="text-purple-600" /> আলোচনা ও ফতোয়া
-          </h2>
-          <div className="space-y-3">
-            {results.posts.map((post: any) => (
-              <Link to="/community" key={post.id} className="block bg-white p-5 rounded-2xl border border-gray-100 hover:border-purple-200 transition-all">
-                <h3 className="font-bold text-gray-800 mb-1">{post.title}</h3>
-                <p className="text-xs text-gray-500">লিখেছেন: {post.author}</p>
-              </Link>
-            ))}
-          </div>
-        </section>
+          {/* Marketplace Results */}
+          {results.products.length > 0 && (
+            <section className="space-y-8">
+               <h2 className="text-2xl font-bold flex items-center gap-3">
+                  <ShoppingBag size={20} /> মার্কেটপ্লেস পণ্য
+               </h2>
+               <div className="grid grid-cols-2 md:grid-cols-4 gap-1 bg-gray-100 minimal-border">
+                  {results.products.map((prod: any) => (
+                    <Link to="/marketplace" key={prod.id} className="bg-white p-6 space-y-4 group transition-all hover:bg-gray-50">
+                      <div className="aspect-square bg-gray-50 overflow-hidden grayscale group-hover:grayscale-0">
+                         <img src={prod.image} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="text-sm font-bold truncate">{prod.name}</h3>
+                        <p className="text-xs font-extrabold text-bd-green">{prod.isFree ? 'ফ্রি' : `৳ ${prod.price}`}</p>
+                      </div>
+                    </Link>
+                  ))}
+               </div>
+            </section>
+          )}
+        </div>
       )}
     </div>
   );

@@ -1,11 +1,12 @@
 
-import { Job, Product, ForumPost, User } from '../types';
-import { MOCK_JOBS, MOCK_PRODUCTS, MOCK_RESOURCES, MOCK_POSTS } from '../data/mockData';
+import { Job, Product, ForumPost, User, Fatwa } from '../types';
+import { MOCK_JOBS, MOCK_PRODUCTS, MOCK_POSTS, MOCK_FATWAS } from '../data/mockData';
 
 const KEYS = {
   JOBS: 'mc_jobs_v2',
   PRODUCTS: 'mc_products_v2',
   POSTS: 'mc_posts_v2',
+  FATWAS: 'mc_fatwas_v1',
   RESOURCES: 'mc_resources_v2',
   USERS: 'madrasa_connect_all_users'
 };
@@ -29,7 +30,7 @@ const seedData = () => {
   if (!localStorage.getItem(KEYS.JOBS)) set(KEYS.JOBS, MOCK_JOBS);
   if (!localStorage.getItem(KEYS.PRODUCTS)) set(KEYS.PRODUCTS, MOCK_PRODUCTS);
   if (!localStorage.getItem(KEYS.POSTS)) set(KEYS.POSTS, MOCK_POSTS);
-  if (!localStorage.getItem(KEYS.RESOURCES)) set(KEYS.RESOURCES, MOCK_RESOURCES);
+  if (!localStorage.getItem(KEYS.FATWAS)) set(KEYS.FATWAS, MOCK_FATWAS);
 };
 
 seedData();
@@ -38,10 +39,6 @@ export const dataService = {
   // --- Jobs Backend ---
   getJobs: () => get<Job[]>(KEYS.JOBS, []),
   
-  getInstitutionJobs: (institutionName: string) => {
-    return dataService.getJobs().filter(j => j.institution === institutionName);
-  },
-
   saveJob: (job: Job) => {
     const jobs = dataService.getJobs();
     const index = jobs.findIndex(j => j.id === job.id);
@@ -53,11 +50,7 @@ export const dataService = {
     set(KEYS.JOBS, jobs);
   },
 
-  deleteJob: (id: string) => {
-    const jobs = dataService.getJobs().filter(j => j.id !== id);
-    set(KEYS.JOBS, jobs);
-  },
-
+  // Added verifyJob to resolve the missing property error in ProfessionalHub.tsx
   verifyJob: (id: string) => {
     const jobs = dataService.getJobs();
     const index = jobs.findIndex(j => j.id === id);
@@ -65,6 +58,25 @@ export const dataService = {
       jobs[index].verified = true;
       set(KEYS.JOBS, jobs);
     }
+  },
+
+  deleteJob: (id: string) => {
+    const jobs = dataService.getJobs().filter(j => j.id !== id);
+    set(KEYS.JOBS, jobs);
+  },
+
+  // --- Fatwa Backend ---
+  getFatwas: () => get<Fatwa[]>(KEYS.FATWAS, []),
+  
+  saveFatwa: (fatwa: Fatwa) => {
+    const fatwas = dataService.getFatwas();
+    const index = fatwas.findIndex(f => f.id === fatwa.id);
+    if (index > -1) {
+      fatwas[index] = fatwa;
+    } else {
+      fatwas.unshift(fatwa);
+    }
+    set(KEYS.FATWAS, fatwas);
   },
 
   // --- Marketplace Backend ---
@@ -86,11 +98,8 @@ export const dataService = {
     set(KEYS.PRODUCTS, products);
   },
 
-  // --- Forum/Posts Backend ---
-  // Fix: Added getPosts to satisfy AdminDashboard requirement on line 35
   getPosts: () => get<ForumPost[]>(KEYS.POSTS, []),
 
-  // --- Users Backend ---
   getUsers: (): User[] => {
     const stored = localStorage.getItem(KEYS.USERS);
     if (!stored) return [];

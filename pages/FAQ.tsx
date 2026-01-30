@@ -1,6 +1,18 @@
 
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, ChevronUp, BookOpen, ShieldCheck, Briefcase, MessageCircle } from 'lucide-react';
+import { 
+  HelpCircle, 
+  ChevronDown, 
+  ChevronUp, 
+  BookOpen, 
+  ShieldCheck, 
+  Briefcase, 
+  MessageCircle,
+  ArrowRight,
+  Plus,
+  Minus
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface FAQItemProps {
   question: string;
@@ -11,26 +23,28 @@ interface FAQItemProps {
 
 const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onClick }) => {
   return (
-    <div className="border-b border-emerald-50 last:border-0">
+    <div className={`border-b border-gray-100 last:border-0 transition-all ${isOpen ? 'bg-gray-50' : 'bg-white'}`}>
       <button
         onClick={onClick}
-        className="w-full py-5 flex items-center justify-between text-left hover:text-emerald-700 transition-colors focus:outline-none"
+        className="w-full py-10 px-8 flex items-center justify-between text-left group focus:outline-none"
       >
-        <span className="font-bold text-gray-800">{question}</span>
-        {isOpen ? (
-          <ChevronUp className="text-emerald-600 shrink-0" size={20} />
-        ) : (
-          <ChevronDown className="text-gray-400 shrink-0" size={20} />
-        )}
+        <span className={`text-xl md:text-2xl font-extrabold tracking-tight transition-colors ${isOpen ? 'text-black' : 'text-gray-800 group-hover:text-black'}`}>
+          {question}
+        </span>
+        <div className={`p-2 transition-all ${isOpen ? 'bg-black text-white' : 'text-gray-300 group-hover:text-black'}`}>
+          {isOpen ? <Minus size={20} /> : <Plus size={20} />}
+        </div>
       </button>
       <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-96 pb-5 opacity-100' : 'max-h-0 opacity-0'
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${
+          isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
-        <p className="text-gray-600 leading-relaxed text-sm">
-          {answer}
-        </p>
+        <div className="px-8 pb-10 max-w-3xl">
+          <p className="text-lg text-gray-500 leading-relaxed font-medium">
+            {answer}
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -42,7 +56,6 @@ const FAQ: React.FC = () => {
   const faqData = [
     {
       category: 'সাধারণ তথ্য',
-      icon: <HelpCircle className="text-emerald-600" />,
       items: [
         {
           question: 'মাদ্রাসা কানেক্ট বিডি কী?',
@@ -56,7 +69,6 @@ const FAQ: React.FC = () => {
     },
     {
       category: 'প্রতিষ্ঠান ও চাকরি',
-      icon: <Briefcase className="text-blue-600" />,
       items: [
         {
           question: 'কীভাবে একটি প্রতিষ্ঠান হিসেবে নিবন্ধন করব?',
@@ -70,7 +82,6 @@ const FAQ: React.FC = () => {
     },
     {
       category: 'শিক্ষা ও রিসোর্স',
-      icon: <BookOpen className="text-orange-600" />,
       items: [
         {
           question: 'কিতাব বা রিসোর্স কীভাবে ডাউনলোড করব?',
@@ -80,7 +91,6 @@ const FAQ: React.FC = () => {
     },
     {
       category: 'নিরাপত্তা ও নীতিমালা',
-      icon: <ShieldCheck className="text-purple-600" />,
       items: [
         {
           question: 'কমিউনিটি নীতিমালা কী?',
@@ -95,22 +105,27 @@ const FAQ: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-10 animate-fadeIn pb-12">
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-extrabold text-gray-900">সাধারণ জিজ্ঞাসা (FAQ)</h1>
-        <p className="text-gray-500 max-w-xl mx-auto">
+    <div className="space-y-24 animate-fadeIn pb-24">
+      {/* Header */}
+      <div className="space-y-6 border-b border-gray-100 pb-12">
+        <div className="caps-label text-gray-400">Support Center</div>
+        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05]">সাধারণ জিজ্ঞাসা <br /> (FAQ)।</h1>
+        <p className="text-xl text-gray-500 max-w-2xl leading-relaxed font-medium">
           মাদ্রাসা কানেক্ট বিডি প্ল্যাটফর্ম ব্যবহারের নিয়মাবলী এবং সচরাচর জিজ্ঞাসিত প্রশ্নগুলোর উত্তর এখানে পাবেন।
         </p>
       </div>
 
-      <div className="space-y-8">
+      {/* FAQ Sections */}
+      <div className="space-y-20">
         {faqData.map((section, sIndex) => (
-          <div key={sIndex} className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-            <div className="bg-emerald-50/50 px-6 py-4 flex items-center gap-3 border-b border-emerald-50">
-              {section.icon}
-              <h2 className="font-black text-emerald-900 uppercase tracking-wide text-sm">{section.category}</h2>
+          <div key={sIndex} className="space-y-8">
+            <div className="flex items-center gap-4">
+               <div className="h-px bg-gray-200 flex-1"></div>
+               <h2 className="caps-label text-bd-green whitespace-nowrap">{section.category}</h2>
+               <div className="h-px bg-gray-200 flex-1"></div>
             </div>
-            <div className="px-6 divide-y divide-emerald-50">
+            
+            <div className="bg-white minimal-border overflow-hidden divide-y divide-gray-100">
               {section.items.map((item, iIndex) => {
                 const globalIndex = sIndex * 10 + iIndex;
                 return (
@@ -128,12 +143,34 @@ const FAQ: React.FC = () => {
         ))}
       </div>
 
-      <div className="bg-emerald-800 rounded-3xl p-8 text-center text-white shadow-xl shadow-emerald-100 mt-12">
-        <h2 className="text-2xl font-bold mb-2">আরও কিছু জানতে চান?</h2>
-        <p className="text-emerald-100 mb-6">আমাদের সাপোর্ট টিম আপনাকে সাহায্য করতে প্রস্তুত।</p>
-        <button className="bg-white text-emerald-800 px-8 py-3 rounded-xl font-bold hover:bg-emerald-50 transition-all flex items-center gap-2 mx-auto">
-          <MessageCircle size={20} /> মেসেজ দিন
-        </button>
+      {/* CTA Section */}
+      <section className="bg-black text-white p-12 md:p-20 flex flex-col md:flex-row items-center justify-between gap-12 group">
+        <div className="space-y-6">
+          <div className="caps-label text-bd-green">Help & Contact</div>
+          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight">আরও কিছু জানতে চান?</h2>
+          <p className="text-xl text-gray-400 max-w-md font-medium">
+            আমাদের সাপোর্ট টিম আপনাকে সাহায্য করতে প্রস্তুত। যেকোনো প্রয়োজনে সরাসরি যোগাযোগ করুন।
+          </p>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+          <button className="bg-white text-black px-10 py-5 font-bold text-lg flex items-center justify-center gap-3 hover:bg-gray-100 transition-all">
+             মেসেজ দিন <MessageCircle size={20} />
+          </button>
+          <Link to="/about" className="border border-gray-800 text-white px-10 py-5 font-bold text-lg flex items-center justify-center gap-3 hover:bg-gray-900 transition-all">
+             লক্ষ্য ও উদ্দেশ্য <ArrowRight size={20} />
+          </Link>
+        </div>
+      </section>
+
+      {/* Minimal Footer Info */}
+      <div className="flex flex-col md:flex-row justify-between items-center py-12 border-t border-gray-100 gap-6">
+         <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400">
+            <ShieldCheck size={14} className="text-bd-green" /> Last Updated: February 2025
+         </div>
+         <div className="flex gap-8">
+            <Link to="/tools" className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-black">Terms of Service</Link>
+            <Link to="/tools" className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-black">Privacy Policy</Link>
+         </div>
       </div>
     </div>
   );

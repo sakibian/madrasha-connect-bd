@@ -10,6 +10,40 @@ export interface User {
   institutionName?: string;
 }
 
+export interface Institution {
+  id: string;
+  name: string;
+  type: 'Qawmi' | 'Alia' | 'Mosque';
+  location: string;
+  district: string;
+  established: string;
+  verified: boolean;
+  studentCount?: number;
+  image: string;
+}
+
+export interface Scholar {
+  id: string;
+  name: string;
+  title: string;
+  specialization: string;
+  institution: string;
+  image: string;
+  verified: boolean;
+  location: string;
+}
+
+export interface SadaqahProject {
+  id: string;
+  title: string;
+  institution: string;
+  category: 'Infrastructure' | 'Food' | 'Books' | 'Emergency';
+  goal: number;
+  raised: number;
+  description: string;
+  image: string;
+}
+
 export interface Job {
   id: string;
   title: string;
@@ -22,14 +56,6 @@ export interface Job {
   contactInfo?: string;
 }
 
-export interface Curriculum {
-  id: string;
-  title: string;
-  board: 'Qawmi (Befaq)' | 'Alia';
-  level: string;
-  subjects: string[];
-}
-
 export interface Product {
   id: string;
   name: string;
@@ -37,6 +63,18 @@ export interface Product {
   category: 'Calligraphy' | 'Sunnah Food' | 'Books' | 'Modest Fashion';
   image: string;
   isFree?: boolean;
+  isVector?: boolean;
+}
+
+export interface Course {
+  id: string;
+  title: string;
+  instructor: string;
+  duration: string;
+  category: 'Deen-101' | 'Tajweed' | 'History';
+  thumbnail: string;
+  isEnrolled?: boolean;
+  progress?: number;
 }
 
 export interface ForumPost {
@@ -48,6 +86,19 @@ export interface ForumPost {
   likes: number;
   comments: number;
   verified: boolean;
+}
+
+export interface Fatwa {
+  id: string;
+  question: string;
+  category: 'Ibadah' | 'Muamalah' | 'Family' | 'Social' | 'Other';
+  askedBy: string;
+  askedAt: string;
+  answer?: string;
+  answeredBy?: string;
+  answeredAt?: string;
+  aiSuggestion?: string;
+  status: 'PENDING' | 'ANSWERED' | 'REJECTED';
 }
 
 export interface AppNotification {

@@ -1,5 +1,8 @@
+
 {
   "name": "Madrasa Connect BD",
   "description": "A comprehensive digital ecosystem for the Madrasa community in Bangladesh, featuring job boards, educational resources, and an Islamic marketplace.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [
+    "geolocation"
+  ]
 }

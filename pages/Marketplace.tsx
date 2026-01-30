@@ -7,11 +7,13 @@ import {
   Star,
   Grid,
   List,
-  Trash2
+  Trash2,
+  ArrowRight
 } from 'lucide-react';
 import { Product } from '../types';
 import { dataService } from '../services/dataService';
 import { getCurrentUser } from '../services/authService';
+import { Link } from 'react-router-dom';
 
 const Marketplace: React.FC = () => {
   const [products, setProducts] = useState<Product[]>(dataService.getProducts());
@@ -31,47 +33,47 @@ const Marketplace: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fadeIn">
-      <div className="flex flex-col md:flex-row justify-between items-end gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">মার্কেটপ্লেস</h1>
-          <p className="text-gray-500">সেরা মানের সুন্নাহ পণ্য এবং ক্যালিগ্রাফি সংগ্রহ।</p>
-        </div>
-        <div className="flex bg-white p-1 rounded-xl shadow-sm border border-gray-100">
-          <button className="p-2 bg-emerald-700 text-white rounded-lg"><Grid size={20} /></button>
-          <button className="p-2 text-gray-400 hover:text-emerald-700"><List size={20} /></button>
-        </div>
+    <div className="space-y-24 animate-fadeIn">
+      <div className="space-y-4 border-b border-gray-100 pb-12">
+        <div className="caps-label text-gray-400">Marketplace</div>
+        <h1 className="text-5xl font-extrabold tracking-tight">সুন্নাহ ও ক্যালিগ্রাফি।</h1>
       </div>
 
-      <section className="bg-amber-50 rounded-3xl p-8 border border-amber-100 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
-        <div className="md:w-1/2 z-10">
-          <span className="inline-block px-3 py-1 bg-amber-200 text-amber-900 rounded-full text-xs font-bold mb-4 uppercase tracking-widest">ফ্রি কালেকশন</span>
-          <h2 className="text-3xl font-bold text-amber-900 mb-4">ভেক্টর ক্যালিগ্রাফি ডাউনলোড করুন</h2>
-          <p className="text-amber-800 mb-6">৫০০+ হাই-রেজোলিউশন আরবি ক্যালিগ্রাফি একদম ফ্রিতে ডাউনলোড করুন।</p>
-          <button className="bg-amber-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-amber-700 transition-all flex items-center gap-2">গ্যালারি দেখুন <Download size={20} /></button>
+      <section className="bg-black text-white p-16 flex flex-col md:flex-row items-center gap-16 relative overflow-hidden">
+        <div className="md:w-1/2 z-10 space-y-8">
+          <div className="caps-label text-bd-green">Featured</div>
+          <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">ভেক্টর ক্যালিগ্রাফি সংগ্রহ।</h2>
+          <p className="text-gray-400 text-xl leading-relaxed">৫০০+ হাই-রেজোলিউশন আরবি ক্যালিগ্রাফি গ্রাফিক ডিজাইনার এবং শিক্ষার্থীদের জন্য একদম ফ্রিতে ডাউনলোডযোগ্য।</p>
+          <Link to="/calligraphy" className="bg-white text-black px-10 py-5 font-bold text-lg inline-flex items-center gap-3 hover:bg-gray-100 transition-all">
+            গ্যালারি দেখুন <ArrowRight size={20} />
+          </Link>
         </div>
-        <div className="md:w-1/2 flex justify-center z-10"><img src="https://picsum.photos/seed/pattern/400/300" className="rounded-2xl shadow-xl border-4 border-white" alt="Featured" /></div>
+        <div className="md:w-1/2 grayscale hover:grayscale-0 transition-all duration-1000">
+           <img src="https://picsum.photos/seed/pattern/600/450" className="w-full h-auto object-cover border-8 border-gray-900 shadow-2xl" alt="Featured" />
+        </div>
       </section>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 bg-gray-100 minimal-border">
         {products.map(product => (
-          <div key={product.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all flex flex-col group relative">
-            {isAdmin && (
-              <button onClick={() => handleDelete(product.id)} className="absolute top-3 left-3 z-20 p-2 bg-red-50 text-red-600 rounded-full hover:bg-red-600 hover:text-white transition-all"><Trash2 size={16} /></button>
-            )}
-            <div className="relative aspect-[4/3] overflow-hidden">
-               <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-               <button className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full text-gray-400 hover:text-red-500"><Heart size={18} /></button>
-               {product.isFree && <span className="absolute bottom-3 left-3 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase">Free</span>}
+          <div key={product.id} className="bg-white p-8 flex flex-col group h-full">
+            <div className="relative aspect-square bg-gray-50 mb-8 overflow-hidden">
+               <img src={product.image} alt={product.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" />
+               <button className="absolute top-4 right-4 p-3 bg-white text-gray-300 hover:text-black border border-gray-100"><Heart size={18} /></button>
+               {product.isFree && <span className="absolute bottom-4 left-4 bg-black text-white px-3 py-1 text-[9px] font-black uppercase tracking-widest">Free</span>}
             </div>
-            <div className="p-4 flex-1 flex flex-col">
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{product.category}</p>
-              <h3 className="font-bold text-gray-800 mb-2 leading-snug">{product.name}</h3>
-              <div className="mt-auto flex items-center justify-between">
-                 <span className="text-xl font-bold text-emerald-800">{product.isFree ? 'ফ্রি' : `৳ ${product.price}`}</span>
-                 <button className={`p-2 rounded-lg transition-all ${product.isFree ? 'bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-700 hover:text-white'}`}>
-                    {product.isFree ? <Download size={20} /> : <ShoppingBag size={20} />}
-                 </button>
+            <div className="flex-1 space-y-4 flex flex-col">
+              <div className="caps-label text-gray-400">{product.category}</div>
+              <h3 className="text-xl font-bold leading-tight flex-1">{product.name}</h3>
+              <div className="pt-6 border-t border-gray-100 flex items-center justify-between">
+                 <span className="text-2xl font-extrabold text-black">{product.isFree ? 'ফ্রি' : `৳ ${product.price}`}</span>
+                 <div className="flex gap-2">
+                    {isAdmin && (
+                      <button onClick={() => handleDelete(product.id)} className="p-3 border border-gray-200 text-red-600 hover:bg-red-50"><Trash2 size={18} /></button>
+                    )}
+                    <button className={`p-4 transition-all ${product.isFree ? 'bg-black text-white hover:bg-bd-green' : 'border border-black text-black hover:bg-black hover:text-white'}`}>
+                       {product.isFree ? <Download size={20} /> : <ShoppingBag size={20} />}
+                    </button>
+                 </div>
               </div>
             </div>
           </div>

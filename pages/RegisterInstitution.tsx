@@ -18,9 +18,8 @@ const RegisterInstitution: React.FC = () => {
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+     e.preventDefault();
     setLoading(true);
-    
     await new Promise(r => setTimeout(r, 2000));
     
     registerUser({
@@ -39,136 +38,109 @@ const RegisterInstitution: React.FC = () => {
       link: '/professional'
     });
 
-    navigate('/');
+    navigate('/dashboard');
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-900 to-indigo-900 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-full h-full opacity-5 pointer-events-none">
-         <div className="islamic-pattern w-full h-full rotate-180"></div>
-      </div>
-
-      <div className="w-full max-w-2xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden relative z-10 animate-fadeIn">
-        <div className="p-8 bg-blue-50 flex justify-between items-center border-b border-blue-100">
-          <div>
-            <h1 className="text-2xl font-bold text-blue-900">প্রতিষ্ঠান রেজিস্ট্রেশন</h1>
-            <p className="text-blue-700 text-sm">মাদ্রাসা বা মসজিদ হিসেবে যুক্ত হোন</p>
-          </div>
-          <Link to="/login" className="p-2 bg-white text-blue-700 rounded-full hover:bg-blue-700 hover:text-white transition-all">
-             <ArrowLeft size={20} />
+    <div className="min-h-screen bg-white flex flex-col lg:flex-row animate-fadeIn">
+      {/* Left Visualization Side */}
+      <div className="lg:w-1/3 bg-black text-white p-12 md:p-16 flex flex-col justify-between border-r border-gray-900 relative overflow-hidden">
+        <div className="z-10">
+          <Link to="/" className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-white text-black flex items-center justify-center font-bold">M</div>
+            <span className="text-xl font-bold tracking-tight">মাদ্রাসা কানেক্ট</span>
           </Link>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2 col-span-full">
-              <label className="text-xs font-bold text-gray-500 ml-1">প্রতিষ্ঠানের ধরন *</label>
-              <div className="grid grid-cols-3 gap-3">
-                {['Qawmi', 'Alia', 'Mosque'].map(type => (
-                  <button 
-                    key={type}
-                    type="button"
-                    onClick={() => setFormData({...formData, instType: type})}
-                    className={`py-3 px-2 rounded-2xl font-bold text-xs transition-all border ${
-                      formData.instType === type ? 'bg-blue-700 text-white border-blue-700' : 'bg-gray-50 text-gray-400 border-gray-100 hover:bg-gray-100'
-                    }`}
-                  >
-                    {type === 'Qawmi' ? 'কওমি' : type === 'Alia' ? 'আলিয়া' : 'মসজিদ'}
-                  </button>
-                ))}
-              </div>
-            </div>
+        <div className="z-10 space-y-8">
+           <div className="caps-label text-bd-green">Institutional Registration</div>
+           <h1 className="text-5xl font-extrabold leading-tight tracking-tight">মাদ্রাসা ও মসজিদ <br />ব্যবস্থাপনার নতুন যুগ।</h1>
+           <p className="text-gray-400 text-lg font-medium leading-relaxed">
+             আপনার প্রতিষ্ঠানের জন্য একটি ডিজিটাল প্রোফাইল তৈরি করুন এবং নিয়োগ বিজ্ঞপ্তি থেকে শুরু করে ফান্ড ম্যানেজমেন্ট পর্যন্ত সব ফিচার ব্যবহার করুন।
+           </p>
+        </div>
 
-            <div className="space-y-2 md:col-span-2">
-              <label className="text-xs font-bold text-gray-500 ml-1">প্রতিষ্ঠানের নাম *</label>
-              <div className="relative">
-                <School className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-600" size={18} />
-                <input 
-                  required
-                  type="text" 
-                  placeholder="মাদ্রাসা বা মসজিদের পূর্ণ নাম"
-                  className="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
-                  value={formData.instName}
-                  onChange={(e) => setFormData({...formData, instName: e.target.value})}
-                />
-              </div>
-            </div>
+        <div className="z-10">
+           <div className="caps-label text-gray-600 mb-4">Official Verification</div>
+           <div className="p-6 bg-gray-900 border border-gray-800 space-y-2">
+              <p className="text-xs text-gray-400 font-bold uppercase tracking-widest leading-relaxed">
+                প্রতিষ্ঠান নিবন্ধনের পর আমাদের ভেরিফিকেশন টিম আপনার তথ্যাদি যাচাই করবে। সঠিক তথ্য প্রদান বাধ্যতামূলক।
+              </p>
+           </div>
+        </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-500 ml-1">অবস্থান *</label>
-              <div className="relative">
-                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-600" size={18} />
-                <input 
-                  required
-                  type="text" 
-                  placeholder="উদা: চট্টগ্রাম"
-                  className="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
-                  value={formData.location}
-                  onChange={(e) => setFormData({...formData, location: e.target.value})}
-                />
-              </div>
-            </div>
+        {/* Decorative Grid Background */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+      </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-500 ml-1">যোগাযোগ নম্বর *</label>
-              <div className="relative">
-                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-600" size={18} />
-                <input 
-                  required
-                  type="tel" 
-                  placeholder="০১XXXXXXXXX"
-                  className="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
-                  value={formData.contact}
-                  onChange={(e) => setFormData({...formData, contact: e.target.value})}
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-500 ml-1">অফিসিয়াল ইমেইল *</label>
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-600" size={18} />
-                <input 
-                  required
-                  type="email" 
-                  placeholder="inst@example.bd"
-                  className="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-500 ml-1">পাসওয়ার্ড *</label>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-600" size={18} />
-                <input 
-                  required
-                  type="password" 
-                  placeholder="••••••••"
-                  className="w-full pl-12 pr-4 py-4 rounded-2xl bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
-                  value={formData.password}
-                  onChange={(e) => setFormData({...formData, password: e.target.value})}
-                />
-              </div>
-            </div>
+      {/* Right Form Side */}
+      <div className="lg:w-2/3 p-8 md:p-24 flex items-center justify-center bg-white overflow-y-auto">
+        <div className="w-full max-w-2xl space-y-12">
+          <div className="space-y-4">
+             <Link to="/login" className="inline-flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest hover:text-black mb-8">
+               <ArrowLeft size={14} /> Back to Login
+            </Link>
+            <h2 className="text-4xl font-extrabold tracking-tight">প্রতিষ্ঠান নিবন্ধন।</h2>
+            <p className="text-gray-500 font-medium">প্রাতিষ্ঠানিক অ্যাকাউন্ট খোলার জন্য নিচের ফর্মটি পূরণ করুন।</p>
           </div>
 
-          <div className="bg-blue-50 p-4 rounded-2xl flex gap-3 items-start border border-blue-100">
-             <Building2 className="text-blue-600 shrink-0 mt-0.5" size={20} />
-             <p className="text-[10px] text-blue-800 leading-relaxed">
-               প্রতিষ্ঠানের বৈধতা যাচাইয়ের জন্য পরবর্তীতে প্রতিষ্ঠানের রেজিস্ট্রেশন বা প্রয়োজনীয় ডকুমেন্টের কপি আপলোড করার প্রয়োজন হতে পারে। সঠিক তথ্য প্রদান করুন।
-             </p>
-          </div>
+          <form onSubmit={handleSubmit} className="space-y-10">
+            <div className="space-y-10">
+              <div className="space-y-4">
+                <label className="caps-label text-gray-400">Institution Type</label>
+                <div className="grid grid-cols-3 gap-1 bg-gray-100 minimal-border">
+                  {(['Qawmi', 'Alia', 'Mosque'] as const).map(type => (
+                    <button 
+                      key={type}
+                      type="button"
+                      onClick={() => setFormData({...formData, instType: type})}
+                      className={`py-5 font-extrabold text-sm transition-all ${
+                        formData.instType === type ? 'bg-black text-white' : 'bg-white text-gray-400 hover:bg-gray-50'
+                      }`}
+                    >
+                      {type === 'Qawmi' ? 'কওমি' : type === 'Alia' ? 'আলিয়া' : 'মসজিদ'}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-          <button 
-            disabled={loading}
-            className="w-full py-4 bg-blue-700 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-blue-800 shadow-xl shadow-blue-200 transition-all disabled:opacity-50"
-          >
-            {loading ? <Loader2 className="animate-spin" size={24} /> : <>প্রতিষ্ঠান হিসেবে যোগ দিন <ArrowRight size={20} /></>}
-          </button>
-        </form>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-2 md:col-span-2">
+                  <label className="caps-label text-gray-400">Official Name</label>
+                  <input required placeholder="মাদ্রাসা বা মসজিদের নাম" className="w-full p-4 bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-black outline-none font-medium text-lg" value={formData.instName} onChange={e => setFormData({...formData, instName: e.target.value})} />
+                </div>
+                <div className="space-y-2">
+                  <label className="caps-label text-gray-400">Location</label>
+                  <input required placeholder="জেলা / এলাকা" className="w-full p-4 bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-black outline-none font-medium text-lg" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} />
+                </div>
+                <div className="space-y-2">
+                  <label className="caps-label text-gray-400">Contact Number</label>
+                  <input required type="tel" placeholder="০১৭xxxxxxxx" className="w-full p-4 bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-black outline-none font-medium text-lg" value={formData.contact} onChange={e => setFormData({...formData, contact: e.target.value})} />
+                </div>
+                <div className="space-y-2">
+                  <label className="caps-label text-gray-400">Admin Email</label>
+                  <input required type="email" placeholder="ইমেইল" className="w-full p-4 bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-black outline-none font-medium text-lg" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                </div>
+                <div className="space-y-2">
+                  <label className="caps-label text-gray-400">Password</label>
+                  <input required type="password" placeholder="পাসওয়ার্ড" className="w-full p-4 bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-black outline-none font-medium text-lg" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <button 
+                disabled={loading}
+                className="w-full py-6 bg-black text-white font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-gray-800 transition-all disabled:opacity-50"
+              >
+                {loading ? <Loader2 className="animate-spin" size={24} /> : <>প্রতিষ্ঠান হিসেবে যোগ দিন <ArrowRight size={24} /></>}
+              </button>
+              <p className="text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                Verification process takes up to 48 hours after registration.
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

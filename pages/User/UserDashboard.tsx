@@ -1,14 +1,18 @@
 
 import React from 'react';
 import { 
-  User as UserIcon, 
   Briefcase, 
   BookOpen, 
   Heart, 
   CheckCircle, 
   ArrowRight,
   Clock,
-  ExternalLink
+  ExternalLink,
+  User as UserIcon,
+  Headset,
+  History,
+  Trophy,
+  ChevronRight
 } from 'lucide-react';
 import { getCurrentUser } from '../../services/authService';
 import { Link } from 'react-router-dom';
@@ -17,108 +21,122 @@ const UserDashboard: React.FC = () => {
   const user = getCurrentUser();
 
   return (
-    <div className="space-y-8 animate-fadeIn">
-      <div className="bg-white p-8 rounded-3xl border border-emerald-100 flex flex-col md:flex-row justify-between items-center gap-6 shadow-sm">
-        <div className="flex items-center gap-6">
-          <img src={user?.avatar} className="w-20 h-20 rounded-full border-4 border-emerald-50 shadow-sm" alt="Profile" />
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800">{user?.name}</h1>
-            <p className="text-emerald-700 font-medium">ব্যবহারকারী ড্যাশবোর্ড</p>
+    <div className="space-y-16 animate-fadeIn">
+      {/* Profile Header */}
+      <div className="p-12 minimal-border bg-white flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="flex items-center gap-8">
+          <div className="relative">
+            <img src={user?.avatar} className="w-24 h-24 border-4 border-gray-50 shadow-sm object-cover bg-gray-50" alt="Profile" />
+            <div className="absolute -bottom-2 -right-2 bg-black text-white p-1.5"><CheckCircle size={16} /></div>
+          </div>
+          <div className="space-y-1">
+            <h1 className="text-4xl font-extrabold tracking-tight">{user?.name}</h1>
+            <p className="caps-label text-gray-400">Community Member • {user?.role}</p>
           </div>
         </div>
-        <button className="bg-emerald-700 text-white px-8 py-4 rounded-2xl font-bold hover:bg-emerald-800 shadow-xl shadow-emerald-100 transition-all">
-           প্রোফাইল আপডেট করুন
-        </button>
+        <Link to="/profile-builder" className="bg-black text-white px-10 py-5 font-bold text-sm hover:bg-gray-800 transition-all">
+           প্রোফাইল আপডেট
+        </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-4">
-          <div className="p-4 bg-orange-50 text-orange-600 rounded-2xl"><Briefcase /></div>
-          <div>
-            <p className="text-2xl font-black text-gray-800">৪টি</p>
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">আবেদনকৃত চাকরি</p>
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-4">
-          <div className="p-4 bg-blue-50 text-blue-600 rounded-2xl"><BookOpen /></div>
-          <div>
-            <p className="text-2xl font-black text-gray-800">৮টি</p>
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">সেভ করা রিসোর্স</p>
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-4">
-          <div className="p-4 bg-emerald-50 text-emerald-600 rounded-2xl"><CheckCircle /></div>
-          <div>
-            <p className="text-2xl font-black text-gray-800">৭৫%</p>
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">প্রোফাইল পূর্ণতা</p>
-          </div>
-        </div>
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-gray-100 minimal-border">
+        <StatCard icon={<Briefcase size={20} />} label="আবেদনকৃত চাকরি" value="৪টি" />
+        <StatCard icon={<BookOpen size={20} />} label="বুকমার্ক রিসোর্স" value="৮টি" />
+        <StatCard icon={<CheckCircle size={20} />} label="প্রোফাইল পূর্ণতা" value="৭৫%" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Recent Applications */}
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
-           <div className="p-6 border-b border-gray-50 flex justify-between items-center">
-              <h2 className="text-xl font-bold text-gray-800">আমার আবেদনসমূহ</h2>
-              <Link to="/professional" className="text-emerald-700 text-sm font-bold flex items-center gap-1">নতুন খুঁজুন <ArrowRight size={14} /></Link>
-           </div>
-           <div className="divide-y divide-gray-50">
-              <ApplicationItem title="হেফজ শিক্ষক" inst="দারুল উলুম মাদ্রাসা" status="Reviewing" date="২ দিন আগে" />
-              <ApplicationItem title="সিনিয়র শিক্ষক" inst="হাটহাজারী মাদ্রাসা" status="Shortlisted" date="৫ দিন আগে" />
-              <ApplicationItem title="ইমাম" inst="বায়তুল মোকাররম মসজিদ" status="Rejected" date="১ সপ্তাহ আগে" />
-           </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="lg:col-span-2 space-y-12">
+          {/* Recent Applications */}
+          <div className="space-y-8">
+             <div className="flex justify-between items-end border-b border-gray-100 pb-8">
+                <h2 className="text-2xl font-extrabold tracking-tight">আমার আবেদনসমূহ</h2>
+                <Link to="/professional" className="text-xs font-bold border-b-2 border-black">নতুন খুঁজুন</Link>
+             </div>
+             <div className="bg-gray-100 minimal-border space-y-1">
+                <ApplicationItem title="হেফজ শিক্ষক" inst="দারুল উলুম মাদ্রাসা" status="Reviewing" date="২ দিন আগে" />
+                <ApplicationItem title="সিনিয়র শিক্ষক" inst="হাটহাজারী মাদ্রাসা" status="Shortlisted" date="৫ দিন আগে" />
+                <ApplicationItem title="ইমাম ও খতিব" inst="বায়তুল মোকাররম মসজিদ" status="Rejected" date="১ সপ্তাহ আগে" />
+             </div>
+          </div>
+
+          {/* Quick Access Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+             <Link to="/audio-library" className="p-10 bg-white minimal-border group hover:bg-black hover:text-white transition-all">
+                <Headset size={32} className="text-bd-green mb-6 transition-colors group-hover:text-white" />
+                <h3 className="text-xl font-bold mb-2">অডিও লাইব্রেরি</h3>
+                <p className="text-sm text-gray-500 group-hover:text-gray-400 font-medium">তিলাওয়াত ও বয়ান শুনুন এক জায়গায়।</p>
+                <div className="mt-6 flex items-center gap-2 text-xs font-bold border-b border-black group-hover:border-white w-fit pb-1">লাইব্রেরি দেখুন <ChevronRight size={14} /></div>
+             </Link>
+             <Link to="/competitions" className="p-10 bg-white minimal-border group hover:bg-black hover:text-white transition-all">
+                <Trophy size={32} className="text-bd-green mb-6 transition-colors group-hover:text-white" />
+                <h3 className="text-xl font-bold mb-2">প্রতিযোগিতা</h3>
+                <p className="text-sm text-gray-500 group-hover:text-gray-400 font-medium">জাতীয় মেধা প্রতিযোগিতায় অংশ নিন।</p>
+                <div className="mt-6 flex items-center gap-2 text-xs font-bold border-b border-black group-hover:border-white w-fit pb-1">অংশ নিন <ChevronRight size={14} /></div>
+             </Link>
+          </div>
         </div>
 
-        {/* Saved Items */}
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
-           <div className="p-6 border-b border-gray-50 flex justify-between items-center">
-              <h2 className="text-xl font-bold text-gray-800">বুকমার্ক রিসোর্স</h2>
-              <Link to="/knowledge" className="text-blue-600 text-sm font-bold flex items-center gap-1">লাইব্রেরি <ExternalLink size={14} /></Link>
+        {/* Saved Items Sidebar */}
+        <div className="space-y-8">
+           <div className="flex justify-between items-end border-b border-gray-100 pb-8">
+              <h2 className="text-2xl font-extrabold tracking-tight">সংরক্ষিত লাইব্রেরি</h2>
+              <Link to="/knowledge" className="text-xs font-bold border-b-2 border-black">লাইব্রেরি দেখুন</Link>
            </div>
-           <div className="p-6 space-y-4">
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                 <div className="flex items-center gap-3">
-                    <BookOpen className="text-blue-600" />
-                    <div>
-                       <p className="font-bold text-gray-800 text-sm">হিদায়াতুন্নাহু (পিডিএফ)</p>
-                       <p className="text-xs text-gray-400">আরবি গ্রামার</p>
-                    </div>
-                 </div>
-                 <button className="text-blue-600 hover:underline text-xs font-bold">পড়ুন</button>
-              </div>
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                 <div className="flex items-center gap-3">
-                    <Heart className="text-red-500" />
-                    <div>
-                       <p className="font-bold text-gray-800 text-sm">সীরাত কুইজ মডিউল</p>
-                       <p className="text-xs text-gray-400">শিক্ষা রিসোর্স</p>
-                    </div>
-                 </div>
-                 <button className="text-blue-600 hover:underline text-xs font-bold">পড়ুন</button>
-              </div>
+           <div className="space-y-4">
+              <SavedItem to="/knowledge" title="হিদায়াতুন্নাহু (পিডিএফ)" category="আরবি গ্রামার" type="PDF" />
+              <SavedItem to="/deen101" title="সালাত শিক্ষা মডিউল" category="শিক্ষা রিসোর্স" type="INTERACTIVE" />
+              <SavedItem to="/knowledge" title="মেশকাত শরিফ (দাওয়াতে হাদিস)" category="বেফাক সিলেবাস" type="PDF" />
            </div>
         </div>
       </div>
     </div>
   );
 };
+
+const StatCard = ({ icon, label, value }: any) => (
+  <div className="bg-white p-12 flex flex-col gap-6 group hover:bg-black hover:text-white transition-all">
+    <div className="text-bd-green group-hover:text-white transition-colors">{icon}</div>
+    <div className="space-y-1">
+      <div className="text-4xl font-extrabold tracking-tight">{value}</div>
+      <div className="caps-label text-gray-400 group-hover:text-gray-500">{label}</div>
+    </div>
+  </div>
+);
 
 const ApplicationItem = ({ title, inst, status, date }: any) => {
-  const statusColors: any = {
-    Reviewing: 'bg-blue-100 text-blue-700',
-    Shortlisted: 'bg-emerald-100 text-emerald-700',
-    Rejected: 'bg-red-100 text-red-700'
+  const statusLabels: any = {
+    Reviewing: { label: 'পর্যালোচনায়', color: 'bg-gray-100 text-gray-500' },
+    Shortlisted: { label: 'নির্বাচিত', color: 'bg-bd-green text-white' },
+    Rejected: { label: 'বাতিল', color: 'bg-red-50 text-red-600' }
   };
+  const s = statusLabels[status];
   return (
-    <div className="p-6 flex justify-between items-center hover:bg-gray-50 transition-colors">
-       <div>
-          <h3 className="font-bold text-gray-800">{title}</h3>
-          <p className="text-xs text-gray-500">{inst}</p>
-          <p className="text-[10px] text-gray-400 mt-1 flex items-center gap-1"><Clock size={10} /> {date}</p>
+    <div className="bg-white p-8 flex justify-between items-center group transition-all">
+       <div className="space-y-1">
+          <h3 className="font-extrabold text-lg group-hover:text-bd-green transition-colors">{title}</h3>
+          <p className="text-sm font-bold text-gray-400">{inst}</p>
+          <p className="text-[10px] font-bold text-gray-300 uppercase mt-2 flex items-center gap-2"><Clock size={12} /> {date}</p>
        </div>
-       <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase ${statusColors[status]}`}>{status}</span>
+       <span className={`text-[9px] font-black px-4 py-1.5 uppercase tracking-widest ${s.color}`}>{s.label}</span>
     </div>
   );
 };
+
+const SavedItem = ({ to, title, category, type }: any) => (
+  <Link to={to} className="block p-8 minimal-border bg-white group hover:bg-black hover:text-white transition-all">
+     <div className="flex justify-between items-start mb-6">
+        <div className="caps-label text-bd-green group-hover:text-gray-400">{type}</div>
+        <button className="text-gray-300 group-hover:text-white"><Heart size={20} fill="currentColor" /></button>
+     </div>
+     <h4 className="text-xl font-extrabold mb-1">{title}</h4>
+     <p className="text-sm font-bold text-gray-500 group-hover:text-gray-400">{category}</p>
+     <div className="mt-8 pt-8 border-t border-gray-100 group-hover:border-gray-800 flex items-center justify-between">
+        <span className="text-xs font-bold border-b-2 border-black group-hover:border-white pb-0.5 transition-all">এখনই পড়ুন</span>
+        <ArrowRight size={18} className="text-gray-200 group-hover:text-white" />
+     </div>
+  </Link>
+);
 
 export default UserDashboard;
