@@ -41,7 +41,7 @@
 - [x] Switch `MemoryRouter` → `BrowserRouter` in `App.tsx`
 - [ ] Add `error boundaries` on AppLayout and PublicLayout
 - [ ] Add loading skeletons for all data-fetching states
-- [ ] Fix 3 orphan pages: route Community, EventsHub, SadaqahHub in App.tsx
+- [x] Fix 3 orphan pages: route Community, EventsHub, SadaqahHub in App.tsx
 - [ ] Remove hardcoded secrets from Vite config
 - [ ] Add basic CSP headers in index.html meta tag
 - [ ] Run `npm audit fix` for dependency vulnerabilities

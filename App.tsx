@@ -21,7 +21,9 @@ import {
   Trophy,
   Plus,
   // Added missing Headset icon import
-  Headset
+  Headset,
+  Calendar,
+  Heart
 } from 'lucide-react';
 
 import Dashboard from './pages/Dashboard';
@@ -50,6 +52,9 @@ import InstructionalHelp from './pages/InstructionalHelp';
 import Competitions from './pages/Competitions';
 import AudioLibrary from './pages/AudioLibrary';
 import Tools from './pages/Tools';
+import Community from './pages/Community';
+import EventsHub from './pages/EventsHub';
+import SadaqahHub from './pages/SadaqahHub';
 
 import { getNotifications } from './services/notificationService';
 import { getCurrentUser, logout } from './services/authService';
@@ -116,6 +121,8 @@ const PublicLayout: React.FC = () => {
             <Link to="/about" className="text-sm font-bold text-gray-500 hover:text-black">লক্ষ্য</Link>
             <Link to="/institutions" className="text-sm font-bold text-gray-500 hover:text-black">ডিরেক্টরি</Link>
             <Link to="/knowledge" className="text-sm font-bold text-gray-500 hover:text-black">শিক্ষা</Link>
+            <Link to="/community" className="text-sm font-bold text-gray-500 hover:text-black">কমিউনিটি</Link>
+            <Link to="/events" className="text-sm font-bold text-gray-500 hover:text-black">ইভেন্ট</Link>
             <Link to="/professional" className="text-sm font-bold text-gray-500 hover:text-black">ক্যারিয়ার</Link>
             <Link to="/login" className="text-sm font-bold border-b-2 border-black pb-0.5">লগইন</Link>
           </div>
@@ -142,6 +149,9 @@ const PublicLayout: React.FC = () => {
           <Route path="/audio-library" element={<AudioLibrary />} />
           <Route path="/tools" element={<Tools />} />
           <Route path="/calligraphy" element={<CalligraphyGallery />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/events" element={<EventsHub />} />
+          <Route path="/sadaqah" element={<SadaqahHub />} />
         </Routes>
       </div>
     </div>
@@ -195,6 +205,8 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
             
             <div className="pt-8 pb-2">
               <p className="caps-label text-gray-400 mb-4 px-2">Community</p>
+              <NavItem to="/community" icon={<Users size={18} />} label="কমিউনিটি" onClick={closeSidebar} />
+              <NavItem to="/events" icon={<Calendar size={18} />} label="ইভেন্ট" onClick={closeSidebar} />
               <NavItem to="/professional" icon={<Briefcase size={18} />} label="ক্যারিয়ার হাব" onClick={closeSidebar} />
               <NavItem to="/institutions" icon={<Building2 size={18} />} label="ডিরেক্টরি" onClick={closeSidebar} />
               <NavItem to="/fatwa" icon={<ShieldCheck size={18} />} label="ফতোয়া পোর্টাল" onClick={closeSidebar} />
@@ -211,6 +223,7 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
             <div className="pt-8 pb-2">
               <p className="caps-label text-gray-400 mb-4 px-2">System</p>
               <NavItem to="/marketplace" icon={<ShoppingBag size={18} />} label="মার্কেটপ্লেস" onClick={closeSidebar} />
+              <NavItem to="/sadaqah" icon={<Heart size={18} />} label="সাদাকাহ" onClick={closeSidebar} />
               <NavItem to="/tools" icon={<Wrench size={18} />} label="ইউটিলিটি টুলস" onClick={closeSidebar} />
               <NavItem to="/faq" icon={<HelpCircle size={18} />} label="সহায়তা কেন্দ্র" onClick={closeSidebar} />
             </div>
@@ -280,6 +293,9 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
             <Route path="/audio-library" element={<AudioLibrary />} />
             <Route path="/tools" element={<Tools />} />
             <Route path="/calligraphy" element={<CalligraphyGallery />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/events" element={<EventsHub />} />
+            <Route path="/sadaqah" element={<SadaqahHub />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </div>
