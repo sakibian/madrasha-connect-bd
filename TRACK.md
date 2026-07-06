@@ -38,7 +38,7 @@
 
 - [ ] Git-ignore `.env` and rotate all exposed API keys
 - [ ] Move Gemini API key to server-side proxy (Edge Function)
-- [ ] Switch `MemoryRouter` → `BrowserRouter` in `App.tsx`
+- [x] Switch `MemoryRouter` → `BrowserRouter` in `App.tsx`
 - [ ] Add `error boundaries` on AppLayout and PublicLayout
 - [ ] Add loading skeletons for all data-fetching states
 - [ ] Fix 3 orphan pages: route Community, EventsHub, SadaqahHub in App.tsx

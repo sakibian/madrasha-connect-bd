@@ -36,7 +36,7 @@
 
 - [ ] `.env` ফাইল গিট-ইগ্নোর করা এবং সব উন্মুক্ত এপিআই কী পরিবর্তন করা
 - [ ] জেমিনি এপিআই কী সার্ভার-সাইড প্রক্সিতে (Edge Function) স্থানান্তর
-- [ ] `MemoryRouter` → `BrowserRouter` পরিবর্তন করা
+- [x] `MemoryRouter` → `BrowserRouter` পরিবর্তন করা
 - [ ] AppLayout এবং PublicLayout-এ error boundary যোগ করা
 - [ ] সব ডেটা-ফেচিং স্টেটের জন্য loading skeleton যোগ করা
 - [ ] ৩টি অরফান পৃষ্ঠা (Community, EventsHub, SadaqahHub) রুট করা
