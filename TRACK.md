@@ -39,12 +39,12 @@
 - [ ] Git-ignore `.env` and rotate all exposed API keys
 - [ ] Move Gemini API key to server-side proxy (Edge Function)
 - [x] Switch `MemoryRouter` → `BrowserRouter` in `App.tsx`
-- [ ] Add `error boundaries` on AppLayout and PublicLayout
+- [x] Add `error boundaries` on AppLayout and PublicLayout
 - [ ] Add loading skeletons for all data-fetching states
 - [x] Fix 3 orphan pages: route Community, EventsHub, SadaqahHub in App.tsx
 - [ ] Remove hardcoded secrets from Vite config
-- [ ] Add basic CSP headers in index.html meta tag
-- [ ] Run `npm audit fix` for dependency vulnerabilities
+- [x] Add basic CSP headers in index.html meta tag
+- [x] Run `npm audit fix` for dependency vulnerabilities
 
 ### Acceptance Criteria
 

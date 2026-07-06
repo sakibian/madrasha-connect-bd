@@ -37,11 +37,11 @@
 - [ ] `.env` ফাইল গিট-ইগ্নোর করা এবং সব উন্মুক্ত এপিআই কী পরিবর্তন করা
 - [ ] জেমিনি এপিআই কী সার্ভার-সাইড প্রক্সিতে (Edge Function) স্থানান্তর
 - [x] `MemoryRouter` → `BrowserRouter` পরিবর্তন করা
-- [ ] AppLayout এবং PublicLayout-এ error boundary যোগ করা
+- [x] AppLayout এবং PublicLayout-এ error boundary যোগ করা
 - [ ] সব ডেটা-ফেচিং স্টেটের জন্য loading skeleton যোগ করা
 - [x] ৩টি অরফান পৃষ্ঠা (Community, EventsHub, SadaqahHub) রুট করা
 - [ ] Vite কনফিগ থেকে হার্ডকোডেড সিক্রেট সরানো
-- [ ] index.html-এ CSP হেডার যোগ করা
+- [x] index.html-এ CSP হেডার যোগ করা
 
 ### গ্রহণযোগ্যতার মানদণ্ড
 
