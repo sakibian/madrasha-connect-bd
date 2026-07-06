@@ -91,52 +91,16 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 
 #### Database Schema (Supabase PostgreSQL)
 
-- [ ] Create `users` table (extends Supabase auth.users)
-- [ ] Create `institutions` table with verification workflow
-- [ ] Create `jobs` table with status lifecycle (draft → pending → verified → closed)
-- [ ] Create `job_applications` table with status tracking
-- [ ] Create `fatwas` table with moderation pipeline
-- [ ] Create `fatwa_answers` table (separate from questions for audit)
-- [ ] Create `products` table for marketplace
-- [ ] Create `courses` and `enrollments` tables
-- [ ] Create `scholars` table with verification
-- [ ] Create `notifications` table
-- [ ] Create `sadaqah_projects` and `donations` tables
-- [ ] Create `forum_posts` and `forum_comments` tables
-- [ ] Create `events` table
-- [ ] Create `audit_log` table for content moderation history
-- [ ] Enable Row-Level Security (RLS) on all tables
-- [ ] Create indexes for searchable columns (name, title, location, category)
-
-#### Auth (Supabase Auth)
-
-- [ ] Configure email + password auth provider
-- [ ] Add phone auth (SMS) for BD users
-- [ ] Create custom `user_profiles` table extending auth.users
-- [ ] Implement role-based access (USER, INSTITUTION, SCHOLAR, ADMIN)
+- [x] Write complete `database/schema.sql` (19 tables, RLS, indexes)
+- [ ] Run schema in Supabase SQL Editor
 - [ ] Create admin user seeding script
-- [ ] Set up email templates for verification, password reset
 
-#### Storage (Supabase Storage)
+#### Client SDK
 
-- [ ] Configure storage buckets (avatars, institution-logos, job-attachments, fatwa-docs)
-- [ ] Set RLS policies for each bucket
-- [ ] Create image optimization pipeline (compress on upload)
-
-#### Edge Functions (Gemini Proxy)
-
-- [ ] Create `moderate-content` function (Gemini text moderation)
-- [ ] Create `search-semantic` function (Gemini embeddings for search)
-- [ ] Create `generate-fatwa-suggestion` function (AI-assisted draft)
-- [ ] Create `generate-daily-wisdom` function
-- [ ] Add rate limiting (100 req/hr per user)
-- [ ] Add request logging & monitoring
-
-#### Realtime & Notifications
-
-- [ ] Configure Supabase Realtime for live updates
-- [ ] Create notification triggers (on job apply, fatwa answer, etc.)
-- [ ] Set up email notifications via Resend or Supabase built-in
+- [x] Install `@supabase/supabase-js`
+- [x] Create `services/supabase.ts` client wrapper
+- [x] Update `.env.example` with Supabase vars
+- [ ] Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in Vercel dashboard
 
 ### Acceptance Criteria
 
