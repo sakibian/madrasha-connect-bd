@@ -59,6 +59,7 @@ import SadaqahHub from './pages/SadaqahHub';
 import { getNotifications } from './services/notificationService';
 import { getCurrentUser, logout } from './services/authService';
 import { AppNotification, User } from './types';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const App: React.FC = () => {
   return (
@@ -93,11 +94,11 @@ const AppRouter: React.FC = () => {
   }
 
   if (currentUser) {
-    return <AppLayout currentUser={currentUser} />;
+    return <ErrorBoundary key="app"><AppLayout currentUser={currentUser} /></ErrorBoundary>;
   }
 
   if (isPublicPage) {
-    return <PublicLayout />;
+    return <ErrorBoundary key="public"><PublicLayout /></ErrorBoundary>;
   }
 
   return <Navigate to="/" replace />;
