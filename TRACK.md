@@ -36,7 +36,7 @@
 
 ### Tasks
 
-- [ ] Git-ignore `.env` and rotate all exposed API keys
+- [x] Git-ignore `.env` and rotate all exposed API keys
 - [ ] Move Gemini API key to server-side proxy (Edge Function)
 - [x] Switch `MemoryRouter` → `BrowserRouter` in `App.tsx`
 - [x] Add `error boundaries` on AppLayout and PublicLayout
