@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, ShieldCheck, MapPin, BookOpen, BadgeCheck, GraduationCap, ArrowRight } from 'lucide-react';
+import { Search, ShieldCheck, MapPin, BookOpen, BadgeCheck, GraduationCap, ArrowRight, MessageCircle } from 'lucide-react';
 import { Scholar } from '../types';
 import { dataService } from '../services/dataService';
 
@@ -10,10 +10,16 @@ const ScholarDirectory: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dataService.getScholars().then(data => {
-      setScholars(data);
+    const fetch = async () => {
+      const data = await dataService.getScholars();
+      const withStats = await Promise.all(data.map(async s => {
+        const stats = await dataService.getScholarStats(s.userId);
+        return { ...s, answersGiven: stats.answersGiven };
+      }));
+      setScholars(withStats);
       setLoading(false);
-    });
+    };
+    fetch();
   }, []);
 
   const filtered = scholars.filter(s =>
@@ -99,6 +105,13 @@ const ScholarDirectory: React.FC = () => {
                   <MapPin size={14} />
                   <span>{scholar.location}</span>
                 </div>
+
+                {scholar.answersGiven !== undefined && (
+                  <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-bd-green">
+                    <MessageCircle size={14} />
+                    <span>{scholar.answersGiven}টি উত্তর</span>
+                  </div>
+                )}
               </div>
 
               <div className="mt-8 w-full space-y-2">

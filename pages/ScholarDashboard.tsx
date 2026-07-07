@@ -13,6 +13,7 @@ const ScholarDashboard: React.FC = () => {
   const currentUser = getCurrentUser();
   const [pendingFatwas, setPendingFatwas] = useState<Fatwa[]>([]);
   const [myProfile, setMyProfile] = useState<Scholar | null>(null);
+  const [answersGiven, setAnswersGiven] = useState(0);
   const [answering, setAnswering] = useState<Fatwa | null>(null);
   const [answerText, setAnswerText] = useState('');
   const [selectedSources, setSelectedSources] = useState<Source[]>([]);
@@ -28,7 +29,12 @@ const ScholarDashboard: React.FC = () => {
         dataService.getScholars(),
       ]);
       setPendingFatwas(fatwas);
-      setMyProfile(scholars.find(s => s.name === currentUser?.name) || null);
+      const profile = scholars.find(s => s.name === currentUser?.name) || null;
+      setMyProfile(profile);
+      if (profile) {
+        const stats = await dataService.getScholarStats(currentUser?.id || '');
+        setAnswersGiven(stats.answersGiven);
+      }
       setLoading(false);
     };
     fetch();
@@ -90,7 +96,7 @@ const ScholarDashboard: React.FC = () => {
             <div className="bg-white p-10 flex items-center gap-6">
               <CheckCircle size={24} className="text-bd-green" />
               <div>
-                <div className="text-3xl font-extrabold">{myProfile ? 1 : 0}</div>
+                <div className="text-3xl font-extrabold">{answersGiven}</div>
                 <div className="caps-label text-gray-400">উত্তর দেওয়া হয়েছে</div>
               </div>
             </div>

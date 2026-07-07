@@ -307,6 +307,7 @@ export const dataService = {
     cacheSet(CACHE_KEYS.SCHOLARS, data);
     return data.map(s => ({
       id: s.id,
+      userId: s.user_id,
       name: (s as any).user_profiles?.name || '',
       title: s.title,
       specialization: s.specialization,
@@ -501,6 +502,15 @@ export const dataService = {
       change_summary: data.changeSummary,
     });
     if (error) throw error;
+  },
+
+  // --- Scholar Reputation ---
+  getScholarStats: async (userId: string): Promise<{ answersGiven: number }> => {
+    const { count, error } = await supabase
+      .from('fatwa_answers')
+      .select('*', { count: 'exact', head: true })
+      .eq('answered_by', userId);
+    return { answersGiven: error ? 0 : (count || 0) };
   },
 
   // --- Scholar Applications ---

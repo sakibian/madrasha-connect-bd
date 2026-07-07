@@ -24,6 +24,7 @@ export interface Institution {
 
 export interface Scholar {
   id: string;
+  userId: string;
   name: string;
   title: string;
   specialization: string;
@@ -31,6 +32,7 @@ export interface Scholar {
   image: string;
   verified: boolean;
   location: string;
+  answersGiven?: number;
 }
 
 export interface SadaqahProject {
