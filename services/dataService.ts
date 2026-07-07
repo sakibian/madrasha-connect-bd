@@ -1,4 +1,4 @@
-import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source } from '../types';
+import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag } from '../types';
 import { supabase } from './supabase';
 
 const CACHE_KEYS = {
@@ -420,6 +420,46 @@ export const dataService = {
       .eq('content_id', contentId);
     if (error) return [];
     return data.map((cs: any) => cs.sources).filter(Boolean) as Source[];
+  },
+
+  // --- Content Flags (Moderation) ---
+  getFlags: async (status?: string): Promise<ContentFlag[]> => {
+    let query = supabase
+      .from('content_flags')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (status) query = query.eq('status', status);
+    const { data, error } = await query;
+    if (error) return [];
+    return data as ContentFlag[];
+  },
+
+  flagContent: async (contentType: string, contentId: string, reason: string) => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in to flag content');
+    const { error } = await supabase.from('content_flags').upsert({
+      content_type: contentType,
+      content_id: contentId,
+      flagged_by: user.id,
+      reason,
+    });
+    if (error) throw error;
+  },
+
+  resolveFlag: async (flagId: string) => {
+    const { error } = await supabase
+      .from('content_flags')
+      .update({ status: 'resolved' })
+      .eq('id', flagId);
+    if (error) throw error;
+  },
+
+  dismissFlag: async (flagId: string) => {
+    const { error } = await supabase
+      .from('content_flags')
+      .update({ status: 'dismissed' })
+      .eq('id', flagId);
+    if (error) throw error;
   },
 
   // --- Users (Admin) ---

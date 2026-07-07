@@ -110,6 +110,16 @@ export interface Source {
   url?: string;
 }
 
+export interface ContentFlag {
+  id: string;
+  content_type: string;
+  content_id: string;
+  flagged_by: string;
+  reason: string;
+  status: 'open' | 'dismissed' | 'resolved';
+  created_at: string;
+}
+
 export interface AppNotification {
   id: string;
   title: string;

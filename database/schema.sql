@@ -394,6 +394,31 @@ alter table public.content_sources enable row level security;
 create policy "Anyone can read content sources"
   on public.content_sources for select using (true);
 
+-- 20. Content Flags (community moderation)
+create table public.content_flags (
+  id uuid primary key default uuid_generate_v4(),
+  content_type text not null,
+  content_id text not null,
+  flagged_by uuid not null references auth.users(id) on delete cascade,
+  reason text not null,
+  status text not null default 'open' check (status in ('open', 'dismissed', 'resolved')),
+  created_at timestamptz default now(),
+  unique(content_type, content_id, flagged_by)
+);
+
+create index idx_content_flags_status on public.content_flags(status);
+
+alter table public.content_flags enable row level security;
+
+create policy "Users can create flags"
+  on public.content_flags for insert with check (auth.uid() = flagged_by);
+
+create policy "Users can read own flags"
+  on public.content_flags for select using (auth.uid() = flagged_by or exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN'));
+
+create policy "Admins can update flags"
+  on public.content_flags for update using (exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN'));
+
 -- Admin access policies (role-based)
 create policy "Admins can read all profiles"
   on public.user_profiles for select

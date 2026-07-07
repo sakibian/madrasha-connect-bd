@@ -18,10 +18,13 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Source } from '../types';
+import CitationBadge from '../components/CitationBadge';
 const EDGE_FN_URL = 'https://qazcxnldkrklxdmunfgj.functions.supabase.co/gemini-proxy';
 
 const Home: React.FC = () => {
   const [dailyDeen, setDailyDeen] = useState<{ text: string; source: string } | null>(null);
+  const [dailySource, setDailySource] = useState<Source | null>(null);
 
   useEffect(() => {
     const fetchDailyDeen = async () => {
@@ -37,8 +40,10 @@ const Home: React.FC = () => {
         const data = await res.json();
         const text = data.text || "ধৈর্যের মাধ্যমেই আল্লাহ সাহায্য করেন।";
         setDailyDeen({ text, source: "দৈনিক নসিহত" });
+        setDailySource({ id: 'daily-wisdom', type: 'other', reference: 'দৈনিক নসিহত', text });
       } catch (e) {
         setDailyDeen({ text: "আল্লাহর সাহায্য অতি নিকটেই।", source: "কুরআন ২:২১৪" });
+        setDailySource({ id: 'daily-fallback', type: 'quran', reference: 'কুরআন ২:২১৪', text: 'আল্লাহর সাহায্য অতি নিকটেই' });
       }
     };
     fetchDailyDeen();
@@ -59,10 +64,16 @@ const Home: React.FC = () => {
           <div className="caps-label text-gray-400">Daily Wisdom</div>
         </div>
         <div className="max-w-3xl space-y-4">
-          <p className="text-3xl font-extrabold leading-tight">
-             {dailyDeen ? dailyDeen.text : "লোড হচ্ছে..."}
-          </p>
-          <p className="text-sm font-bold text-gray-500">— {dailyDeen?.source}</p>
+           <p className="text-3xl font-extrabold leading-tight">
+              {dailyDeen ? dailyDeen.text : "লোড হচ্ছে..."}
+           </p>
+           <div className="pt-1">
+             {dailySource ? (
+               <CitationBadge source={dailySource} />
+             ) : (
+               <p className="text-sm font-bold text-gray-500">— {dailyDeen?.source}</p>
+             )}
+           </div>
         </div>
       </section>
 

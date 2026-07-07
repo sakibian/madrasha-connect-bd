@@ -15,7 +15,7 @@ import {
   Loader2
 } from 'lucide-react';
 import { dataService } from '../../services/dataService';
-import { Job, Product, User, Fatwa, Source } from '../../types';
+import { Job, Product, User, Fatwa, Source, ContentFlag } from '../../types';
 import CitationBadge from '../../components/CitationBadge';
 import CitationPicker from '../../components/CitationPicker';
 
@@ -73,7 +73,7 @@ const AdminDashboard: React.FC = () => {
       {activeTab === 'jobs' && <ManageJobs />}
       {activeTab === 'products' && <ManageProducts />}
       {activeTab === 'users' && <ManageUsers />}
-      {activeTab === 'moderation' && <ManageModeration />}
+      {activeTab === 'moderation' && <ModerationHub />}
     </div>
   );
 };
@@ -420,6 +420,99 @@ const ManageModeration: React.FC = () => {
     </div>
   );
 };
+
+const ModerationHub: React.FC = () => {
+  const [subTab, setSubTab] = useState<'fatwas' | 'flags'>('fatwas');
+  return (
+    <div className="space-y-8">
+      <div className="flex gap-1 bg-gray-100 p-1 minimal-border w-fit">
+        <SubTabButton active={subTab === 'fatwas'} onClick={() => setSubTab('fatwas')} label="পেন্ডিং ফতোয়া" />
+        <SubTabButton active={subTab === 'flags'} onClick={() => setSubTab('flags')} label="রিপোর্ট করা কন্টেন্ট" />
+      </div>
+      {subTab === 'fatwas' ? <ManageModeration /> : <ManageFlags />}
+    </div>
+  );
+};
+
+const ManageFlags: React.FC = () => {
+  const [flags, setFlags] = useState<ContentFlag[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const load = async () => {
+    setLoading(true);
+    const data = await dataService.getFlags('open');
+    setFlags(data);
+    setLoading(false);
+  };
+
+  useEffect(() => { load(); }, []);
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-3">
+        <Shield size={20} />
+        <span className="font-bold text-lg">রিপোর্ট করা কন্টেন্ট</span>
+        <span className="text-[9px] font-black px-2 py-1 bg-red-50 text-red-500">{flags.length} টি</span>
+      </div>
+
+      {loading ? (
+        <div className="bg-white p-20 text-center text-gray-400 font-bold">লোড হচ্ছে...</div>
+      ) : flags.length === 0 ? (
+        <div className="bg-white p-20 text-center text-gray-400 font-bold">কোনো রিপোর্ট নেই</div>
+      ) : (
+        <div className="bg-white minimal-border overflow-hidden">
+          <table className="w-full text-left">
+            <thead className="bg-gray-50 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100">
+              <tr>
+                <th className="px-8 py-5">কন্টেন্ট টাইপ</th>
+                <th className="px-8 py-5">কন্টেন্ট আইডি</th>
+                <th className="px-8 py-5">কারণ</th>
+                <th className="px-8 py-5">তারিখ</th>
+                <th className="px-8 py-5 text-right">অ্যাকশন</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {flags.map(flag => (
+                <tr key={flag.id} className="hover:bg-gray-50 transition-colors">
+                  <td className="px-8 py-6">
+                    <span className="text-[9px] font-black px-2 py-1 bg-gray-100 uppercase tracking-widest">{flag.content_type}</span>
+                  </td>
+                  <td className="px-8 py-6 text-sm font-mono text-gray-400">{flag.content_id.slice(0, 12)}...</td>
+                  <td className="px-8 py-6 font-bold text-sm text-gray-700">{flag.reason}</td>
+                  <td className="px-8 py-6 text-xs font-bold text-gray-400">
+                    {flag.created_at ? new Date(flag.created_at).toLocaleDateString('bn-BD') : ''}
+                  </td>
+                  <td className="px-8 py-6 text-right">
+                    <div className="flex justify-end gap-2">
+                      <button
+                        onClick={async () => { await dataService.resolveFlag(flag.id); load(); }}
+                        className="px-4 py-2 bg-black text-white font-bold text-[10px] hover:bg-bd-green transition-all"
+                      >
+                        সমাধান
+                      </button>
+                      <button
+                        onClick={async () => { await dataService.dismissFlag(flag.id); load(); }}
+                        className="px-4 py-2 border border-gray-200 text-gray-500 font-bold text-[10px] hover:bg-gray-50 transition-all"
+                      >
+                        খারিজ
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const SubTabButton: React.FC<{ active: boolean, onClick: () => void, label: string }> = ({ active, onClick, label }) => (
+  <button onClick={onClick} className={`px-6 py-3 transition-all font-bold text-xs uppercase tracking-widest ${active ? 'bg-black text-white' : 'text-gray-400 hover:text-black hover:bg-white'}`}>
+    {label}
+  </button>
+);
 
 const TabButton: React.FC<{ active: boolean, onClick: () => void, icon: React.ReactNode, label: string }> = ({ active, onClick, icon, label }) => (
   <button onClick={onClick} className={`flex items-center gap-3 px-8 py-4 transition-all font-bold text-xs uppercase tracking-widest ${active ? 'bg-black text-white' : 'text-gray-400 hover:text-black hover:bg-white'}`}>

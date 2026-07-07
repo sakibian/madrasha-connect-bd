@@ -21,6 +21,7 @@ import { askScholar } from '../services/geminiService';
 import { getCurrentUser } from '../services/authService';
 import { addNotification } from '../services/notificationService';
 import CitationBadge from '../components/CitationBadge';
+import FlagButton from '../components/FlagButton';
 
 const FatwaCenter: React.FC = () => {
   const currentUser = getCurrentUser();
@@ -147,10 +148,13 @@ const FatwaCenter: React.FC = () => {
            <div className="space-y-6">
               {filteredFatwas.map(fatwa => (
                 <div key={fatwa.id} className="minimal-border p-10 bg-white space-y-8 group">
-                   <div className="flex justify-between items-start">
-                      <div className="caps-label text-bd-green">{fatwa.category}</div>
-                      <div className="text-[10px] font-bold text-gray-400 flex items-center gap-2"><Clock size={12} /> {fatwa.askedAt}</div>
-                   </div>
+                    <div className="flex justify-between items-start">
+                       <div className="caps-label text-bd-green">{fatwa.category}</div>
+                       <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-bold text-gray-400 flex items-center gap-1"><Clock size={12} /> {fatwa.askedAt}</span>
+                          <FlagButton contentType="fatwa" contentId={fatwa.id} />
+                       </div>
+                    </div>
                    <h3 className="text-2xl font-extrabold leading-tight">প্রশ্ন: {fatwa.question}</h3>
                    
                     {fatwa.answer ? (

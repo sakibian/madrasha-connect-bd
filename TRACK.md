@@ -344,12 +344,12 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
   - Layer 3: Scholar review queue for religious rulings
 - [x] Create admin moderation dashboard (queue, approve, reject, flag) with CitationPicker integration
 - [ ] Create scholar review interface (for fatwa answers, course content)
-- [ ] Add content flagging mechanism for community users
+- [x] Add content flagging mechanism for community users (FlagButton + ManageFlags admin view)
 - [ ] Create automated weekly content audit report
 
 #### Knowledge Hub Enhancement
 - [ ] Add source citations to Seerah Timeline events
-- [ ] Add source references to Deen-101 course content
+- [x] Add source references to Deen-101 course content
 - [ ] Add "Fatwa Archive" with search + source filtering
 - [ ] Create scholar attribution system (content → answering scholar)
 - [ ] Add content versioning (track edits to fatwa/course content)
@@ -654,14 +654,14 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M3: Component Library | ~20 | 0 | 0% |
 | M4: State Management | 12 | 0 | 0% |
 | M5: Authentication | ~15 | 0 | 0% |
-| M6: Authentic Knowledge Base | ~18 | 10 | 56% |
+| M6: Authentic Knowledge Base | ~18 | 13 | 72% |
 | M7: Testing & QA | ~18 | 0 | 0% |
 | M8: Performance & Accessibility | ~15 | 0 | 0% |
 | M9: Orphan Pages | 10 | 0 | 0% |
 | M10: Community & Engagement | ~12 | 0 | 0% |
 | M11: Mobile App | ~14 | 0 | 0% |
 | M12: Production Launch | ~15 | 0 | 0% |
-| **Total** | **~200** | **49** | **25%** |
+| **Total** | **~200** | **52** | **26%** |
 
 ---
 
