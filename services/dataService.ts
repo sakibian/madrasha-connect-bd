@@ -1,4 +1,4 @@
-import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication } from '../types';
+import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication, ContentVersion } from '../types';
 import { supabase } from './supabase';
 
 const CACHE_KEYS = {
@@ -459,6 +459,47 @@ export const dataService = {
       .from('content_flags')
       .update({ status: 'dismissed' })
       .eq('id', flagId);
+    if (error) throw error;
+  },
+
+  // --- Content Versioning ---
+  getVersions: async (contentType: string, contentId: string): Promise<ContentVersion[]> => {
+    const { data, error } = await supabase
+      .from('content_versions')
+      .select('*, user_profiles(name)')
+      .eq('content_type', contentType)
+      .eq('content_id', contentId)
+      .order('created_at', { ascending: false });
+    if (error) return [];
+    return data.map(v => ({
+      id: v.id,
+      contentType: v.content_type,
+      contentId: v.content_id,
+      title: v.title || undefined,
+      body: v.body,
+      changedBy: (v as any).user_profiles?.name || v.changed_by,
+      changeSummary: v.change_summary || undefined,
+      createdAt: v.created_at,
+    }));
+  },
+
+  saveVersion: async (data: {
+    contentType: string;
+    contentId: string;
+    body: string;
+    title?: string;
+    changeSummary?: string;
+  }) => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+    const { error } = await supabase.from('content_versions').insert({
+      content_type: data.contentType,
+      content_id: data.contentId,
+      body: data.body,
+      title: data.title,
+      changed_by: user.id,
+      change_summary: data.changeSummary,
+    });
     if (error) throw error;
   },
 

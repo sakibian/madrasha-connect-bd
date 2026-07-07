@@ -472,3 +472,25 @@ create policy "Admins can update applications"
   using (
     exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN')
   );
+
+-- 22. Content Versions (audit trail for edits)
+create table public.content_versions (
+  id uuid primary key default uuid_generate_v4(),
+  content_type text not null,
+  content_id uuid not null,
+  title text,
+  body text not null,
+  changed_by uuid not null references auth.users(id) on delete cascade,
+  change_summary text,
+  created_at timestamptz default now()
+);
+
+create index idx_content_versions_content on public.content_versions(content_type, content_id, created_at desc);
+
+alter table public.content_versions enable row level security;
+
+create policy "Anyone can read content versions"
+  on public.content_versions for select using (true);
+
+create policy "Authenticated users can create versions"
+  on public.content_versions for insert with check (auth.role() = 'authenticated');

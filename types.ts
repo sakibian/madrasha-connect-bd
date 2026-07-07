@@ -120,6 +120,17 @@ export interface ContentFlag {
   created_at: string;
 }
 
+export interface ContentVersion {
+  id: string;
+  contentType: string;
+  contentId: string;
+  title?: string;
+  body: string;
+  changedBy: string;
+  changeSummary?: string;
+  createdAt: string;
+}
+
 export interface ScholarApplication {
   id: string;
   userId: string;
