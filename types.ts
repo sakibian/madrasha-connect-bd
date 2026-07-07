@@ -8,6 +8,7 @@ export interface User {
   role: UserRole;
   avatar?: string;
   institutionName?: string;
+  banned?: boolean;
 }
 
 export interface Institution {

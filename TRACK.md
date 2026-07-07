@@ -296,8 +296,8 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [x] Show 403 page for unauthorized role access
 
 #### Admin User Management
-- [ ] Create admin panel for user management (approve institutions, assign roles)
-- [ ] Create admin panel for content moderation (moderation queue)
+- [x] Create admin panel for user management (approve institutions, assign roles, ban users)
+- [x] Create admin panel for content moderation (moderation queue)
 - [ ] Add audit logging for admin actions
 
 #### Scholar Role
@@ -653,11 +653,11 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M2: Data Migration | 9 | 0 | 0% |
 | M3: Component Library | ~20 | 0 | 0% |
 | M4: State Management | 12 | 0 | 0% |
-| M5: Authentication | ~15 | 9 | 60% |
+| M5: Authentication | ~15 | 10 | 67% |
 | M6: Authentic Knowledge Base | ~18 | 18 | 100% |
 | M9: Orphan Pages | 10 | 10 | 100% |
 | M10: Community & Engagement | ~12 | 12 | 100% |
-| **Total** | **~200** | **82** | **41%** |
+| **Total** | **~200** | **83** | **42%** |
 
 ---
 

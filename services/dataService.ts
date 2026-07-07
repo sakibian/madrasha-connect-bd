@@ -849,6 +849,60 @@ export const dataService = {
       role: u.role as User['role'],
       avatar: u.avatar_url || 'https://picsum.photos/seed/user/100/100',
       institutionName: u.institution_name,
+      banned: u.banned || false,
     }));
+  },
+
+  updateUserRole: async (userId: string, role: string): Promise<void> => {
+    const { error } = await supabase
+      .from('user_profiles')
+      .update({ role })
+      .eq('id', userId);
+    if (error) throw error;
+  },
+
+  banUser: async (userId: string, banned: boolean): Promise<void> => {
+    const { error } = await supabase
+      .from('user_profiles')
+      .update({ banned })
+      .eq('id', userId);
+    if (error) throw error;
+  },
+
+  // --- Institutions (Admin) ---
+  getPendingInstitutions: async (): Promise<Institution[]> => {
+    const { data, error } = await supabase
+      .from('institutions')
+      .select('*')
+      .eq('verified', false)
+      .order('created_at', { ascending: false });
+    if (error) return [];
+    return data.map(i => ({
+      id: i.id,
+      name: i.name,
+      type: i.type as Institution['type'],
+      location: i.location,
+      district: i.district,
+      established: i.established || '',
+      verified: i.verified,
+      studentCount: i.student_count,
+      image: i.image_url || 'https://picsum.photos/seed/institution/400/300',
+    }));
+  },
+
+  verifyInstitution: async (id: string): Promise<void> => {
+    const { error } = await supabase
+      .from('institutions')
+      .update({ verified: true })
+      .eq('id', id);
+    if (error) throw error;
+  },
+
+  deleteInstitution: async (id: string): Promise<void> => {
+    const { error } = await supabase
+      .from('institutions')
+      .delete()
+      .eq('id', id);
+    if (error) throw error;
   },
 };

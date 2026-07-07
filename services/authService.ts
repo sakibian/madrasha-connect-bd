@@ -18,6 +18,7 @@ const fetchUserProfile = async (userId: string): Promise<User | null> => {
     role: profileResult.data.role as User['role'],
     avatar: profileResult.data.avatar_url || undefined,
     institutionName: profileResult.data.institution_name,
+    banned: profileResult.data.banned || false,
   };
 };
 
@@ -47,7 +48,15 @@ export const login = async (email: string, password: string): Promise<User | nul
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error || !data.user) return null;
 
-  currentUser = await fetchUserProfile(data.user.id);
+  const profile = await fetchUserProfile(data.user.id);
+  if (profile?.banned) {
+    await supabase.auth.signOut();
+    currentUser = null;
+    window.dispatchEvent(new CustomEvent('auth_change'));
+    return null;
+  }
+
+  currentUser = profile;
   window.dispatchEvent(new CustomEvent('auth_change'));
   return currentUser;
 };

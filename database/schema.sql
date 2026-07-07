@@ -12,6 +12,7 @@ create table public.user_profiles (
   avatar_url text,
   phone text,
   institution_name text,
+  banned boolean default false,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );

@@ -215,41 +215,175 @@ const ManageProducts: React.FC = () => {
 
 const ManageUsers: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
-  useEffect(() => { dataService.getUsers().then(setUsers); }, []);
+  const [userSubTab, setUserSubTab] = useState<'users' | 'institutions'>('users');
+
+  const loadUsers = async () => setUsers(await dataService.getUsers());
+  useEffect(() => { loadUsers(); }, []);
+
+  const handleRoleChange = async (userId: string, role: string) => {
+    await dataService.updateUserRole(userId, role);
+    await loadUsers();
+  };
+
+  const handleBanToggle = async (userId: string, currentlyBanned: boolean) => {
+    await dataService.banUser(userId, !currentlyBanned);
+    await loadUsers();
+  };
 
   return (
-    <div className="bg-white minimal-border overflow-hidden">
-      <table className="w-full text-left">
-        <thead className="bg-gray-50 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100">
-          <tr>
-            <th className="px-8 py-5">ইউজার / প্রোফাইল</th>
-            <th className="px-8 py-5">রোল</th>
-            <th className="px-8 py-5">ইমেইল</th>
-            <th className="px-8 py-5 text-right">অ্যাকশন</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-100">
-          {users.map(u => (
-            <tr key={u.id} className="hover:bg-gray-50 transition-colors">
-              <td className="px-8 py-6 flex items-center gap-4">
-                <img src={u.avatar} className="w-10 h-10 bg-gray-50 border border-gray-200" alt="" />
-                <span className="font-bold text-gray-800 text-lg">{u.name}</span>
-              </td>
-              <td className="px-8 py-6">
-                <span className={`text-[9px] font-black px-3 py-1 uppercase tracking-widest ${u.role === 'ADMIN' ? 'bg-black text-white' : 'bg-gray-100 text-gray-500'}`}>
-                  {u.role}
-                </span>
-              </td>
-              <td className="px-8 py-6 text-sm font-bold text-gray-400">{u.email}</td>
-              <td className="px-8 py-6 text-right">
-                {u.role !== 'ADMIN' && (
-                  <button className="text-[10px] font-black uppercase tracking-widest border border-gray-200 px-4 py-2 hover:bg-black hover:text-white transition-all">ব্যান করুন</button>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="space-y-6">
+      <div className="flex gap-1 bg-gray-100 p-1 minimal-border w-fit">
+        <SubTabButton active={userSubTab === 'users'} onClick={() => setUserSubTab('users')} label="ইউজার ম্যানেজমেন্ট" />
+        <SubTabButton active={userSubTab === 'institutions'} onClick={() => setUserSubTab('institutions')} label="প্রতিষ্ঠান অনুমোদন" />
+      </div>
+
+      {userSubTab === 'users' && (
+        <div className="bg-white minimal-border overflow-hidden">
+          <table className="w-full text-left">
+            <thead className="bg-gray-50 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100">
+              <tr>
+                <th className="px-8 py-5">ইউজার / প্রোফাইল</th>
+                <th className="px-8 py-5">রোল</th>
+                <th className="px-8 py-5">স্ট্যাটাস</th>
+                <th className="px-8 py-5 text-right">অ্যাকশন</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {users.map(u => (
+                <tr key={u.id} className={`hover:bg-gray-50 transition-colors ${u.banned ? 'opacity-50' : ''}`}>
+                  <td className="px-8 py-6 flex items-center gap-4">
+                    <img src={u.avatar} className="w-10 h-10 bg-gray-50 border border-gray-200" alt="" />
+                    <div>
+                      <span className="font-bold text-gray-800 text-lg">{u.name}</span>
+                      {u.institutionName && <p className="text-[10px] font-bold text-gray-400">{u.institutionName}</p>}
+                    </div>
+                  </td>
+                  <td className="px-8 py-6">
+                    {u.role === 'ADMIN' ? (
+                      <span className="text-[9px] font-black px-3 py-1 bg-black text-white uppercase tracking-widest">ADMIN</span>
+                    ) : (
+                      <select
+                        value={u.role}
+                        onChange={e => handleRoleChange(u.id, e.target.value)}
+                        className="text-[9px] font-black px-3 py-1 bg-gray-100 text-gray-500 uppercase tracking-widest border-none outline-none cursor-pointer"
+                      >
+                        <option value="USER">USER</option>
+                        <option value="INSTITUTION">INSTITUTION</option>
+                        <option value="SCHOLAR">SCHOLAR</option>
+                      </select>
+                    )}
+                  </td>
+                  <td className="px-8 py-6">
+                    {u.banned ? (
+                      <span className="text-[9px] font-black px-3 py-1 bg-red-100 text-red-600 uppercase tracking-widest">ব্যানড</span>
+                    ) : (
+                      <span className="text-[9px] font-black px-3 py-1 bg-green-100 text-green-600 uppercase tracking-widest">সক্রিয়</span>
+                    )}
+                  </td>
+                  <td className="px-8 py-6 text-right">
+                    {u.role !== 'ADMIN' && (
+                      <button
+                        onClick={() => handleBanToggle(u.id, !!u.banned)}
+                        className={`text-[10px] font-black uppercase tracking-widest border px-4 py-2 transition-all ${
+                          u.banned ? 'border-green-200 text-green-600 hover:bg-green-600 hover:text-white' : 'border-gray-200 text-gray-500 hover:bg-red-600 hover:text-white'
+                        }`}
+                      >
+                        {u.banned ? 'আনব্যান' : 'ব্যান'}
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {userSubTab === 'institutions' && <ManageInstitutions />}
+    </div>
+  );
+};
+
+const ManageInstitutions: React.FC = () => {
+  const [institutions, setInstitutions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const load = async () => {
+    setLoading(true);
+    const data = await dataService.getPendingInstitutions();
+    setInstitutions(data);
+    setLoading(false);
+  };
+
+  useEffect(() => { load(); }, []);
+
+  const handleApprove = async (id: string) => {
+    await dataService.verifyInstitution(id);
+    await load();
+  };
+
+  const handleReject = async (id: string) => {
+    await dataService.deleteInstitution(id);
+    await load();
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-3">
+        <Shield size={20} />
+        <span className="font-bold text-lg">প্রতিষ্ঠান অনুমোদন</span>
+        <span className="text-[9px] font-black px-2 py-1 bg-gray-100 text-gray-500">{institutions.length} পেন্ডিং</span>
+      </div>
+
+      {loading ? (
+        <div className="bg-white p-20 text-center text-gray-400 font-bold">লোড হচ্ছে...</div>
+      ) : institutions.length === 0 ? (
+        <div className="bg-white p-20 text-center text-gray-400 font-bold">কোনো পেন্ডিং প্রতিষ্ঠান নেই</div>
+      ) : (
+        <div className="bg-white minimal-border overflow-hidden">
+          <table className="w-full text-left">
+            <thead className="bg-gray-50 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100">
+              <tr>
+                <th className="px-8 py-5">প্রতিষ্ঠান</th>
+                <th className="px-8 py-5">ধরন</th>
+                <th className="px-8 py-5">অবস্থান</th>
+                <th className="px-8 py-5 text-right">অ্যাকশন</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {institutions.map(inst => (
+                <tr key={inst.id} className="hover:bg-gray-50 transition-colors">
+                  <td className="px-8 py-6">
+                    <p className="font-bold text-gray-800 text-lg">{inst.name}</p>
+                  </td>
+                  <td className="px-8 py-6">
+                    <span className="text-[9px] font-black px-3 py-1 bg-gray-100 uppercase tracking-widest">{inst.type}</span>
+                  </td>
+                  <td className="px-8 py-6 text-sm font-bold text-gray-500">
+                    {inst.location}{inst.district ? `, ${inst.district}` : ''}
+                  </td>
+                  <td className="px-8 py-6 text-right">
+                    <div className="flex justify-end gap-2">
+                      <button
+                        onClick={() => handleApprove(inst.id)}
+                        className="px-5 py-2.5 bg-black text-white font-bold text-[10px] hover:bg-bd-green transition-all flex items-center gap-1"
+                      >
+                        <CheckCircle size={14} /> অনুমোদন
+                      </button>
+                      <button
+                        onClick={() => handleReject(inst.id)}
+                        className="px-5 py-2.5 border border-gray-200 text-red-600 font-bold text-[10px] hover:bg-red-50 transition-all flex items-center gap-1"
+                      >
+                        <X size={14} /> বাতিল
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
