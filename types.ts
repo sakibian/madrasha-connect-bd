@@ -120,6 +120,23 @@ export interface ContentFlag {
   created_at: string;
 }
 
+export interface ScholarApplication {
+  id: string;
+  userId: string;
+  title: string;
+  specialization: string;
+  institution: string;
+  location: string;
+  bio: string;
+  credentials: string[];
+  references: string[];
+  status: 'pending' | 'approved' | 'rejected';
+  adminNotes?: string;
+  reviewedBy?: string;
+  reviewedAt?: string;
+  createdAt: string;
+}
+
 export interface AppNotification {
   id: string;
   title: string;

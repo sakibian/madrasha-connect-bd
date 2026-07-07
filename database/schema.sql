@@ -431,3 +431,44 @@ create policy "Admins can update all profiles"
   using (
     exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN')
   );
+
+-- 21. Scholar Applications (verification workflow)
+create table public.scholar_applications (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid not null references auth.users(id) on delete cascade unique,
+  title text not null,
+  specialization text not null,
+  institution text,
+  location text,
+  bio text,
+  credentials text[] default '{}',
+  references text[] default '{}',
+  status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
+  admin_notes text,
+  reviewed_by uuid references auth.users(id) on delete set null,
+  reviewed_at timestamptz,
+  created_at timestamptz default now()
+);
+
+create index idx_scholar_applications_status on public.scholar_applications(status);
+
+alter table public.scholar_applications enable row level security;
+
+create policy "Users can read own applications"
+  on public.scholar_applications for select
+  using (auth.uid() = user_id);
+
+create policy "Users can create applications"
+  on public.scholar_applications for insert with check (auth.uid() = user_id);
+
+create policy "Admins can read all applications"
+  on public.scholar_applications for select
+  using (
+    exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN')
+  );
+
+create policy "Admins can update applications"
+  on public.scholar_applications for update
+  using (
+    exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN')
+  );

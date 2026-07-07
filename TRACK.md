@@ -355,9 +355,9 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [ ] Add content versioning (track edits to fatwa/course content)
 
 #### Scholar Verification
-- [ ] Create scholar application form (credentials, references, specialization)
-- [ ] Create admin verification workflow (verify credentials, approve)
-- [ ] Add verified badge on scholar profiles
+- [x] Create scholar application form (credentials, references, specialization)
+- [x] Create admin verification workflow (verify credentials, approve)
+- [x] Add verified badge on scholar profiles
 - [ ] Create scholar reputation system (answers given, helpful votes)
 
 ### Acceptance Criteria
@@ -654,14 +654,14 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M3: Component Library | ~20 | 0 | 0% |
 | M4: State Management | 12 | 0 | 0% |
 | M5: Authentication | ~15 | 0 | 0% |
-| M6: Authentic Knowledge Base | ~18 | 16 | 89% |
+| M6: Authentic Knowledge Base | ~18 | 18 | 95% |
 | M7: Testing & QA | ~18 | 0 | 0% |
 | M8: Performance & Accessibility | ~15 | 0 | 0% |
 | M9: Orphan Pages | 10 | 0 | 0% |
 | M10: Community & Engagement | ~12 | 0 | 0% |
 | M11: Mobile App | ~14 | 0 | 0% |
 | M12: Production Launch | ~15 | 0 | 0% |
-| **Total** | **~200** | **55** | **28%** |
+| **Total** | **~200** | **57** | **29%** |
 
 ---
 

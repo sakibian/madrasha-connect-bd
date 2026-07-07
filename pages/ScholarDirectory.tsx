@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ShieldCheck, MapPin, BookOpen, BadgeCheck, GraduationCap } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Search, ShieldCheck, MapPin, BookOpen, BadgeCheck, GraduationCap, ArrowRight } from 'lucide-react';
 import { Scholar } from '../types';
 import { dataService } from '../services/dataService';
 
@@ -26,6 +27,19 @@ const ScholarDirectory: React.FC = () => {
           <div className="caps-label text-gray-400">Scholars</div>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">আলেম ডিরেক্টরি।</h1>
         </div>
+      </div>
+
+      <div className="bg-gray-50 p-10 minimal-border flex items-center justify-between">
+        <div className="space-y-1">
+          <p className="font-bold text-lg">আপনি কি একজন আলেম?</p>
+          <p className="text-sm text-gray-500 font-medium">আমাদের স্কলার টিমে যোগ দিন এবং ফতোয়া প্রশ্নের উত্তর দিন।</p>
+        </div>
+        <Link
+          to="/scholar/apply"
+          className="px-8 py-4 bg-black text-white font-bold text-xs hover:bg-gray-800 transition-all flex items-center gap-2"
+        >
+          আবেদন করুন <ArrowRight size={16} />
+        </Link>
       </div>
 
       <div className="relative">

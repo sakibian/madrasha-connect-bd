@@ -58,6 +58,7 @@ import EventsHub from './pages/EventsHub';
 import SadaqahHub from './pages/SadaqahHub';
 import FatwaArchive from './pages/FatwaArchive';
 import ScholarDashboard from './pages/ScholarDashboard';
+import ScholarApply from './pages/ScholarApply';
 
 import { getNotifications, initNotifications } from './services/notificationService';
 import { getCurrentUser, logout, initAuth } from './services/authService';
@@ -99,7 +100,7 @@ const AppRouter: React.FC = () => {
     '/', '/about', '/institutions', '/knowledge', '/professional', 
     '/scholars', '/fatwa', '/marketplace', '/seerah', '/calligraphy', 
     '/search', '/deen101', '/faq', '/competitions', '/audio-library', '/tools',
-    '/fatwa/archive', '/scholar-dashboard'
+    '/fatwa/archive', '/scholar-dashboard', '/scholar/apply'
   ];
   
   const isPublicPage = publicPaths.includes(location.pathname) || location.pathname.startsWith('/institution/');
@@ -178,6 +179,7 @@ const PublicLayout: React.FC = () => {
           <Route path="/sadaqah" element={<SadaqahHub />} />
           <Route path="/fatwa/archive" element={<FatwaArchive />} />
           <Route path="/scholar-dashboard" element={<ScholarDashboard />} />
+          <Route path="/scholar/apply" element={<ScholarApply />} />
         </Routes>
       </div>
     </div>
@@ -258,6 +260,7 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
               <NavItem to="/tools" icon={<Wrench size={18} />} label="ইউটিলিটি টুলস" onClick={closeSidebar} />
               <NavItem to="/faq" icon={<HelpCircle size={18} />} label="সহায়তা কেন্দ্র" onClick={closeSidebar} />
               <NavItem to="/scholar-dashboard" icon={<GraduationCap size={18} />} label="স্কলার প্যানেল" onClick={closeSidebar} />
+              <NavItem to="/scholar/apply" icon={<ShieldCheck size={18} />} label="স্কলার আবেদন" onClick={closeSidebar} />
             </div>
           </nav>
 
@@ -330,6 +333,7 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
             <Route path="/sadaqah" element={<SadaqahHub />} />
             <Route path="/fatwa/archive" element={<FatwaArchive />} />
             <Route path="/scholar-dashboard" element={<ScholarDashboard />} />
+            <Route path="/scholar/apply" element={<ScholarApply />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </div>

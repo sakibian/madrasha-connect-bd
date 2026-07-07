@@ -1,4 +1,4 @@
-import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag } from '../types';
+import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication } from '../types';
 import { supabase } from './supabase';
 
 const CACHE_KEYS = {
@@ -460,6 +460,135 @@ export const dataService = {
       .update({ status: 'dismissed' })
       .eq('id', flagId);
     if (error) throw error;
+  },
+
+  // --- Scholar Applications ---
+  getScholarApplications: async (status?: string): Promise<ScholarApplication[]> => {
+    let query = supabase
+      .from('scholar_applications')
+      .select('*, user_profiles(name)')
+      .order('created_at', { ascending: false });
+    if (status) query = query.eq('status', status);
+    const { data, error } = await query;
+    if (error) return [];
+    return data.map(a => ({
+      id: a.id,
+      userId: a.user_id,
+      title: a.title,
+      specialization: a.specialization,
+      institution: a.institution || '',
+      location: a.location || '',
+      bio: a.bio || '',
+      credentials: a.credentials || [],
+      references: a.references || [],
+      status: a.status as ScholarApplication['status'],
+      adminNotes: a.admin_notes,
+      reviewedBy: a.reviewed_by,
+      reviewedAt: a.reviewed_at,
+      createdAt: a.created_at,
+    }));
+  },
+
+  submitScholarApplication: async (data: {
+    title: string;
+    specialization: string;
+    institution?: string;
+    location?: string;
+    bio?: string;
+    credentials?: string[];
+    references?: string[];
+  }) => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in to apply');
+    const { error } = await supabase.from('scholar_applications').insert({
+      user_id: user.id,
+      title: data.title,
+      specialization: data.specialization,
+      institution: data.institution,
+      location: data.location,
+      bio: data.bio,
+      credentials: data.credentials || [],
+      references: data.references || [],
+    });
+    if (error) throw error;
+  },
+
+  getMyScholarApplication: async (): Promise<ScholarApplication | null> => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) return null;
+    const { data, error } = await supabase
+      .from('scholar_applications')
+      .select('*')
+      .eq('user_id', user.id)
+      .single();
+    if (error || !data) return null;
+    return {
+      id: data.id,
+      userId: data.user_id,
+      title: data.title,
+      specialization: data.specialization,
+      institution: data.institution || '',
+      location: data.location || '',
+      bio: data.bio || '',
+      credentials: data.credentials || [],
+      references: data.references || [],
+      status: data.status as ScholarApplication['status'],
+      adminNotes: data.admin_notes,
+      reviewedBy: data.reviewed_by,
+      reviewedAt: data.reviewed_at,
+      createdAt: data.created_at,
+    };
+  },
+
+  approveScholarApplication: async (applicationId: string, adminNotes?: string) => {
+    const admin = (await supabase.auth.getSession()).data.session?.user;
+    if (!admin) throw new Error('Must be logged in');
+
+    const { data: app, error: appError } = await supabase
+      .from('scholar_applications')
+      .select('*')
+      .eq('id', applicationId)
+      .single();
+    if (appError || !app) throw new Error('Application not found');
+
+    await supabase.from('scholar_applications').update({
+      status: 'approved',
+      admin_notes: adminNotes,
+      reviewed_by: admin.id,
+      reviewed_at: new Date().toISOString(),
+    }).eq('id', applicationId);
+
+    await supabase.from('user_profiles').update({ role: 'SCHOLAR' }).eq('id', app.user_id);
+
+    const { data: existing } = await supabase
+      .from('scholars')
+      .select('id')
+      .eq('user_id', app.user_id)
+      .single();
+    if (!existing) {
+      await supabase.from('scholars').insert({
+        user_id: app.user_id,
+        title: app.title,
+        specialization: app.specialization,
+        institution: app.institution,
+        location: app.location,
+        bio: app.bio,
+        verified: true,
+      });
+    } else {
+      await supabase.from('scholars').update({ verified: true, title: app.title, specialization: app.specialization }).eq('user_id', app.user_id);
+    }
+  },
+
+  rejectScholarApplication: async (applicationId: string, adminNotes?: string) => {
+    const admin = (await supabase.auth.getSession()).data.session?.user;
+    if (!admin) throw new Error('Must be logged in');
+    await supabase.from('scholar_applications').update({
+      status: 'rejected',
+      admin_notes: adminNotes,
+      reviewed_by: admin.id,
+      reviewed_at: new Date().toISOString(),
+    }).eq('id', applicationId);
   },
 
   // --- Users (Admin) ---

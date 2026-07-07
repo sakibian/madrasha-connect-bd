@@ -12,10 +12,11 @@ import {
   ArrowUpRight,
   Shield,
   X,
-  Loader2
+  Loader2,
+  GraduationCap
 } from 'lucide-react';
 import { dataService } from '../../services/dataService';
-import { Job, Product, User, Fatwa, Source, ContentFlag } from '../../types';
+import { Job, Product, User, Fatwa, Source, ContentFlag, ScholarApplication } from '../../types';
 import CitationBadge from '../../components/CitationBadge';
 import CitationPicker from '../../components/CitationPicker';
 
@@ -422,14 +423,17 @@ const ManageModeration: React.FC = () => {
 };
 
 const ModerationHub: React.FC = () => {
-  const [subTab, setSubTab] = useState<'fatwas' | 'flags'>('fatwas');
+  const [subTab, setSubTab] = useState<'fatwas' | 'flags' | 'scholars'>('fatwas');
   return (
     <div className="space-y-8">
       <div className="flex gap-1 bg-gray-100 p-1 minimal-border w-fit">
         <SubTabButton active={subTab === 'fatwas'} onClick={() => setSubTab('fatwas')} label="পেন্ডিং ফতোয়া" />
         <SubTabButton active={subTab === 'flags'} onClick={() => setSubTab('flags')} label="রিপোর্ট করা কন্টেন্ট" />
+        <SubTabButton active={subTab === 'scholars'} onClick={() => setSubTab('scholars')} label="স্কলার আবেদন" />
       </div>
-      {subTab === 'fatwas' ? <ManageModeration /> : <ManageFlags />}
+      {subTab === 'fatwas' && <ManageModeration />}
+      {subTab === 'flags' && <ManageFlags />}
+      {subTab === 'scholars' && <ManageScholarApplications />}
     </div>
   );
 };
@@ -502,6 +506,187 @@ const ManageFlags: React.FC = () => {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ManageScholarApplications: React.FC = () => {
+  const [apps, setApps] = useState<ScholarApplication[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [reviewing, setReviewing] = useState<ScholarApplication | null>(null);
+  const [adminNotes, setAdminNotes] = useState('');
+
+  const load = async () => {
+    setLoading(true);
+    const data = await dataService.getScholarApplications('pending');
+    setApps(data);
+    setLoading(false);
+  };
+
+  useEffect(() => { load(); }, []);
+
+  const handleApprove = async (app: ScholarApplication) => {
+    await dataService.approveScholarApplication(app.id, adminNotes);
+    setReviewing(null);
+    setAdminNotes('');
+    await load();
+  };
+
+  const handleReject = async (app: ScholarApplication) => {
+    await dataService.rejectScholarApplication(app.id, adminNotes);
+    setReviewing(null);
+    setAdminNotes('');
+    await load();
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-3">
+        <GraduationCap size={20} />
+        <span className="font-bold text-lg">স্কলার আবেদন</span>
+        <span className="text-[9px] font-black px-2 py-1 bg-gray-100 text-gray-500">{apps.length} পেন্ডিং</span>
+      </div>
+
+      {loading ? (
+        <div className="bg-white p-20 text-center text-gray-400 font-bold">লোড হচ্ছে...</div>
+      ) : apps.length === 0 ? (
+        <div className="bg-white p-20 text-center text-gray-400 font-bold">কোনো পেন্ডিং আবেদন নেই</div>
+      ) : (
+        <div className="space-y-1 bg-gray-100 minimal-border">
+          {apps.map(app => (
+            <div key={app.id} className="bg-white p-10 space-y-6">
+              <div className="flex justify-between items-start">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <span className="text-[9px] font-black px-2 py-1 bg-black text-white uppercase tracking-widest">{app.title}</span>
+                    <span className="caps-label text-bd-green">{app.specialization}</span>
+                  </div>
+                  <h3 className="text-2xl font-extrabold">{app.userId.slice(0, 8)}...</h3>
+                  <div className="flex flex-wrap gap-4 text-sm font-bold text-gray-400">
+                    {app.institution && <span>{app.institution}</span>}
+                    {app.location && <span>{app.location}</span>}
+                  </div>
+                </div>
+              </div>
+
+              {app.bio && (
+                <div className="p-4 bg-gray-50 text-sm text-gray-600">{app.bio}</div>
+              )}
+
+              {app.credentials.length > 0 && (
+                <div className="space-y-2">
+                  <div className="caps-label text-gray-400">যোগ্যতা</div>
+                  <div className="flex flex-wrap gap-2">
+                    {app.credentials.map((c, i) => (
+                      <span key={i} className="text-xs font-bold px-3 py-1 bg-gray-100">{c}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setReviewing(app)}
+                  className="px-6 py-3 bg-black text-white font-bold text-xs hover:bg-gray-800 transition-all"
+                >
+                  পর্যালোচনা
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {reviewing && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm" onClick={() => setReviewing(null)}>
+          <div className="bg-white w-full max-w-2xl p-12 space-y-8 animate-slideUp" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-center border-b border-gray-100 pb-6">
+              <div className="space-y-1">
+                <div className="flex items-center gap-3">
+                  <span className="text-[9px] font-black px-2 py-1 bg-black text-white uppercase tracking-widest">{reviewing.title}</span>
+                  <span className="caps-label text-bd-green">{reviewing.specialization}</span>
+                </div>
+                <h2 className="text-xl font-extrabold">স্কলার আবেদন পর্যালোচনা</h2>
+              </div>
+              <button onClick={() => setReviewing(null)} className="text-gray-400 hover:text-black"><X size={24} /></button>
+            </div>
+
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <div className="caps-label text-gray-400">প্রতিষ্ঠান</div>
+                  <p className="font-bold">{reviewing.institution || '—'}</p>
+                </div>
+                <div className="space-y-1">
+                  <div className="caps-label text-gray-400">অবস্থান</div>
+                  <p className="font-bold">{reviewing.location || '—'}</p>
+                </div>
+              </div>
+
+              {reviewing.bio && (
+                <div className="space-y-1">
+                  <div className="caps-label text-gray-400">জীবনবৃত্তান্ত</div>
+                  <p className="text-sm text-gray-600 bg-gray-50 p-4">{reviewing.bio}</p>
+                </div>
+              )}
+
+              {reviewing.credentials.length > 0 && (
+                <div className="space-y-2">
+                  <div className="caps-label text-gray-400">যোগ্যতা</div>
+                  <ul className="list-disc list-inside space-y-1">
+                    {reviewing.credentials.map((c, i) => (
+                      <li key={i} className="text-sm font-medium text-gray-700">{c}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {reviewing.references.length > 0 && (
+                <div className="space-y-2">
+                  <div className="caps-label text-gray-400">রেফারেন্স</div>
+                  <ul className="list-disc list-inside space-y-1">
+                    {reviewing.references.map((r, i) => (
+                      <li key={i} className="text-sm font-medium text-gray-700">{r}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <div className="space-y-2">
+                <div className="caps-label text-gray-400">অ্যাডমিন নোট</div>
+                <textarea
+                  value={adminNotes}
+                  onChange={e => setAdminNotes(e.target.value)}
+                  placeholder="অ্যাডমিনের মন্তব্য..."
+                  rows={3}
+                  className="w-full p-4 border border-gray-100 bg-gray-50 outline-none focus:ring-2 focus:ring-black font-medium"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-4 pt-4 border-t border-gray-100">
+              <button
+                onClick={() => handleApprove(reviewing)}
+                className="flex-1 py-4 bg-bd-green text-white font-bold text-sm hover:bg-green-700 transition-all flex items-center justify-center gap-2"
+              >
+                <CheckCircle size={18} /> অনুমোদন
+              </button>
+              <button
+                onClick={() => handleReject(reviewing)}
+                className="flex-1 py-4 bg-red-600 text-white font-bold text-sm hover:bg-red-700 transition-all flex items-center justify-center gap-2"
+              >
+                <X size={18} /> প্রত্যাখ্যান
+              </button>
+              <button
+                onClick={() => setReviewing(null)}
+                className="px-8 py-4 border border-gray-200 text-gray-500 font-bold text-sm hover:bg-gray-50 transition-all"
+              >
+                বাতিল
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
