@@ -239,3 +239,16 @@ on conflict (id) do nothing;
 insert into public.scholar_applications (id, user_id, title, specialization, institution, location, bio, credentials, references, status) values
   ('s-app-001', (select id from auth.users limit 1), 'মুফতি', 'ফিকহ ও হাদিস', 'দারুল উলুম মাদ্রাসা', 'ঢাকা', '১০ বছরের বেশি শিক্ষাদানের অভিজ্ঞতা। ফিকহ ও হাদিস বিষয়ে বিশেষজ্ঞ।', '{দাওরায়ে হাদিস, জামিয়া ইসলামিয়া,ফিকহ স্পেশালাইজেশন, মদিনা বিশ্ববিদ্যালয়}', '{মাওলানা আব্দুর রহিম, অধ্যক্ষ, দারুল উলুম}', 'approved')
 on conflict (user_id) do nothing;
+
+-- Demo Forum Post Likes
+insert into public.forum_post_likes (id, post_id, user_id) values
+  ('fl-001', 'e490f1ee-6c54-4b01-90e6-d701748f0851', (select id from auth.users limit 1)),
+  ('fl-002', 'e490f1ee-6c54-4b01-90e6-d701748f0852', (select id from auth.users limit 1))
+on conflict (post_id, user_id) do nothing;
+
+-- Demo Forum Comments
+insert into public.forum_comments (id, post_id, author_id, content) values
+  ('fc-001', 'e490f1ee-6c54-4b01-90e6-d701748f0851', (select id from auth.users limit 1), 'একটি গুরুত্বপূর্ণ আলোচনা। আমাদের মাদ্রাসায়ও একই সমস্যা বিদ্যমান।'),
+  ('fc-002', 'e490f1ee-6c54-4b01-90e6-d701748f0851', (select id from auth.users limit 1), 'আমি মনে করি পাঠ্যক্রমে আরও বেশি গুরুত্ব দেওয়া উচিত ইসলামী অর্থনীতিতে।'),
+  ('fc-003', 'e490f1ee-6c54-4b01-90e6-d701748f0852', (select id from auth.users limit 1), 'শিক্ষক নিয়োগে সবচেয়ে গুরুত্বপূর্ণ বিষয় হলো তাকওয়া ও ইলম।')
+on conflict (id) do nothing;

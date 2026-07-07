@@ -33,7 +33,7 @@ const Leaderboard: React.FC = () => {
       <div className="space-y-4 border-b border-gray-100 pb-12">
         <div className="caps-label text-gray-400">Community</div>
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">লিডারবোর্ড।</h1>
-        <p className="text-gray-500 font-medium max-w-xl">সবচেয়ে সক্রিয় সদস্যরা — ফতোয়া উত্তর, চাকরি পোস্ট, কোর্স সম্পূর্ণ এবং আরও অনেক কিছুতে XP অর্জন করুন!</p>
+        <p className="text-gray-500 font-medium max-w-xl">সবচেয়ে সক্রিয় সদস্যরা — ফতোয়া উত্তর, চাকরি পোস্ট, কোর্স সম্পূর্ণ এবং আরও অনেক কিছুতে CP (কন্ট্রিবিউট পয়েন্ট) অর্জন করুন!</p>
       </div>
 
       <div className="flex gap-1 bg-gray-100 p-1 minimal-border w-fit">
@@ -41,7 +41,7 @@ const Leaderboard: React.FC = () => {
           onClick={() => setTab('xp')}
           className={`px-6 py-3 text-xs font-bold uppercase tracking-widest transition-all ${tab === 'xp' ? 'bg-black text-white' : 'text-gray-400 hover:text-black'}`}
         >
-          <TrendingUp size={14} className="inline mr-2" />সর্বোচ্চ XP
+          <TrendingUp size={14} className="inline mr-2" />সর্বোচ্চ CP
         </button>
         <button
           onClick={() => setTab('level')}
@@ -61,7 +61,7 @@ const Leaderboard: React.FC = () => {
                 <th className="px-8 py-5">#</th>
                 <th className="px-8 py-5">সদস্য</th>
                 <th className="px-8 py-5">লেভেল</th>
-                <th className="px-8 py-5 text-right">XP</th>
+                <th className="px-8 py-5 text-right">CP</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">

@@ -297,6 +297,106 @@ export const dataService = {
     if (error) throw error;
   },
 
+  // --- Forum Post Likes ---
+  likePost: async (postId: string): Promise<void> => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in to like');
+    const { error } = await supabase.from('forum_post_likes').upsert({
+      post_id: postId,
+      user_id: user.id,
+    }, { onConflict: 'post_id,user_id' });
+    if (error && !error.message.includes('duplicate')) throw error;
+    const { data: post } = await supabase.from('forum_posts').select('likes').eq('id', postId).single();
+    await supabase.from('forum_posts').update({ likes: (post?.likes || 0) + 1 }).eq('id', postId);
+  },
+
+  unlikePost: async (postId: string): Promise<void> => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+    await supabase.from('forum_post_likes').delete().eq('post_id', postId).eq('user_id', user.id);
+    const { data: post } = await supabase.from('forum_posts').select('likes').eq('id', postId).single();
+    await supabase.from('forum_posts').update({ likes: Math.max(0, (post?.likes || 1) - 1) }).eq('id', postId);
+  },
+
+  getUserLikes: async (userId: string): Promise<string[]> => {
+    const { data, error } = await supabase
+      .from('forum_post_likes')
+      .select('post_id')
+      .eq('user_id', userId);
+    if (error) return [];
+    return data.map(l => l.post_id);
+  },
+
+  // --- Forum Comments ---
+  getComments: async (postId: string): Promise<any[]> => {
+    const { data, error } = await supabase
+      .from('forum_comments')
+      .select('*, user_profiles(name)')
+      .eq('post_id', postId)
+      .order('created_at', { ascending: true });
+    if (error) return [];
+    return data.map(c => ({
+      id: c.id,
+      postId: c.post_id,
+      author: (c as any).user_profiles?.name || c.author_id,
+      content: c.content,
+      createdAt: c.created_at,
+    }));
+  },
+
+  saveComment: async (postId: string, content: string): Promise<void> => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in to comment');
+    const { error } = await supabase.from('forum_comments').insert({
+      post_id: postId,
+      author_id: user.id,
+      content,
+    });
+    if (error) throw error;
+    const { data: post } = await supabase.from('forum_posts').select('comments_count').eq('id', postId).single();
+    await supabase.from('forum_posts').update({ comments_count: (post?.comments_count || 0) + 1 }).eq('id', postId);
+  },
+
+  // --- User Stats / Milestones ---
+  getUserStats: async (userId: string): Promise<{
+    postsCount: number;
+    commentsCount: number;
+    likesReceived: number;
+    fatwasAsked: number;
+    coursesEnrolled: number;
+  }> => {
+    const { count: postsCount } = await supabase
+      .from('forum_posts')
+      .select('*', { count: 'exact', head: true })
+      .eq('author_id', userId);
+    const { count: commentsCount } = await supabase
+      .from('forum_comments')
+      .select('*', { count: 'exact', head: true })
+      .eq('author_id', userId);
+    const { data: userPosts } = await supabase
+      .from('forum_posts')
+      .select('id')
+      .eq('author_id', userId);
+    const postIds = userPosts?.map(p => p.id) || [];
+    let likesReceived = 0;
+    if (postIds.length > 0) {
+      const { count } = await supabase
+        .from('forum_post_likes')
+        .select('*', { count: 'exact', head: true })
+        .in('post_id', postIds);
+      likesReceived = count || 0;
+    }
+    const { count: fatwasAsked } = await supabase
+      .from('fatwas')
+      .select('*', { count: 'exact', head: true })
+      .eq('asked_by', userId);
+    const { count: coursesEnrolled } = await supabase
+      .from('enrollments')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', userId);
+    return { postsCount: postsCount || 0, commentsCount: commentsCount || 0, likesReceived, fatwasAsked: fatwasAsked || 0, coursesEnrolled: coursesEnrolled || 0 };
+  },
+
   // --- Scholars ---
   getScholars: async (): Promise<Scholar[]> => {
     const { data, error } = await supabase

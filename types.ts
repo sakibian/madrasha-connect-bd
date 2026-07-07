@@ -82,12 +82,19 @@ export interface Course {
 export interface ForumPost {
   id: string;
   author: string;
-  role: string;
   title: string;
   content: string;
   likes: number;
   comments: number;
   verified: boolean;
+}
+
+export interface ForumComment {
+  id: string;
+  postId: string;
+  author: string;
+  content: string;
+  createdAt: string;
 }
 
 export interface Fatwa {

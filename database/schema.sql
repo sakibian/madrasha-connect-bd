@@ -566,3 +566,26 @@ create policy "Anyone can read xp_events"
 
 create policy "System can insert xp_events"
   on public.xp_events for insert with check (auth.uid() = user_id);
+
+-- 27. Forum Post Likes (voting)
+create table public.forum_post_likes (
+  id uuid primary key default uuid_generate_v4(),
+  post_id uuid not null references public.forum_posts(id) on delete cascade,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  created_at timestamptz default now(),
+  unique(post_id, user_id)
+);
+
+create index idx_forum_post_likes_post on public.forum_post_likes(post_id);
+create index idx_forum_post_likes_user on public.forum_post_likes(user_id);
+
+alter table public.forum_post_likes enable row level security;
+
+create policy "Anyone can read likes"
+  on public.forum_post_likes for select using (true);
+
+create policy "Users can like"
+  on public.forum_post_likes for insert with check (auth.uid() = user_id);
+
+create policy "Users can unlike"
+  on public.forum_post_likes for delete using (auth.uid() = user_id);

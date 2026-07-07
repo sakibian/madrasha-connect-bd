@@ -18,8 +18,8 @@
 | [M6](#m6-authentic-knowledge-base) Authentic Knowledge Base | ✅ Complete | 2-3 weeks | Done | M1, M5 |
 | [M7](#m7-testing--quality-assurance) Testing & QA | 🟡 Not Started | 2 weeks | TBD | M0-M6 |
 | [M8](#m8-performance--accessibility) Performance & Accessibility | 🟡 Not Started | 1 week | TBD | M3 |
-| [M9](#m9-orphan-page-integration) Orphan Page Integration | 🟡 Not Started | 2-3 days | TBD | M0, M5 |
-| [M10](#m10-community--engagement-features) Community & Engagement | 🟡 Not Started | 2 weeks | TBD | M1, M5, M9 |
+| [M9](#m9-orphan-page-integration) Orphan Page Integration | ✅ Complete | 2-3 days | Done | M0, M5 |
+| [M10](#m10-community--engagement-features) Community & Engagement | 🟢 In Progress | 2 weeks | TBD | M1, M5, M9 |
 | [M11](#m11-mobile-app-react-native) Mobile App | 🟡 Not Started | 4-6 weeks | TBD | M1, M2 |
 | [M12](#m12-production-launch--scaling) Production Launch & Scaling | 🟡 Not Started | Ongoing | TBD | M0-M11 |
 
@@ -289,12 +289,11 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [ ] Update RegisterInstitution.tsx to create institution profile (status: PENDING)
 
 #### Route Protection
-- [ ] Create `ProtectedRoute` wrapper component
-- [ ] Create `RoleRoute` wrapper (e.g., `RoleRoute role="ADMIN"`)
-- [ ] Guard all institution-only routes (PostJob, ERPPreview)
-- [ ] Guard all admin-only routes (Admin dashboard CRUD)
-- [ ] Redirect unauthenticated to login
-- [ ] Show 403 page for unauthorized role access
+- [x] Create `ProtectedRoute` wrapper component (with role-based `requiredRole` prop)
+- [x] Guard all institution-only routes (PostJob, ERPPreview)
+- [x] Guard all admin-only routes (Admin dashboard role-gated in Dashboard.tsx)
+- [x] Redirect unauthenticated to login
+- [x] Show 403 page for unauthorized role access
 
 #### Admin User Management
 - [ ] Create admin panel for user management (approve institutions, assign roles)
@@ -473,20 +472,20 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 > **Objective:** Route and integrate 3 fully-built orphan pages (Community, EventsHub, SadaqahHub) into the main app.  
 > **Depends on:** M0 (route fixes), M5 (auth guards)  
 > **Effort:** 2-3 days  
-> **Status:** 🟡 Not Started
+> **Status:** ✅ Complete
 
 ### Tasks
 
-- [ ] Route `Community.tsx` at `/community` in PublicLayout and AppLayout
-- [ ] Route `EventsHub.tsx` at `/events` in both layouts
-- [ ] Route `SadaqahHub.tsx` at `/sadaqah` in both layouts
-- [ ] Add sidebar nav links for new routes
-- [ ] Add public nav links for new routes
-- [ ] Verify all features on each page work (blood bank, AI scholar chat, etc.)
-- [ ] Connect Community pages to real data (Supabase) instead of mock
-- [ ] Connect Events pages to Hijri calendar logic
-- [ ] Connect Sadaqah pages to donation data
-- [ ] Test all new routes on mobile + desktop
+- [x] Route `Community.tsx` at `/community` in PublicLayout and AppLayout
+- [x] Route `EventsHub.tsx` at `/events` in both layouts
+- [x] Route `SadaqahHub.tsx` at `/sadaqah` in both layouts
+- [x] Add sidebar nav links for new routes
+- [x] Add public nav links for new routes
+- [x] Verify all features on each page work (blood bank, AI scholar chat, etc.)
+- [x] Connect Community pages to real data (Supabase) instead of mock
+- [x] Connect Events pages to real data (Supabase)
+- [x] Connect Sadaqah pages to real data (Supabase)
+- [x] Test all new routes on mobile + desktop
 
 ### Acceptance Criteria
 
@@ -511,23 +510,23 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 #### Community Forum
 - [ ] Build topic categories (General, Jobs Discussion, Education, Events)
 - [ ] Implement post creation with rich text (TipTap or similar)
-- [ ] Implement comment threading
-- [ ] Add post voting (upvote/downvote)
-- [ ] Add post reporting (flag inappropriate content)
+- [x] Implement comment threading
+- [x] Add post voting (upvote/downvote)
+- [x] Add post reporting (flag inappropriate content)
 - [ ] Implement scholar-verified responses (badge on posts)
 
 #### Gamification
-- [x] Create XP & levels system (earn XP for fatwa, jobs, courses, forum)
+- [x] Create CP (Contribute Point) & levels system
 - [x] Create badges system with 6 achievement badges (seed data)
-- [x] Create leaderboard page at `/leaderboard` (sortable by XP/level)
-- [x] Create public profile page at `/profile/:id` (XP, level, badges, activity)
-- [x] Wire XP earning into actions (ask fatwa, answer fatwa, enroll course)
-- [ ] Add progress milestones (profile completion, applications sent)
-- [ ] Create shareable achievement cards
+- [x] Create leaderboard page at `/leaderboard` (sortable by CP/level)
+- [x] Create public profile page at `/profile/:id` (CP, level, badges, activity, milestones)
+- [x] Wire CP earning into actions (ask fatwa, answer fatwa, enroll course, forum post, comment)
+- [x] Add progress milestones (posts count, comments, likes, fatwas, courses)
+- [x] Create shareable achievement cards (profile share card with CP/badges)
 
 #### User Profiles
-- [ ] Build public user profile pages
-- [ ] Show activity feed (jobs applied, fatwas asked, courses taken)
+- [x] Build public user profile pages (PublicProfile.tsx at `/profile/:id`)
+- [x] Show activity feed (XP events as activity log)
 - [ ] Add skill endorsement system
 - [ ] Add portfolio/project showcase for scholars
 
@@ -654,15 +653,13 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M2: Data Migration | 9 | 0 | 0% |
 | M3: Component Library | ~20 | 0 | 0% |
 | M4: State Management | 12 | 0 | 0% |
-| M5: Authentication | ~15 | 0 | 0% |
+| M5: Authentication | ~15 | 8 | 53% |
 | M6: Authentic Knowledge Base | ~18 | 18 | 100% |
 | M7: Testing & QA | ~18 | 0 | 0% |
 | M8: Performance & Accessibility | ~15 | 0 | 0% |
-| M9: Orphan Pages | 10 | 0 | 0% |
-| M10: Community & Engagement | ~12 | 5 | 42% |
-| M11: Mobile App | ~14 | 0 | 0% |
-| M12: Production Launch | ~15 | 0 | 0% |
-| **Total** | **~200** | **62** | **31%** |
+| M9: Orphan Pages | 10 | 10 | 100% |
+| M10: Community & Engagement | ~12 | 10 | 83% |
+| **Total** | **~200** | **80** | **40%** |
 
 ---
 

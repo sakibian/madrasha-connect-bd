@@ -1,9 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   MessageCircle, 
   Send, 
-  User, 
   CheckCircle, 
   Share2, 
   ThumbsUp,
@@ -12,17 +11,80 @@ import {
   Heart,
   Search,
   MapPin,
-  Droplets
+  Droplets,
+  Plus,
+  Flag,
+  X
 } from 'lucide-react';
 import { askScholar } from '../services/geminiService';
-import { MOCK_POSTS } from '../data/mockData';
+import { getCurrentUser } from '../services/authService';
+import { dataService } from '../services/dataService';
 import { addNotification } from '../services/notificationService';
+import { ForumPost, ForumComment, XP_ACTIONS } from '../types';
 
 const Community: React.FC = () => {
   const [question, setQuestion] = useState('');
   const [aiResponse, setAiResponse] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [bloodSearch, setBloodSearch] = useState('');
+  const [posts, setPosts] = useState<ForumPost[]>([]);
+  const [loadingPosts, setLoadingPosts] = useState(true);
+  const [showCreatePost, setShowCreatePost] = useState(false);
+  const [newPostTitle, setNewPostTitle] = useState('');
+  const [newPostContent, setNewPostContent] = useState('');
+  const [posting, setPosting] = useState(false);
+  const [userLikes, setUserLikes] = useState<string[]>([]);
+
+  const currentUser = getCurrentUser();
+
+  useEffect(() => {
+    loadPosts();
+    if (currentUser) {
+      dataService.getUserLikes(currentUser.id).then(setUserLikes);
+    }
+  }, [currentUser]);
+
+  const loadPosts = async () => {
+    setLoadingPosts(true);
+    const data = await dataService.getPosts();
+    setPosts(data);
+    setLoadingPosts(false);
+  };
+
+  const handleCreatePost = async () => {
+    if (!newPostTitle.trim() || !newPostContent.trim()) return;
+    setPosting(true);
+    try {
+      await dataService.saveForumPost({ title: newPostTitle, content: newPostContent });
+      if (currentUser) await dataService.addXP(currentUser.id, XP_ACTIONS.FORUM_POST.action, XP_ACTIONS.FORUM_POST.xp);
+      setNewPostTitle('');
+      setNewPostContent('');
+      setShowCreatePost(false);
+      await loadPosts();
+    } catch (e) {
+      console.error('Failed to create post', e);
+    } finally {
+      setPosting(false);
+    }
+  };
+
+  const handleLike = useCallback(async (postId: string) => {
+    if (!currentUser) return;
+    const isLiked = userLikes.includes(postId);
+    try {
+      if (isLiked) {
+        await dataService.unlikePost(postId);
+        setUserLikes(prev => prev.filter(id => id !== postId));
+        setPosts(prev => prev.map(p => p.id === postId ? { ...p, likes: Math.max(0, p.likes - 1) } : p));
+      } else {
+        await dataService.likePost(postId);
+        setUserLikes(prev => [...prev, postId]);
+        setPosts(prev => prev.map(p => p.id === postId ? { ...p, likes: p.likes + 1 } : p));
+      }
+    } catch (e) {
+      console.error('Like failed', e);
+    }
+  }, [currentUser, userLikes]);
 
   const handleAskScholar = async () => {
     if (!question.trim()) return;
@@ -125,58 +187,266 @@ const Community: React.FC = () => {
 
       {/* Community Feed */}
       <div className="space-y-6">
-        <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-          <MessageCircle className="text-emerald-700" size={22} />
-          সাম্প্রতিক আলোচনা
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+            <MessageCircle className="text-emerald-700" size={22} />
+            সাম্প্রতিক আলোচনা
+          </h2>
+          {currentUser && (
+            <button
+              onClick={() => setShowCreatePost(!showCreatePost)}
+              className="flex items-center gap-2 bg-black text-white px-5 py-2.5 text-sm font-bold hover:bg-gray-800 transition-all"
+            >
+              <Plus size={16} /> নতুন পোস্ট
+            </button>
+          )}
+        </div>
 
-        {MOCK_POSTS.map(post => (
-          <PostCard 
-            key={post.id}
-            author={post.author} 
-            role={post.role} 
-            title={post.title}
-            content={post.content}
-            likes={post.likes}
-            comments={post.comments}
-            verified={post.verified}
-          />
-        ))}
+        {showCreatePost && (
+          <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 space-y-4 animate-fadeIn">
+            <input
+              className="w-full px-0 py-2 text-xl font-black border-b border-gray-200 outline-none focus:border-black transition-all"
+              placeholder="শিরোনাম"
+              value={newPostTitle}
+              onChange={(e) => setNewPostTitle(e.target.value)}
+            />
+            <textarea
+              className="w-full px-0 py-4 text-gray-600 border-b border-gray-200 outline-none focus:border-black transition-all min-h-[100px] resize-none"
+              placeholder="আপনার মতামত লিখুন..."
+              value={newPostContent}
+              onChange={(e) => setNewPostContent(e.target.value)}
+            />
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                onClick={() => setShowCreatePost(false)}
+                className="px-6 py-2.5 text-sm font-bold text-gray-500 hover:text-black transition-all"
+              >
+                বাতিল
+              </button>
+              <button
+                onClick={handleCreatePost}
+                disabled={posting || !newPostTitle.trim() || !newPostContent.trim()}
+                className="px-6 py-2.5 bg-black text-white text-sm font-bold hover:bg-gray-800 transition-all disabled:opacity-50 flex items-center gap-2"
+              >
+                {posting ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+                প্রকাশ করুন
+              </button>
+            </div>
+          </div>
+        )}
+
+        {loadingPosts ? (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 size={32} className="animate-spin text-gray-300" />
+          </div>
+        ) : posts.length === 0 ? (
+          <div className="text-center py-20 text-gray-400 font-medium">
+            এখনো কোনো আলোচনা শুরু হয়নি। প্রথম পোস্ট তৈরি করুন!
+          </div>
+        ) : (
+          posts.map(post => (
+            <PostCard 
+              key={post.id}
+              post={post}
+              isLiked={userLikes.includes(post.id)}
+              currentUser={currentUser}
+              onLike={handleLike}
+            />
+          ))
+        )}
       </div>
     </div>
   );
 };
 
-const PostCard: React.FC<any> = ({ author, role, title, content, likes, comments, verified }) => {
+const PostCard: React.FC<{
+  post: ForumPost;
+  isLiked: boolean;
+  currentUser: any;
+  onLike: (postId: string) => void;
+}> = ({ post, isLiked, currentUser, onLike }) => {
+  const [showComments, setShowComments] = useState(false);
+  const [comments, setComments] = useState<ForumComment[]>([]);
+  const [loadingComments, setLoadingComments] = useState(false);
+  const [newComment, setNewComment] = useState('');
+  const [commenting, setCommenting] = useState(false);
+  const [showFlagModal, setShowFlagModal] = useState(false);
+  const [flagReason, setFlagReason] = useState('');
+  const [flagging, setFlagging] = useState(false);
+  const [flagged, setFlagged] = useState(false);
+
+  const loadComments = async () => {
+    setLoadingComments(true);
+    const data = await dataService.getComments(post.id);
+    setComments(data);
+    setLoadingComments(false);
+  };
+
+  const toggleComments = () => {
+    if (!showComments && comments.length === 0) loadComments();
+    setShowComments(!showComments);
+  };
+
+  const handleComment = async () => {
+    if (!newComment.trim()) return;
+    setCommenting(true);
+    try {
+      await dataService.saveComment(post.id, newComment);
+      if (currentUser) await dataService.addXP(currentUser.id, XP_ACTIONS.FORUM_COMMENT.action, XP_ACTIONS.FORUM_COMMENT.xp);
+      setNewComment('');
+      await loadComments();
+      post.comments = comments.length + 1;
+    } catch (e) {
+      console.error('Comment failed', e);
+    } finally {
+      setCommenting(false);
+    }
+  };
+
+  const handleFlag = async () => {
+    if (!flagReason.trim()) return;
+    setFlagging(true);
+    try {
+      await dataService.flagContent('forum_post', post.id, flagReason);
+      setFlagged(true);
+      setShowFlagModal(false);
+    } catch (e) {
+      console.error('Flag failed', e);
+    } finally {
+      setFlagging(false);
+    }
+  };
+
   return (
     <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 space-y-6 hover:shadow-md transition-all group">
       <div className="flex justify-between items-start">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 bg-gray-100 rounded-2xl overflow-hidden border border-gray-100">
-            <img src={`https://picsum.photos/seed/${author}/100/100`} alt={author} />
+            <img src={`https://picsum.photos/seed/${post.author}/100/100`} alt={post.author} />
           </div>
           <div>
             <h4 className="font-bold text-gray-800 flex items-center gap-1 group-hover:text-emerald-700 transition-colors">
-              {author}
-              {verified && <CheckCircle size={14} className="text-blue-500" />}
+              {post.author || 'ব্যবহারকারী'}
+              {post.verified && <CheckCircle size={14} className="text-blue-500" />}
             </h4>
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{role}</p>
           </div>
         </div>
-        <button className="text-gray-400 hover:text-emerald-700 p-2"><Share2 size={20} /></button>
+        <div className="flex items-center gap-2">
+          {currentUser && (
+            <button
+              onClick={() => setShowFlagModal(true)}
+              className="text-gray-300 hover:text-red-500 p-2 transition-all"
+              title="রিপোর্ট করুন"
+            >
+              <Flag size={16} />
+            </button>
+          )}
+          <button className="text-gray-300 hover:text-emerald-700 p-2"><Share2 size={18} /></button>
+        </div>
       </div>
       <div>
-        <h3 className="font-black text-gray-900 text-xl mb-3 leading-snug">{title}</h3>
-        <p className="text-gray-600 text-sm leading-relaxed">{content}</p>
+        <h3 className="font-black text-gray-900 text-xl mb-3 leading-snug">{post.title}</h3>
+        <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">{post.content}</p>
       </div>
       <div className="flex items-center gap-8 pt-6 border-t border-gray-50">
-        <button className="flex items-center gap-2 text-xs font-black text-gray-500 hover:text-emerald-700 transition-all">
-          <ThumbsUp size={18} /> {likes} লাইক
+        <button
+          onClick={() => onLike(post.id)}
+          className={`flex items-center gap-2 text-xs font-black transition-all ${
+            isLiked ? 'text-emerald-700' : 'text-gray-500 hover:text-emerald-700'
+          }`}
+          disabled={!currentUser}
+        >
+          <ThumbsUp size={18} fill={isLiked ? 'currentColor' : 'none'} /> {post.likes} লাইক
         </button>
-        <button className="flex items-center gap-2 text-xs font-black text-gray-500 hover:text-emerald-700 transition-all">
-          <MessageCircle size={18} /> {comments} মন্তব্য
+        <button
+          onClick={toggleComments}
+          className={`flex items-center gap-2 text-xs font-black transition-all ${
+            showComments ? 'text-emerald-700' : 'text-gray-500 hover:text-emerald-700'
+          }`}
+        >
+          <MessageCircle size={18} /> {post.comments} মন্তব্য
         </button>
       </div>
+
+      {showComments && (
+        <div className="border-t border-gray-50 pt-6 space-y-4 animate-fadeIn">
+          {loadingComments ? (
+            <div className="flex justify-center py-4">
+              <Loader2 size={20} className="animate-spin text-gray-300" />
+            </div>
+          ) : comments.length === 0 ? (
+            <p className="text-center text-gray-400 text-sm font-medium py-4">কোনো মন্তব্য নেই</p>
+          ) : (
+            <div className="space-y-3">
+              {comments.map(c => (
+                <div key={c.id} className="flex gap-3 bg-gray-50 p-4 rounded-2xl">
+                  <div className="w-8 h-8 bg-gray-200 rounded-full shrink-0 flex items-center justify-center">
+                    <span className="text-[10px] font-black text-gray-500">{c.author.charAt(0)}</span>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-gray-500">{c.author}</p>
+                    <p className="text-sm text-gray-700 mt-0.5">{c.content}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {currentUser ? (
+            <div className="flex gap-3 pt-2">
+              <input
+                className="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-emerald-300 transition-all"
+                placeholder="মন্তব্য লিখুন..."
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleComment()}
+              />
+              <button
+                onClick={handleComment}
+                disabled={commenting || !newComment.trim()}
+                className="p-2.5 bg-black text-white rounded-xl hover:bg-gray-800 transition-all disabled:opacity-50"
+              >
+                {commenting ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+              </button>
+            </div>
+          ) : (
+            <p className="text-center text-xs text-gray-400 font-medium pt-2">মন্তব্য করতে লগইন করুন</p>
+          )}
+        </div>
+      )}
+
+      {showFlagModal && (
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowFlagModal(false)}>
+          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl animate-fadeIn" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-lg font-black">পোস্ট রিপোর্ট করুন</h3>
+              <button onClick={() => setShowFlagModal(false)} className="text-gray-400 hover:text-black p-1"><X size={20} /></button>
+            </div>
+            <textarea
+              className="w-full px-4 py-3 border border-gray-200 rounded-2xl text-sm outline-none focus:border-red-300 transition-all min-h-[100px] resize-none"
+              placeholder="কেন এই পোস্টটি রিপোর্ট করছেন? (বিস্তারিত লিখুন)"
+              value={flagReason}
+              onChange={(e) => setFlagReason(e.target.value)}
+            />
+            <div className="flex justify-end gap-3 mt-4">
+              <button
+                onClick={() => setShowFlagModal(false)}
+                className="px-5 py-2.5 text-sm font-bold text-gray-500 hover:text-black transition-all"
+              >
+                বাতিল
+              </button>
+              <button
+                onClick={handleFlag}
+                disabled={flagging || !flagReason.trim()}
+                className="px-5 py-2.5 bg-red-600 text-white text-sm font-bold hover:bg-red-700 transition-all disabled:opacity-50 flex items-center gap-2"
+              >
+                {flagging ? <Loader2 size={16} className="animate-spin" /> : null}
+                {flagged ? 'রিপোর্ট করা হয়েছে' : 'রিপোর্ট করুন'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

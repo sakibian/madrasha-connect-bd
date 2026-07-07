@@ -106,7 +106,8 @@ const AppRouter: React.FC = () => {
     '/', '/about', '/institutions', '/knowledge', '/professional', 
     '/scholars', '/fatwa', '/marketplace', '/seerah', '/calligraphy', 
     '/search', '/deen101', '/faq', '/competitions', '/audio-library', '/tools',
-    '/fatwa/archive', '/scholar-dashboard', '/scholar/apply', '/leaderboard', '/forbidden'
+    '/fatwa/archive', '/scholar-dashboard', '/scholar/apply', '/leaderboard', '/forbidden',
+    '/community', '/events', '/sadaqah'
   ];
   
   const isPublicPage = publicPaths.includes(location.pathname) || location.pathname.startsWith('/institution/') || location.pathname.startsWith('/profile/');

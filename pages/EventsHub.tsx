@@ -1,8 +1,23 @@
 
-import React from 'react';
-import { Calendar, Moon, Star, Bell, Clock, MapPin, Sparkles, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Calendar, Moon, Star, Bell, Clock, MapPin, Sparkles, ChevronRight, Loader2 } from 'lucide-react';
+import { dataService } from '../services/dataService';
 
 const EventsHub: React.FC = () => {
+  const [events, setEvents] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadEvents();
+  }, []);
+
+  const loadEvents = async () => {
+    setLoading(true);
+    const data = await dataService.getEvents();
+    setEvents(data);
+    setLoading(false);
+  };
+
   // Calculate Hijri date using Intl
   const today = new Date();
   const hijriFormatter = new Intl.DateTimeFormat('bn-BD-u-ca-islamic-uma', {
@@ -12,11 +27,17 @@ const EventsHub: React.FC = () => {
   });
   const hijriDate = hijriFormatter.format(today);
 
-  const upcomingEvents = [
-    { title: 'পবিত্র রমজান শুরু (সম্ভাব্য)', date: '০২ মার্চ ২০২৫', type: 'Religious', status: 'শীঘ্রই' },
-    { title: 'সালাতুল ইস্তিসকা (বিশেষ দোয়া)', date: '২০ ফেব্রুয়ারি ২০২৫', type: 'Community', status: 'আসছে' },
-    { title: 'বার্ষিক ইসলামী মাহফিল', date: '২৫ ফেব্রুয়ারি ২০২৫', type: 'Event', status: 'নিবন্ধিত' },
-  ];
+  const formatDate = (dateStr: string) => {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' });
+  };
+
+  const eventTypeLabels: Record<string, string> = {
+    competition: 'প্রতিযোগিতা',
+    seminar: 'সেমিনার',
+    workshop: 'ওয়ার্কশপ',
+    other: 'অন্যান্য',
+  };
 
   return (
     <div className="max-w-4xl mx-auto space-y-10 animate-fadeIn">
@@ -50,21 +71,32 @@ const EventsHub: React.FC = () => {
             <Bell size={24} className="text-emerald-700" /> আসন্ন ইভেন্টসমূহ
           </h2>
           <div className="space-y-4">
-            {upcomingEvents.map((e, i) => (
-              <div key={i} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex justify-between items-center group cursor-pointer hover:border-emerald-200 transition-all">
-                <div className="space-y-1">
-                   <p className="text-[10px] font-black text-emerald-600 uppercase">{e.type}</p>
-                   <h3 className="font-bold text-gray-800 group-hover:text-emerald-900">{e.title}</h3>
-                   <div className="flex items-center gap-4 text-xs text-gray-400">
-                      <span className="flex items-center gap-1 font-bold"><Calendar size={12} /> {e.date}</span>
-                   </div>
-                </div>
-                <div className="flex flex-col items-end gap-2">
-                   <span className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-[10px] font-black">{e.status}</span>
-                   <ChevronRight size={18} className="text-gray-300 group-hover:text-emerald-700" />
-                </div>
+            {loading ? (
+              <div className="flex items-center justify-center py-16">
+                <Loader2 size={32} className="animate-spin text-gray-300" />
               </div>
-            ))}
+            ) : events.length === 0 ? (
+              <div className="text-center py-16 text-gray-400 font-medium">
+                কোনো ইভেন্ট পাওয়া যায়নি
+              </div>
+            ) : (
+              events.map((e: any) => (
+                <div key={e.id} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex justify-between items-center group cursor-pointer hover:border-emerald-200 transition-all">
+                  <div className="space-y-1">
+                     <p className="text-[10px] font-black text-emerald-600 uppercase">{eventTypeLabels[e.type] || e.type}</p>
+                     <h3 className="font-bold text-gray-800 group-hover:text-emerald-900">{e.title}</h3>
+                     <div className="flex items-center gap-4 text-xs text-gray-400">
+                        <span className="flex items-center gap-1 font-bold"><Calendar size={12} /> {formatDate(e.event_date)}</span>
+                        {e.location && <span className="flex items-center gap-1 font-bold"><MapPin size={12} /> {e.location}</span>}
+                     </div>
+                  </div>
+                  <div className="flex flex-col items-end gap-2">
+                     <span className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-[10px] font-black">আসছে</span>
+                     <ChevronRight size={18} className="text-gray-300 group-hover:text-emerald-700" />
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
 
