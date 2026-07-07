@@ -91,6 +91,22 @@ export interface ForumPost {
   verified: boolean;
 }
 
+export interface UserSkill {
+  id: string;
+  userId: string;
+  skill: string;
+  endorsementsCount?: number;
+  endorsedByMe?: boolean;
+  createdAt?: string;
+}
+
+export interface SkillEndorsement {
+  id: string;
+  skillId: string;
+  endorsedBy: string;
+  createdAt?: string;
+}
+
 export interface ForumComment {
   id: string;
   postId: string;

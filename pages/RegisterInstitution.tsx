@@ -9,6 +9,7 @@ import { supabase } from '../services/supabase';
 const RegisterInstitution: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     instName: '',
     instType: 'Qawmi',
@@ -22,6 +23,7 @@ const RegisterInstitution: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
     try {
       const { user, needsVerification } = await registerUser({
         name: `অ্যাডমিন (${formData.instName})`,
@@ -54,7 +56,7 @@ const RegisterInstitution: React.FC = () => {
 
       navigate('/dashboard');
     } catch (err: any) {
-      console.error(err);
+      setError(err.message || 'নিবন্ধন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।');
     } finally {
       setLoading(false);
     }
@@ -150,6 +152,12 @@ const RegisterInstitution: React.FC = () => {
                 </div>
               </div>
             </div>
+
+            {error && (
+              <div className="p-5 bg-red-50 border border-red-100 text-red-600 text-sm font-bold">
+                {error}
+              </div>
+            )}
 
             <div className="space-y-6">
               <button 

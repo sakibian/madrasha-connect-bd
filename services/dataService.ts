@@ -1,4 +1,4 @@
-import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication, ContentVersion, UserXP, Badge, UserBadge, XPEvent, getLevel } from '../types';
+import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication, ContentVersion, UserXP, Badge, UserBadge, XPEvent, UserSkill, getLevel } from '../types';
 import { supabase } from './supabase';
 
 const CACHE_KEYS = {
@@ -904,5 +904,79 @@ export const dataService = {
       .delete()
       .eq('id', id);
     if (error) throw error;
+  },
+
+  // --- Skills & Endorsements ---
+  getUserSkills: async (userId: string, currentUserId?: string): Promise<UserSkill[]> => {
+    const { data, error } = await supabase
+      .from('user_skills')
+      .select('*')
+      .eq('user_id', userId)
+      .order('skill');
+    if (error) return [];
+
+    const skills = data.map(s => ({
+      id: s.id,
+      userId: s.user_id,
+      skill: s.skill,
+      createdAt: s.created_at,
+    }));
+
+    if (currentUserId) {
+      const { data: endorsements } = await supabase
+        .from('skill_endorsements')
+        .select('skill_id')
+        .eq('endorsed_by', currentUserId);
+      const endorsedIds = new Set(endorsements?.map(e => e.skill_id) || []);
+
+      for (const skill of skills) {
+        const { count } = await supabase
+          .from('skill_endorsements')
+          .select('*', { count: 'exact', head: true })
+          .eq('skill_id', skill.id);
+        skill.endorsementsCount = count || 0;
+        skill.endorsedByMe = endorsedIds.has(skill.id);
+      }
+    } else {
+      for (const skill of skills) {
+        const { count } = await supabase
+          .from('skill_endorsements')
+          .select('*', { count: 'exact', head: true })
+          .eq('skill_id', skill.id);
+        skill.endorsementsCount = count || 0;
+      }
+    }
+
+    return skills;
+  },
+
+  addUserSkill: async (userId: string, skill: string): Promise<void> => {
+    const { error } = await supabase.from('user_skills').insert({
+      user_id: userId,
+      skill,
+    });
+    if (error && !error.message.includes('duplicate')) throw error;
+  },
+
+  deleteUserSkill: async (skillId: string): Promise<void> => {
+    await supabase.from('user_skills').delete().eq('id', skillId);
+  },
+
+  endorseSkill: async (skillId: string): Promise<void> => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+    const { error } = await supabase.from('skill_endorsements').upsert({
+      skill_id: skillId,
+      endorsed_by: user.id,
+    }, { onConflict: 'skill_id,endorsed_by' });
+    if (error && !error.message.includes('duplicate')) throw error;
+  },
+
+  unendorseSkill: async (skillId: string): Promise<void> => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+    await supabase.from('skill_endorsements').delete()
+      .eq('skill_id', skillId)
+      .eq('endorsed_by', user.id);
   },
 };

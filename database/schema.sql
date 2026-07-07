@@ -572,7 +572,47 @@ create policy "Anyone can read xp_events"
 create policy "System can insert xp_events"
   on public.xp_events for insert with check (auth.uid() = user_id);
 
--- 27. Forum Post Likes (voting)
+-- 27. User Skills
+create table public.user_skills (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  skill text not null,
+  created_at timestamptz default now(),
+  unique(user_id, skill)
+);
+
+alter table public.user_skills enable row level security;
+
+create policy "Anyone can read user skills"
+  on public.user_skills for select using (true);
+
+create policy "Users can add own skills"
+  on public.user_skills for insert with check (auth.uid() = user_id);
+
+create policy "Users can delete own skills"
+  on public.user_skills for delete using (auth.uid() = user_id);
+
+-- 28. Skill Endorsements
+create table public.skill_endorsements (
+  id uuid primary key default uuid_generate_v4(),
+  skill_id uuid not null references public.user_skills(id) on delete cascade,
+  endorsed_by uuid not null references auth.users(id) on delete cascade,
+  created_at timestamptz default now(),
+  unique(skill_id, endorsed_by)
+);
+
+alter table public.skill_endorsements enable row level security;
+
+create policy "Anyone can read endorsements"
+  on public.skill_endorsements for select using (true);
+
+create policy "Users can endorse"
+  on public.skill_endorsements for insert with check (auth.uid() = endorsed_by);
+
+create policy "Users can remove endorsement"
+  on public.skill_endorsements for delete using (auth.uid() = endorsed_by);
+
+-- 29. Forum Post Likes (voting)
 create table public.forum_post_likes (
   id uuid primary key default uuid_generate_v4(),
   post_id uuid not null references public.forum_posts(id) on delete cascade,

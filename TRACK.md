@@ -284,7 +284,7 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [x] Add email verification flow
 - [x] Add session persistence (auto-login on return)
 - [ ] Add loading state during auth checks
-- [ ] Add error states (wrong password, network error, etc.)
+- [x] Add error states (wrong password, network error, etc.)
 - [ ] Update RegisterUser.tsx to create Supabase user + profile
 - [x] Update RegisterInstitution.tsx to create institution profile (status: PENDING)
 
@@ -527,7 +527,7 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 #### User Profiles
 - [x] Build public user profile pages (PublicProfile.tsx at `/profile/:id`)
 - [x] Show activity feed (XP events as activity log)
-- [ ] Add skill endorsement system
+- [x] Add skill endorsement system
 - [ ] Add portfolio/project showcase for scholars
 
 #### Referral & Growth
@@ -653,11 +653,11 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M2: Data Migration | 9 | 0 | 0% |
 | M3: Component Library | ~20 | 0 | 0% |
 | M4: State Management | 12 | 0 | 0% |
-| M5: Authentication | ~15 | 11 | 73% |
+| M5: Authentication | ~15 | 12 | 80% |
 | M6: Authentic Knowledge Base | ~18 | 18 | 100% |
 | M9: Orphan Pages | 10 | 10 | 100% |
 | M10: Community & Engagement | ~12 | 12 | 100% |
-| **Total** | **~200** | **84** | **42%** |
+| **Total** | **~200** | **85** | **43%** |
 
 ---
 

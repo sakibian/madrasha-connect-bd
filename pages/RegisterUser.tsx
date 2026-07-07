@@ -8,6 +8,7 @@ import { addNotification } from '../services/notificationService';
 const RegisterUser: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,6 +19,7 @@ const RegisterUser: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
     try {
       const { user, needsVerification } = await registerUser({
         name: formData.name,
@@ -40,7 +42,7 @@ const RegisterUser: React.FC = () => {
 
       navigate('/dashboard');
     } catch (err: any) {
-      console.error(err);
+      setError(err.message || 'রেজিস্ট্রেশন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।');
     } finally {
       setLoading(false);
     }
@@ -121,10 +123,16 @@ const RegisterUser: React.FC = () => {
               </div>
             </div>
 
+            {error && (
+              <div className="p-5 bg-red-50 border border-red-100 text-red-600 text-sm font-bold">
+                {error}
+              </div>
+            )}
+
             <div className="space-y-6">
                <button 
-                disabled={loading}
-                className="w-full py-6 bg-black text-white font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-gray-800 transition-all disabled:opacity-50"
+                 disabled={loading}
+                 className="w-full py-6 bg-black text-white font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-gray-800 transition-all disabled:opacity-50"
                >
                  {loading ? <Loader2 className="animate-spin" size={24} /> : <>রেজিস্ট্রেশন করুন <ArrowRight size={24} /></>}
                </button>

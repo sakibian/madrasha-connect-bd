@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
-  User, BadgeCheck, Star, Trophy, Clock, Loader2, ArrowLeft, MessageCircle, GraduationCap, BookOpen, MapPin, Share2, X, Check
+  User, BadgeCheck, Star, Trophy, Clock, Loader2, ArrowLeft, MessageCircle, GraduationCap, BookOpen, MapPin, Share2, X, Check, ThumbsUp, Plus
 } from 'lucide-react';
 import { dataService } from '../services/dataService';
-import { getLevelProgress } from '../types';
-import { Scholar, Badge as BadgeType } from '../types';
+import { getCurrentUser } from '../services/authService';
+import { getLevelProgress, UserSkill, Scholar } from '../types';
 
 const PublicProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -19,6 +19,12 @@ const PublicProfile: React.FC = () => {
   const [showShareCard, setShowShareCard] = useState(false);
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [skills, setSkills] = useState<UserSkill[]>([]);
+  const [newSkill, setNewSkill] = useState('');
+  const [addingSkill, setAddingSkill] = useState(false);
+
+  const currentUser = getCurrentUser();
+  const isOwnProfile = currentUser?.id === id;
 
   useEffect(() => {
     if (!id) return;
@@ -37,6 +43,8 @@ const PublicProfile: React.FC = () => {
       setActivity(events);
       setScholar(scholars.find(s => s.userId === id) || null);
       setStats(userStats);
+      const userSkills = await dataService.getUserSkills(id, currentUser?.id);
+      setSkills(userSkills);
       setLoading(false);
     };
     fetch();
@@ -49,6 +57,35 @@ const PublicProfile: React.FC = () => {
       </div>
     );
   }
+
+  const handleAddSkill = async () => {
+    if (!newSkill.trim() || !id) return;
+    setAddingSkill(true);
+    try {
+      await dataService.addUserSkill(id, newSkill.trim());
+      setNewSkill('');
+      const userSkills = await dataService.getUserSkills(id, currentUser?.id);
+      setSkills(userSkills);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setAddingSkill(false);
+    }
+  };
+
+  const handleEndorse = async (skillId: string, endorsed: boolean) => {
+    try {
+      if (endorsed) {
+        await dataService.unendorseSkill(skillId);
+      } else {
+        await dataService.endorseSkill(skillId);
+      }
+      const userSkills = await dataService.getUserSkills(id, currentUser?.id);
+      setSkills(userSkills);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   if (!profile) {
     return (
@@ -160,6 +197,68 @@ const PublicProfile: React.FC = () => {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+      </div>
+
+      {/* Skills & Endorsements */}
+      <div className="bg-white p-12 minimal-border space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-extrabold flex items-center gap-2"><Star size={18} /> দক্ষতা</h2>
+          {isOwnProfile && (
+            <div className="flex gap-2">
+              <input
+                value={newSkill}
+                onChange={e => setNewSkill(e.target.value)}
+                placeholder="দক্ষতার নাম"
+                className="px-3 py-1.5 text-xs border border-gray-200 outline-none focus:border-black w-32"
+                onKeyDown={e => e.key === 'Enter' && handleAddSkill()}
+              />
+              <button
+                onClick={handleAddSkill}
+                disabled={addingSkill || !newSkill.trim()}
+                className="px-3 py-1.5 bg-black text-white text-xs font-bold hover:bg-gray-800 transition-all disabled:opacity-50"
+              >
+                {addingSkill ? <Loader2 size={12} className="animate-spin" /> : <Plus size={14} />}
+              </button>
+            </div>
+          )}
+        </div>
+
+        {skills.length === 0 ? (
+          <p className="text-sm text-gray-400 font-medium">এখনো কোনো দক্ষতা যোগ করা হয়নি</p>
+        ) : (
+          <div className="flex flex-wrap gap-3">
+            {skills.map(s => (
+              <div key={s.id} className="flex items-center gap-2 px-4 py-2.5 bg-gray-50 border border-gray-100 group hover:border-gray-200 transition-all">
+                <span className="text-sm font-bold">{s.skill}</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] text-gray-400 font-bold">{s.endorsementsCount || 0}</span>
+                  {currentUser && !isOwnProfile && (
+                    <button
+                      onClick={() => handleEndorse(s.id, !!s.endorsedByMe)}
+                      className={`p-1 rounded transition-all ${
+                        s.endorsedByMe ? 'text-emerald-600 bg-emerald-50' : 'text-gray-300 hover:text-emerald-600 hover:bg-emerald-50'
+                      }`}
+                      title={s.endorsedByMe ? 'এনডোর্সমেন্ট সরান' : 'এনডোর্স করুন'}
+                    >
+                      <ThumbsUp size={12} />
+                    </button>
+                  )}
+                  {isOwnProfile && (
+                    <button
+                      onClick={() => dataService.deleteUserSkill(s.id).then(async () => {
+                        const userSkills = await dataService.getUserSkills(id!, currentUser?.id);
+                        setSkills(userSkills);
+                      })}
+                      className="p-1 text-gray-200 hover:text-red-500 transition-all opacity-0 group-hover:opacity-100"
+                    >
+                      <X size={12} />
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>
