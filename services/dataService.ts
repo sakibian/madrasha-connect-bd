@@ -1,5 +1,6 @@
 import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication, ContentVersion, UserXP, Badge, UserBadge, XPEvent, UserSkill, ScholarPortfolioItem, AdminAuditLog, getLevel } from '../types';
 import { supabase } from './supabase';
+import { retryWithBackoff } from './retry';
 
 const CACHE_KEYS = {
   INSTITUTIONS: 'mc_cache_institutions',
@@ -26,6 +27,12 @@ const cacheGet = <T>(key: string): T | null => {
 const cacheSet = (key: string, data: unknown) => {
   try {
     localStorage.setItem(key, JSON.stringify(data));
+  } catch { }
+};
+
+const cacheInvalidate = (key: string) => {
+  try {
+    localStorage.removeItem(key);
   } catch { }
 };
 
@@ -94,24 +101,35 @@ export const dataService = {
   },
 
   saveJob: async (job: Job) => {
-    const { error } = await supabase.from('jobs').upsert({
-      id: job.id,
-      title: job.title,
-      type: job.type,
-      location: job.location,
-      salary: job.salary,
-      contact_info: job.contactInfo,
-      status: 'pending',
+    await retryWithBackoff(async () => {
+      const { error } = await supabase.from('jobs').upsert({
+        id: job.id,
+        title: job.title,
+        type: job.type,
+        location: job.location,
+        salary: job.salary,
+        contact_info: job.contactInfo,
+        status: 'pending',
+      });
+      if (error) throw error;
+      cacheInvalidate(CACHE_KEYS.JOBS);
     });
-    if (error) throw error;
   },
 
   verifyJob: async (id: string) => {
-    await supabase.from('jobs').update({ status: 'verified' }).eq('id', id);
+    await retryWithBackoff(async () => {
+      const { error } = await supabase.from('jobs').update({ status: 'verified' }).eq('id', id);
+      if (error) throw error;
+      cacheInvalidate(CACHE_KEYS.JOBS);
+    });
   },
 
   deleteJob: async (id: string) => {
-    await supabase.from('jobs').delete().eq('id', id);
+    await retryWithBackoff(async () => {
+      const { error } = await supabase.from('jobs').delete().eq('id', id);
+      if (error) throw error;
+      cacheInvalidate(CACHE_KEYS.JOBS);
+    });
   },
 
   // --- Fatwas ---
@@ -150,14 +168,17 @@ export const dataService = {
   saveFatwa: async (fatwa: Fatwa) => {
     const user = (await supabase.auth.getSession()).data.session?.user;
     if (!user) throw new Error('Must be logged in to submit a fatwa');
-    const { error } = await supabase.from('fatwas').insert({
-      id: fatwa.id,
-      question: fatwa.question,
-      category: fatwa.category,
-      asked_by: user.id,
-      status: 'pending',
+    await retryWithBackoff(async () => {
+      const { error } = await supabase.from('fatwas').insert({
+        id: fatwa.id,
+        question: fatwa.question,
+        category: fatwa.category,
+        asked_by: user.id,
+        status: 'pending',
+      });
+      if (error) throw error;
+      cacheInvalidate(CACHE_KEYS.FATWAS);
     });
-    if (error) throw error;
   },
 
   getPendingFatwas: async (): Promise<Fatwa[]> => {
@@ -189,29 +210,35 @@ export const dataService = {
     const user = (await supabase.auth.getSession()).data.session?.user;
     if (!user) throw new Error('Must be logged in');
 
-    const { error: answerError } = await supabase.from('fatwa_answers').upsert({
-      fatwa_id: fatwaId,
-      answer,
-      answered_by: user.id,
-      sources: sourceIds,
-    });
-    if (answerError) throw answerError;
+    await retryWithBackoff(async () => {
+      const { error: answerError } = await supabase.from('fatwa_answers').upsert({
+        fatwa_id: fatwaId,
+        answer,
+        answered_by: user.id,
+        sources: sourceIds,
+      });
+      if (answerError) throw answerError;
 
-    const { error: statusError } = await supabase
-      .from('fatwas')
-      .update({ status: 'answered' })
-      .eq('id', fatwaId);
-    if (statusError) throw statusError;
+      const { error: statusError } = await supabase
+        .from('fatwas')
+        .update({ status: 'answered' })
+        .eq('id', fatwaId);
+      if (statusError) throw statusError;
+      cacheInvalidate(CACHE_KEYS.FATWAS);
+    });
 
     await dataService.logAdminAction('approve_fatwa', 'fatwa', fatwaId);
   },
 
   rejectFatwa: async (fatwaId: string) => {
-    const { error } = await supabase
-      .from('fatwas')
-      .update({ status: 'rejected' })
-      .eq('id', fatwaId);
-    if (error) throw error;
+    await retryWithBackoff(async () => {
+      const { error } = await supabase
+        .from('fatwas')
+        .update({ status: 'rejected' })
+        .eq('id', fatwaId);
+      if (error) throw error;
+      cacheInvalidate(CACHE_KEYS.FATWAS);
+    });
     await dataService.logAdminAction('reject_fatwa', 'fatwa', fatwaId);
   },
 
@@ -293,13 +320,16 @@ export const dataService = {
   saveForumPost: async (post: { title: string; content: string; category?: string }) => {
     const user = (await supabase.auth.getSession()).data.session?.user;
     if (!user) throw new Error('Must be logged in to post');
-    const { error } = await supabase.from('forum_posts').insert({
-      author_id: user.id,
-      title: post.title,
-      content: post.content,
-      category: post.category || 'General',
+    await retryWithBackoff(async () => {
+      const { error } = await supabase.from('forum_posts').insert({
+        author_id: user.id,
+        title: post.title,
+        content: post.content,
+        category: post.category || 'General',
+      });
+      if (error) throw error;
+      cacheInvalidate(CACHE_KEYS.POSTS);
     });
-    if (error) throw error;
   },
 
   // --- Forum Post Likes ---
@@ -352,14 +382,18 @@ export const dataService = {
   saveComment: async (postId: string, content: string): Promise<void> => {
     const user = (await supabase.auth.getSession()).data.session?.user;
     if (!user) throw new Error('Must be logged in to comment');
-    const { error } = await supabase.from('forum_comments').insert({
-      post_id: postId,
-      author_id: user.id,
-      content,
+    await retryWithBackoff(async () => {
+      const { error } = await supabase.from('forum_comments').insert({
+        post_id: postId,
+        author_id: user.id,
+        content,
+      });
+      if (error) throw error;
+
+      const { data: post } = await supabase.from('forum_posts').select('comments_count').eq('id', postId).single();
+      await supabase.from('forum_posts').update({ comments_count: (post?.comments_count || 0) + 1 }).eq('id', postId);
+      cacheInvalidate(CACHE_KEYS.POSTS);
     });
-    if (error) throw error;
-    const { data: post } = await supabase.from('forum_posts').select('comments_count').eq('id', postId).single();
-    await supabase.from('forum_posts').update({ comments_count: (post?.comments_count || 0) + 1 }).eq('id', postId);
   },
 
   // --- User Stats / Milestones ---

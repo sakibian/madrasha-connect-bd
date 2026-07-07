@@ -71,11 +71,15 @@ import { getNotifications, initNotifications } from './services/notificationServ
 import { getCurrentUser, logout, initAuth } from './services/authService';
 import { AppNotification, User } from './types';
 import ErrorBoundary from './components/ErrorBoundary';
+import { SyncStatusProvider } from './contexts/SyncStatusContext';
+import SyncStatus from './components/SyncStatus';
 
 const App: React.FC = () => {
   return (
     <Router>
-      <AppRouter />
+      <SyncStatusProvider>
+        <AppRouter />
+      </SyncStatusProvider>
     </Router>
   );
 };
@@ -308,6 +312,7 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
             </div>
           </form>
           <div className="flex items-center gap-6">
+             <SyncStatus />
              <button className="text-gray-400 hover:text-black relative">
                <Bell size={20} />
                {unreadCount > 0 && <span className="absolute -top-1 -right-1 w-2 h-2 bg-bd-green"></span>}
