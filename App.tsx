@@ -23,7 +23,8 @@ import {
   // Added missing Headset icon import
   Headset,
   Calendar,
-  Heart
+  Heart,
+  GraduationCap
 } from 'lucide-react';
 
 import Dashboard from './pages/Dashboard';
@@ -55,6 +56,8 @@ import Tools from './pages/Tools';
 import Community from './pages/Community';
 import EventsHub from './pages/EventsHub';
 import SadaqahHub from './pages/SadaqahHub';
+import FatwaArchive from './pages/FatwaArchive';
+import ScholarDashboard from './pages/ScholarDashboard';
 
 import { getNotifications, initNotifications } from './services/notificationService';
 import { getCurrentUser, logout, initAuth } from './services/authService';
@@ -95,7 +98,8 @@ const AppRouter: React.FC = () => {
   const publicPaths = [
     '/', '/about', '/institutions', '/knowledge', '/professional', 
     '/scholars', '/fatwa', '/marketplace', '/seerah', '/calligraphy', 
-    '/search', '/deen101', '/faq', '/competitions', '/audio-library', '/tools'
+    '/search', '/deen101', '/faq', '/competitions', '/audio-library', '/tools',
+    '/fatwa/archive', '/scholar-dashboard'
   ];
   
   const isPublicPage = publicPaths.includes(location.pathname) || location.pathname.startsWith('/institution/');
@@ -172,6 +176,8 @@ const PublicLayout: React.FC = () => {
           <Route path="/community" element={<Community />} />
           <Route path="/events" element={<EventsHub />} />
           <Route path="/sadaqah" element={<SadaqahHub />} />
+          <Route path="/fatwa/archive" element={<FatwaArchive />} />
+          <Route path="/scholar-dashboard" element={<ScholarDashboard />} />
         </Routes>
       </div>
     </div>
@@ -234,6 +240,7 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
               <NavItem to="/professional" icon={<Briefcase size={18} />} label="ক্যারিয়ার হাব" onClick={closeSidebar} />
               <NavItem to="/institutions" icon={<Building2 size={18} />} label="ডিরেক্টরি" onClick={closeSidebar} />
               <NavItem to="/fatwa" icon={<ShieldCheck size={18} />} label="ফতোয়া পোর্টাল" onClick={closeSidebar} />
+              <NavItem to="/fatwa/archive" icon={<BookOpen size={18} />} label="ফতোয়া আর্কাইভ" onClick={closeSidebar} />
               <NavItem to="/competitions" icon={<Trophy size={18} />} label="প্রতিযোগিতা" onClick={closeSidebar} />
             </div>
 
@@ -250,6 +257,7 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
               <NavItem to="/sadaqah" icon={<Heart size={18} />} label="সাদাকাহ" onClick={closeSidebar} />
               <NavItem to="/tools" icon={<Wrench size={18} />} label="ইউটিলিটি টুলস" onClick={closeSidebar} />
               <NavItem to="/faq" icon={<HelpCircle size={18} />} label="সহায়তা কেন্দ্র" onClick={closeSidebar} />
+              <NavItem to="/scholar-dashboard" icon={<GraduationCap size={18} />} label="স্কলার প্যানেল" onClick={closeSidebar} />
             </div>
           </nav>
 
@@ -320,6 +328,8 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
             <Route path="/community" element={<Community />} />
             <Route path="/events" element={<EventsHub />} />
             <Route path="/sadaqah" element={<SadaqahHub />} />
+            <Route path="/fatwa/archive" element={<FatwaArchive />} />
+            <Route path="/scholar-dashboard" element={<ScholarDashboard />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </div>
