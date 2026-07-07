@@ -68,12 +68,12 @@ import VerifyEmail from './pages/VerifyEmail';
 import ProtectedRoute from './components/ProtectedRoute';
 import { NavItem } from './components/ui';
 
-import { getNotifications, initNotifications } from './services/notificationService';
-import { getCurrentUser, logout, initAuth } from './services/authService';
-import { AppNotification, User } from './types';
+import { initNotifications } from './services/notificationService';
+import { User } from './types';
 import ErrorBoundary from './components/ErrorBoundary';
 import { SyncStatusProvider } from './contexts/SyncStatusContext';
 import SyncStatus from './components/SyncStatus';
+import { useAuthStore, useNotificationStore } from './stores';
 
 const App: React.FC = () => {
   return (
@@ -86,20 +86,15 @@ const App: React.FC = () => {
 };
 
 const AppRouter: React.FC = () => {
-  const [ready, setReady] = useState(false);
-  const [, refresh] = useState(0);
   const location = useLocation();
+  const { user: currentUser, initialized, init } = useAuthStore();
+  const { fetch: fetchNotifications, notifications } = useNotificationStore();
 
   useEffect(() => {
-    initAuth().then(() => setReady(true));
-    const onAuth = () => refresh(n => n + 1);
-    window.addEventListener('auth_change', onAuth);
-    return () => window.removeEventListener('auth_change', onAuth);
+    init();
   }, []);
 
-  const currentUser = getCurrentUser();
-
-  if (!ready) {
+  if (!initialized) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-white gap-6">
         <div className="w-12 h-12 bg-black flex items-center justify-center text-white font-bold text-xl animate-pulse">M</div>
@@ -208,13 +203,11 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
   const navigate = useNavigate();
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [searchVal, setSearchVal] = useState('');
-  const [notifications, setNotifications] = useState<AppNotification[]>([]);
+  const { logout: storeLogout } = useAuthStore();
+  const { fetch: fetchNotifs, notifications } = useNotificationStore();
 
   useEffect(() => {
-    const load = async () => setNotifications(await getNotifications());
-    load();
-    window.addEventListener('notification_update', load);
-    return () => window.removeEventListener('notification_update', load);
+    fetchNotifs();
   }, []);
 
   useEffect(() => {
@@ -224,7 +217,7 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
   const unreadCount = notifications.filter(n => !n.isRead).length;
 
   const handleLogout = async () => {
-    await logout();
+    await storeLogout();
     navigate('/');
   };
 

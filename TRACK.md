@@ -13,7 +13,7 @@
 | [M1](#m1-backend-foundation-supabase) Backend Foundation | ✅ Complete | 2-3 weeks | Done | M0 |
 | [M2](#m2-data-migration-localslate-to-supabase) Data Migration | ✅ Complete | 1 week | Done | M1 |
 | [M3](#m3-component-library--design-system) Component Library | 🟢 In Progress | 2 weeks | TBD | None |
-| [M4](#m4-state-management-zustand) State Management | 🟡 Not Started | 1 week | TBD | M3 |
+| [M4](#m4-state-management-zustand) State Management | 🟢 In Progress | 1 week | TBD | M3 |
 | [M5](#m5-authentication--authorization) Auth & Authorization | ✅ Complete | 1.5 weeks | Done | M1 |
 | [M6](#m6-authentic-knowledge-base) Authentic Knowledge Base | ✅ Complete | 2-3 weeks | Done | M1, M5 |
 | [M7](#m7-testing--quality-assurance) Testing & QA | 🟡 Not Started | 2 weeks | TBD | M0-M6 |
@@ -23,7 +23,7 @@
 | [M11](#m11-mobile-app-react-native) Mobile App | 🟡 Not Started | 4-6 weeks | TBD | M1, M2 |
 | [M12](#m12-production-launch--scaling) Production Launch & Scaling | 🟡 Not Started | Ongoing | TBD | M0-M11 |
 
-**Total tracked tasks:** ~106 / ~200 complete
+**Total tracked tasks:** ~114 / ~200 complete
 
 ---
 
@@ -228,23 +228,25 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 > **Objective:** Replace 87+ scattered `useState`/`useEffect` and `window.dispatchEvent` pub/sub with centralized Zustand stores.  
 > **Depends on:** M3 (components)  
 > **Effort:** 1 week  
-> **Status:** 🟡 Not Started
+> **Status:** 🟢 In Progress
 
 ### Tasks
 
-- [ ] Install `zustand` and `zustand/devtools`
-- [ ] Create `useAuthStore` — user session, role, login/logout actions
-- [ ] Create `useJobStore` — job listings, filters, applications, CRUD actions
-- [ ] Create `useInstitutionStore` — institution directory, detail, CRUD
-- [ ] Create `useFatwaStore` — questions, answers, filters
-- [ ] Create `useProductStore` — marketplace items
-- [ ] Create `useNotificationStore` — notifications, unread count
-- [ ] Create `useUIStore` — sidebar state, theme (future), modals
-- [ ] Create `useCourseStore` — courses, enrollments, progress
+- [x] Install `zustand` and `zustand/devtools`
+- [x] Create `useAuthStore` — user session, role, login/logout actions
+- [x] Create `useJobStore` — job listings, filters, applications, CRUD actions
+- [x] Create `useInstitutionStore` — institution directory, detail, CRUD
+- [x] Create `useFatwaStore` — questions, answers, filters
+- [x] Create `useProductStore` — marketplace items
+- [x] Create `useNotificationStore` — notifications, unread count (`notification_update` event)
+- [x] Create `useUIStore` — sidebar state, modals (with persist middleware)
+- [x] Create `useCourseStore` — courses, enrollments, progress
 - [ ] Create `useContentStore` — knowledge hub, articles
-- [ ] Replace all `window.dispatchEvent(new CustomEvent('data_update'))` patterns
-- [ ] Add Zustand devtools for debugging
-- [ ] Add persist middleware for offline support
+- [x] Replace auth init in App.tsx with useAuthStore
+- [x] Replace notification handling in App.tsx with useNotificationStore
+- [ ] Replace remaining `window.dispatchEvent(data_update)` patterns
+- [ ] Replace remaining `window.dispatchEvent(auth_change)` patterns
+- [x] Add persist middleware for offline support (useUIStore)
 
 ### Store Map
 
@@ -653,12 +655,12 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M1: Backend Foundation | ~30 | 30 | 100% |
 | M2: Data Migration | 9 | 8 | 89% |
 | M3: Component Library | ~20 | 10 | 50% |
-| M4: State Management | 12 | 0 | 0% |
+| M4: State Management | 12 | 8 | 67% |
 | M5: Authentication | ~15 | 15 | 100% |
 | M6: Authentic Knowledge Base | ~18 | 18 | 100% |
 | M9: Orphan Pages | 10 | 10 | 100% |
 | M10: Community & Engagement | ~12 | 12 | 100% |
-| **Total** | **~200** | **106** | **53%** |
+| **Total** | **~200** | **114** | **57%** |
 
 ---
 
