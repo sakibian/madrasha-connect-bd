@@ -16,19 +16,18 @@ import { getCurrentUser } from '../services/authService';
 import { Link } from 'react-router-dom';
 
 const Marketplace: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>(dataService.getProducts());
+  const [products, setProducts] = useState<Product[]>([]);
   const currentUser = getCurrentUser();
   const isAdmin = currentUser?.role === 'ADMIN';
 
   useEffect(() => {
-    const update = () => setProducts(dataService.getProducts());
-    window.addEventListener('data_update', update);
-    return () => window.removeEventListener('data_update', update);
+    dataService.getProducts().then(setProducts);
   }, []);
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (window.confirm('পণ্যটি কি মুছে ফেলতে চান?')) {
-      dataService.deleteProduct(id);
+      await dataService.deleteProduct(id);
+      setProducts(await dataService.getProducts());
     }
   };
 

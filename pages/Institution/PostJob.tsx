@@ -76,9 +76,9 @@ const PostJob: React.FC = () => {
         verified: false
       };
 
-      dataService.saveJob(newJob);
-      
-      addNotification({
+      await dataService.saveJob(newJob);
+
+      await addNotification({
         title: 'বিজ্ঞপ্তি জমা হয়েছে',
         message: 'আপনার নিয়োগ বিজ্ঞপ্তিটি সফলভাবে জমা হয়েছে এবং পর্যালোচনার জন্য পাঠানো হয়েছে।',
         type: 'job',

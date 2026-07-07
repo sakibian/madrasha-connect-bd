@@ -20,25 +20,24 @@ const ProfessionalHub: React.FC = () => {
   const canPost = currentUser?.role === 'INSTITUTION' || isAdmin;
 
   useEffect(() => {
-    const update = () => setJobs(dataService.getJobs());
-    update();
-    window.addEventListener('data_update', update);
-    return () => window.removeEventListener('data_update', update);
+    dataService.getJobs().then(setJobs);
   }, []);
 
-  const handleVerify = (id: string) => {
-    dataService.verifyJob(id);
-    addNotification({
+  const handleVerify = async (id: string) => {
+    await dataService.verifyJob(id);
+    await addNotification({
       title: 'সার্কুলার অনুমোদিত',
       message: 'পোস্টটি ভেরিফাই করা হয়েছে।',
       type: 'application',
       link: '/professional'
     });
+    setJobs(await dataService.getJobs());
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (window.confirm('মুছে ফেলতে চান?')) {
-      dataService.deleteJob(id);
+      await dataService.deleteJob(id);
+      setJobs(await dataService.getJobs());
     }
   };
 

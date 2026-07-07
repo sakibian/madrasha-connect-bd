@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { User as UserIcon, Mail, Lock, ArrowRight, ArrowLeft, Loader2, Menu, X } from 'lucide-react';
-import { registerUser, login } from '../services/authService';
+import { registerUser } from '../services/authService';
 import { addNotification } from '../services/notificationService';
 
 const RegisterUser: React.FC = () => {
@@ -18,24 +18,27 @@ const RegisterUser: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise(r => setTimeout(r, 1500));
-    
-    registerUser({
-      name: formData.name,
-      email: formData.email,
-      role: 'USER'
-    });
-    
-    login(formData.email);
-    
-    addNotification({
-      title: 'স্বাগতম!',
-      message: `${formData.name}, মাদ্রাসা কানেক্ট বিডিতে আপনার রেজিস্ট্রেশন সফল হয়েছে।`,
-      type: 'community',
-      link: '/dashboard'
-    });
+    try {
+      await registerUser({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        role: 'USER'
+      });
 
-    navigate('/dashboard');
+      await addNotification({
+        title: 'স্বাগতম!',
+        message: `${formData.name}, মাদ্রাসা কানেক্ট বিডিতে আপনার রেজিস্ট্রেশন সফল হয়েছে।`,
+        type: 'community',
+        link: '/dashboard'
+      });
+
+      navigate('/dashboard');
+    } catch (err: any) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

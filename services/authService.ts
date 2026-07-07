@@ -1,68 +1,97 @@
 
-import { User, UserRole } from '../types';
+import { User } from '../types';
+import { supabase } from './supabase';
 
-const AUTH_KEY = 'madrasa_connect_user';
-const USERS_COLLECTION_KEY = 'madrasa_connect_all_users';
+let currentUser: User | null | undefined = undefined;
+let initPromise: Promise<void> | null = null;
 
-const DEFAULT_USERS: Record<string, User> = {
-  'admin@madrasa.bd': {
-    id: 'u-1',
-    name: 'আব্দুর রহমান',
-    email: 'admin@madrasa.bd',
-    role: 'ADMIN',
-    avatar: 'https://picsum.photos/seed/admin/100/100'
-  },
-  'hathazari@madrasa.bd': {
-    id: 'u-2',
-    name: 'মাওলানা ইউসুফ',
-    email: 'hathazari@madrasa.bd',
-    role: 'INSTITUTION',
-    institutionName: 'হাটহাজারী মাদ্রাসা',
-    avatar: 'https://picsum.photos/seed/inst/100/100'
-  },
-  'student@madrasa.bd': {
-    id: 'u-3',
-    name: 'মো. সালমান',
-    email: 'student@madrasa.bd',
-    role: 'USER',
-    avatar: 'https://picsum.photos/seed/student/100/100'
-  }
-};
-
-const getStoredUsers = (): Record<string, User> => {
-  const stored = localStorage.getItem(USERS_COLLECTION_KEY);
-  return stored ? JSON.parse(stored) : DEFAULT_USERS;
-};
-
-export const login = (email: string): User | null => {
-  const users = getStoredUsers();
-  const user = users[email];
-  if (user) {
-    localStorage.setItem(AUTH_KEY, JSON.stringify(user));
-    window.dispatchEvent(new CustomEvent('auth_change'));
-    return user;
-  }
-  return null;
-};
-
-export const registerUser = (userData: Omit<User, 'id' | 'avatar'>): User => {
-  const users = getStoredUsers();
-  const newUser: User = {
-    ...userData,
-    id: `u-${Date.now()}`,
-    avatar: `https://picsum.photos/seed/${userData.email}/100/100`
+const fetchUserProfile = async (userId: string): Promise<User | null> => {
+  const [profileResult, authResult] = await Promise.all([
+    supabase.from('user_profiles').select('*').eq('id', userId).single(),
+    supabase.auth.getUser(),
+  ]);
+  if (!profileResult.data) return null;
+  return {
+    id: profileResult.data.id,
+    name: profileResult.data.name,
+    email: authResult.data?.user?.email || '',
+    role: profileResult.data.role as User['role'],
+    avatar: profileResult.data.avatar_url || undefined,
+    institutionName: profileResult.data.institution_name,
   };
-  users[userData.email] = newUser;
-  localStorage.setItem(USERS_COLLECTION_KEY, JSON.stringify(users));
-  return newUser;
 };
 
-export const logout = () => {
-  localStorage.removeItem(AUTH_KEY);
+export const initAuth = async (): Promise<void> => {
+  if (initPromise) return initPromise;
+  initPromise = (async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.user) {
+      currentUser = await fetchUserProfile(session.user.id);
+    } else {
+      currentUser = null;
+    }
+
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session?.user) {
+        currentUser = await fetchUserProfile(session.user.id);
+      } else {
+        currentUser = null;
+      }
+      window.dispatchEvent(new CustomEvent('auth_change'));
+    });
+  })();
+  return initPromise;
+};
+
+export const login = async (email: string, password: string): Promise<User | null> => {
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error || !data.user) return null;
+
+  currentUser = await fetchUserProfile(data.user.id);
+  window.dispatchEvent(new CustomEvent('auth_change'));
+  return currentUser;
+};
+
+export const registerUser = async (userData: {
+  name: string;
+  email: string;
+  password: string;
+  role: 'USER' | 'INSTITUTION';
+  institutionName?: string;
+}): Promise<User> => {
+  const { data, error } = await supabase.auth.signUp({
+    email: userData.email,
+    password: userData.password,
+  });
+  if (error) throw error;
+  if (!data.user) throw new Error('Registration failed');
+
+  const { error: profileError } = await supabase.from('user_profiles').insert({
+    id: data.user.id,
+    name: userData.name,
+    role: userData.role,
+    institution_name: userData.institutionName || null,
+  });
+  if (profileError) throw profileError;
+
+  const user: User = {
+    id: data.user.id,
+    name: userData.name,
+    email: userData.email,
+    role: userData.role,
+    avatar: undefined,
+    institutionName: userData.institutionName,
+  };
+
+  currentUser = user;
+  window.dispatchEvent(new CustomEvent('auth_change'));
+  return user;
+};
+
+export const logout = async (): Promise<void> => {
+  await supabase.auth.signOut();
+  currentUser = null;
   window.dispatchEvent(new CustomEvent('auth_change'));
 };
 
-export const getCurrentUser = (): User | null => {
-  const stored = localStorage.getItem(AUTH_KEY);
-  return stored ? JSON.parse(stored) : null;
-};
+export const getCurrentUser = (): User | null => currentUser ?? null;

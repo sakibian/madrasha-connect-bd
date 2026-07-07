@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { School, MapPin, Phone, Mail, Lock, ArrowRight, ArrowLeft, Loader2, Building2 } from 'lucide-react';
-import { registerUser, login } from '../services/authService';
+import { registerUser } from '../services/authService';
 import { addNotification } from '../services/notificationService';
 
 const RegisterInstitution: React.FC = () => {
@@ -18,27 +18,30 @@ const RegisterInstitution: React.FC = () => {
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
-     e.preventDefault();
+    e.preventDefault();
     setLoading(true);
-    await new Promise(r => setTimeout(r, 2000));
-    
-    registerUser({
-      name: `অ্যাডমিন (${formData.instName})`,
-      email: formData.email,
-      role: 'INSTITUTION',
-      institutionName: formData.instName
-    });
-    
-    login(formData.email);
-    
-    addNotification({
-      title: 'প্রতিষ্ঠান নিবন্ধিত!',
-      message: `${formData.instName} সফলভাবে প্ল্যাটফর্মে যুক্ত হয়েছে। এখন সার্কুলার পোস্ট করতে পারবেন।`,
-      type: 'job',
-      link: '/professional'
-    });
+    try {
+      await registerUser({
+        name: `অ্যাডমিন (${formData.instName})`,
+        email: formData.email,
+        password: formData.password,
+        role: 'INSTITUTION',
+        institutionName: formData.instName
+      });
 
-    navigate('/dashboard');
+      await addNotification({
+        title: 'প্রতিষ্ঠান নিবন্ধিত!',
+        message: `${formData.instName} সফলভাবে প্ল্যাটফর্মে যুক্ত হয়েছে। এখন সার্কুলার পোস্ট করতে পারবেন।`,
+        type: 'job',
+        link: '/professional'
+      });
+
+      navigate('/dashboard');
+    } catch (err: any) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

@@ -24,18 +24,18 @@ const InstitutionDashboard: React.FC = () => {
   const [myJobs, setMyJobs] = useState<Job[]>([]);
 
   useEffect(() => {
-    const update = () => {
-      const allJobs = dataService.getJobs();
+    const load = async () => {
+      const allJobs = await dataService.getJobs();
       setMyJobs(allJobs.filter(j => j.institution === user?.institutionName));
     };
-    update();
-    window.addEventListener('data_update', update);
-    return () => window.removeEventListener('data_update', update);
+    load();
   }, [user]);
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (confirm('সার্কুলারটি কি চিরতরে মুছে ফেলতে চান?')) {
-      dataService.deleteJob(id);
+      await dataService.deleteJob(id);
+      const allJobs = await dataService.getJobs();
+      setMyJobs(allJobs.filter(j => j.institution === user?.institutionName));
     }
   };
 

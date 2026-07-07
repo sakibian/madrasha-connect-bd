@@ -32,7 +32,7 @@ const Community: React.FC = () => {
       const response = await askScholar(question);
       setAiResponse(response);
       
-      addNotification({
+      await addNotification({
         title: 'এআই আলেম উত্তর দিয়েছে',
         message: `আপনার প্রশ্নের উত্তর তৈরি হয়েছে: "${question.substring(0, 30)}..."`,
         type: 'community',

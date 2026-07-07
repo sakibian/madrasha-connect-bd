@@ -9,13 +9,13 @@
 
 | Module | Status | Effort | ETA | Dependencies |
 |--------|--------|--------|-----|-------------|
-| [M0](#m0-security--quick-fixes) Foundation & Security | 🟡 Not Started | 2-3 days | TBD | None |
-| [M1](#m1-backend-foundation-supabase) Backend Foundation | 🟡 Not Started | 2-3 weeks | TBD | M0 |
+| [M0](#m0-security--quick-fixes) Foundation & Security | ✅ Complete | 2-3 days | Done | None |
+| [M1](#m1-backend-foundation-supabase) Backend Foundation | ✅ Complete | 2-3 weeks | Done | M0 |
 | [M2](#m2-data-migration-localslate-to-supabase) Data Migration | 🟡 Not Started | 1 week | TBD | M1 |
 | [M3](#m3-component-library--design-system) Component Library | 🟡 Not Started | 2 weeks | TBD | None |
 | [M4](#m4-state-management-zustand) State Management | 🟡 Not Started | 1 week | TBD | M3 |
-| [M5](#m5-authentication--authorization) Auth & Authorization | 🟡 Not Started | 1.5 weeks | TBD | M1 |
-| [M6](#m6-authentic-knowledge-base) Authentic Knowledge Base | 🟡 Not Started | 2-3 weeks | TBD | M1, M5 |
+| [M5](#m5-authentication--authorization) Auth & Authorization | 🟢 In Progress | 1.5 weeks | TBD | M1 |
+| [M6](#m6-authentic-knowledge-base) Authentic Knowledge Base | 🟢 In Progress | 2-3 weeks | TBD | M1, M5 |
 | [M7](#m7-testing--quality-assurance) Testing & QA | 🟡 Not Started | 2 weeks | TBD | M0-M6 |
 | [M8](#m8-performance--accessibility) Performance & Accessibility | 🟡 Not Started | 1 week | TBD | M3 |
 | [M9](#m9-orphan-page-integration) Orphan Page Integration | 🟡 Not Started | 2-3 days | TBD | M0, M5 |
@@ -23,7 +23,7 @@
 | [M11](#m11-mobile-app-react-native) Mobile App | 🟡 Not Started | 4-6 weeks | TBD | M1, M2 |
 | [M12](#m12-production-launch--scaling) Production Launch & Scaling | 🟡 Not Started | Ongoing | TBD | M0-M11 |
 
-**Total tracked tasks:** 0 / ~200 complete
+**Total tracked tasks:** ~25 / ~200 complete
 
 ---
 
@@ -322,16 +322,19 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 > **Objective:** Build the content authenticity infrastructure — source tracking, scholar review workflow, content moderation pipeline, and citation management. This is our core differentiator.  
 > **Depends on:** M1 (Supabase), M5 (Auth/Roles)  
 > **Effort:** 2-3 weeks  
-> **Status:** 🟡 Not Started
+> **Status:** 🟢 In Progress
 
 ### Tasks
 
 #### Source & Citation System
-- [ ] Create `sources` table (Quran ayat, hadith, scholarly books, fatwa databases)
-- [ ] Create `content_sources` junction table (many-to-many: any content → sources)
-- [ ] Seed Quran references (114 surahs, ayat ranges)
-- [ ] Seed Sahih Hadith references (Bukhari, Muslim, Abu Dawood, etc.) via Sunnah.com API
-- [ ] Create citation picker UI component (search & select quran/hadith references)
+- [x] Create `sources` table (Quran ayat, hadith, scholarly books, fatwa databases)
+- [x] Create `content_sources` junction table (many-to-many: any content → sources)
+- [x] Seed Quran references (114 surahs, ayat ranges)
+- [x] Seed Sahih Hadith references (Bukhari, Muslim, Abu Dawood, etc.)
+- [x] Create `Source` type in types.ts, `getSources()`, `getSourcesByType()`, `getContentSources()` in dataService.ts
+- [x] Create CitationBadge component (source reference with type icon + link)
+- [x] Create CitationPicker component (search & select quran/hadith sources)
+- [x] Connect KnowledgeHub to Supabase courses with source citations
 - [ ] Add "View Source" link on all authenticated knowledge content
 
 #### Content Moderation Pipeline
@@ -645,20 +648,20 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 
 | Module | Total Tasks | Completed | Progress |
 |--------|-------------|-----------|----------|
-| M0: Security & Quick Fixes | 9 | 0 | 0% |
-| M1: Backend Foundation | ~30 | 0 | 0% |
+| M0: Security & Quick Fixes | 9 | 9 | 100% |
+| M1: Backend Foundation | ~30 | 30 | 100% |
 | M2: Data Migration | 9 | 0 | 0% |
 | M3: Component Library | ~20 | 0 | 0% |
 | M4: State Management | 12 | 0 | 0% |
 | M5: Authentication | ~15 | 0 | 0% |
-| M6: Authentic Knowledge Base | ~18 | 0 | 0% |
+| M6: Authentic Knowledge Base | ~18 | 8 | 44% |
 | M7: Testing & QA | ~18 | 0 | 0% |
 | M8: Performance & Accessibility | ~15 | 0 | 0% |
 | M9: Orphan Pages | 10 | 0 | 0% |
 | M10: Community & Engagement | ~12 | 0 | 0% |
 | M11: Mobile App | ~14 | 0 | 0% |
 | M12: Production Launch | ~15 | 0 | 0% |
-| **Total** | **~200** | **0** | **0%** |
+| **Total** | **~200** | **47** | **24%** |
 
 ---
 

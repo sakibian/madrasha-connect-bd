@@ -1,48 +1,101 @@
 
 import { AppNotification } from '../types';
+import { supabase } from './supabase';
 
-const STORAGE_KEY = 'madrasa_connect_notifications';
+let realtimeChannel: any = null;
 
-export const getNotifications = (): AppNotification[] => {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  return stored ? JSON.parse(stored) : [];
+export const initNotifications = async (userId: string) => {
+  if (realtimeChannel) {
+    await supabase.removeChannel(realtimeChannel);
+  }
+
+  realtimeChannel = supabase
+    .channel('notifications')
+    .on('postgres_changes',
+      {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'notifications',
+        filter: `user_id=eq.${userId}`,
+      },
+      () => {
+        window.dispatchEvent(new CustomEvent('notification_update'));
+      }
+    )
+    .subscribe();
 };
 
-export const saveNotifications = (notifications: AppNotification[]) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(notifications));
+export const cleanupNotifications = async () => {
+  if (realtimeChannel) {
+    await supabase.removeChannel(realtimeChannel);
+    realtimeChannel = null;
+  }
 };
 
-export const addNotification = (notification: Omit<AppNotification, 'id' | 'timestamp' | 'isRead'>) => {
-  const notifications = getNotifications();
-  const newNotification: AppNotification = {
-    ...notification,
-    id: `notif-${Date.now()}`,
-    timestamp: Date.now(),
-    isRead: false,
-  };
-  const updated = [newNotification, ...notifications].slice(0, 50); // Keep last 50
-  saveNotifications(updated);
-  
-  // Dispatch custom event for real-time UI updates across components
+export const getNotifications = async (): Promise<AppNotification[]> => {
+  const user = (await supabase.auth.getSession()).data.session?.user;
+  if (!user) return [];
+
+  const { data, error } = await supabase
+    .from('notifications')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(50);
+
+  if (error) return [];
+
+  return data.map(n => ({
+    id: n.id,
+    title: n.title,
+    message: n.message,
+    timestamp: new Date(n.created_at).getTime(),
+    isRead: n.is_read,
+    type: n.type as AppNotification['type'],
+    link: n.link || undefined,
+  }));
+};
+
+export const addNotification = async (notification: Omit<AppNotification, 'id' | 'timestamp' | 'isRead'>) => {
+  const user = (await supabase.auth.getSession()).data.session?.user;
+  if (!user) return;
+
+  await supabase.from('notifications').insert({
+    user_id: user.id,
+    title: notification.title,
+    message: notification.message,
+    type: notification.type,
+    link: notification.link || null,
+  });
+};
+
+export const markAsRead = async (id: string) => {
+  await supabase
+    .from('notifications')
+    .update({ is_read: true })
+    .eq('id', id);
   window.dispatchEvent(new CustomEvent('notification_update'));
-  return newNotification;
 };
 
-export const markAsRead = (id: string) => {
-  const notifications = getNotifications();
-  const updated = notifications.map(n => n.id === id ? { ...n, isRead: true } : n);
-  saveNotifications(updated);
+export const markAllAsRead = async () => {
+  const user = (await supabase.auth.getSession()).data.session?.user;
+  if (!user) return;
+
+  await supabase
+    .from('notifications')
+    .update({ is_read: true })
+    .eq('user_id', user.id)
+    .is('is_read', false);
   window.dispatchEvent(new CustomEvent('notification_update'));
 };
 
-export const markAllAsRead = () => {
-  const notifications = getNotifications();
-  const updated = notifications.map(n => ({ ...n, isRead: true }));
-  saveNotifications(updated);
-  window.dispatchEvent(new CustomEvent('notification_update'));
-};
+export const clearNotifications = async () => {
+  const user = (await supabase.auth.getSession()).data.session?.user;
+  if (!user) return;
 
-export const clearNotifications = () => {
-  saveNotifications([]);
+  await supabase
+    .from('notifications')
+    .delete()
+    .eq('user_id', user.id);
   window.dispatchEvent(new CustomEvent('notification_update'));
 };

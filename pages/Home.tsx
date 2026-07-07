@@ -18,9 +18,7 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { GoogleGenAI } from "@google/genai";
-
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const EDGE_FN_URL = 'https://qazcxnldkrklxdmunfgj.functions.supabase.co/gemini-proxy';
 
 const Home: React.FC = () => {
   const [dailyDeen, setDailyDeen] = useState<{ text: string; source: string } | null>(null);
@@ -28,12 +26,16 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchDailyDeen = async () => {
       try {
-        const response = await ai.models.generateContent({
-          model: 'gemini-3-flash-preview',
-          contents: 'আজকের জন্য একটি ছোট এবং অনুপ্রেরণামূলক হাদিস বা কুরআনের আয়াত নির্বাচন করুন। শুধুমাত্র বাংলা অনুবাদ এবং রেফারেন্স প্রদান করুন।',
-          config: { temperature: 0.7 }
+        const res = await fetch(EDGE_FN_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'daily',
+            prompt: 'আজকের জন্য একটি ছোট এবং অনুপ্রেরণামূলক হাদিস বা কুরআনের আয়াত নির্বাচন করুন। শুধুমাত্র বাংলা অনুবাদ এবং রেফারেন্স প্রদান করুন।',
+          }),
         });
-        const text = response.text || "ধৈর্যের মাধ্যমেই আল্লাহ সাহায্য করেন।";
+        const data = await res.json();
+        const text = data.text || "ধৈর্যের মাধ্যমেই আল্লাহ সাহায্য করেন।";
         setDailyDeen({ text, source: "দৈনিক নসিহত" });
       } catch (e) {
         setDailyDeen({ text: "আল্লাহর সাহায্য অতি নিকটেই।", source: "কুরআন ২:২১৪" });

@@ -12,6 +12,7 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import { dataService } from '../../services/dataService';
+import { Job, Product, User } from '../../types';
 
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'products' | 'users'>('overview');
@@ -23,17 +24,21 @@ const AdminDashboard: React.FC = () => {
   });
 
   useEffect(() => {
-    const update = () => {
+    const load = async () => {
+      const [jobs, products, users, posts] = await Promise.all([
+        dataService.getJobs(),
+        dataService.getProducts(),
+        dataService.getUsers(),
+        dataService.getPosts(),
+      ]);
       setStats({
-        jobs: dataService.getJobs().length,
-        products: dataService.getProducts().length,
-        users: dataService.getUsers().length,
-        posts: dataService.getPosts().length
+        jobs: jobs.length,
+        products: products.length,
+        users: users.length,
+        posts: posts.length,
       });
     };
-    update();
-    window.addEventListener('data_update', update);
-    return () => window.removeEventListener('data_update', update);
+    load();
   }, []);
 
   return (
@@ -67,12 +72,9 @@ const AdminDashboard: React.FC = () => {
 };
 
 const ManageJobs: React.FC = () => {
-  const [jobs, setJobs] = useState(dataService.getJobs());
-  useEffect(() => {
-    const update = () => setJobs(dataService.getJobs());
-    window.addEventListener('data_update', update);
-    return () => window.removeEventListener('data_update', update);
-  }, []);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const loadJobs = async () => setJobs(await dataService.getJobs());
+  useEffect(() => { loadJobs(); }, []);
 
   return (
     <div className="bg-white minimal-border overflow-hidden">
@@ -101,11 +103,11 @@ const ManageJobs: React.FC = () => {
               <td className="px-8 py-6 text-right">
                 <div className="flex justify-end gap-3">
                   {!job.verified && (
-                    <button onClick={() => dataService.saveJob({...job, verified: true})} className="p-3 bg-black text-white hover:bg-bd-green transition-all">
+                    <button onClick={async () => { await dataService.saveJob({...job, verified: true}); loadJobs(); }} className="p-3 bg-black text-white hover:bg-bd-green transition-all">
                       <CheckCircle size={16} />
                     </button>
                   )}
-                  <button onClick={() => dataService.deleteJob(job.id)} className="p-3 border border-gray-200 text-red-600 hover:bg-red-50 transition-all">
+                  <button onClick={async () => { await dataService.deleteJob(job.id); loadJobs(); }} className="p-3 border border-gray-200 text-red-600 hover:bg-red-50 transition-all">
                     <Trash2 size={16} />
                   </button>
                 </div>
@@ -119,19 +121,17 @@ const ManageJobs: React.FC = () => {
 };
 
 const ManageProducts: React.FC = () => {
-  const [products, setProducts] = useState(dataService.getProducts());
+  const [products, setProducts] = useState<Product[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newProd, setNewProd] = useState({ name: '', price: 0, category: 'Sunnah Food', image: 'https://picsum.photos/400/300' });
 
-  useEffect(() => {
-    const update = () => setProducts(dataService.getProducts());
-    window.addEventListener('data_update', update);
-    return () => window.removeEventListener('data_update', update);
-  }, []);
+  const loadProducts = async () => setProducts(await dataService.getProducts());
+  useEffect(() => { loadProducts(); }, []);
 
-  const handleAdd = () => {
-    dataService.saveProduct({ ...newProd as any, id: `prod-${Date.now()}` });
+  const handleAdd = async () => {
+    await dataService.saveProduct({ ...newProd as any, id: `prod-${Date.now()}` });
     setIsAdding(false);
+    loadProducts();
   };
 
   return (
@@ -192,7 +192,7 @@ const ManageProducts: React.FC = () => {
                 <td className="px-8 py-6 text-sm font-bold text-gray-500">{p.category}</td>
                 <td className="px-8 py-6 font-black text-xl text-black">৳{p.price}</td>
                 <td className="px-8 py-6 text-right">
-                  <button onClick={() => dataService.deleteProduct(p.id)} className="p-3 border border-gray-100 text-red-600 hover:bg-red-50 transition-all">
+                  <button onClick={async () => { await dataService.deleteProduct(p.id); loadProducts(); }} className="p-3 border border-gray-100 text-red-600 hover:bg-red-50 transition-all">
                     <Trash2 size={16} />
                   </button>
                 </td>
@@ -206,12 +206,8 @@ const ManageProducts: React.FC = () => {
 };
 
 const ManageUsers: React.FC = () => {
-  const [users, setUsers] = useState(dataService.getUsers());
-  useEffect(() => {
-    const update = () => setUsers(dataService.getUsers());
-    window.addEventListener('auth_change', update);
-    return () => window.removeEventListener('auth_change', update);
-  }, []);
+  const [users, setUsers] = useState<User[]>([]);
+  useEffect(() => { dataService.getUsers().then(setUsers); }, []);
 
   return (
     <div className="bg-white minimal-border overflow-hidden">

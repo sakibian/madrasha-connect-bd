@@ -1,18 +1,37 @@
 
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ShieldCheck, School, User as UserIcon, Loader2, ArrowRight, ArrowLeft } from 'lucide-react';
+import { ShieldCheck, School, User as UserIcon, Loader2, ArrowRight, ArrowLeft, Lock, Mail } from 'lucide-react';
 import { login } from '../services/authService';
+
+const DEMO_PASSWORD = 'madrasa123';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleQuickLogin = async (email: string) => {
+  const handleQuickLogin = async (demoEmail: string) => {
+    setEmail(demoEmail);
+    setPassword(DEMO_PASSWORD);
     setLoading(true);
-    await new Promise(r => setTimeout(r, 800));
-    const user = login(email);
+    setError('');
+    const user = await login(demoEmail, DEMO_PASSWORD);
     if (user) navigate('/dashboard');
+    else setError('ডেমো অ্যাকাউন্ট পাওয়া যায়নি। অনুগ্রহ করে রেজিস্ট্রেশন করুন।');
+    setLoading(false);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !password) return;
+    setLoading(true);
+    setError('');
+    const user = await login(email, password);
+    if (user) navigate('/dashboard');
+    else setError('ইমেইল বা পাসওয়ার্ড ভুল।');
     setLoading(false);
   };
 
@@ -33,54 +52,100 @@ const Login: React.FC = () => {
              নিরাপদ <br />পোর্টালে <br />স্বাগতম।
            </h1>
            <p className="text-xl text-gray-400 leading-relaxed font-medium">
-             আপনার সঠিক রোল নির্বাচন করে সিস্টেমে প্রবেশ করুন। আমরা আপনার তথ্যের সর্বোচ্চ নিরাপত্তা নিশ্চিত করি।
+             আপনার ইমেইল ও পাসওয়ার্ড ব্যবহার করে লগইন করুন। প্ল্যাটফর্ম আপনার তথ্যের সর্বোচ্চ নিরাপত্তা নিশ্চিত করে।
            </p>
         </div>
 
-        <div className="z-10">
+        <div className="z-10 space-y-4">
            <Link to="/about" className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-white transition-colors">
               <ArrowLeft size={18} /> আমাদের সম্পর্কে জানুন
            </Link>
+           <div className="pt-4">
+              <p className="text-xs text-gray-600 font-mono">Demo password: <span className="text-bd-green">{DEMO_PASSWORD}</span></p>
+           </div>
         </div>
 
-        {/* Subtle Decorative Element */}
         <div className="absolute -bottom-20 -right-20 w-96 h-96 border-[1px] border-gray-900 rounded-full"></div>
       </div>
 
       {/* Action Side */}
       <div className="lg:w-1/2 p-8 md:p-24 flex items-center justify-center bg-[#F9FAFB]">
-        <div className="w-full max-w-md space-y-16">
+        <div className="w-full max-w-md space-y-12">
           <div className="space-y-4">
             <div className="caps-label text-gray-400">Authentication</div>
             <h2 className="text-4xl font-extrabold tracking-tight">লগইন করুন।</h2>
-            <p className="text-gray-500 font-medium">নিচের তালিকা থেকে আপনার ব্যবহারের ধরনটি নির্বাচন করুন।</p>
+            <p className="text-gray-500 font-medium">ইমেইল ও পাসওয়ার্ড দিয়ে প্রবেশ করুন, অথবা দ্রুত লগইন ব্যবহার করুন।</p>
           </div>
 
-          <div className="space-y-0 bg-gray-100 minimal-border overflow-hidden">
-            <LoginRoleButton 
-              icon={<ShieldCheck size={24} />} 
-              label="সিস্টেম অ্যাডমিন" 
-              sub="প্ল্যাটফর্ম নিয়ন্ত্রক"
-              onClick={() => handleQuickLogin('admin@madrasa.bd')} 
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="space-y-4">
+              <div className="relative">
+                <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="email"
+                  placeholder="ইমেইল"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  className="w-full pl-14 pr-6 py-5 bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium text-lg"
+                  required
+                />
+              </div>
+              <div className="relative">
+                <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="password"
+                  placeholder="পাসওয়ার্ড"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  className="w-full pl-14 pr-6 py-5 bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium text-lg"
+                  required
+                />
+              </div>
+            </div>
+
+            {error && (
+              <div className="p-5 bg-red-50 border border-red-100 text-red-600 text-sm font-bold">
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
               disabled={loading}
-            />
-            <LoginRoleButton 
-              icon={<School size={24} />} 
-              label="মাদ্রাসা / মসজিদ" 
-              sub="প্রাতিষ্ঠানিক অ্যাকাউন্ট"
-              onClick={() => handleQuickLogin('hathazari@madrasa.bd')} 
-              disabled={loading}
-            />
-            <LoginRoleButton 
-              icon={<UserIcon size={24} />} 
-              label="শিক্ষার্থী / ব্যবহারকারী" 
-              sub="ব্যক্তিগত অ্যাকাউন্ট"
-              onClick={() => handleQuickLogin('student@madrasa.bd')} 
-              disabled={loading}
-            />
+              className="w-full py-6 bg-black text-white font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-gray-800 transition-all disabled:opacity-50"
+            >
+              {loading ? <Loader2 className="animate-spin" size={24} /> : <>সাইন ইন করুন <ArrowRight size={24} /></>}
+            </button>
+          </form>
+
+          <div className="space-y-4">
+            <div className="caps-label text-gray-400 text-center">অথবা দ্রুত লগইন</div>
+            <div className="space-y-0 bg-gray-100 minimal-border overflow-hidden">
+              <LoginRoleButton 
+                icon={<ShieldCheck size={20} />} 
+                label="সিস্টেম অ্যাডমিন" 
+                sub="প্ল্যাটফর্ম নিয়ন্ত্রক"
+                onClick={() => handleQuickLogin('admin@madrasa.bd')} 
+                disabled={loading}
+              />
+              <LoginRoleButton 
+                icon={<School size={20} />} 
+                label="মাদ্রাসা / মসজিদ" 
+                sub="প্রাতিষ্ঠানিক অ্যাকাউন্ট"
+                onClick={() => handleQuickLogin('hathazari@madrasa.bd')} 
+                disabled={loading}
+              />
+              <LoginRoleButton 
+                icon={<UserIcon size={20} />} 
+                label="শিক্ষার্থী / ব্যবহারকারী" 
+                sub="ব্যক্তিগত অ্যাকাউন্ট"
+                onClick={() => handleQuickLogin('student@madrasa.bd')} 
+                disabled={loading}
+              />
+            </div>
           </div>
 
-          <div className="pt-12 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
              <span className="text-sm font-bold text-gray-400">আপনার কি কোনো অ্যাকাউন্ট নেই?</span>
              <Link to="/register-user" className="text-sm font-bold border-b-2 border-black pb-0.5 hover:text-gray-600 transition-all">
                 নতুন অ্যাকাউন্ট তৈরি
@@ -88,13 +153,6 @@ const Login: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {loading && (
-        <div className="fixed inset-0 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center z-50 animate-fadeIn">
-           <Loader2 className="animate-spin text-black mb-6" size={48} />
-           <div className="caps-label text-black">Authenticating Identity</div>
-        </div>
-      )}
     </div>
   );
 };

@@ -32,10 +32,7 @@ const FatwaCenter: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const update = () => setFatwas(dataService.getFatwas());
-    update();
-    window.addEventListener('data_update', update);
-    return () => window.removeEventListener('data_update', update);
+    dataService.getFatwas().then(setFatwas);
   }, []);
 
   const handleAskQuestion = async (e: React.FormEvent) => {
@@ -56,8 +53,8 @@ const FatwaCenter: React.FC = () => {
         status: 'PENDING'
       };
 
-      dataService.saveFatwa(newFatwa);
-      addNotification({
+      await dataService.saveFatwa(newFatwa);
+      await addNotification({
         title: 'আপনার প্রশ্ন জমা হয়েছে',
         message: 'এআই একটি প্রাথমিক উত্তর দিয়েছে। শীঘ্রই একজন মুফতি এটি যাচাই করবেন।',
         type: 'community',
@@ -65,6 +62,7 @@ const FatwaCenter: React.FC = () => {
       });
       setQuestion('');
       setIsAsking(false);
+      setFatwas(await dataService.getFatwas());
     } catch (error) {
       console.error(error);
     } finally {

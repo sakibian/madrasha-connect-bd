@@ -101,6 +101,14 @@ export interface Fatwa {
   status: 'PENDING' | 'ANSWERED' | 'REJECTED';
 }
 
+export interface Source {
+  id: string;
+  type: 'quran' | 'hadith' | 'scholarly' | 'book' | 'other';
+  reference: string;
+  text?: string;
+  url?: string;
+}
+
 export interface AppNotification {
   id: string;
   title: string;

@@ -56,8 +56,8 @@ import Community from './pages/Community';
 import EventsHub from './pages/EventsHub';
 import SadaqahHub from './pages/SadaqahHub';
 
-import { getNotifications } from './services/notificationService';
-import { getCurrentUser, logout } from './services/authService';
+import { getNotifications, initNotifications } from './services/notificationService';
+import { getCurrentUser, logout, initAuth } from './services/authService';
 import { AppNotification, User } from './types';
 import ErrorBoundary from './components/ErrorBoundary';
 
@@ -70,8 +70,27 @@ const App: React.FC = () => {
 };
 
 const AppRouter: React.FC = () => {
-  const currentUser = getCurrentUser();
+  const [ready, setReady] = useState(false);
+  const [, refresh] = useState(0);
   const location = useLocation();
+
+  useEffect(() => {
+    initAuth().then(() => setReady(true));
+    const onAuth = () => refresh(n => n + 1);
+    window.addEventListener('auth_change', onAuth);
+    return () => window.removeEventListener('auth_change', onAuth);
+  }, []);
+
+  const currentUser = getCurrentUser();
+
+  if (!ready) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-white gap-6">
+        <div className="w-12 h-12 bg-black flex items-center justify-center text-white font-bold text-xl animate-pulse">M</div>
+        <div className="caps-label text-gray-400 animate-pulse">Initializing...</div>
+      </div>
+    );
+  }
 
   const publicPaths = [
     '/', '/about', '/institutions', '/knowledge', '/professional', 
@@ -166,16 +185,20 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
 
   useEffect(() => {
-    const handleNotifUpdate = () => setNotifications(getNotifications());
-    handleNotifUpdate();
-    window.addEventListener('notification_update', handleNotifUpdate);
-    return () => window.removeEventListener('notification_update', handleNotifUpdate);
+    const load = async () => setNotifications(await getNotifications());
+    load();
+    window.addEventListener('notification_update', load);
+    return () => window.removeEventListener('notification_update', load);
   }, []);
+
+  useEffect(() => {
+    initNotifications(currentUser.id);
+  }, [currentUser.id]);
 
   const unreadCount = notifications.filter(n => !n.isRead).length;
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate('/');
   };
 
