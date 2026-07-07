@@ -4,7 +4,7 @@ import {
   BookOpen, Download, ExternalLink, Search, Book, FileText, Video, Sparkles, Clock, Play, CheckCircle,
   ArrowRight
 } from 'lucide-react';
-import { Course, Source } from '../types';
+import { Course, Source, XP_ACTIONS } from '../types';
 import { supabase } from '../services/supabase';
 import { dataService } from '../services/dataService';
 import { addNotification } from '../services/notificationService';
@@ -46,6 +46,9 @@ const KnowledgeHub: React.FC = () => {
     try {
       await dataService.enrollCourse(courseId);
       setEnrolledCourses([...enrolledCourses, courseId]);
+      const session = await supabase.auth.getSession();
+      const userId = session.data.session?.user?.id;
+      if (userId) dataService.addXP(userId, XP_ACTIONS.ENROLL_COURSE.action, XP_ACTIONS.ENROLL_COURSE.xp);
       await addNotification({
         title: 'এনরোল সফল',
         message: `আপনি "${title}" কোর্সে যুক্ত হয়েছেন।`,

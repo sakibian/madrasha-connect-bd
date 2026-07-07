@@ -24,7 +24,8 @@ import {
   Headset,
   Calendar,
   Heart,
-  GraduationCap
+  GraduationCap,
+  Star
 } from 'lucide-react';
 
 import Dashboard from './pages/Dashboard';
@@ -59,6 +60,8 @@ import SadaqahHub from './pages/SadaqahHub';
 import FatwaArchive from './pages/FatwaArchive';
 import ScholarDashboard from './pages/ScholarDashboard';
 import ScholarApply from './pages/ScholarApply';
+import Leaderboard from './pages/Leaderboard';
+import PublicProfile from './pages/PublicProfile';
 
 import { getNotifications, initNotifications } from './services/notificationService';
 import { getCurrentUser, logout, initAuth } from './services/authService';
@@ -100,10 +103,10 @@ const AppRouter: React.FC = () => {
     '/', '/about', '/institutions', '/knowledge', '/professional', 
     '/scholars', '/fatwa', '/marketplace', '/seerah', '/calligraphy', 
     '/search', '/deen101', '/faq', '/competitions', '/audio-library', '/tools',
-    '/fatwa/archive', '/scholar-dashboard', '/scholar/apply'
+    '/fatwa/archive', '/scholar-dashboard', '/scholar/apply', '/leaderboard'
   ];
   
-  const isPublicPage = publicPaths.includes(location.pathname) || location.pathname.startsWith('/institution/');
+  const isPublicPage = publicPaths.includes(location.pathname) || location.pathname.startsWith('/institution/') || location.pathname.startsWith('/profile/');
   const isAuthPage = ['/login', '/register-user', '/register-institution'].includes(location.pathname);
 
   if (isAuthPage) {
@@ -180,6 +183,8 @@ const PublicLayout: React.FC = () => {
           <Route path="/fatwa/archive" element={<FatwaArchive />} />
           <Route path="/scholar-dashboard" element={<ScholarDashboard />} />
           <Route path="/scholar/apply" element={<ScholarApply />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/profile/:id" element={<PublicProfile />} />
         </Routes>
       </div>
     </div>
@@ -244,6 +249,7 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
               <NavItem to="/fatwa" icon={<ShieldCheck size={18} />} label="ফতোয়া পোর্টাল" onClick={closeSidebar} />
               <NavItem to="/fatwa/archive" icon={<BookOpen size={18} />} label="ফতোয়া আর্কাইভ" onClick={closeSidebar} />
               <NavItem to="/competitions" icon={<Trophy size={18} />} label="প্রতিযোগিতা" onClick={closeSidebar} />
+              <NavItem to="/leaderboard" icon={<Star size={18} />} label="লিডারবোর্ড" onClick={closeSidebar} />
             </div>
 
             <div className="pt-8 pb-2">
@@ -334,6 +340,8 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
             <Route path="/fatwa/archive" element={<FatwaArchive />} />
             <Route path="/scholar-dashboard" element={<ScholarDashboard />} />
             <Route path="/scholar/apply" element={<ScholarApply />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/profile/:id" element={<PublicProfile />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </div>

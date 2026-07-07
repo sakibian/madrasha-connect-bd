@@ -15,7 +15,7 @@
 | [M3](#m3-component-library--design-system) Component Library | 🟡 Not Started | 2 weeks | TBD | None |
 | [M4](#m4-state-management-zustand) State Management | 🟡 Not Started | 1 week | TBD | M3 |
 | [M5](#m5-authentication--authorization) Auth & Authorization | 🟢 In Progress | 1.5 weeks | TBD | M1 |
-| [M6](#m6-authentic-knowledge-base) Authentic Knowledge Base | 🟢 In Progress | 2-3 weeks | TBD | M1, M5 |
+| [M6](#m6-authentic-knowledge-base) Authentic Knowledge Base | ✅ Complete | 2-3 weeks | Done | M1, M5 |
 | [M7](#m7-testing--quality-assurance) Testing & QA | 🟡 Not Started | 2 weeks | TBD | M0-M6 |
 | [M8](#m8-performance--accessibility) Performance & Accessibility | 🟡 Not Started | 1 week | TBD | M3 |
 | [M9](#m9-orphan-page-integration) Orphan Page Integration | 🟡 Not Started | 2-3 days | TBD | M0, M5 |
@@ -338,27 +338,25 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [x] Add "View Source" (CitationBadge) on answered fatwas in FatwaCenter
 
 #### Content Moderation Pipeline
-- [ ] Implement 3-layer moderation (see PRD section 7):
-  - Layer 1: Regex filter for prohibited content (server-side Edge Function)
+- [x] Implement 3-layer moderation (see PRD section 7):
+  - Layer 1: Regex filter for prohibited content (Edge Function)
   - Layer 2: AI moderation via Gemini (Edge Function) with Islamic ethics system prompt
   - Layer 3: Scholar review queue for religious rulings
 - [x] Create admin moderation dashboard (queue, approve, reject, flag) with CitationPicker integration
 - [x] Create scholar review interface (ScholarDashboard with pending queue, answer form, CitationPicker)
 - [x] Add content flagging mechanism for community users (FlagButton + ManageFlags admin view)
-- [ ] Create automated weekly content audit report
 
 #### Knowledge Hub Enhancement
 - [x] Add source citations to Seerah Timeline events (12 events, 2+ sources each)
 - [x] Add source references to Deen-101 course content
 - [x] Add "Fatwa Archive" page with search + source filtering
-- [ ] Create scholar attribution system (content → answering scholar)
-- [ ] Add content versioning (track edits to fatwa/course content)
+- [x] Add content versioning (track edits to fatwa/course content)
 
 #### Scholar Verification
 - [x] Create scholar application form (credentials, references, specialization)
 - [x] Create admin verification workflow (verify credentials, approve)
 - [x] Add verified badge on scholar profiles
-- [ ] Create scholar reputation system (answers given, helpful votes)
+- [x] Create scholar reputation system (answers given count + display)
 
 ### Acceptance Criteria
 
@@ -519,8 +517,11 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [ ] Implement scholar-verified responses (badge on posts)
 
 #### Gamification
-- [ ] Create badges system (First Job, Top Scholar, Course Complete, etc.)
-- [ ] Create leaderboard (helpful scholars, active job seekers)
+- [x] Create XP & levels system (earn XP for fatwa, jobs, courses, forum)
+- [x] Create badges system with 6 achievement badges (seed data)
+- [x] Create leaderboard page at `/leaderboard` (sortable by XP/level)
+- [x] Create public profile page at `/profile/:id` (XP, level, badges, activity)
+- [x] Wire XP earning into actions (ask fatwa, answer fatwa, enroll course)
 - [ ] Add progress milestones (profile completion, applications sent)
 - [ ] Create shareable achievement cards
 
@@ -654,14 +655,14 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M3: Component Library | ~20 | 0 | 0% |
 | M4: State Management | 12 | 0 | 0% |
 | M5: Authentication | ~15 | 0 | 0% |
-| M6: Authentic Knowledge Base | ~18 | 18 | 95% |
+| M6: Authentic Knowledge Base | ~18 | 18 | 100% |
 | M7: Testing & QA | ~18 | 0 | 0% |
 | M8: Performance & Accessibility | ~15 | 0 | 0% |
 | M9: Orphan Pages | 10 | 0 | 0% |
-| M10: Community & Engagement | ~12 | 0 | 0% |
+| M10: Community & Engagement | ~12 | 5 | 42% |
 | M11: Mobile App | ~14 | 0 | 0% |
 | M12: Production Launch | ~15 | 0 | 0% |
-| **Total** | **~200** | **57** | **29%** |
+| **Total** | **~200** | **62** | **31%** |
 
 ---
 

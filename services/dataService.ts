@@ -1,4 +1,4 @@
-import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication, ContentVersion } from '../types';
+import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication, ContentVersion, UserXP, Badge, UserBadge, XPEvent, getLevel } from '../types';
 import { supabase } from './supabase';
 
 const CACHE_KEYS = {
@@ -502,6 +502,97 @@ export const dataService = {
       change_summary: data.changeSummary,
     });
     if (error) throw error;
+  },
+
+  // --- Gamification: XP & Badges ---
+  getUserXP: async (userId: string): Promise<UserXP | null> => {
+    const { data, error } = await supabase
+      .from('user_xp')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
+    if (error || !data) return null;
+    return {
+      id: data.id,
+      userId: data.user_id,
+      xp: data.xp,
+      level: data.level,
+      updatedAt: data.updated_at,
+    };
+  },
+
+  addXP: async (userId: string, action: string, points: number): Promise<void> => {
+    const { data: existing } = await supabase
+      .from('user_xp')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
+
+    const newXp = (existing?.xp || 0) + points;
+    const newLevel = getLevel(newXp);
+
+    if (existing) {
+      await supabase.from('user_xp').update({ xp: newXp, level: newLevel, updated_at: new Date().toISOString() }).eq('user_id', userId);
+    } else {
+      await supabase.from('user_xp').insert({ user_id: userId, xp: newXp, level: newLevel });
+    }
+
+    await supabase.from('xp_events').insert({ user_id: userId, action, xp: points });
+  },
+
+  getLeaderboard: async (limit: number = 50): Promise<(UserXP & { name: string; avatar?: string })[]> => {
+    const { data, error } = await supabase
+      .from('user_xp')
+      .select('*, user_profiles(name, avatar_url)')
+      .order('xp', { ascending: false })
+      .limit(limit);
+    if (error) return [];
+    return data.map(u => ({
+      id: u.id,
+      userId: u.user_id,
+      xp: u.xp,
+      level: u.level,
+      updatedAt: u.updated_at,
+      name: (u as any).user_profiles?.name || 'Unknown',
+      avatar: (u as any).user_profiles?.avatar_url || undefined,
+    }));
+  },
+
+  getBadges: async (): Promise<Badge[]> => {
+    const { data, error } = await supabase.from('badges').select('*').order('xp_required');
+    if (error) return [];
+    return data as Badge[];
+  },
+
+  getUserBadges: async (userId: string): Promise<UserBadge[]> => {
+    const { data, error } = await supabase
+      .from('user_badges')
+      .select('*, badges(*)')
+      .eq('user_id', userId);
+    if (error) return [];
+    return data.map(ub => ({
+      id: ub.id,
+      userId: ub.user_id,
+      badgeId: ub.badge_id,
+      earnedAt: ub.earned_at,
+      badge: (ub as any).badges as Badge,
+    }));
+  },
+
+  awardBadge: async (userId: string, badgeId: string): Promise<void> => {
+    const { error } = await supabase.from('user_badges').insert({ user_id: userId, badge_id: badgeId });
+    if (error && !error.message.includes('duplicate')) throw error;
+  },
+
+  getUserXPEvents: async (userId: string): Promise<XPEvent[]> => {
+    const { data, error } = await supabase
+      .from('xp_events')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+      .limit(20);
+    if (error) return [];
+    return data as XPEvent[];
   },
 
   // --- Scholar Reputation ---

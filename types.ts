@@ -1,5 +1,5 @@
 
-export type UserRole = 'ADMIN' | 'INSTITUTION' | 'USER';
+export type UserRole = 'ADMIN' | 'INSTITUTION' | 'SCHOLAR' | 'USER';
 
 export interface User {
   id: string;
@@ -159,3 +159,58 @@ export interface AppNotification {
   type: 'job' | 'community' | 'application';
   link?: string;
 }
+
+export interface UserXP {
+  id: string;
+  userId: string;
+  xp: number;
+  level: number;
+  updatedAt: string;
+}
+
+export interface Badge {
+  id: string;
+  name: string;
+  description?: string;
+  icon?: string;
+  xp_required: number;
+}
+
+export interface UserBadge {
+  id: string;
+  userId: string;
+  badgeId: string;
+  earnedAt: string;
+  badge?: Badge;
+}
+
+export interface XPEvent {
+  id: string;
+  userId: string;
+  action: string;
+  xp: number;
+  createdAt: string;
+}
+
+export const XP_ACTIONS = {
+  ASK_FATWA: { action: 'ask_fatwa', xp: 10 },
+  ANSWER_FATWA: { action: 'answer_fatwa', xp: 50 },
+  FORUM_POST: { action: 'forum_post', xp: 15 },
+  FORUM_COMMENT: { action: 'forum_comment', xp: 5 },
+  VERIFIED_SCHOLAR: { action: 'verified_scholar', xp: 100 },
+  POST_JOB: { action: 'post_job', xp: 20 },
+  APPLY_JOB: { action: 'apply_job', xp: 10 },
+  ENROLL_COURSE: { action: 'enroll_course', xp: 25 },
+  COMPLETE_COURSE: { action: 'complete_course', xp: 50 },
+  FLAG_CONTENT: { action: 'flag_content', xp: 2 },
+} as const;
+
+export const getLevel = (xp: number): number => Math.floor(Math.sqrt(xp / 100)) + 1;
+export const getXpForNextLevel = (level: number): number => (level * 2 - 1) * 100;
+export const getLevelProgress = (xp: number): { current: number; next: number; progress: number } => {
+  const level = getLevel(xp);
+  const currentLevelXp = (level - 1) * (level - 1) * 100;
+  const nextLevelXp = level * level * 100;
+  const progress = ((xp - currentLevelXp) / (nextLevelXp - currentLevelXp)) * 100;
+  return { current: currentLevelXp, next: nextLevelXp, progress };
+};

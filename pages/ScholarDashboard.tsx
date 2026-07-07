@@ -8,6 +8,7 @@ import { dataService } from '../services/dataService';
 import { getCurrentUser } from '../services/authService';
 import CitationBadge from '../components/CitationBadge';
 import CitationPicker from '../components/CitationPicker';
+import { XP_ACTIONS } from '../types';
 
 const ScholarDashboard: React.FC = () => {
   const currentUser = getCurrentUser();
@@ -45,6 +46,7 @@ const ScholarDashboard: React.FC = () => {
     setSubmitting(true);
     try {
       await dataService.approveFatwa(answering.id, answerText, selectedSources.map(s => s.id));
+      if (currentUser) dataService.addXP(currentUser.id, XP_ACTIONS.ANSWER_FATWA.action, XP_ACTIONS.ANSWER_FATWA.xp);
       setPendingFatwas(prev => prev.filter(f => f.id !== answering.id));
       setAnswering(null);
       setAnswerText('');

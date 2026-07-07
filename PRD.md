@@ -288,6 +288,31 @@ User Post → Layer 1: Regex (prohibited keywords)
 
 ---
 
+### Gamification & Reputation System
+
+To drive engagement and reward contribution, the platform includes a full gamification layer:
+
+| Feature | Description | Status |
+|---------|-------------|--------|
+| **XP & Levels** | Earn XP for all actions (fatwa, jobs, courses, forum). Level = floor(sqrt(XP/100)) + 1 | ✅ Built |
+| **Badges** | 6 achievement badges (First Fatwa, Scholar Verified, Job Seeker, Course Graduate, Community Helper, Top Contributor) | ✅ Built |
+| **Leaderboard** | `/leaderboard` — sortable by XP or level, shows progress bar to next level | ✅ Built |
+| **Public Profile** | `/profile/:id` — XP, level progress, badges earned, recent activity log | ✅ Built |
+| **XP Actions** | ask_fatwa (+10), answer_fatwa (+50), forum_post (+15), forum_comment (+5), verified_scholar (+100), post_job (+20), apply_job (+10), enroll_course (+25), complete_course (+50) | 🔄 Wiring in progress |
+| **Shareable Cards** | Achievement cards for social sharing | 📝 Future |
+
+### XP Table
+
+| Action | XP | Level 1→2 | Level 2→3 | Level 3→4 | Level 10 |
+|--------|----|-----------|-----------|-----------|----------|
+| Ask a fatwa | 10 | 10 actions | 30 actions | 50 actions | — |
+| Answer a fatwa | 50 | 2 answers | 6 answers | 10 answers | — |
+| Enroll in course | 25 | 4 enrolls | 12 enrolls | 20 enrolls | — |
+| Post a job | 20 | 5 posts | 15 posts | 25 posts | — |
+| Get verified | 100 | 1 verification | — | — | — |
+
+---
+
 ## 8. Non-Functional Requirements
 
 ### Performance

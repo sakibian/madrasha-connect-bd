@@ -208,6 +208,33 @@ insert into public.content_sources (source_id, content_type, content_id) values
   ('s-q-103', 'course', 'a290f1ee-6c54-4b01-90e6-d701748f0851')
 on conflict (source_id, content_type, content_id) do nothing;
 
+-- Demo Badges (Gamification)
+insert into public.badges (id, name, description, icon, xp_required) values
+  ('b-001', 'প্রথম ফতোয়া', 'আপনার প্রথম প্রশ্ন জমা দিন', '📩', 0),
+  ('b-002', 'স্কলার ভেরিফায়েড', 'ভেরিফায়েড স্কলার হন', '✅', 100),
+  ('b-003', 'চাকরি প্রার্থী', '৫টি চাকরিতে আবেদন করুন', '💼', 50),
+  ('b-004', 'কোর্স গ্র্যাজুয়েট', 'একটি কোর্স সম্পূর্ণ করুন', '🎓', 250),
+  ('b-005', 'কমিউনিটি হেল্পার', '১০টি ফতোয়ার উত্তর দিন', '🤝', 500),
+  ('b-006', 'টপ কন্ট্রিবিউটর', 'লেভেল ১০ এ পৌঁছান', '👑', 900)
+on conflict (id) do nothing;
+
+-- Demo XP for test user
+insert into public.user_xp (id, user_id, xp, level) values
+  ('xp-001', (select id from auth.users limit 1), 450, 3)
+on conflict (user_id) do nothing;
+
+-- Demo User Badge
+insert into public.user_badges (id, user_id, badge_id) values
+  ('ub-001', (select id from auth.users limit 1), 'b-001')
+on conflict (user_id, badge_id) do nothing;
+
+-- Demo XP Events
+insert into public.xp_events (id, user_id, action, xp) values
+  ('xe-001', (select id from auth.users limit 1), 'ask_fatwa', 10),
+  ('xe-002', (select id from auth.users limit 1), 'enroll_course', 25),
+  ('xe-003', (select id from auth.users limit 1), 'forum_post', 15)
+on conflict (id) do nothing;
+
 -- Demo Scholar Application
 insert into public.scholar_applications (id, user_id, title, specialization, institution, location, bio, credentials, references, status) values
   ('s-app-001', (select id from auth.users limit 1), 'মুফতি', 'ফিকহ ও হাদিস', 'দারুল উলুম মাদ্রাসা', 'ঢাকা', '১০ বছরের বেশি শিক্ষাদানের অভিজ্ঞতা। ফিকহ ও হাদিস বিষয়ে বিশেষজ্ঞ।', '{দাওরায়ে হাদিস, জামিয়া ইসলামিয়া,ফিকহ স্পেশালাইজেশন, মদিনা বিশ্ববিদ্যালয়}', '{মাওলানা আব্দুর রহিম, অধ্যক্ষ, দারুল উলুম}', 'approved')

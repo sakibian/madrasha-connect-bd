@@ -494,3 +494,75 @@ create policy "Anyone can read content versions"
 
 create policy "Authenticated users can create versions"
   on public.content_versions for insert with check (auth.role() = 'authenticated');
+
+-- 23. User XP & Levels (Gamification)
+create table public.user_xp (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid not null references auth.users(id) on delete cascade unique,
+  xp integer default 0,
+  level integer default 1,
+  updated_at timestamptz default now()
+);
+
+alter table public.user_xp enable row level security;
+
+create policy "Anyone can read user_xp"
+  on public.user_xp for select using (true);
+
+create policy "System can insert user_xp"
+  on public.user_xp for insert with check (auth.uid() = user_id);
+
+create policy "System can update own xp"
+  on public.user_xp for update using (auth.uid() = user_id);
+
+-- 24. Badge Definitions
+create table public.badges (
+  id uuid primary key default uuid_generate_v4(),
+  name text not null,
+  description text,
+  icon text,
+  xp_required integer default 0
+);
+
+alter table public.badges enable row level security;
+
+create policy "Anyone can read badges"
+  on public.badges for select using (true);
+
+-- 25. User Badges (earned)
+create table public.user_badges (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  badge_id uuid not null references public.badges(id) on delete cascade,
+  earned_at timestamptz default now(),
+  unique(user_id, badge_id)
+);
+
+create index idx_user_badges_user on public.user_badges(user_id);
+
+alter table public.user_badges enable row level security;
+
+create policy "Anyone can read user_badges"
+  on public.user_badges for select using (true);
+
+create policy "Users can earn badges"
+  on public.user_badges for insert with check (auth.uid() = user_id);
+
+-- 26. XP Events (audit log for XP earning)
+create table public.xp_events (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  action text not null,
+  xp integer not null,
+  created_at timestamptz default now()
+);
+
+create index idx_xp_events_user on public.xp_events(user_id, created_at desc);
+
+alter table public.xp_events enable row level security;
+
+create policy "Anyone can read xp_events"
+  on public.xp_events for select using (true);
+
+create policy "System can insert xp_events"
+  on public.xp_events for insert with check (auth.uid() = user_id);

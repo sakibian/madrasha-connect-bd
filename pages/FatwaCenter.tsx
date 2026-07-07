@@ -21,6 +21,7 @@ import { askScholar } from '../services/geminiService';
 import { getCurrentUser } from '../services/authService';
 import { addNotification } from '../services/notificationService';
 import { moderateContent } from '../services/moderationService';
+import { XP_ACTIONS } from '../types';
 import CitationBadge from '../components/CitationBadge';
 import FlagButton from '../components/FlagButton';
 
@@ -80,6 +81,7 @@ const FatwaCenter: React.FC = () => {
       };
 
       await dataService.saveFatwa(newFatwa);
+      if (currentUser) dataService.addXP(currentUser.id, XP_ACTIONS.ASK_FATWA.action, XP_ACTIONS.ASK_FATWA.xp);
       await addNotification({
         title: 'আপনার প্রশ্ন জমা হয়েছে',
         message: 'এআই একটি প্রাথমিক উত্তর দিয়েছে। শীঘ্রই একজন মুফতি এটি যাচাই করবেন।',
