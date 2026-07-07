@@ -119,7 +119,7 @@ export const dataService = {
     const user = (await supabase.auth.getSession()).data.session?.user;
     let query = supabase
       .from('fatwas')
-      .select('*')
+      .select('*, fatwa_answers(*)')
       .order('created_at', { ascending: false });
 
     if (!user) {
@@ -129,17 +129,22 @@ export const dataService = {
     const { data, error } = await query;
     if (error) return cacheGet<Fatwa[]>(CACHE_KEYS.FATWAS) || [];
     cacheSet(CACHE_KEYS.FATWAS, data);
-    return data.map(f => ({
-      id: f.id,
-      question: f.question,
-      category: f.category as Fatwa['category'],
-      askedBy: f.asked_by || '',
-      askedAt: f.created_at || '',
-      answer: undefined,
-      answeredBy: undefined,
-      answeredAt: undefined,
-      status: f.status as Fatwa['status'],
-    }));
+    return data.map(f => {
+      const answer = (f as any).fatwa_answers;
+      return {
+        id: f.id,
+        question: f.question,
+        category: f.category as Fatwa['category'],
+        askedBy: f.asked_by || '',
+        askedAt: f.created_at || '',
+        answer: answer?.answer || undefined,
+        answeredBy: answer?.answered_by || undefined,
+        answeredAt: answer?.created_at || undefined,
+        answerSources: answer?.sources || [],
+        aiSuggestion: f.ai_suggestion || undefined,
+        status: f.status as Fatwa['status'],
+      };
+    });
   },
 
   saveFatwa: async (fatwa: Fatwa) => {
@@ -152,6 +157,58 @@ export const dataService = {
       asked_by: user.id,
       status: 'pending',
     });
+    if (error) throw error;
+  },
+
+  getPendingFatwas: async (): Promise<Fatwa[]> => {
+    const { data, error } = await supabase
+      .from('fatwas')
+      .select('*, fatwa_answers(*)')
+      .eq('status', 'pending')
+      .order('created_at', { ascending: false });
+    if (error) return [];
+    return data.map(f => {
+      const answer = (f as any).fatwa_answers;
+      return {
+        id: f.id,
+        question: f.question,
+        category: f.category as Fatwa['category'],
+        askedBy: f.asked_by || '',
+        askedAt: f.created_at || '',
+        answer: answer?.answer || undefined,
+        answeredBy: answer?.answered_by || undefined,
+        answeredAt: answer?.created_at || undefined,
+        answerSources: answer?.sources || [],
+        aiSuggestion: f.ai_suggestion || undefined,
+        status: f.status as Fatwa['status'],
+      };
+    });
+  },
+
+  approveFatwa: async (fatwaId: string, answer: string, sourceIds: string[]) => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+
+    const { error: answerError } = await supabase.from('fatwa_answers').upsert({
+      fatwa_id: fatwaId,
+      answer,
+      answered_by: user.id,
+      sources: sourceIds,
+    });
+    if (answerError) throw answerError;
+
+    const { error: statusError } = await supabase
+      .from('fatwas')
+      .update({ status: 'answered' })
+      .eq('id', fatwaId);
+    if (statusError) throw statusError;
+  },
+
+  rejectFatwa: async (fatwaId: string) => {
+    const { error } = await supabase
+      .from('fatwas')
+      .update({ status: 'rejected' })
+      .eq('id', fatwaId);
     if (error) throw error;
   },
 
@@ -341,6 +398,16 @@ export const dataService = {
       .select('*')
       .eq('type', type)
       .order('reference');
+    if (error) return [];
+    return data as Source[];
+  },
+
+  getSourcesByIds: async (ids: string[]): Promise<Source[]> => {
+    if (ids.length === 0) return [];
+    const { data, error } = await supabase
+      .from('sources')
+      .select('*')
+      .in('id', ids);
     if (error) return [];
     return data as Source[];
   },

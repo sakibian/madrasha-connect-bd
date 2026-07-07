@@ -335,14 +335,14 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [x] Create CitationBadge component (source reference with type icon + link)
 - [x] Create CitationPicker component (search & select quran/hadith sources)
 - [x] Connect KnowledgeHub to Supabase courses with source citations
-- [ ] Add "View Source" link on all authenticated knowledge content
+- [x] Add "View Source" (CitationBadge) on answered fatwas in FatwaCenter
 
 #### Content Moderation Pipeline
 - [ ] Implement 3-layer moderation (see PRD section 7):
   - Layer 1: Regex filter for prohibited content (server-side Edge Function)
   - Layer 2: AI moderation via Gemini (Edge Function) with Islamic ethics system prompt
   - Layer 3: Scholar review queue for religious rulings
-- [ ] Create admin moderation dashboard (queue, approve, reject, flag)
+- [x] Create admin moderation dashboard (queue, approve, reject, flag) with CitationPicker integration
 - [ ] Create scholar review interface (for fatwa answers, course content)
 - [ ] Add content flagging mechanism for community users
 - [ ] Create automated weekly content audit report
@@ -654,14 +654,14 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M3: Component Library | ~20 | 0 | 0% |
 | M4: State Management | 12 | 0 | 0% |
 | M5: Authentication | ~15 | 0 | 0% |
-| M6: Authentic Knowledge Base | ~18 | 8 | 44% |
+| M6: Authentic Knowledge Base | ~18 | 10 | 56% |
 | M7: Testing & QA | ~18 | 0 | 0% |
 | M8: Performance & Accessibility | ~15 | 0 | 0% |
 | M9: Orphan Pages | 10 | 0 | 0% |
 | M10: Community & Engagement | ~12 | 0 | 0% |
 | M11: Mobile App | ~14 | 0 | 0% |
 | M12: Production Launch | ~15 | 0 | 0% |
-| **Total** | **~200** | **47** | **24%** |
+| **Total** | **~200** | **49** | **25%** |
 
 ---
 

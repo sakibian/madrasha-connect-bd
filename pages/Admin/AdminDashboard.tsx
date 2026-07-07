@@ -9,13 +9,18 @@ import {
   Plus,
   Trash2,
   CheckCircle,
-  ArrowUpRight
+  ArrowUpRight,
+  Shield,
+  X,
+  Loader2
 } from 'lucide-react';
 import { dataService } from '../../services/dataService';
-import { Job, Product, User } from '../../types';
+import { Job, Product, User, Fatwa, Source } from '../../types';
+import CitationBadge from '../../components/CitationBadge';
+import CitationPicker from '../../components/CitationPicker';
 
 const AdminDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'products' | 'users'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'products' | 'users' | 'moderation'>('overview');
   const [stats, setStats] = useState({
     jobs: 0,
     products: 0,
@@ -53,6 +58,7 @@ const AdminDashboard: React.FC = () => {
         <TabButton active={activeTab === 'jobs'} onClick={() => setActiveTab('jobs')} icon={<Briefcase size={16} />} label="চাকরি" />
         <TabButton active={activeTab === 'products'} onClick={() => setActiveTab('products')} icon={<ShoppingBag size={16} />} label="মার্কেটপ্লেস" />
         <TabButton active={activeTab === 'users'} onClick={() => setActiveTab('users')} icon={<Users size={16} />} label="ইউজার" />
+        <TabButton active={activeTab === 'moderation'} onClick={() => setActiveTab('moderation')} icon={<Shield size={16} />} label="মডারেশন" />
       </div>
 
       {activeTab === 'overview' && (
@@ -67,6 +73,7 @@ const AdminDashboard: React.FC = () => {
       {activeTab === 'jobs' && <ManageJobs />}
       {activeTab === 'products' && <ManageProducts />}
       {activeTab === 'users' && <ManageUsers />}
+      {activeTab === 'moderation' && <ManageModeration />}
     </div>
   );
 };
@@ -242,6 +249,174 @@ const ManageUsers: React.FC = () => {
           ))}
         </tbody>
       </table>
+    </div>
+  );
+};
+
+const ManageModeration: React.FC = () => {
+  const [fatwas, setFatwas] = useState<Fatwa[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [answering, setAnswering] = useState<Fatwa | null>(null);
+  const [answerText, setAnswerText] = useState('');
+  const [selectedSources, setSelectedSources] = useState<Source[]>([]);
+  const [showPicker, setShowPicker] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  const load = async () => {
+    setLoading(true);
+    const data = await dataService.getPendingFatwas();
+    setFatwas(data);
+    setLoading(false);
+  };
+
+  useEffect(() => { load(); }, []);
+
+  const handleApprove = async () => {
+    if (!answering || !answerText.trim()) return;
+    setSubmitting(true);
+    try {
+      await dataService.approveFatwa(
+        answering.id,
+        answerText,
+        selectedSources.map(s => s.id)
+      );
+      setAnswering(null);
+      setAnswerText('');
+      setSelectedSources([]);
+      await load();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleReject = async (fatwa: Fatwa) => {
+    await dataService.rejectFatwa(fatwa.id);
+    await load();
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-3">
+        <Shield size={20} />
+        <span className="font-bold text-lg">ফতোয়া মডারেশন কিউ</span>
+        <span className="text-[9px] font-black px-2 py-1 bg-gray-100 text-gray-500">{fatwas.length} পেন্ডিং</span>
+      </div>
+
+      {loading ? (
+        <div className="bg-white p-20 text-center text-gray-400 font-bold">লোড হচ্ছে...</div>
+      ) : fatwas.length === 0 ? (
+        <div className="bg-white p-20 text-center text-gray-400 font-bold">কোনো পেন্ডিং ফতোয়া নেই</div>
+      ) : (
+        <div className="space-y-1 bg-gray-100 minimal-border">
+          {fatwas.map(fatwa => (
+            <div key={fatwa.id} className="bg-white p-10 space-y-6">
+              <div className="flex justify-between items-start">
+                <div className="space-y-2">
+                  <div className="caps-label text-bd-green">{fatwa.category}</div>
+                  <h3 className="text-2xl font-extrabold leading-tight">{fatwa.question}</h3>
+                  <div className="text-xs font-bold text-gray-400">{fatwa.askedAt}</div>
+                </div>
+              </div>
+
+              {fatwa.aiSuggestion && (
+                <div className="p-6 bg-gray-50 border-l-4 border-gray-300 space-y-2">
+                  <div className="caps-label text-gray-400">এআই প্রস্তাবনা</div>
+                  <p className="text-sm text-gray-600 italic">{fatwa.aiSuggestion}</p>
+                </div>
+              )}
+
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setAnswering(fatwa)}
+                  className="px-6 py-3 bg-black text-white font-bold text-xs hover:bg-gray-800 transition-all"
+                >
+                  উত্তর দিন & অনুমোদন
+                </button>
+                <button
+                  onClick={() => handleReject(fatwa)}
+                  className="px-6 py-3 border border-gray-200 text-red-600 font-bold text-xs hover:bg-red-50 transition-all"
+                >
+                  প্রত্যাখ্যান
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {answering && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm" onClick={() => setAnswering(null)}>
+          <div className="bg-white w-full max-w-2xl p-12 space-y-8 animate-slideUp max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-center border-b border-gray-100 pb-6">
+              <div className="space-y-1">
+                <h2 className="text-2xl font-extrabold">ফতোয়ার উত্তর</h2>
+                <p className="text-sm text-gray-500 font-medium">{answering.question}</p>
+              </div>
+              <button onClick={() => setAnswering(null)} className="text-gray-400 hover:text-black"><X size={24} /></button>
+            </div>
+
+            {answering.aiSuggestion && (
+              <div className="p-4 bg-gray-50 text-sm text-gray-500 italic border-l-4 border-gray-300">
+                <div className="caps-label text-gray-400 mb-2">এআই প্রস্তাবনা</div>
+                {answering.aiSuggestion}
+              </div>
+            )}
+
+            <textarea
+              value={answerText}
+              onChange={e => setAnswerText(e.target.value)}
+              placeholder="মুফতির উত্তর লিখুন..."
+              className="w-full p-6 border border-gray-100 bg-gray-50 outline-none focus:ring-2 focus:ring-black font-medium min-h-[200px]"
+            />
+
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="caps-label text-gray-400">সোর্স সাইটেশন</span>
+                <button
+                  onClick={() => setShowPicker(true)}
+                  className="text-xs font-bold border border-gray-200 px-4 py-2 hover:bg-black hover:text-white transition-all"
+                >
+                  + সোর্স যোগ করুন
+                </button>
+              </div>
+              {selectedSources.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {selectedSources.map(s => (
+                    <CitationBadge key={s.id} source={s} size="md" />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="flex gap-4 pt-4 border-t border-gray-100">
+              <button
+                onClick={handleApprove}
+                disabled={submitting || !answerText.trim()}
+                className="flex-1 py-4 bg-black text-white font-bold text-sm hover:bg-gray-800 transition-all disabled:bg-gray-200 disabled:text-gray-400 flex items-center justify-center gap-2"
+              >
+                {submitting ? <Loader2 size={18} className="animate-spin" /> : <CheckCircle size={18} />}
+                উত্তর প্রকাশ করুন
+              </button>
+              <button
+                onClick={() => setAnswering(null)}
+                className="px-8 py-4 border border-gray-200 text-gray-500 font-bold text-sm hover:bg-gray-50 transition-all"
+              >
+                বাতিল
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showPicker && (
+        <CitationPicker
+          selected={selectedSources}
+          onChange={setSelectedSources}
+          onClose={() => setShowPicker(false)}
+        />
+      )}
     </div>
   );
 };

@@ -97,6 +97,7 @@ export interface Fatwa {
   answer?: string;
   answeredBy?: string;
   answeredAt?: string;
+  answerSources?: string[];
   aiSuggestion?: string;
   status: 'PENDING' | 'ANSWERED' | 'REJECTED';
 }

@@ -15,11 +15,12 @@ import {
   // Added missing X icon import
   X
 } from 'lucide-react';
-import { Fatwa } from '../types';
+import { Fatwa, Source } from '../types';
 import { dataService } from '../services/dataService';
 import { askScholar } from '../services/geminiService';
 import { getCurrentUser } from '../services/authService';
 import { addNotification } from '../services/notificationService';
+import CitationBadge from '../components/CitationBadge';
 
 const FatwaCenter: React.FC = () => {
   const currentUser = getCurrentUser();
@@ -30,9 +31,24 @@ const FatwaCenter: React.FC = () => {
   const [question, setQuestion] = useState('');
   const [category, setCategory] = useState<Fatwa['category']>('Ibadah');
   const [isLoading, setIsLoading] = useState(false);
+  const [answerSources, setAnswerSources] = useState<Record<string, Source[]>>({});
 
   useEffect(() => {
-    dataService.getFatwas().then(setFatwas);
+    const fetchFatwas = async () => {
+      const data = await dataService.getFatwas();
+      setFatwas(data);
+      const answered = data.filter(f => f.answerSources && f.answerSources.length > 0);
+      if (answered.length > 0) {
+        const allIds = answered.flatMap(f => f.answerSources || []);
+        const sources = await dataService.getSourcesByIds(allIds);
+        const map: Record<string, Source[]> = {};
+        answered.forEach(f => {
+          map[f.id] = sources.filter(s => (f.answerSources || []).includes(s.id));
+        });
+        setAnswerSources(map);
+      }
+    };
+    fetchFatwas();
   }, []);
 
   const handleAskQuestion = async (e: React.FormEvent) => {
@@ -137,14 +153,21 @@ const FatwaCenter: React.FC = () => {
                    </div>
                    <h3 className="text-2xl font-extrabold leading-tight">প্রশ্ন: {fatwa.question}</h3>
                    
-                   {fatwa.answer ? (
-                     <div className="pt-8 border-t border-gray-100 space-y-6">
-                        <div className="flex items-center gap-3">
-                           <div className="w-8 h-8 bg-black text-white flex items-center justify-center text-[10px] font-bold">A</div>
-                           <span className="text-xs font-extrabold uppercase tracking-widest">মুফতির উত্তর</span>
-                        </div>
-                        <p className="text-gray-600 leading-relaxed font-medium">{fatwa.answer}</p>
-                     </div>
+                    {fatwa.answer ? (
+                      <div className="pt-8 border-t border-gray-100 space-y-6">
+                         <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-black text-white flex items-center justify-center text-[10px] font-bold">A</div>
+                            <span className="text-xs font-extrabold uppercase tracking-widest">মুফতির উত্তর</span>
+                         </div>
+                         <p className="text-gray-600 leading-relaxed font-medium">{fatwa.answer}</p>
+                         {answerSources[fatwa.id] && answerSources[fatwa.id].length > 0 && (
+                           <div className="flex flex-wrap gap-2 pt-2 border-t border-gray-100">
+                             {answerSources[fatwa.id].map(s => (
+                               <CitationBadge key={s.id} source={s} />
+                             ))}
+                           </div>
+                         )}
+                      </div>
                    ) : (
                      <div className="pt-8 border-t border-gray-100 bg-gray-50/50 p-6 space-y-4">
                         <div className="caps-label text-gray-400">এআই প্রস্তাবনা</div>
