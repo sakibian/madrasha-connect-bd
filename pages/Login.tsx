@@ -103,6 +103,12 @@ const Login: React.FC = () => {
               </div>
             </div>
 
+            <div className="flex justify-end">
+              <Link to="/forgot-password" className="text-xs font-bold text-gray-400 hover:text-black transition-colors">
+                পাসওয়ার্ড ভুলে গেছেন?
+              </Link>
+            </div>
+
             {error && (
               <div className="p-5 bg-red-50 border border-red-100 text-red-600 text-sm font-bold">
                 {error}

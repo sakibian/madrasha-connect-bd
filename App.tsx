@@ -62,6 +62,9 @@ import ScholarDashboard from './pages/ScholarDashboard';
 import ScholarApply from './pages/ScholarApply';
 import Leaderboard from './pages/Leaderboard';
 import PublicProfile from './pages/PublicProfile';
+import Forbidden from './pages/Forbidden';
+import ForgotPassword from './pages/ForgotPassword';
+import ProtectedRoute from './components/ProtectedRoute';
 
 import { getNotifications, initNotifications } from './services/notificationService';
 import { getCurrentUser, logout, initAuth } from './services/authService';
@@ -103,11 +106,11 @@ const AppRouter: React.FC = () => {
     '/', '/about', '/institutions', '/knowledge', '/professional', 
     '/scholars', '/fatwa', '/marketplace', '/seerah', '/calligraphy', 
     '/search', '/deen101', '/faq', '/competitions', '/audio-library', '/tools',
-    '/fatwa/archive', '/scholar-dashboard', '/scholar/apply', '/leaderboard'
+    '/fatwa/archive', '/scholar-dashboard', '/scholar/apply', '/leaderboard', '/forbidden'
   ];
   
   const isPublicPage = publicPaths.includes(location.pathname) || location.pathname.startsWith('/institution/') || location.pathname.startsWith('/profile/');
-  const isAuthPage = ['/login', '/register-user', '/register-institution'].includes(location.pathname);
+  const isAuthPage = ['/login', '/register-user', '/register-institution', '/forgot-password'].includes(location.pathname);
 
   if (isAuthPage) {
     if (currentUser) return <Navigate to="/dashboard" replace />;
@@ -116,6 +119,7 @@ const AppRouter: React.FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register-user" element={<RegisterUser />} />
         <Route path="/register-institution" element={<RegisterInstitution />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     );
   }
@@ -185,6 +189,7 @@ const PublicLayout: React.FC = () => {
           <Route path="/scholar/apply" element={<ScholarApply />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/profile/:id" element={<PublicProfile />} />
+          <Route path="/forbidden" element={<Forbidden />} />
         </Routes>
       </div>
     </div>
@@ -326,8 +331,6 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
             <Route path="/deen101" element={<Deen101 />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/about" element={<AboutUs />} />
-            <Route path="/post-job" element={<PostJob />} />
-            <Route path="/erp-preview" element={<ERPPreview />} />
             <Route path="/profile-builder" element={<ProfileBuilder />} />
             <Route path="/help" element={<InstructionalHelp />} />
             <Route path="/competitions" element={<Competitions />} />
@@ -342,6 +345,9 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
             <Route path="/scholar/apply" element={<ScholarApply />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/profile/:id" element={<PublicProfile />} />
+            <Route path="/forbidden" element={<Forbidden />} />
+            <Route path="/post-job" element={<ProtectedRoute requiredRole="INSTITUTION"><PostJob /></ProtectedRoute>} />
+            <Route path="/erp-preview" element={<ProtectedRoute requiredRole="INSTITUTION"><ERPPreview /></ProtectedRoute>} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </div>
