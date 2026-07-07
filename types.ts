@@ -84,6 +84,7 @@ export interface ForumPost {
   author: string;
   title: string;
   content: string;
+  category: string;
   likes: number;
   comments: number;
   verified: boolean;

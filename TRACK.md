@@ -286,7 +286,7 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [ ] Add loading state during auth checks
 - [ ] Add error states (wrong password, network error, etc.)
 - [ ] Update RegisterUser.tsx to create Supabase user + profile
-- [ ] Update RegisterInstitution.tsx to create institution profile (status: PENDING)
+- [x] Update RegisterInstitution.tsx to create institution profile (status: PENDING)
 
 #### Route Protection
 - [x] Create `ProtectedRoute` wrapper component (with role-based `requiredRole` prop)
@@ -508,12 +508,12 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 ### Tasks
 
 #### Community Forum
-- [ ] Build topic categories (General, Jobs Discussion, Education, Events)
+- [x] Build topic categories (General, Jobs Discussion, Education, Events)
 - [ ] Implement post creation with rich text (TipTap or similar)
 - [x] Implement comment threading
 - [x] Add post voting (upvote/downvote)
 - [x] Add post reporting (flag inappropriate content)
-- [ ] Implement scholar-verified responses (badge on posts)
+- [x] Implement scholar-verified responses (badge on posts)
 
 #### Gamification
 - [x] Create CP (Contribute Point) & levels system
@@ -653,13 +653,11 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M2: Data Migration | 9 | 0 | 0% |
 | M3: Component Library | ~20 | 0 | 0% |
 | M4: State Management | 12 | 0 | 0% |
-| M5: Authentication | ~15 | 8 | 53% |
+| M5: Authentication | ~15 | 9 | 60% |
 | M6: Authentic Knowledge Base | ~18 | 18 | 100% |
-| M7: Testing & QA | ~18 | 0 | 0% |
-| M8: Performance & Accessibility | ~15 | 0 | 0% |
 | M9: Orphan Pages | 10 | 10 | 100% |
-| M10: Community & Engagement | ~12 | 10 | 83% |
-| **Total** | **~200** | **80** | **40%** |
+| M10: Community & Engagement | ~12 | 12 | 100% |
+| **Total** | **~200** | **82** | **41%** |
 
 ---
 

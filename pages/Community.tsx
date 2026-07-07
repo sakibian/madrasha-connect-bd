@@ -22,6 +22,16 @@ import { dataService } from '../services/dataService';
 import { addNotification } from '../services/notificationService';
 import { ForumPost, ForumComment, XP_ACTIONS } from '../types';
 
+const CATEGORIES = ['General', 'Jobs Discussion', 'Education', 'Events', 'Fatwa', 'Other'] as const;
+const CATEGORY_LABELS: Record<string, string> = {
+  'General': 'সাধারণ',
+  'Jobs Discussion': 'চাকরি আলোচনা',
+  'Education': 'শিক্ষা',
+  'Events': 'ইভেন্ট',
+  'Fatwa': 'মাসআলা',
+  'Other': 'অন্যান্য',
+};
+
 const Community: React.FC = () => {
   const [question, setQuestion] = useState('');
   const [aiResponse, setAiResponse] = useState<string | null>(null);
@@ -32,8 +42,10 @@ const Community: React.FC = () => {
   const [showCreatePost, setShowCreatePost] = useState(false);
   const [newPostTitle, setNewPostTitle] = useState('');
   const [newPostContent, setNewPostContent] = useState('');
+  const [newPostCategory, setNewPostCategory] = useState('General');
   const [posting, setPosting] = useState(false);
   const [userLikes, setUserLikes] = useState<string[]>([]);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   const currentUser = getCurrentUser();
 
@@ -55,10 +67,11 @@ const Community: React.FC = () => {
     if (!newPostTitle.trim() || !newPostContent.trim()) return;
     setPosting(true);
     try {
-      await dataService.saveForumPost({ title: newPostTitle, content: newPostContent });
+      await dataService.saveForumPost({ title: newPostTitle, content: newPostContent, category: newPostCategory });
       if (currentUser) await dataService.addXP(currentUser.id, XP_ACTIONS.FORUM_POST.action, XP_ACTIONS.FORUM_POST.xp);
       setNewPostTitle('');
       setNewPostContent('');
+      setNewPostCategory('General');
       setShowCreatePost(false);
       await loadPosts();
     } catch (e) {
@@ -202,6 +215,29 @@ const Community: React.FC = () => {
           )}
         </div>
 
+        {/* Category Filter Tabs */}
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          <button
+            onClick={() => setActiveCategory(null)}
+            className={`px-4 py-2 text-xs font-black rounded-xl whitespace-nowrap transition-all ${
+              activeCategory === null ? 'bg-black text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+            }`}
+          >
+            সবগুলো
+          </button>
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-4 py-2 text-xs font-black rounded-xl whitespace-nowrap transition-all ${
+                activeCategory === cat ? 'bg-black text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+              }`}
+            >
+              {CATEGORY_LABELS[cat]}
+            </button>
+          ))}
+        </div>
+
         {showCreatePost && (
           <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 space-y-4 animate-fadeIn">
             <input
@@ -216,6 +252,23 @@ const Community: React.FC = () => {
               value={newPostContent}
               onChange={(e) => setNewPostContent(e.target.value)}
             />
+            <div>
+              <label className="caps-label text-gray-400 block mb-2">ক্যাটাগরি</label>
+              <div className="flex gap-1 bg-gray-100 rounded-xl p-1">
+                {CATEGORIES.map(cat => (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => setNewPostCategory(cat)}
+                    className={`flex-1 py-2.5 text-xs font-bold rounded-lg transition-all ${
+                      newPostCategory === cat ? 'bg-black text-white' : 'text-gray-500 hover:text-black'
+                    }`}
+                  >
+                    {CATEGORY_LABELS[cat]}
+                  </button>
+                ))}
+              </div>
+            </div>
             <div className="flex justify-end gap-3 pt-2">
               <button
                 onClick={() => setShowCreatePost(false)}
@@ -239,12 +292,14 @@ const Community: React.FC = () => {
           <div className="flex items-center justify-center py-20">
             <Loader2 size={32} className="animate-spin text-gray-300" />
           </div>
-        ) : posts.length === 0 ? (
+        ) : posts.filter(p => !activeCategory || p.category === activeCategory).length === 0 ? (
           <div className="text-center py-20 text-gray-400 font-medium">
-            এখনো কোনো আলোচনা শুরু হয়নি। প্রথম পোস্ট তৈরি করুন!
+            {activeCategory ? `"${CATEGORY_LABELS[activeCategory]}" ক্যাটাগরিতে এখনো কোনো পোস্ট নেই` : 'এখনো কোনো আলোচনা শুরু হয়নি। প্রথম পোস্ট তৈরি করুন!'}
           </div>
         ) : (
-          posts.map(post => (
+          posts
+            .filter(p => !activeCategory || p.category === activeCategory)
+            .map(post => (
             <PostCard 
               key={post.id}
               post={post}
@@ -329,6 +384,9 @@ const PostCard: React.FC<{
               {post.author || 'ব্যবহারকারী'}
               {post.verified && <CheckCircle size={14} className="text-blue-500" />}
             </h4>
+            <span className="text-[10px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-md inline-block mt-1">
+              {CATEGORY_LABELS[post.category] || post.category}
+            </span>
           </div>
         </div>
         <div className="flex items-center gap-2">

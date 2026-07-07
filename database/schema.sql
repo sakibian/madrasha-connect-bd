@@ -259,11 +259,15 @@ create table public.forum_posts (
   author_id uuid not null references auth.users(id) on delete cascade,
   title text not null,
   content text not null,
+  category text not null default 'General' check (category in ('General', 'Jobs Discussion', 'Education', 'Events', 'Fatwa', 'Other')),
   likes int default 0,
   comments_count int default 0,
   verified boolean default false,
   created_at timestamptz default now()
 );
+
+-- Add category column if upgrading from earlier schema
+-- ALTER TABLE public.forum_posts ADD COLUMN IF NOT EXISTS category text not null default 'General';
 
 alter table public.forum_posts enable row level security;
 

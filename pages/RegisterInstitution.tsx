@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { School, MapPin, Phone, Mail, Lock, ArrowRight, ArrowLeft, Loader2, Building2 } from 'lucide-react';
 import { registerUser } from '../services/authService';
 import { addNotification } from '../services/notificationService';
+import { supabase } from '../services/supabase';
 
 const RegisterInstitution: React.FC = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const RegisterInstitution: React.FC = () => {
     instName: '',
     instType: 'Qawmi',
     location: '',
+    district: '',
     contact: '',
     email: '',
     password: ''
@@ -21,12 +23,21 @@ const RegisterInstitution: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await registerUser({
+      const user = await registerUser({
         name: `অ্যাডমিন (${formData.instName})`,
         email: formData.email,
         password: formData.password,
         role: 'INSTITUTION',
         institutionName: formData.instName
+      });
+
+      await supabase.from('institutions').insert({
+        owner_id: user.id,
+        name: formData.instName,
+        type: formData.instType,
+        location: formData.location,
+        district: formData.district || formData.location,
+        verified: false,
       });
 
       await addNotification({
@@ -114,7 +125,11 @@ const RegisterInstitution: React.FC = () => {
                 </div>
                 <div className="space-y-2">
                   <label className="caps-label text-gray-400">Location</label>
-                  <input required placeholder="জেলা / এলাকা" className="w-full p-4 bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-black outline-none font-medium text-lg" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} />
+                  <input required placeholder="ঠিকানা" className="w-full p-4 bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-black outline-none font-medium text-lg" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} />
+                </div>
+                <div className="space-y-2">
+                  <label className="caps-label text-gray-400">District</label>
+                  <input required placeholder="জেলা" className="w-full p-4 bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-black outline-none font-medium text-lg" value={formData.district} onChange={e => setFormData({...formData, district: e.target.value})} />
                 </div>
                 <div className="space-y-2">
                   <label className="caps-label text-gray-400">Contact Number</label>

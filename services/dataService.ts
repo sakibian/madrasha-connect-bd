@@ -280,19 +280,21 @@ export const dataService = {
       role: '',
       title: p.title,
       content: p.content,
+      category: p.category || 'General',
       likes: p.likes || 0,
       comments: p.comments_count || 0,
       verified: p.verified,
     }));
   },
 
-  saveForumPost: async (post: { title: string; content: string }) => {
+  saveForumPost: async (post: { title: string; content: string; category?: string }) => {
     const user = (await supabase.auth.getSession()).data.session?.user;
     if (!user) throw new Error('Must be logged in to post');
     const { error } = await supabase.from('forum_posts').insert({
       author_id: user.id,
       title: post.title,
       content: post.content,
+      category: post.category || 'General',
     });
     if (error) throw error;
   },

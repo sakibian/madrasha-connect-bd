@@ -36,8 +36,8 @@ export const MOCK_PRODUCTS: Product[] = [
 ];
 
 export const MOCK_POSTS: ForumPost[] = [
-  { id: 'post-1', author: 'মুফতি আব্দুল্লাহ আল-মামুন', role: 'খতিব, ঢাকা উত্তর', title: 'রমজানের প্রস্তুতি ও আমাদের সামাজিক দায়িত্ব', content: 'আসসালামু আলাইকুম। রমজান সমাগত...', likes: 124, comments: 18, verified: true },
-  { id: 'post-2', author: 'মাওলানা সাঈদ বিন নূর', role: 'মুহাদ্দিস, হাটহাজারী', title: 'নাহু ও সরফ শিখার সহজ ৫টি কৌশল', content: 'ইলমে দ্বীন শিক্ষার শুরুতেই আরবী ব্যাকরণ নিয়ে অনেকে ভয় পান...', likes: 85, comments: 45, verified: true },
+  { id: 'post-1', author: 'মুফতি আব্দুল্লাহ আল-মামুন', title: 'রমজানের প্রস্তুতি ও আমাদের সামাজিক দায়িত্ব', content: 'আসসালামু আলাইকুম। রমজান সমাগত...', category: 'General', likes: 124, comments: 18, verified: true },
+  { id: 'post-2', author: 'মাওলানা সাঈদ বিন নূর', title: 'নাহু ও সরফ শিখার সহজ ৫টি কৌশল', content: 'ইলমে দ্বীন শিক্ষার শুরুতেই আরবী ব্যাকরণ নিয়ে অনেকে ভয় পান...', category: 'Education', likes: 85, comments: 45, verified: true },
 ];
 
 export const MOCK_FATWAS: Fatwa[] = [

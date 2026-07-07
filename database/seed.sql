@@ -52,9 +52,11 @@ insert into public.events (id, title, description, event_date, type) values
 on conflict (id) do nothing;
 
 -- Demo Forum Posts
-insert into public.forum_posts (id, author_id, title, content, likes) values
-  ('e490f1ee-6c54-4b01-90e6-d701748f0851', (select id from auth.users limit 1), 'মাদ্রাসার পাঠ্যক্রম নিয়ে আলোচনা', 'আমাদের মাদ্রাসার পাঠ্যক্রম নিয়ে কিছু মতামত...', 12),
-  ('e490f1ee-6c54-4b01-90e6-d701748f0852', (select id from auth.users limit 1), 'শিক্ষক নিয়োগের মান', 'শিক্ষক নিয়োগের ক্ষেত্রে কী কী বিষয় দেখা উচিত?', 8)
+insert into public.forum_posts (id, author_id, title, content, category, likes) values
+  ('e490f1ee-6c54-4b01-90e6-d701748f0851', (select id from auth.users limit 1), 'মাদ্রাসার পাঠ্যক্রম নিয়ে আলোচনা', 'আমাদের মাদ্রাসার পাঠ্যক্রম নিয়ে কিছু মতামত...', 'Education', 12),
+  ('e490f1ee-6c54-4b01-90e6-d701748f0852', (select id from auth.users limit 1), 'শিক্ষক নিয়োগের মান', 'শিক্ষক নিয়োগের ক্ষেত্রে কী কী বিষয় দেখা উচিত?', 'Jobs Discussion', 8),
+  ('e490f1ee-6c54-4b01-90e6-d701748f0853', (select id from auth.users limit 1), 'এশার জামাতের সময় নিয়ে প্রশ্ন', 'আমাদের মসজিদে এশার জামাত অনেক দেরিতে হয়। এটা কি ঠিক?', 'Fatwa', 15),
+  ('e490f1ee-6c54-4b01-90e6-d701748f0854', (select id from auth.users limit 1), 'মাদ্রাসা মিলাদ মাহফিলে আসার আমন্ত্রণ', 'আগামী শুক্রবার আমাদের বার্ষিক মিলাদ মাহফিল অনুষ্ঠিত হবে', 'Events', 7)
 on conflict (id) do nothing;
 
 -- Demo Sadaqah Projects
