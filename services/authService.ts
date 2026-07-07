@@ -67,7 +67,7 @@ export const registerUser = async (userData: {
   password: string;
   role: 'USER' | 'INSTITUTION';
   institutionName?: string;
-}): Promise<User> => {
+}): Promise<{ user: User; needsVerification: boolean }> => {
   const { data, error } = await supabase.auth.signUp({
     email: userData.email,
     password: userData.password,
@@ -92,9 +92,22 @@ export const registerUser = async (userData: {
     institutionName: userData.institutionName,
   };
 
-  currentUser = user;
-  window.dispatchEvent(new CustomEvent('auth_change'));
-  return user;
+  const needsVerification = !data.session;
+
+  if (!needsVerification) {
+    currentUser = user;
+    window.dispatchEvent(new CustomEvent('auth_change'));
+  }
+
+  return { user, needsVerification };
+};
+
+export const resendVerificationEmail = async (email: string): Promise<void> => {
+  const { error } = await supabase.auth.resend({
+    type: 'signup',
+    email,
+  });
+  if (error) throw error;
 };
 
 export const logout = async (): Promise<void> => {

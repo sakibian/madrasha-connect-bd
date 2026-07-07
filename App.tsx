@@ -64,6 +64,7 @@ import Leaderboard from './pages/Leaderboard';
 import PublicProfile from './pages/PublicProfile';
 import Forbidden from './pages/Forbidden';
 import ForgotPassword from './pages/ForgotPassword';
+import VerifyEmail from './pages/VerifyEmail';
 import ProtectedRoute from './components/ProtectedRoute';
 
 import { getNotifications, initNotifications } from './services/notificationService';
@@ -111,7 +112,7 @@ const AppRouter: React.FC = () => {
   ];
   
   const isPublicPage = publicPaths.includes(location.pathname) || location.pathname.startsWith('/institution/') || location.pathname.startsWith('/profile/');
-  const isAuthPage = ['/login', '/register-user', '/register-institution', '/forgot-password'].includes(location.pathname);
+  const isAuthPage = ['/login', '/register-user', '/register-institution', '/forgot-password', '/verify-email'].includes(location.pathname);
 
   if (isAuthPage) {
     if (currentUser) return <Navigate to="/dashboard" replace />;
@@ -121,6 +122,7 @@ const AppRouter: React.FC = () => {
         <Route path="/register-user" element={<RegisterUser />} />
         <Route path="/register-institution" element={<RegisterInstitution />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
       </Routes>
     );
   }

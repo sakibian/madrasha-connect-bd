@@ -19,12 +19,17 @@ const RegisterUser: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await registerUser({
+      const { user, needsVerification } = await registerUser({
         name: formData.name,
         email: formData.email,
         password: formData.password,
         role: 'USER'
       });
+
+      if (needsVerification) {
+        navigate('/verify-email', { state: { email: formData.email } });
+        return;
+      }
 
       await addNotification({
         title: 'স্বাগতম!',

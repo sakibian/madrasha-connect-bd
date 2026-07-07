@@ -23,7 +23,7 @@ const RegisterInstitution: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const user = await registerUser({
+      const { user, needsVerification } = await registerUser({
         name: `অ্যাডমিন (${formData.instName})`,
         email: formData.email,
         password: formData.password,
@@ -39,6 +39,11 @@ const RegisterInstitution: React.FC = () => {
         district: formData.district || formData.location,
         verified: false,
       });
+
+      if (needsVerification) {
+        navigate('/verify-email', { state: { email: formData.email } });
+        return;
+      }
 
       await addNotification({
         title: 'প্রতিষ্ঠান নিবন্ধিত!',

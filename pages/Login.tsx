@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ShieldCheck, School, User as UserIcon, Loader2, ArrowRight, ArrowLeft, Lock, Mail } from 'lucide-react';
-import { login } from '../services/authService';
+import { login, resendVerificationEmail } from '../services/authService';
 
 const DEMO_PASSWORD = 'madrasa123';
 
@@ -10,6 +10,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [unconfirmedEmail, setUnconfirmedEmail] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,6 +19,7 @@ const Login: React.FC = () => {
     setPassword(DEMO_PASSWORD);
     setLoading(true);
     setError('');
+    setUnconfirmedEmail('');
     const user = await login(demoEmail, DEMO_PASSWORD);
     if (user) navigate('/dashboard');
     else setError('ডেমো অ্যাকাউন্ট পাওয়া যায়নি। অনুগ্রহ করে রেজিস্ট্রেশন করুন।');
@@ -29,9 +31,18 @@ const Login: React.FC = () => {
     if (!email || !password) return;
     setLoading(true);
     setError('');
+    setUnconfirmedEmail('');
     const user = await login(email, password);
     if (user) navigate('/dashboard');
-    else setError('ইমেইল বা পাসওয়ার্ড ভুল।');
+    else {
+      const { error: signInError } = await (await import('../services/supabase')).supabase.auth.signInWithPassword({ email, password });
+      if (signInError?.message?.toLowerCase().includes('email not confirmed')) {
+        setUnconfirmedEmail(email);
+        setError('');
+      } else {
+        setError('ইমেইল বা পাসওয়ার্ড ভুল।');
+      }
+    }
     setLoading(false);
   };
 
@@ -109,6 +120,10 @@ const Login: React.FC = () => {
               </Link>
             </div>
 
+            {unconfirmedEmail && (
+              <UnconfirmedEmailBanner email={unconfirmedEmail} />
+            )}
+
             {error && (
               <div className="p-5 bg-red-50 border border-red-100 text-red-600 text-sm font-bold">
                 {error}
@@ -159,6 +174,45 @@ const Login: React.FC = () => {
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+const UnconfirmedEmailBanner: React.FC<{ email: string }> = ({ email }) => {
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  const handleResend = async () => {
+    setSending(true);
+    try {
+      await resendVerificationEmail(email);
+      setSent(true);
+    } catch { }
+    setSending(false);
+  };
+
+  return (
+    <div className="p-5 bg-amber-50 border border-amber-100 rounded-2xl space-y-3">
+      <div className="flex items-start gap-3">
+        <Mail size={20} className="text-amber-600 shrink-0 mt-0.5" />
+        <div>
+          <p className="font-bold text-amber-800 text-sm">ইমেইল ভেরিফাই করুন</p>
+          <p className="text-xs text-amber-600 mt-1">
+            আপনার ইমেইল এখনো ভেরিফাই করা হয়নি। অনুগ্রহ করে <strong>{email}</strong>-এ পাঠানো লিংকে ক্লিক করুন।
+          </p>
+        </div>
+      </div>
+      {sent ? (
+        <p className="text-xs font-bold text-emerald-600">✓ পুনরায় পাঠানো হয়েছে!</p>
+      ) : (
+        <button
+          onClick={handleResend}
+          disabled={sending}
+          className="text-xs font-bold text-amber-700 underline hover:no-underline disabled:opacity-50"
+        >
+          {sending ? 'পাঠানো হচ্ছে...' : 'ভেরিফিকেশন ইমেইল পুনরায় পাঠান'}
+        </button>
+      )}
     </div>
   );
 };
