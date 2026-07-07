@@ -20,6 +20,7 @@ import { dataService } from '../services/dataService';
 import { askScholar } from '../services/geminiService';
 import { getCurrentUser } from '../services/authService';
 import { addNotification } from '../services/notificationService';
+import { moderateContent } from '../services/moderationService';
 import CitationBadge from '../components/CitationBadge';
 import FlagButton from '../components/FlagButton';
 
@@ -32,6 +33,7 @@ const FatwaCenter: React.FC = () => {
   const [question, setQuestion] = useState('');
   const [category, setCategory] = useState<Fatwa['category']>('Ibadah');
   const [isLoading, setIsLoading] = useState(false);
+  const [moderationFeedback, setModerationFeedback] = useState<string | null>(null);
   const [answerSources, setAnswerSources] = useState<Record<string, Source[]>>({});
 
   useEffect(() => {
@@ -55,6 +57,13 @@ const FatwaCenter: React.FC = () => {
   const handleAskQuestion = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!question.trim()) return;
+
+    setModerationFeedback(null);
+    const modResult = await moderateContent(question, 'fatwa_question');
+    if (!modResult.safe) {
+      setModerationFeedback(modResult.feedback);
+      return;
+    }
 
     setIsLoading(true);
 
@@ -193,6 +202,11 @@ const FatwaCenter: React.FC = () => {
               <button onClick={() => setIsAsking(false)} className="text-gray-400 hover:text-black"><X size={32} /></button>
             </div>
             <form onSubmit={handleAskQuestion} className="space-y-6">
+               {moderationFeedback && (
+                 <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-sm font-medium">
+                   {moderationFeedback}
+                 </div>
+               )}
                <div className="space-y-4">
                   <select className="w-full p-4 border border-gray-100 bg-gray-50 outline-none font-bold text-sm" value={category} onChange={e => setCategory(e.target.value as any)}>
                       <option value="Ibadah">ইবাদাত</option>
