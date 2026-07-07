@@ -1,4 +1,4 @@
-import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication, ContentVersion, UserXP, Badge, UserBadge, XPEvent, UserSkill, getLevel } from '../types';
+import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication, ContentVersion, UserXP, Badge, UserBadge, XPEvent, UserSkill, ScholarPortfolioItem, AdminAuditLog, getLevel } from '../types';
 import { supabase } from './supabase';
 
 const CACHE_KEYS = {
@@ -202,6 +202,8 @@ export const dataService = {
       .update({ status: 'answered' })
       .eq('id', fatwaId);
     if (statusError) throw statusError;
+
+    await dataService.logAdminAction('approve_fatwa', 'fatwa', fatwaId);
   },
 
   rejectFatwa: async (fatwaId: string) => {
@@ -210,6 +212,7 @@ export const dataService = {
       .update({ status: 'rejected' })
       .eq('id', fatwaId);
     if (error) throw error;
+    await dataService.logAdminAction('reject_fatwa', 'fatwa', fatwaId);
   },
 
   // --- Products ---
@@ -550,19 +553,23 @@ export const dataService = {
   },
 
   resolveFlag: async (flagId: string) => {
+    const { data: flag } = await supabase.from('content_flags').select('content_type, content_id').eq('id', flagId).single();
     const { error } = await supabase
       .from('content_flags')
       .update({ status: 'resolved' })
       .eq('id', flagId);
     if (error) throw error;
+    await dataService.logAdminAction('resolve_flag', 'content_flag', flagId, { contentType: flag?.content_type, contentId: flag?.content_id });
   },
 
   dismissFlag: async (flagId: string) => {
+    const { data: flag } = await supabase.from('content_flags').select('content_type, content_id').eq('id', flagId).single();
     const { error } = await supabase
       .from('content_flags')
       .update({ status: 'dismissed' })
       .eq('id', flagId);
     if (error) throw error;
+    await dataService.logAdminAction('dismiss_flag', 'content_flag', flagId, { contentType: flag?.content_type, contentId: flag?.content_id });
   },
 
   // --- Content Versioning ---
@@ -822,17 +829,21 @@ export const dataService = {
     } else {
       await supabase.from('scholars').update({ verified: true, title: app.title, specialization: app.specialization }).eq('user_id', app.user_id);
     }
+
+    await dataService.logAdminAction('approve_scholar', 'scholar_application', applicationId, { userId: app.user_id });
   },
 
   rejectScholarApplication: async (applicationId: string, adminNotes?: string) => {
     const admin = (await supabase.auth.getSession()).data.session?.user;
     if (!admin) throw new Error('Must be logged in');
+    const { data: app } = await supabase.from('scholar_applications').select('user_id').eq('id', applicationId).single();
     await supabase.from('scholar_applications').update({
       status: 'rejected',
       admin_notes: adminNotes,
       reviewed_by: admin.id,
       reviewed_at: new Date().toISOString(),
     }).eq('id', applicationId);
+    await dataService.logAdminAction('reject_scholar', 'scholar_application', applicationId, { userId: app?.user_id });
   },
 
   // --- Users (Admin) ---
@@ -854,11 +865,13 @@ export const dataService = {
   },
 
   updateUserRole: async (userId: string, role: string): Promise<void> => {
+    const { data: old } = await supabase.from('user_profiles').select('role').eq('id', userId).single();
     const { error } = await supabase
       .from('user_profiles')
       .update({ role })
       .eq('id', userId);
     if (error) throw error;
+    await dataService.logAdminAction('update_user_role', 'user', userId, { oldRole: old?.role, newRole: role });
   },
 
   banUser: async (userId: string, banned: boolean): Promise<void> => {
@@ -867,6 +880,7 @@ export const dataService = {
       .update({ banned })
       .eq('id', userId);
     if (error) throw error;
+    await dataService.logAdminAction(banned ? 'ban_user' : 'unban_user', 'user', userId);
   },
 
   // --- Institutions (Admin) ---
@@ -896,14 +910,17 @@ export const dataService = {
       .update({ verified: true })
       .eq('id', id);
     if (error) throw error;
+    await dataService.logAdminAction('approve_institution', 'institution', id);
   },
 
   deleteInstitution: async (id: string): Promise<void> => {
+    const { data: inst } = await supabase.from('institutions').select('name').eq('id', id).single();
     const { error } = await supabase
       .from('institutions')
       .delete()
       .eq('id', id);
     if (error) throw error;
+    await dataService.logAdminAction('reject_institution', 'institution', id, { name: inst?.name });
   },
 
   // --- Skills & Endorsements ---
@@ -978,5 +995,77 @@ export const dataService = {
     await supabase.from('skill_endorsements').delete()
       .eq('skill_id', skillId)
       .eq('endorsed_by', user.id);
+  },
+
+  // --- Scholar Portfolio ---
+  getScholarPortfolio: async (userId: string): Promise<ScholarPortfolioItem[]> => {
+    const { data, error } = await supabase
+      .from('scholar_portfolios')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+    if (error) return [];
+    return data.map(p => ({
+      id: p.id,
+      userId: p.user_id,
+      title: p.title,
+      description: p.description || undefined,
+      url: p.url || undefined,
+      type: p.type as ScholarPortfolioItem['type'],
+      createdAt: p.created_at,
+    }));
+  },
+
+  addScholarPortfolioItem: async (item: {
+    title: string;
+    description?: string;
+    url?: string;
+    type: string;
+  }): Promise<void> => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+    const { error } = await supabase.from('scholar_portfolios').insert({
+      user_id: user.id,
+      title: item.title,
+      description: item.description,
+      url: item.url,
+      type: item.type,
+    });
+    if (error) throw error;
+  },
+
+  deleteScholarPortfolioItem: async (id: string): Promise<void> => {
+    await supabase.from('scholar_portfolios').delete().eq('id', id);
+  },
+
+  // --- Admin Audit Log ---
+  logAdminAction: async (action: string, targetType: string, targetId: string, details: Record<string, unknown> = {}) => {
+    const admin = (await supabase.auth.getSession()).data.session?.user;
+    if (!admin) return;
+    await supabase.from('admin_audit_log').insert({
+      admin_id: admin.id,
+      action,
+      target_type: targetType,
+      target_id: targetId,
+      details,
+    });
+  },
+
+  getAuditLogs: async (): Promise<AdminAuditLog[]> => {
+    const { data, error } = await supabase
+      .from('admin_audit_log')
+      .select('*, admin:admin_id(name)')
+      .order('created_at', { ascending: false });
+    if (error) return [];
+    return data.map(l => ({
+      id: l.id,
+      adminId: l.admin_id,
+      adminName: l.admin?.name,
+      action: l.action,
+      targetType: l.target_type,
+      targetId: l.target_id,
+      details: l.details || {},
+      createdAt: l.created_at,
+    }));
   },
 };

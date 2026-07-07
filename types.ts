@@ -100,6 +100,16 @@ export interface UserSkill {
   createdAt?: string;
 }
 
+export interface ScholarPortfolioItem {
+  id: string;
+  userId: string;
+  title: string;
+  description?: string;
+  url?: string;
+  type: 'publication' | 'video' | 'article' | 'lecture' | 'other';
+  createdAt?: string;
+}
+
 export interface SkillEndorsement {
   id: string;
   skillId: string;
@@ -214,6 +224,17 @@ export interface XPEvent {
   userId: string;
   action: string;
   xp: number;
+  createdAt: string;
+}
+
+export interface AdminAuditLog {
+  id: string;
+  adminId: string;
+  adminName?: string;
+  action: string;
+  targetType: string;
+  targetId: string;
+  details: Record<string, unknown>;
   createdAt: string;
 }
 

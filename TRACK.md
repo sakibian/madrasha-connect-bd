@@ -14,7 +14,7 @@
 | [M2](#m2-data-migration-localslate-to-supabase) Data Migration | 🟡 Not Started | 1 week | TBD | M1 |
 | [M3](#m3-component-library--design-system) Component Library | 🟡 Not Started | 2 weeks | TBD | None |
 | [M4](#m4-state-management-zustand) State Management | 🟡 Not Started | 1 week | TBD | M3 |
-| [M5](#m5-authentication--authorization) Auth & Authorization | 🟢 In Progress | 1.5 weeks | TBD | M1 |
+| [M5](#m5-authentication--authorization) Auth & Authorization | ✅ Complete | 1.5 weeks | Done | M1 |
 | [M6](#m6-authentic-knowledge-base) Authentic Knowledge Base | ✅ Complete | 2-3 weeks | Done | M1, M5 |
 | [M7](#m7-testing--quality-assurance) Testing & QA | 🟡 Not Started | 2 weeks | TBD | M0-M6 |
 | [M8](#m8-performance--accessibility) Performance & Accessibility | 🟡 Not Started | 1 week | TBD | M3 |
@@ -23,7 +23,7 @@
 | [M11](#m11-mobile-app-react-native) Mobile App | 🟡 Not Started | 4-6 weeks | TBD | M1, M2 |
 | [M12](#m12-production-launch--scaling) Production Launch & Scaling | 🟡 Not Started | Ongoing | TBD | M0-M11 |
 
-**Total tracked tasks:** ~25 / ~200 complete
+**Total tracked tasks:** ~88 / ~200 complete
 
 ---
 
@@ -273,19 +273,19 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 > **Objective:** Replace fake localStorage auth with real Supabase Auth, add role-based access control, and secure all protected routes.  
 > **Depends on:** M1 (backend)  
 > **Effort:** 1.5 weeks  
-> **Status:** 🟡 Not Started
+> **Status:** ✅ Complete
 
 ### Tasks
 
 #### Auth Frontend
-- [ ] Update registration flows to use Supabase Auth SDK
-- [ ] Update login to use Supabase Auth with email/phone
-- [ ] Add "Forgot Password" flow
+- [x] Update registration flows to use Supabase Auth SDK
+- [x] Update login to use Supabase Auth with email/phone
+- [x] Add "Forgot Password" flow
 - [x] Add email verification flow
 - [x] Add session persistence (auto-login on return)
-- [ ] Add loading state during auth checks
+- [x] Add loading state during auth checks
 - [x] Add error states (wrong password, network error, etc.)
-- [ ] Update RegisterUser.tsx to create Supabase user + profile
+- [x] Update RegisterUser.tsx to create Supabase user + profile
 - [x] Update RegisterInstitution.tsx to create institution profile (status: PENDING)
 
 #### Route Protection
@@ -298,12 +298,12 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 #### Admin User Management
 - [x] Create admin panel for user management (approve institutions, assign roles, ban users)
 - [x] Create admin panel for content moderation (moderation queue)
-- [ ] Add audit logging for admin actions
+- [x] Add audit logging for admin actions
 
 #### Scholar Role
-- [ ] Create scholar registration flow (application + admin approval)
-- [ ] Create scholar dashboard (fatwa queue, profile management)
-- [ ] Add verification badge to scholar profiles
+- [x] Create scholar registration flow (application + admin approval) *(via M6)*
+- [x] Create scholar dashboard (fatwa queue, profile management) *(via M6)*
+- [x] Add verification badge to scholar profiles *(via M6)*
 
 ### Acceptance Criteria
 
@@ -653,11 +653,11 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M2: Data Migration | 9 | 0 | 0% |
 | M3: Component Library | ~20 | 0 | 0% |
 | M4: State Management | 12 | 0 | 0% |
-| M5: Authentication | ~15 | 12 | 80% |
+| M5: Authentication | ~15 | 15 | 100% |
 | M6: Authentic Knowledge Base | ~18 | 18 | 100% |
 | M9: Orphan Pages | 10 | 10 | 100% |
 | M10: Community & Engagement | ~12 | 12 | 100% |
-| **Total** | **~200** | **85** | **43%** |
+| **Total** | **~200** | **88** | **44%** |
 
 ---
 

@@ -612,7 +612,34 @@ create policy "Users can endorse"
 create policy "Users can remove endorsement"
   on public.skill_endorsements for delete using (auth.uid() = endorsed_by);
 
--- 29. Forum Post Likes (voting)
+-- 29. Scholar Portfolio (showcase)
+create table public.scholar_portfolios (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  title text not null,
+  description text,
+  url text,
+  type text not null check (type in ('publication', 'video', 'article', 'lecture', 'other')),
+  created_at timestamptz default now()
+);
+
+create index idx_scholar_portfolios_user on public.scholar_portfolios(user_id);
+
+alter table public.scholar_portfolios enable row level security;
+
+create policy "Anyone can read scholar portfolios"
+  on public.scholar_portfolios for select using (true);
+
+create policy "Scholar can manage own portfolio"
+  on public.scholar_portfolios for insert with check (auth.uid() = user_id);
+
+create policy "Scholar can update own portfolio"
+  on public.scholar_portfolios for update using (auth.uid() = user_id);
+
+create policy "Scholar can delete own portfolio"
+  on public.scholar_portfolios for delete using (auth.uid() = user_id);
+
+-- 30. Forum Post Likes (voting)
 create table public.forum_post_likes (
   id uuid primary key default uuid_generate_v4(),
   post_id uuid not null references public.forum_posts(id) on delete cascade,
@@ -634,3 +661,30 @@ create policy "Users can like"
 
 create policy "Users can unlike"
   on public.forum_post_likes for delete using (auth.uid() = user_id);
+
+-- 31. Admin Audit Log
+create table public.admin_audit_log (
+  id uuid primary key default uuid_generate_v4(),
+  admin_id uuid not null references auth.users(id) on delete cascade,
+  action text not null,
+  target_type text not null,
+  target_id text not null,
+  details jsonb default '{}'::jsonb,
+  created_at timestamptz default now()
+);
+
+create index idx_admin_audit_log_admin on public.admin_audit_log(admin_id);
+create index idx_admin_audit_log_action on public.admin_audit_log(action);
+create index idx_admin_audit_log_created on public.admin_audit_log(created_at desc);
+
+alter table public.admin_audit_log enable row level security;
+
+create policy "Admins can read audit logs"
+  on public.admin_audit_log for select using (
+    exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN')
+  );
+
+create policy "Admins can insert audit logs"
+  on public.admin_audit_log for insert with check (
+    exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN')
+  );

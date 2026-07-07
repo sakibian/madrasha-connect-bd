@@ -13,15 +13,16 @@ import {
   Shield,
   X,
   Loader2,
-  GraduationCap
+  GraduationCap,
+  History
 } from 'lucide-react';
 import { dataService } from '../../services/dataService';
-import { Job, Product, User, Fatwa, Source, ContentFlag, ScholarApplication } from '../../types';
+import { Job, Product, User, Fatwa, Source, ContentFlag, ScholarApplication, AdminAuditLog } from '../../types';
 import CitationBadge from '../../components/CitationBadge';
 import CitationPicker from '../../components/CitationPicker';
 
 const AdminDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'products' | 'users' | 'moderation'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'products' | 'users' | 'moderation' | 'audit'>('overview');
   const [stats, setStats] = useState({
     jobs: 0,
     products: 0,
@@ -60,6 +61,7 @@ const AdminDashboard: React.FC = () => {
         <TabButton active={activeTab === 'products'} onClick={() => setActiveTab('products')} icon={<ShoppingBag size={16} />} label="মার্কেটপ্লেস" />
         <TabButton active={activeTab === 'users'} onClick={() => setActiveTab('users')} icon={<Users size={16} />} label="ইউজার" />
         <TabButton active={activeTab === 'moderation'} onClick={() => setActiveTab('moderation')} icon={<Shield size={16} />} label="মডারেশন" />
+        <TabButton active={activeTab === 'audit'} onClick={() => setActiveTab('audit')} icon={<History size={16} />} label="অডিট লগ" />
       </div>
 
       {activeTab === 'overview' && (
@@ -75,6 +77,7 @@ const AdminDashboard: React.FC = () => {
       {activeTab === 'products' && <ManageProducts />}
       {activeTab === 'users' && <ManageUsers />}
       {activeTab === 'moderation' && <ModerationHub />}
+      {activeTab === 'audit' && <AuditLogViewer />}
     </div>
   );
 };
@@ -821,6 +824,87 @@ const ManageScholarApplications: React.FC = () => {
               </button>
             </div>
           </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const AuditLogViewer: React.FC = () => {
+  const [logs, setLogs] = useState<AdminAuditLog[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const load = async () => {
+    setLoading(true);
+    const data = await dataService.getAuditLogs();
+    setLogs(data);
+    setLoading(false);
+  };
+
+  useEffect(() => { load(); }, []);
+
+  const actionLabels: Record<string, string> = {
+    ban_user: 'ব্যান',
+    unban_user: 'আনব্যান',
+    update_user_role: 'রোল পরিবর্তন',
+    approve_institution: 'প্রতিষ্ঠান অনুমোদন',
+    reject_institution: 'প্রতিষ্ঠান বাতিল',
+    approve_fatwa: 'ফতোয়া অনুমোদন',
+    reject_fatwa: 'ফতোয়া প্রত্যাখ্যান',
+    approve_scholar: 'স্কলার অনুমোদন',
+    reject_scholar: 'স্কলার প্রত্যাখ্যান',
+    resolve_flag: 'রিপোর্ট সমাধান',
+    dismiss_flag: 'রিপোর্ট খারিজ',
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-3">
+        <History size={20} />
+        <span className="font-bold text-lg">অ্যাডমিন অডিট লগ</span>
+        <span className="text-[9px] font-black px-2 py-1 bg-gray-100 text-gray-500">{logs.length} টি</span>
+      </div>
+
+      {loading ? (
+        <div className="bg-white p-20 text-center text-gray-400 font-bold">লোড হচ্ছে...</div>
+      ) : logs.length === 0 ? (
+        <div className="bg-white p-20 text-center text-gray-400 font-bold">কোনো অডিট লগ নেই</div>
+      ) : (
+        <div className="bg-white minimal-border overflow-hidden">
+          <table className="w-full text-left">
+            <thead className="bg-gray-50 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100">
+              <tr>
+                <th className="px-8 py-5">সময়</th>
+                <th className="px-8 py-5">অ্যাডমিন</th>
+                <th className="px-8 py-5">অ্যাকশন</th>
+                <th className="px-8 py-5">টার্গেট</th>
+                <th className="px-8 py-5">বিবরণ</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {logs.map(log => (
+                <tr key={log.id} className="hover:bg-gray-50 transition-colors">
+                  <td className="px-8 py-6 text-xs font-bold text-gray-400 whitespace-nowrap">
+                    {new Date(log.createdAt).toLocaleString('bn-BD')}
+                  </td>
+                  <td className="px-8 py-6">
+                    <span className="font-bold text-gray-800">{log.adminName || log.adminId.slice(0, 8)}</span>
+                  </td>
+                  <td className="px-8 py-6">
+                    <span className="text-[9px] font-black px-3 py-1 bg-gray-100 uppercase tracking-widest">
+                      {actionLabels[log.action] || log.action}
+                    </span>
+                  </td>
+                  <td className="px-8 py-6">
+                    <span className="text-xs font-mono text-gray-400">{log.targetType}:{log.targetId.slice(0, 8)}</span>
+                  </td>
+                  <td className="px-8 py-6 text-sm text-gray-500 max-w-[200px] truncate">
+                    {Object.keys(log.details).length > 0 ? JSON.stringify(log.details) : '—'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
