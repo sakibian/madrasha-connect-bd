@@ -9,17 +9,19 @@ import {
   Plus,
   Trash2,
   CheckCircle,
-  ArrowUpRight,
   Shield,
   X,
   Loader2,
   GraduationCap,
-  History
+  History,
+  Building2,
+  FolderOpen
 } from 'lucide-react';
 import { dataService } from '../../services/dataService';
 import { Job, Product, User, Fatwa, Source, ContentFlag, ScholarApplication, AdminAuditLog } from '../../types';
 import CitationBadge from '../../components/CitationBadge';
 import CitationPicker from '../../components/CitationPicker';
+import { StatCard, Button, Badge, LoadingSkeleton, EmptyState } from '../../components/ui';
 
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'products' | 'users' | 'moderation' | 'audit'>('overview');
@@ -66,10 +68,10 @@ const AdminDashboard: React.FC = () => {
 
       {activeTab === 'overview' && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 bg-gray-100 minimal-border">
-          <StatBox icon={<Briefcase size={20} />} label="মোট সার্কুলার" value={stats.jobs} />
-          <StatBox icon={<ShoppingBag size={20} />} label="পণ্য সংখ্যা" value={stats.products} />
-          <StatBox icon={<Users size={20} />} label="নিবন্ধিত ইউজার" value={stats.users} />
-          <StatBox icon={<MessageSquare size={20} />} label="কমিউনিটি পোস্ট" value={stats.posts} />
+          <StatCard icon={<Briefcase size={20} />} label="মোট সার্কুলার" value={stats.jobs} />
+          <StatCard icon={<ShoppingBag size={20} />} label="পণ্য সংখ্যা" value={stats.products} />
+          <StatCard icon={<Users size={20} />} label="নিবন্ধিত ইউজার" value={stats.users} />
+          <StatCard icon={<MessageSquare size={20} />} label="কমিউনিটি পোস্ট" value={stats.posts} />
         </div>
       )}
 
@@ -339,9 +341,9 @@ const ManageInstitutions: React.FC = () => {
       </div>
 
       {loading ? (
-        <div className="bg-white p-20 text-center text-gray-400 font-bold">লোড হচ্ছে...</div>
+        <LoadingSkeleton variant="table" />
       ) : institutions.length === 0 ? (
-        <div className="bg-white p-20 text-center text-gray-400 font-bold">কোনো পেন্ডিং প্রতিষ্ঠান নেই</div>
+        <EmptyState icon={<Building2 size={48} />} title="কোনো পেন্ডিং প্রতিষ্ঠান নেই" />
       ) : (
         <div className="bg-white minimal-border overflow-hidden">
           <table className="w-full text-left">
@@ -360,25 +362,19 @@ const ManageInstitutions: React.FC = () => {
                     <p className="font-bold text-gray-800 text-lg">{inst.name}</p>
                   </td>
                   <td className="px-8 py-6">
-                    <span className="text-[9px] font-black px-3 py-1 bg-gray-100 uppercase tracking-widest">{inst.type}</span>
+                    <Badge>{inst.type}</Badge>
                   </td>
                   <td className="px-8 py-6 text-sm font-bold text-gray-500">
                     {inst.location}{inst.district ? `, ${inst.district}` : ''}
                   </td>
                   <td className="px-8 py-6 text-right">
                     <div className="flex justify-end gap-2">
-                      <button
-                        onClick={() => handleApprove(inst.id)}
-                        className="px-5 py-2.5 bg-black text-white font-bold text-[10px] hover:bg-bd-green transition-all flex items-center gap-1"
-                      >
-                        <CheckCircle size={14} /> অনুমোদন
-                      </button>
-                      <button
-                        onClick={() => handleReject(inst.id)}
-                        className="px-5 py-2.5 border border-gray-200 text-red-600 font-bold text-[10px] hover:bg-red-50 transition-all flex items-center gap-1"
-                      >
-                        <X size={14} /> বাতিল
-                      </button>
+                      <Button size="sm" onClick={() => handleApprove(inst.id)} icon={<CheckCircle size={14} />}>
+                        অনুমোদন
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => handleReject(inst.id)} icon={<X size={14} />}>
+                        বাতিল
+                      </Button>
                     </div>
                   </td>
                 </tr>
@@ -921,16 +917,6 @@ const TabButton: React.FC<{ active: boolean, onClick: () => void, icon: React.Re
   <button onClick={onClick} className={`flex items-center gap-3 px-8 py-4 transition-all font-bold text-xs uppercase tracking-widest ${active ? 'bg-black text-white' : 'text-gray-400 hover:text-black hover:bg-white'}`}>
     {icon} {label}
   </button>
-);
-
-const StatBox: React.FC<{ icon: React.ReactNode, label: string, value: number }> = ({ icon, label, value }) => (
-  <div className="bg-white p-10 flex flex-col gap-6 group hover:bg-black hover:text-white transition-all">
-    <div className="text-bd-green group-hover:text-white transition-colors">{icon}</div>
-    <div className="space-y-1">
-      <div className="text-4xl font-extrabold tracking-tight">{value}</div>
-      <div className="caps-label text-gray-400 group-hover:text-gray-500">{label}</div>
-    </div>
-  </div>
 );
 
 export default AdminDashboard;

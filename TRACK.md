@@ -12,7 +12,7 @@
 | [M0](#m0-security--quick-fixes) Foundation & Security | ✅ Complete | 2-3 days | Done | None |
 | [M1](#m1-backend-foundation-supabase) Backend Foundation | ✅ Complete | 2-3 weeks | Done | M0 |
 | [M2](#m2-data-migration-localslate-to-supabase) Data Migration | ✅ Complete | 1 week | Done | M1 |
-| [M3](#m3-component-library--design-system) Component Library | 🟡 Not Started | 2 weeks | TBD | None |
+| [M3](#m3-component-library--design-system) Component Library | 🟢 In Progress | 2 weeks | TBD | None |
 | [M4](#m4-state-management-zustand) State Management | 🟡 Not Started | 1 week | TBD | M3 |
 | [M5](#m5-authentication--authorization) Auth & Authorization | ✅ Complete | 1.5 weeks | Done | M1 |
 | [M6](#m6-authentic-knowledge-base) Authentic Knowledge Base | ✅ Complete | 2-3 weeks | Done | M1, M5 |
@@ -23,7 +23,7 @@
 | [M11](#m11-mobile-app-react-native) Mobile App | 🟡 Not Started | 4-6 weeks | TBD | M1, M2 |
 | [M12](#m12-production-launch--scaling) Production Launch & Scaling | 🟡 Not Started | Ongoing | TBD | M0-M11 |
 
-**Total tracked tasks:** ~96 / ~200 complete
+**Total tracked tasks:** ~106 / ~200 complete
 
 ---
 
@@ -170,44 +170,45 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 > **Objective:** Eliminate duplicate UI code (Button, Card, Input, Modal exist 20+ times each) by building a shared component library.  
 > **Depends on:** None (can parallelize with M1)  
 > **Effort:** 2 weeks  
-> **Status:** 🟡 Not Started
+> **Status:** 🟢 In Progress
 
 ### Tasks
 
 #### Foundation
-- [ ] Create `src/components/` directory structure
-- [ ] Define design tokens (colors, spacing, typography, shadows) in Tailwind config
-- [ ] Create `src/components/ui/` for primitive components
+- [x] Create `components/ui/` directory structure
+- [x] Define design tokens (CSS variables in index.html)
+- [x] Create `components/ui/` for primitive components
 
-#### Primitive Components (P1)
+#### Primitive Components (P1) ✅
 
-| Component | Variants | Current Duplicates |
-|-----------|----------|-------------------|
-| Button | `primary`, `ghost`, `outline`, `danger` + sizes `sm`, `md`, `lg` | ~15 instances |
-| Card | compound: `Card`, `Card.Header`, `Card.Body`, `Card.Footer` | ~12 instances |
-| Input | `text`, `email`, `password`, `textarea` + error state + label | ~10 instances |
-| Modal | overlay, close button, focus trap, ESC to close | ~5 instances |
-| SearchInput | debounced, with clear button | ~4 instances |
-| Badge | `success`, `warning`, `error`, `info` | ~6 instances |
-| Avatar | with initials fallback, online indicator | ~4 instances |
-| LoadingSkeleton | variants for card, list, table, text | ~0 (new) |
-| EmptyState | icon + title + description + CTA | ~3 instances |
+| Component | Variants | Status |
+|-----------|----------|--------|
+| Button | `primary`, `ghost`, `outline`, `danger` + sizes `sm`, `md`, `lg` | ✅ |
+| Card | compound: `Card`, `Card.Header`, `Card.Body`, `Card.Footer` | ✅ |
+| Input | `text`, `email`, `password`, `textarea` + error state + label | ✅ |
+| Modal | overlay, close button, focus trap, ESC to close | ✅ |
+| SearchInput | debounced, with clear button | ✅ |
+| Badge | `success`, `warning`, `error`, `info`, `default` | ✅ |
+| Avatar | with initials fallback, online indicator | ✅ |
+| LoadingSkeleton | variants for card, list, table, text | ✅ |
+| EmptyState | icon + title + description + CTA | ✅ |
 
-#### Feature Components (P2)
+#### Feature Components (P2) ✅
 
-- [ ] `JobCard` — consistent job listing card across all pages
-- [ ] `InstitutionCard` — institution directory card
-- [ ] `FatwaCard` — Q&A display card
-- [ ] `ProductCard` — marketplace item card
-- [ ] `StatCard` — dashboard statistics
-- [ ] `NavItem` — sidebar navigation item (extract from App.tsx)
+- [x] `JobCard` — consistent job listing card
+- [x] `InstitutionCard` — institution directory card
+- [x] `FatwaCard` — Q&A display card
+- [x] `ProductCard` — marketplace item card
+- [x] `StatCard` — dashboard statistics
+- [x] `NavItem` — sidebar navigation item (extract from App.tsx)
 - [ ] `Header` — top app bar with search + notifications
 - [ ] `Sidebar` — navigation sidebar (extract from App.tsx)
 
-#### Component Migration
+#### Component Migration (in progress)
 
-- [ ] Migrate all P1 components into existing pages (remove inline implementations)
-- [ ] Migrate all P2 components
+- [x] Migrate App.tsx NavItem to library component
+- [x] Migrate AdminDashboard: StatBox → StatCard, LoadingSkeleton, EmptyState, Badge
+- [ ] Migrate remaining pages (ProfessionalHub, InstitutionDirectory, etc.)
 - [ ] Delete old inline implementations
 - [ ] Verify all 32 pages render correctly with new components
 
@@ -651,13 +652,13 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M0: Security & Quick Fixes | 9 | 9 | 100% |
 | M1: Backend Foundation | ~30 | 30 | 100% |
 | M2: Data Migration | 9 | 8 | 89% |
-| M3: Component Library | ~20 | 0 | 0% |
+| M3: Component Library | ~20 | 10 | 50% |
 | M4: State Management | 12 | 0 | 0% |
 | M5: Authentication | ~15 | 15 | 100% |
 | M6: Authentic Knowledge Base | ~18 | 18 | 100% |
 | M9: Orphan Pages | 10 | 10 | 100% |
 | M10: Community & Engagement | ~12 | 12 | 100% |
-| **Total** | **~200** | **96** | **48%** |
+| **Total** | **~200** | **106** | **53%** |
 
 ---
 

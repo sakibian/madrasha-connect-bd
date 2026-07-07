@@ -66,6 +66,7 @@ import Forbidden from './pages/Forbidden';
 import ForgotPassword from './pages/ForgotPassword';
 import VerifyEmail from './pages/VerifyEmail';
 import ProtectedRoute from './components/ProtectedRoute';
+import { NavItem } from './components/ui';
 
 import { getNotifications, initNotifications } from './services/notificationService';
 import { getCurrentUser, logout, initAuth } from './services/authService';
@@ -364,25 +365,6 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
         <div className="fixed inset-0 bg-black/20 z-40 md:hidden" onClick={closeSidebar}></div>
       )}
     </div>
-  );
-};
-
-const NavItem = ({ to, icon, label, onClick }: { to: string, icon: React.ReactNode, label: string, onClick?: () => void }) => {
-  const location = useLocation();
-  const isActive = location.pathname === to;
-  return (
-    <Link 
-      to={to} 
-      onClick={onClick}
-      className={`flex items-center gap-4 px-4 py-3 text-sm transition-all ${
-        isActive 
-          ? 'bg-black text-white font-bold' 
-          : 'text-gray-500 hover:bg-gray-50 hover:text-black font-medium'
-      }`}
-    >
-      {icon}
-      <span>{label}</span>
-    </Link>
   );
 };
 
