@@ -13,3 +13,5 @@ export { default as FatwaCard } from './FatwaCard';
 export { default as ProductCard } from './ProductCard';
 export { default as StatCard } from './StatCard';
 export { default as NavItem } from './NavItem';
+export { default as Header } from './Header';
+export { default as Sidebar } from './Sidebar';

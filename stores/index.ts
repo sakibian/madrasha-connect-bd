@@ -6,3 +6,4 @@ export { useInstitutionStore } from './useInstitutionStore';
 export { useProductStore } from './useProductStore';
 export { useNotificationStore } from './useNotificationStore';
 export { useCourseStore } from './useCourseStore';
+export { useContentStore } from './useContentStore';

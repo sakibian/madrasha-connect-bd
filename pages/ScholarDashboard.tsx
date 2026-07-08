@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Shield, Clock, CheckCircle, X, ArrowRight, BookOpen, User, Loader2, MessageCircle, BadgeCheck, GraduationCap, Plus, ExternalLink, Trash2, FolderOpen
-} from 'lucide-react';
-import { Fatwa, Source, Scholar, ScholarPortfolioItem } from '../types';
+import { Shield, Clock, CheckCircle, Loader2, MessageCircle, BadgeCheck, GraduationCap, Plus, ExternalLink, Trash2, FolderOpen } from 'lucide-react';
+import { Fatwa, Source, Scholar, ScholarPortfolioItem, XP_ACTIONS } from '../types';
 import { dataService } from '../services/dataService';
-import { getCurrentUser } from '../services/authService';
 import CitationBadge from '../components/CitationBadge';
 import CitationPicker from '../components/CitationPicker';
-import { XP_ACTIONS } from '../types';
+import { Button, Modal, Badge, StatCard, EmptyState } from '../components/ui';
+import { useAuthStore, useFatwaStore } from '../stores';
 
 const PORTFOLIO_TYPES = ['publication', 'video', 'article', 'lecture', 'other'] as const;
 const TYPE_LABELS: Record<string, string> = {
@@ -16,9 +14,9 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 const ScholarDashboard: React.FC = () => {
-  const currentUser = getCurrentUser();
+  const currentUser = useAuthStore((s) => s.user);
+  const { pendingFatwas, fetchPending } = useFatwaStore();
   const [activeTab, setActiveTab] = useState<'fatwas' | 'portfolio'>('fatwas');
-  const [pendingFatwas, setPendingFatwas] = useState<Fatwa[]>([]);
   const [myProfile, setMyProfile] = useState<Scholar | null>(null);
   const [answersGiven, setAnswersGiven] = useState(0);
   const [answering, setAnswering] = useState<Fatwa | null>(null);
@@ -36,11 +34,8 @@ const ScholarDashboard: React.FC = () => {
   useEffect(() => {
     const fetch = async () => {
       setLoading(true);
-      const [fatwas, scholars] = await Promise.all([
-        dataService.getPendingFatwas(),
-        dataService.getScholars(),
-      ]);
-      setPendingFatwas(fatwas);
+      await fetchPending();
+      const scholars = await dataService.getScholars();
       const profile = scholars.find(s => s.name === currentUser?.name) || null;
       setMyProfile(profile);
       if (profile) {
@@ -64,7 +59,7 @@ const ScholarDashboard: React.FC = () => {
     try {
       await dataService.approveFatwa(answering.id, answerText, selectedSources.map(s => s.id));
       if (currentUser) dataService.addXP(currentUser.id, XP_ACTIONS.ANSWER_FATWA.action, XP_ACTIONS.ANSWER_FATWA.xp);
-      setPendingFatwas(prev => prev.filter(f => f.id !== answering.id));
+      fetchPending();
       setAnswering(null);
       setAnswerText('');
       setSelectedSources([]);
@@ -77,7 +72,7 @@ const ScholarDashboard: React.FC = () => {
 
   const handleReject = async (fatwa: Fatwa) => {
     await dataService.rejectFatwa(fatwa.id);
-    setPendingFatwas(prev => prev.filter(f => f.id !== fatwa.id));
+    fetchPending();
   };
 
   return (
@@ -105,44 +100,30 @@ const ScholarDashboard: React.FC = () => {
       ) : (
         <>
           <div className="flex gap-1 bg-gray-100 p-1 minimal-border w-fit">
-            <button
+            <Button
+              variant={activeTab === 'fatwas' ? 'primary' : 'ghost'}
+              size="sm"
               onClick={() => setActiveTab('fatwas')}
-              className={`px-6 py-3 transition-all font-bold text-xs uppercase tracking-widest ${activeTab === 'fatwas' ? 'bg-black text-white' : 'text-gray-400 hover:text-black hover:bg-white'}`}
+              icon={<MessageCircle size={14} />}
             >
-              <MessageCircle size={14} className="inline mr-2" />ফতোয়া কিউ
-            </button>
-            <button
+              ফতোয়া কিউ
+            </Button>
+            <Button
+              variant={activeTab === 'portfolio' ? 'primary' : 'ghost'}
+              size="sm"
               onClick={() => setActiveTab('portfolio')}
-              className={`px-6 py-3 transition-all font-bold text-xs uppercase tracking-widest ${activeTab === 'portfolio' ? 'bg-black text-white' : 'text-gray-400 hover:text-black hover:bg-white'}`}
+              icon={<FolderOpen size={14} />}
             >
-              <FolderOpen size={14} className="inline mr-2" />পোর্টফোলিও
-            </button>
+              পোর্টফোলিও
+            </Button>
           </div>
 
           {activeTab === 'fatwas' && (
             <>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-gray-100 minimal-border">
-                <div className="bg-white p-10 flex items-center gap-6">
-                  <MessageCircle size={24} className="text-bd-green" />
-                  <div>
-                    <div className="text-3xl font-extrabold">{pendingFatwas.length}</div>
-                    <div className="caps-label text-gray-400">পেন্ডিং ফতোয়া</div>
-                  </div>
-                </div>
-                <div className="bg-white p-10 flex items-center gap-6">
-                  <CheckCircle size={24} className="text-bd-green" />
-                  <div>
-                    <div className="text-3xl font-extrabold">{answersGiven}</div>
-                    <div className="caps-label text-gray-400">উত্তর দেওয়া হয়েছে</div>
-                  </div>
-                </div>
-                <div className="bg-white p-10 flex items-center gap-6">
-                  <GraduationCap size={24} className="text-bd-green" />
-                  <div>
-                    <div className="text-3xl font-extrabold">{myProfile?.verified ? 1 : 0}</div>
-                    <div className="caps-label text-gray-400">ভেরিফিকেশন</div>
-                  </div>
-                </div>
+                <StatCard icon={<MessageCircle size={24} />} label="পেন্ডিং ফতোয়া" value={pendingFatwas.length} />
+                <StatCard icon={<CheckCircle size={24} />} label="উত্তর দেওয়া হয়েছে" value={answersGiven} />
+                <StatCard icon={<GraduationCap size={24} />} label="ভেরিফিকেশন" value={myProfile?.verified ? 1 : 0} />
               </div>
 
               <div className="space-y-6">
@@ -152,11 +133,7 @@ const ScholarDashboard: React.FC = () => {
                 </div>
 
                 {pendingFatwas.length === 0 ? (
-                  <div className="bg-white p-20 text-center border border-dashed border-gray-200">
-                    <Shield size={48} className="text-gray-200 mx-auto mb-6" />
-                    <p className="text-xl font-bold text-gray-400">কোনো পেন্ডিং ফতোয়া নেই</p>
-                    <p className="text-sm text-gray-400 mt-2">সব ফতোয়ার উত্তর দেওয়া হয়েছে।</p>
-                  </div>
+                  <EmptyState icon={<Shield size={48} />} title="কোনো পেন্ডিং ফতোয়া নেই" description="সব ফতোয়ার উত্তর দেওয়া হয়েছে।" />
                 ) : (
                   <div className="space-y-1 bg-gray-100 minimal-border">
                     {pendingFatwas.map(fatwa => (
@@ -179,18 +156,8 @@ const ScholarDashboard: React.FC = () => {
                         )}
 
                         <div className="flex gap-3">
-                          <button
-                            onClick={() => setAnswering(fatwa)}
-                            className="px-6 py-3 bg-black text-white font-bold text-xs hover:bg-gray-800 transition-all"
-                          >
-                            উত্তর দিন
-                          </button>
-                          <button
-                            onClick={() => handleReject(fatwa)}
-                            className="px-6 py-3 border border-gray-200 text-red-600 font-bold text-xs hover:bg-red-50 transition-all"
-                          >
-                            প্রত্যাখ্যান
-                          </button>
+                          <Button onClick={() => setAnswering(fatwa)}>উত্তর দিন</Button>
+                          <Button variant="danger" onClick={() => handleReject(fatwa)}>প্রত্যাখ্যান</Button>
                         </div>
                       </div>
                     ))}
@@ -204,12 +171,9 @@ const ScholarDashboard: React.FC = () => {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-extrabold">পোর্টফোলিও</h2>
-                <button
-                  onClick={() => setShowAddPortfolio(!showAddPortfolio)}
-                  className="flex items-center gap-2 bg-black text-white px-5 py-2.5 text-sm font-bold hover:bg-gray-800 transition-all"
-                >
-                  <Plus size={16} /> নতুন আইটেম
-                </button>
+                <Button onClick={() => setShowAddPortfolio(!showAddPortfolio)} icon={<Plus size={16} />}>
+                  নতুন আইটেম
+                </Button>
               </div>
 
               {showAddPortfolio && (
@@ -255,7 +219,7 @@ const ScholarDashboard: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <button
+                    <Button
                       onClick={async () => {
                         if (!newPortItem.title.trim()) return;
                         await dataService.addScholarPortfolioItem(newPortItem);
@@ -264,33 +228,25 @@ const ScholarDashboard: React.FC = () => {
                         if (currentUser) dataService.getScholarPortfolio(currentUser.id).then(setPortfolio);
                       }}
                       disabled={!newPortItem.title.trim()}
-                      className="px-6 py-3 bg-black text-white font-bold text-xs hover:bg-gray-800 transition-all disabled:opacity-50"
                     >
                       সেভ করুন
-                    </button>
-                    <button
-                      onClick={() => setShowAddPortfolio(false)}
-                      className="px-6 py-3 border border-gray-200 text-gray-500 font-bold text-xs hover:bg-gray-50 transition-all"
-                    >
+                    </Button>
+                    <Button variant="outline" onClick={() => setShowAddPortfolio(false)}>
                       বাতিল
-                    </button>
+                    </Button>
                   </div>
                 </div>
               )}
 
               {portfolio.length === 0 ? (
-                <div className="bg-white p-20 text-center border border-dashed border-gray-200">
-                  <FolderOpen size={48} className="text-gray-200 mx-auto mb-6" />
-                  <p className="text-xl font-bold text-gray-400">পোর্টফোলিওতে কিছু নেই</p>
-                  <p className="text-sm text-gray-400 mt-2">আপনার কাজ ও প্রকাশনা যোগ করুন।</p>
-                </div>
+                <EmptyState icon={<FolderOpen size={48} />} title="পোর্টফোলিওতে কিছু নেই" description="আপনার কাজ ও প্রকাশনা যোগ করুন।" />
               ) : (
                 <div className="grid gap-4">
                   {portfolio.map(item => (
                     <div key={item.id} className="bg-white p-8 minimal-border flex items-start justify-between gap-6 group hover:border-gray-200 transition-all">
                       <div className="space-y-2 flex-1">
                         <div className="flex items-center gap-3">
-                          <span className="text-[9px] font-black px-2 py-1 bg-gray-100 uppercase tracking-widest">{TYPE_LABELS[item.type] || item.type}</span>
+                          <Badge variant="default">{TYPE_LABELS[item.type] || item.type}</Badge>
                           <h3 className="font-bold text-gray-800 text-lg">{item.title}</h3>
                         </div>
                         {item.description && <p className="text-sm text-gray-500">{item.description}</p>}
@@ -300,15 +256,15 @@ const ScholarDashboard: React.FC = () => {
                           </a>
                         )}
                       </div>
-                      <button
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={async () => {
                           await dataService.deleteScholarPortfolioItem(item.id);
                           if (currentUser) dataService.getScholarPortfolio(currentUser.id).then(setPortfolio);
                         }}
-                        className="p-2 text-gray-200 hover:text-red-500 transition-all opacity-0 group-hover:opacity-100"
-                      >
-                        <Trash2 size={16} />
-                      </button>
+                        icon={<Trash2 size={16} />}
+                      />
                     </div>
                   ))}
                 </div>
@@ -318,15 +274,11 @@ const ScholarDashboard: React.FC = () => {
         </>
       )}
 
-      {answering && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm" onClick={() => setAnswering(null)}>
-          <div className="bg-white w-full max-w-2xl p-12 space-y-8 animate-slideUp max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-            <div className="flex justify-between items-center border-b border-gray-100 pb-6">
-              <div className="space-y-1">
-                <h2 className="text-2xl font-extrabold">ফতোয়ার উত্তর</h2>
-                <p className="text-sm text-gray-500 font-medium">{answering.question}</p>
-              </div>
-              <button onClick={() => setAnswering(null)} className="text-gray-400 hover:text-black"><X size={24} /></button>
+      <Modal open={!!answering} onClose={() => { setAnswering(null); setShowPicker(false); }} size="lg">
+        {answering && (
+          <div className="space-y-8">
+            <div className="space-y-1">
+              <p className="text-sm text-gray-500 font-medium">{answering.question}</p>
             </div>
 
             {answering.aiSuggestion && (
@@ -346,12 +298,9 @@ const ScholarDashboard: React.FC = () => {
             <div className="space-y-3">
               <div className="flex justify-between items-center">
                 <span className="caps-label text-gray-400">সোর্স সাইটেশন</span>
-                <button
-                  onClick={() => setShowPicker(true)}
-                  className="text-xs font-bold border border-gray-200 px-4 py-2 hover:bg-black hover:text-white transition-all"
-                >
+                <Button variant="outline" size="sm" onClick={() => setShowPicker(true)}>
                   + সোর্স যোগ করুন
-                </button>
+                </Button>
               </div>
               {selectedSources.length > 0 && (
                 <div className="flex flex-wrap gap-2">
@@ -363,24 +312,23 @@ const ScholarDashboard: React.FC = () => {
             </div>
 
             <div className="flex gap-4 pt-4 border-t border-gray-100">
-              <button
+              <Button
                 onClick={handleApprove}
                 disabled={submitting || !answerText.trim()}
-                className="flex-1 py-4 bg-black text-white font-bold text-sm hover:bg-gray-800 transition-all disabled:bg-gray-200 disabled:text-gray-400 flex items-center justify-center gap-2"
+                loading={submitting}
+                size="lg"
+                className="flex-1"
+                icon={!submitting ? <CheckCircle size={18} /> : undefined}
               >
-                {submitting ? <Loader2 size={18} className="animate-spin" /> : <CheckCircle size={18} />}
                 উত্তর প্রকাশ করুন
-              </button>
-              <button
-                onClick={() => setAnswering(null)}
-                className="px-8 py-4 border border-gray-200 text-gray-500 font-bold text-sm hover:bg-gray-50 transition-all"
-              >
+              </Button>
+              <Button variant="outline" size="lg" onClick={() => setAnswering(null)}>
                 বাতিল
-              </button>
+              </Button>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </Modal>
 
       {showPicker && (
         <CitationPicker

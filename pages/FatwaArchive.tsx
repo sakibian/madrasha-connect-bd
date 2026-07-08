@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Clock, BookOpen, Shield, ArrowRight, Sparkles, User, X } from 'lucide-react';
+import { Clock, Shield, ArrowRight, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Fatwa, Source } from '../types';
 import { dataService } from '../services/dataService';
 import CitationBadge from '../components/CitationBadge';
+import { Button, SearchInput, Badge, EmptyState } from '../components/ui';
 
 const categories = ['All', 'Ibadah', 'Muamalah', 'Family', 'Social'] as const;
 
@@ -84,14 +85,11 @@ const FatwaArchive: React.FC = () => {
       </div>
 
       <div className="flex flex-col md:flex-row gap-4">
-        <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-          <input
-            type="text"
-            placeholder="ফতোয়া খুঁজুন..."
-            className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 focus:border-black outline-none font-bold text-sm transition-all"
+        <div className="flex-1">
+          <SearchInput
             value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
+            onChange={setSearchTerm}
+            placeholder="ফতোয়া খুঁজুন..."
           />
         </div>
         <select
@@ -111,23 +109,21 @@ const FatwaArchive: React.FC = () => {
 
       <div className="flex gap-2">
         {categories.map(cat => (
-          <button
+          <Button
             key={cat}
+            variant={activeCategory === cat ? 'primary' : 'outline'}
+            size="sm"
             onClick={() => setActiveCategory(cat)}
-            className={`px-5 py-2.5 text-[10px] font-black uppercase tracking-widest transition-all border ${
-              activeCategory === cat ? 'bg-black text-white border-black' : 'bg-white text-gray-400 border-gray-200 hover:border-black'
-            }`}
           >
             {cat === 'All' ? 'সব' : cat}
-          </button>
+          </Button>
         ))}
       </div>
 
       <div className="space-y-1 bg-gray-100 minimal-border">
         {filtered.length === 0 ? (
           <div className="bg-white p-20 text-center">
-            <BookOpen size={48} className="text-gray-200 mx-auto mb-6" />
-            <p className="text-xl font-bold text-gray-400">কোনো ফতোয়া পাওয়া যায়নি</p>
+            <EmptyState icon={<Shield size={48} />} title="কোনো ফতোয়া পাওয়া যায়নি" />
           </div>
         ) : (
           filtered.map(fatwa => (
@@ -166,8 +162,8 @@ const FatwaArchive: React.FC = () => {
           <h3 className="text-xl font-bold">একটি প্রশ্ন আছে?</h3>
           <p className="text-gray-400 font-medium">আপনার দ্বীনি মাসআলা জিজ্ঞেস করুন এবং নির্ভরযোগ্য সোর্স সহ উত্তর পান।</p>
         </div>
-        <Link to="/fatwa" className="ml-auto whitespace-nowrap px-8 py-4 bg-white text-black font-bold text-sm hover:bg-gray-200 transition-all flex items-center gap-2">
-          প্রশ্ন করুন <ArrowRight size={18} />
+        <Link to="/fatwa" className="ml-auto">
+          <Button variant="white" size="lg">প্রশ্ন করুন <ArrowRight size={18} /></Button>
         </Link>
       </div>
     </div>

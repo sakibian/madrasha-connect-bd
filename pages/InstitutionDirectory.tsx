@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
-import { Search, MapPin, Building, CheckCircle, ArrowRight, Filter, Users, Calendar } from 'lucide-react';
+import { MapPin, CheckCircle, ArrowRight } from 'lucide-react';
 import { MOCK_INSTITUTIONS } from '../data/mockData';
 import { Link } from 'react-router-dom';
+import { Button, SearchInput } from '../components/ui';
 
 const InstitutionDirectory: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,31 +25,23 @@ const InstitutionDirectory: React.FC = () => {
         </div>
         <div className="flex flex-wrap gap-2">
           {(['All', 'Qawmi', 'Alia', 'Mosque'] as const).map(f => (
-            <button 
+            <Button
               key={f}
+              variant={activeFilter === f ? 'primary' : 'outline'}
+              size="sm"
               onClick={() => setActiveFilter(f)}
-              className={`px-5 py-2.5 text-xs font-bold transition-all border ${
-                activeFilter === f 
-                  ? 'bg-black text-white border-black' 
-                  : 'bg-white text-gray-500 border-gray-200 hover:border-black'
-              }`}
             >
               {f === 'All' ? 'সব' : f === 'Qawmi' ? 'কওমি' : f === 'Alia' ? 'আলিয়া' : 'মসজিদ'}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
 
-      <div className="relative">
-        <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-        <input 
-          type="text" 
-          placeholder="প্রতিষ্ঠানের নাম বা এলাকা লিখুন..."
-          className="w-full pl-16 pr-6 py-5 bg-gray-50 border-none focus:ring-2 focus:ring-black outline-none transition-all font-medium text-lg"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
+      <SearchInput
+        value={searchTerm}
+        onChange={setSearchTerm}
+        placeholder="প্রতিষ্ঠানের নাম বা এলাকা লিখুন..."
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-1 bg-gray-100 minimal-border">
         {filtered.map(inst => (

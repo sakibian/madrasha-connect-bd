@@ -1,33 +1,20 @@
 
 import React, { useState, useEffect } from 'react';
-import { 
-  MessageCircle, 
-  Search, 
-  Send, 
-  ShieldCheck, 
-  HelpCircle, 
-  Sparkles, 
-  Loader2, 
-  ArrowRight,
-  User,
-  Clock,
-  ChevronDown,
-  // Added missing X icon import
-  X
-} from 'lucide-react';
-import { Fatwa, Source } from '../types';
+import { Sparkles, Loader2, Clock } from 'lucide-react';
+import { Fatwa, Source, XP_ACTIONS } from '../types';
 import { dataService } from '../services/dataService';
 import { askScholar } from '../services/geminiService';
-import { getCurrentUser } from '../services/authService';
 import { addNotification } from '../services/notificationService';
 import { moderateContent } from '../services/moderationService';
-import { XP_ACTIONS } from '../types';
 import CitationBadge from '../components/CitationBadge';
 import FlagButton from '../components/FlagButton';
+import { Button, Modal, SearchInput } from '../components/ui';
+import { useAuthStore, useFatwaStore } from '../stores';
 
 const FatwaCenter: React.FC = () => {
-  const currentUser = getCurrentUser();
-  const [fatwas, setFatwas] = useState<Fatwa[]>([]);
+  const currentUser = useAuthStore((s) => s.user);
+  const { fatwas, fetch: fetchFatwas, ask: askFatwa } = useFatwaStore();
+  const [isInitialized, setIsInitialized] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [isAsking, setIsAsking] = useState(false);
@@ -38,10 +25,9 @@ const FatwaCenter: React.FC = () => {
   const [answerSources, setAnswerSources] = useState<Record<string, Source[]>>({});
 
   useEffect(() => {
-    const fetchFatwas = async () => {
-      const data = await dataService.getFatwas();
-      setFatwas(data);
-      const answered = data.filter(f => f.answerSources && f.answerSources.length > 0);
+    const init = async () => {
+      await fetchFatwas();
+      const answered = fatwas.filter(f => f.answerSources && f.answerSources.length > 0);
       if (answered.length > 0) {
         const allIds = answered.flatMap(f => f.answerSources || []);
         const sources = await dataService.getSourcesByIds(allIds);
@@ -51,9 +37,10 @@ const FatwaCenter: React.FC = () => {
         });
         setAnswerSources(map);
       }
+      setIsInitialized(true);
     };
-    fetchFatwas();
-  }, []);
+    if (!isInitialized) init();
+  }, [isInitialized]);
 
   const handleAskQuestion = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,7 +67,7 @@ const FatwaCenter: React.FC = () => {
         status: 'PENDING'
       };
 
-      await dataService.saveFatwa(newFatwa);
+      await askFatwa(newFatwa);
       if (currentUser) dataService.addXP(currentUser.id, XP_ACTIONS.ASK_FATWA.action, XP_ACTIONS.ASK_FATWA.xp);
       await addNotification({
         title: 'আপনার প্রশ্ন জমা হয়েছে',
@@ -90,7 +77,7 @@ const FatwaCenter: React.FC = () => {
       });
       setQuestion('');
       setIsAsking(false);
-      setFatwas(await dataService.getFatwas());
+      fetchFatwas();
     } catch (error) {
       console.error(error);
     } finally {
@@ -113,29 +100,28 @@ const FatwaCenter: React.FC = () => {
           <div className="caps-label text-gray-400">Fatwa Center</div>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">ফতোয়া ও জিজ্ঞাসা।</h1>
         </div>
-        <button 
-          onClick={() => setIsAsking(true)}
-          className="bg-black text-white px-8 py-4 font-bold text-sm flex items-center gap-2 hover:bg-gray-800 transition-all"
-        >
-          <HelpCircle size={20} /> প্রশ্ন করুন
-        </button>
+        <Button onClick={() => setIsAsking(true)}>
+          প্রশ্ন করুন
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="md:col-span-1 space-y-8">
            <div className="space-y-4">
               <div className="caps-label text-gray-400">Categories</div>
-              <div className="flex flex-col gap-2">
-                 {categories.map(cat => (
-                   <button 
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
-                    className={`text-left px-4 py-3 text-sm font-bold transition-all ${activeCategory === cat ? 'bg-black text-white' : 'text-gray-500 hover:bg-gray-50'}`}
-                   >
-                     {cat === 'All' ? 'সব বিষয়' : cat}
-                   </button>
-                 ))}
-              </div>
+               <div className="flex flex-col gap-2">
+                  {categories.map(cat => (
+                    <Button
+                     key={cat}
+                     variant={activeCategory === cat ? 'primary' : 'ghost'}
+                     size="md"
+                     onClick={() => setActiveCategory(cat)}
+                     className="text-left justify-start"
+                    >
+                      {cat === 'All' ? 'সব বিষয়' : cat}
+                    </Button>
+                  ))}
+               </div>
            </div>
            <div className="p-8 bg-gray-50 space-y-4">
               <Sparkles size={24} className="text-bd-green" />
@@ -145,16 +131,11 @@ const FatwaCenter: React.FC = () => {
         </div>
 
         <div className="md:col-span-3 space-y-8">
-           <div className="relative">
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-              <input 
-                type="text" 
-                placeholder="ফতোয়া বা মাসআলা খুঁজুন..."
-                className="w-full pl-16 pr-6 py-5 bg-white minimal-border focus:ring-2 focus:ring-black outline-none transition-all font-medium text-lg"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-           </div>
+           <SearchInput
+              value={searchTerm}
+              onChange={setSearchTerm}
+              placeholder="ফতোয়া বা মাসআলা খুঁজুন..."
+           />
 
            <div className="space-y-6">
               {filteredFatwas.map(fatwa => (
@@ -196,41 +177,33 @@ const FatwaCenter: React.FC = () => {
         </div>
       </div>
 
-      {isAsking && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm">
-          <div className="bg-white w-full max-w-xl p-12 space-y-10 animate-slideUp">
-            <div className="flex justify-between items-center border-b border-gray-100 pb-8">
-              <h2 className="text-3xl font-extrabold">আপনার মাসআলা লিখুন</h2>
-              <button onClick={() => setIsAsking(false)} className="text-gray-400 hover:text-black"><X size={32} /></button>
-            </div>
-            <form onSubmit={handleAskQuestion} className="space-y-6">
-               {moderationFeedback && (
-                 <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-sm font-medium">
-                   {moderationFeedback}
-                 </div>
-               )}
-               <div className="space-y-4">
-                  <select className="w-full p-4 border border-gray-100 bg-gray-50 outline-none font-bold text-sm" value={category} onChange={e => setCategory(e.target.value as any)}>
-                      <option value="Ibadah">ইবাদাত</option>
-                      <option value="Muamalah">মুয়ামালাত</option>
-                      <option value="Family">পারিবারিক</option>
-                      <option value="Social">সামাজিক</option>
-                  </select>
-                  <textarea 
-                    required 
-                    placeholder="আপনার প্রশ্নটি বিস্তারিত লিখুন..." 
-                    className="w-full p-6 border border-gray-100 bg-gray-50 outline-none focus:ring-2 focus:ring-black font-medium min-h-[200px]" 
-                    value={question} 
-                    onChange={e => setQuestion(e.target.value)} 
-                  />
-               </div>
-               <button disabled={isLoading} className="w-full py-5 bg-black text-white font-bold text-lg hover:bg-gray-800 transition-all flex items-center justify-center gap-3">
-                {isLoading ? <Loader2 className="animate-spin" /> : 'প্রশ্ন জমা দিন'}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
+      <Modal open={isAsking} onClose={() => setIsAsking(false)} title="আপনার মাসআলা লিখুন">
+        <form onSubmit={handleAskQuestion} className="space-y-6">
+           {moderationFeedback && (
+             <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-sm font-medium">
+               {moderationFeedback}
+             </div>
+           )}
+           <div className="space-y-4">
+              <select className="w-full p-4 border border-gray-100 bg-gray-50 outline-none font-bold text-sm" value={category} onChange={e => setCategory(e.target.value as any)}>
+                  <option value="Ibadah">ইবাদাত</option>
+                  <option value="Muamalah">মুয়ামালাত</option>
+                  <option value="Family">পারিবারিক</option>
+                  <option value="Social">সামাজিক</option>
+              </select>
+              <textarea 
+                required 
+                placeholder="আপনার প্রশ্নটি বিস্তারিত লিখুন..." 
+                className="w-full p-6 border border-gray-100 bg-gray-50 outline-none focus:ring-2 focus:ring-black font-medium min-h-[200px]" 
+                value={question} 
+                onChange={e => setQuestion(e.target.value)} 
+              />
+           </div>
+           <Button loading={isLoading} size="lg" className="w-full">
+            {isLoading ? '' : 'প্রশ্ন জমা দিন'}
+          </Button>
+        </form>
+      </Modal>
     </div>
   );
 };

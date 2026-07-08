@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  BookOpen, Download, ExternalLink, Search, Book, FileText, Video, Sparkles, Clock, Play, CheckCircle,
-  ArrowRight
-} from 'lucide-react';
-import { Course, Source, XP_ACTIONS } from '../types';
+import { Clock, Play, Download, ExternalLink } from 'lucide-react';
+import { Source, XP_ACTIONS } from '../types';
 import { supabase } from '../services/supabase';
 import { dataService } from '../services/dataService';
 import { addNotification } from '../services/notificationService';
 import CitationBadge from '../components/CitationBadge';
+import { Button, Badge } from '../components/ui';
+import { useCourseStore, useAuthStore } from '../stores';
 
 const KnowledgeHub: React.FC = () => {
-  const [courses, setCourses] = useState<Course[]>([]);
+  const currentUser = useAuthStore((s) => s.user);
+  const { courses, fetch: fetchCourses } = useCourseStore();
   const [enrolledCourses, setEnrolledCourses] = useState<string[]>([]);
   const [courseSources, setCourseSources] = useState<Record<string, Source[]>>({});
   const [loading, setLoading] = useState(true);
@@ -19,18 +19,14 @@ const KnowledgeHub: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const session = await supabase.auth.getSession();
-      const userId = session.data.session?.user?.id || '';
-      const [courseData, enrollData] = await Promise.all([
-        dataService.getCourses(),
-        userId ? dataService.getEnrollments(userId).catch(() => [] as string[]) : Promise.resolve([] as string[]),
-      ]);
-      setCourses(courseData);
+      await fetchCourses();
+      const userId = currentUser?.id || '';
+      const enrollData = userId ? await dataService.getEnrollments(userId).catch(() => [] as string[]) : [];
       setEnrolledCourses(enrollData);
 
       const sourcesMap: Record<string, Source[]> = {};
       await Promise.all(
-        courseData.map(async (c) => {
+        courses.map(async (c) => {
           const srcs = await dataService.getContentSources('course', c.id);
           if (srcs.length > 0) sourcesMap[c.id] = srcs;
         })
@@ -38,8 +34,8 @@ const KnowledgeHub: React.FC = () => {
       setCourseSources(sourcesMap);
       setLoading(false);
     };
-    fetchData();
-  }, []);
+    if (loading) fetchData();
+  }, [loading]);
 
   const handleEnroll = async (courseId: string, title: string) => {
     if (enrolledCourses.includes(courseId)) return;
@@ -125,14 +121,14 @@ const KnowledgeHub: React.FC = () => {
                     </div>
                   )}
                 </div>
-                <button
+                <Button
                   onClick={() => handleEnroll(course.id, course.title)}
-                  className={`mt-10 py-4 font-bold text-sm transition-all border ${
-                    isEnrolled ? 'bg-gray-50 text-gray-400 border-gray-100' : 'bg-black text-white border-black hover:bg-gray-800'
-                  }`}
+                  variant={isEnrolled ? 'outline' : 'primary'}
+                  size="md"
+                  className="w-full mt-10"
                 >
                   {isEnrolled ? 'অধ্যয়নরত' : 'কোর্সে যুক্ত হোন'}
-                </button>
+                </Button>
               </div>
             );
           })}
@@ -168,8 +164,8 @@ const ListResource = ({ title, sub }: any) => (
       <div className="text-xs text-gray-400 font-bold group-hover:text-gray-500 uppercase tracking-widest mt-1">{sub}</div>
     </div>
     <div className="flex gap-4">
-      <button className="p-2 border border-gray-200 group-hover:border-gray-800"><Download size={18} /></button>
-      <button className="p-2 border border-gray-200 group-hover:border-gray-800"><ExternalLink size={18} /></button>
+      <Button variant="outline" size="sm" icon={<Download size={18} />} />
+      <Button variant="outline" size="sm" icon={<ExternalLink size={18} />} />
     </div>
   </div>
 );

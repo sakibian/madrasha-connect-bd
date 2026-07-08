@@ -1,33 +1,22 @@
 
-import React, { useState, useEffect } from 'react';
-import { 
-  ShoppingBag, 
-  Heart, 
-  Download, 
-  Star,
-  Grid,
-  List,
-  Trash2,
-  ArrowRight
-} from 'lucide-react';
-import { Product } from '../types';
-import { dataService } from '../services/dataService';
-import { getCurrentUser } from '../services/authService';
+import React, { useEffect } from 'react';
+import { ShoppingBag, Heart, Download, Trash2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Button, Badge } from '../components/ui';
+import { useAuthStore, useProductStore } from '../stores';
 
 const Marketplace: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const currentUser = getCurrentUser();
+  const currentUser = useAuthStore((s) => s.user);
+  const { products, fetch: fetchProducts, remove: deleteProduct } = useProductStore();
   const isAdmin = currentUser?.role === 'ADMIN';
 
   useEffect(() => {
-    dataService.getProducts().then(setProducts);
+    fetchProducts();
   }, []);
 
   const handleDelete = async (id: string) => {
     if (window.confirm('পণ্যটি কি মুছে ফেলতে চান?')) {
-      await dataService.deleteProduct(id);
-      setProducts(await dataService.getProducts());
+      await deleteProduct(id);
     }
   };
 
@@ -58,7 +47,7 @@ const Marketplace: React.FC = () => {
             <div className="relative aspect-square bg-gray-50 mb-8 overflow-hidden">
                <img src={product.image} alt={product.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" />
                <button className="absolute top-4 right-4 p-3 bg-white text-gray-300 hover:text-black border border-gray-100"><Heart size={18} /></button>
-               {product.isFree && <span className="absolute bottom-4 left-4 bg-black text-white px-3 py-1 text-[9px] font-black uppercase tracking-widest">Free</span>}
+               {product.isFree && <Badge variant="success" className="absolute bottom-4 left-4">Free</Badge>}
             </div>
             <div className="flex-1 space-y-4 flex flex-col">
               <div className="caps-label text-gray-400">{product.category}</div>
@@ -67,11 +56,9 @@ const Marketplace: React.FC = () => {
                  <span className="text-2xl font-extrabold text-black">{product.isFree ? 'ফ্রি' : `৳ ${product.price}`}</span>
                  <div className="flex gap-2">
                     {isAdmin && (
-                      <button onClick={() => handleDelete(product.id)} className="p-3 border border-gray-200 text-red-600 hover:bg-red-50"><Trash2 size={18} /></button>
+                      <Button variant="danger" size="sm" onClick={() => handleDelete(product.id)} icon={<Trash2 size={18} />} />
                     )}
-                    <button className={`p-4 transition-all ${product.isFree ? 'bg-black text-white hover:bg-bd-green' : 'border border-black text-black hover:bg-black hover:text-white'}`}>
-                       {product.isFree ? <Download size={20} /> : <ShoppingBag size={20} />}
-                    </button>
+                    <Button variant={product.isFree ? 'primary' : 'outline'} size="sm" icon={product.isFree ? <Download size={20} /> : <ShoppingBag size={20} />} />
                  </div>
               </div>
             </div>

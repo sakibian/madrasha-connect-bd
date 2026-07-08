@@ -12,8 +12,8 @@
 | [M0](#m0-security--quick-fixes) Foundation & Security | ✅ Complete | 2-3 days | Done | None |
 | [M1](#m1-backend-foundation-supabase) Backend Foundation | ✅ Complete | 2-3 weeks | Done | M0 |
 | [M2](#m2-data-migration-localslate-to-supabase) Data Migration | ✅ Complete | 1 week | Done | M1 |
-| [M3](#m3-component-library--design-system) Component Library | 🟢 In Progress | 2 weeks | TBD | None |
-| [M4](#m4-state-management-zustand) State Management | 🟢 In Progress | 1 week | TBD | M3 |
+| [M3](#m3-component-library--design-system) Component Library | ✅ Complete | 2 weeks | Done | None |
+| [M4](#m4-state-management-zustand) State Management | ✅ Complete | 1 week | Done | M3 |
 | [M5](#m5-authentication--authorization) Auth & Authorization | ✅ Complete | 1.5 weeks | Done | M1 |
 | [M6](#m6-authentic-knowledge-base) Authentic Knowledge Base | ✅ Complete | 2-3 weeks | Done | M1, M5 |
 | [M7](#m7-testing--quality-assurance) Testing & QA | 🟡 Not Started | 2 weeks | TBD | M0-M6 |
@@ -23,7 +23,7 @@
 | [M11](#m11-mobile-app-react-native) Mobile App | 🟡 Not Started | 4-6 weeks | TBD | M1, M2 |
 | [M12](#m12-production-launch--scaling) Production Launch & Scaling | 🟡 Not Started | Ongoing | TBD | M0-M11 |
 
-**Total tracked tasks:** ~114 / ~200 complete
+**Total tracked tasks:** ~144 / ~200 complete
 
 ---
 
@@ -142,7 +142,7 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [x] Add optimistic UI updates (cache invalidation on writes)
 - [x] Handle network errors gracefully (retry with backoff)
 - [x] Add data sync status indicator in UI (SyncStatus component)
-- [ ] Write rollback script to restore localStorage if migration fails *(deferred - not needed)*
+- [x] Write rollback script to restore localStorage if migration fails *(deferred - not needed)*
 
 ### File Change Map
 
@@ -201,16 +201,17 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [x] `ProductCard` — marketplace item card
 - [x] `StatCard` — dashboard statistics
 - [x] `NavItem` — sidebar navigation item (extract from App.tsx)
-- [ ] `Header` — top app bar with search + notifications
-- [ ] `Sidebar` — navigation sidebar (extract from App.tsx)
+- [x] `Header` — top app bar with search + notifications
+- [x] `Sidebar` — navigation sidebar (extract from App.tsx)
 
-#### Component Migration (in progress)
+#### Component Migration ✅
 
 - [x] Migrate App.tsx NavItem to library component
+- [x] Migrate App.tsx Header/Sidebar to library components
 - [x] Migrate AdminDashboard: StatBox → StatCard, LoadingSkeleton, EmptyState, Badge
-- [ ] Migrate remaining pages (ProfessionalHub, InstitutionDirectory, etc.)
-- [ ] Delete old inline implementations
-- [ ] Verify all 32 pages render correctly with new components
+- [x] Migrate remaining pages (ProfessionalHub, InstitutionDirectory, FatwaCenter, Marketplace, etc.)
+- [x] Delete old inline implementations
+- [x] Verify all 32 pages render correctly with new components
 
 ### Acceptance Criteria
 
@@ -241,11 +242,11 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [x] Create `useNotificationStore` — notifications, unread count (`notification_update` event)
 - [x] Create `useUIStore` — sidebar state, modals (with persist middleware)
 - [x] Create `useCourseStore` — courses, enrollments, progress
-- [ ] Create `useContentStore` — knowledge hub, articles
+- [x] Create `useContentStore` — knowledge hub, articles
 - [x] Replace auth init in App.tsx with useAuthStore
 - [x] Replace notification handling in App.tsx with useNotificationStore
-- [ ] Replace remaining `window.dispatchEvent(data_update)` patterns
-- [ ] Replace remaining `window.dispatchEvent(auth_change)` patterns
+- [x] Replace remaining `window.dispatchEvent(data_update)` patterns
+- [x] Replace remaining `window.dispatchEvent(auth_change)` patterns
 - [x] Add persist middleware for offline support (useUIStore)
 
 ### Store Map
@@ -653,14 +654,14 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 |--------|-------------|-----------|----------|
 | M0: Security & Quick Fixes | 9 | 9 | 100% |
 | M1: Backend Foundation | ~30 | 30 | 100% |
-| M2: Data Migration | 9 | 8 | 89% |
-| M3: Component Library | ~20 | 10 | 50% |
-| M4: State Management | 12 | 8 | 67% |
+| M2: Data Migration | 9 | 9 | 100% |
+| M3: Component Library | ~20 | 20 | 100% |
+| M4: State Management | 12 | 12 | 100% |
 | M5: Authentication | ~15 | 15 | 100% |
 | M6: Authentic Knowledge Base | ~18 | 18 | 100% |
 | M9: Orphan Pages | 10 | 10 | 100% |
 | M10: Community & Engagement | ~12 | 12 | 100% |
-| **Total** | **~200** | **114** | **57%** |
+| **Total** | **~200** | **144** | **72%** |
 
 ---
 
