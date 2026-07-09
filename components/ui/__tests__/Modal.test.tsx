@@ -44,7 +44,7 @@ describe('Modal', () => {
   it('renders close button when title is present', async () => {
     const onClose = vi.fn();
     render(<Modal open={true} onClose={onClose} title="Title">Content</Modal>);
-    const closeBtn = screen.getByRole('button', { name: '' });
+    const closeBtn = screen.getByRole('button', { name: /বন্ধ/i });
     await userEvent.click(closeBtn);
     expect(onClose).toHaveBeenCalled();
   });

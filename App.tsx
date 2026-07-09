@@ -1,45 +1,45 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
-import Dashboard from './pages/Dashboard';
-import Home from './pages/Home';
-import ProfessionalHub from './pages/ProfessionalHub';
-import KnowledgeHub from './pages/KnowledgeHub';
-import Marketplace from './pages/Marketplace';
-import FatwaCenter from './pages/FatwaCenter';
-import SearchResults from './pages/SearchResults';
-import Login from './pages/Login';
-import RegisterUser from './pages/RegisterUser';
-import RegisterInstitution from './pages/RegisterInstitution';
-import FAQ from './pages/FAQ';
-import InstitutionDirectory from './pages/InstitutionDirectory';
-import InstitutionDetail from './pages/InstitutionDetail';
-import ScholarDirectory from './pages/ScholarDirectory';
-import CalligraphyGallery from './pages/CalligraphyGallery';
-import SeerahTimeline from './pages/SeerahTimeline';
-import Deen101 from './pages/Deen101';
-import LandingPage from './pages/LandingPage';
-import AboutUs from './pages/AboutUs';
-import PostJob from './pages/Institution/PostJob';
-import ERPPreview from './pages/Institution/ERPPreview';
-import ProfileBuilder from './pages/ProfileBuilder';
-import InstructionalHelp from './pages/InstructionalHelp';
-import Competitions from './pages/Competitions';
-import AudioLibrary from './pages/AudioLibrary';
-import Tools from './pages/Tools';
-import Community from './pages/Community';
-import EventsHub from './pages/EventsHub';
-import SadaqahHub from './pages/SadaqahHub';
-import FatwaArchive from './pages/FatwaArchive';
-import ScholarDashboard from './pages/ScholarDashboard';
-import ScholarApply from './pages/ScholarApply';
-import Leaderboard from './pages/Leaderboard';
-import PublicProfile from './pages/PublicProfile';
-import Forbidden from './pages/Forbidden';
-import ForgotPassword from './pages/ForgotPassword';
-import VerifyEmail from './pages/VerifyEmail';
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Home = lazy(() => import('./pages/Home'));
+const ProfessionalHub = lazy(() => import('./pages/ProfessionalHub'));
+const KnowledgeHub = lazy(() => import('./pages/KnowledgeHub'));
+const Marketplace = lazy(() => import('./pages/Marketplace'));
+const FatwaCenter = lazy(() => import('./pages/FatwaCenter'));
+const SearchResults = lazy(() => import('./pages/SearchResults'));
+const Login = lazy(() => import('./pages/Login'));
+const RegisterUser = lazy(() => import('./pages/RegisterUser'));
+const RegisterInstitution = lazy(() => import('./pages/RegisterInstitution'));
+const FAQ = lazy(() => import('./pages/FAQ'));
+const InstitutionDirectory = lazy(() => import('./pages/InstitutionDirectory'));
+const InstitutionDetail = lazy(() => import('./pages/InstitutionDetail'));
+const ScholarDirectory = lazy(() => import('./pages/ScholarDirectory'));
+const CalligraphyGallery = lazy(() => import('./pages/CalligraphyGallery'));
+const SeerahTimeline = lazy(() => import('./pages/SeerahTimeline'));
+const Deen101 = lazy(() => import('./pages/Deen101'));
+const LandingPage = lazy(() => import('./pages/LandingPage'));
+const AboutUs = lazy(() => import('./pages/AboutUs'));
+const PostJob = lazy(() => import('./pages/Institution/PostJob'));
+const ERPPreview = lazy(() => import('./pages/Institution/ERPPreview'));
+const ProfileBuilder = lazy(() => import('./pages/ProfileBuilder'));
+const InstructionalHelp = lazy(() => import('./pages/InstructionalHelp'));
+const Competitions = lazy(() => import('./pages/Competitions'));
+const AudioLibrary = lazy(() => import('./pages/AudioLibrary'));
+const Tools = lazy(() => import('./pages/Tools'));
+const Community = lazy(() => import('./pages/Community'));
+const EventsHub = lazy(() => import('./pages/EventsHub'));
+const SadaqahHub = lazy(() => import('./pages/SadaqahHub'));
+const FatwaArchive = lazy(() => import('./pages/FatwaArchive'));
+const ScholarDashboard = lazy(() => import('./pages/ScholarDashboard'));
+const ScholarApply = lazy(() => import('./pages/ScholarApply'));
+const Leaderboard = lazy(() => import('./pages/Leaderboard'));
+const PublicProfile = lazy(() => import('./pages/PublicProfile'));
+const Forbidden = lazy(() => import('./pages/Forbidden'));
+const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
+const VerifyEmail = lazy(() => import('./pages/VerifyEmail'));
 import ProtectedRoute from './components/ProtectedRoute';
 
 import { initNotifications } from './services/notificationService';
@@ -47,7 +47,7 @@ import { User } from './types';
 import ErrorBoundary from './components/ErrorBoundary';
 import { SyncStatusProvider } from './contexts/SyncStatusContext';
 import { useAuthStore, useNotificationStore } from './stores';
-import { Header, Sidebar } from './components/ui';
+import { Header, Sidebar, PageLoader } from './components/ui';
 
 const App: React.FC = () => {
   return (
@@ -91,13 +91,15 @@ const AppRouter: React.FC = () => {
   if (isAuthPage) {
     if (currentUser) return <Navigate to="/dashboard" replace />;
     return (
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register-user" element={<RegisterUser />} />
-        <Route path="/register-institution" element={<RegisterInstitution />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
-      </Routes>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register-user" element={<RegisterUser />} />
+          <Route path="/register-institution" element={<RegisterInstitution />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+        </Routes>
+      </Suspense>
     );
   }
 
@@ -141,33 +143,35 @@ const PublicLayout: React.FC = () => {
         </div>
       </nav>
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <Routes>
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/institutions" element={<InstitutionDirectory />} />
-          <Route path="/institution/:id" element={<InstitutionDetail />} />
-          <Route path="/scholars" element={<ScholarDirectory />} />
-          <Route path="/professional" element={<ProfessionalHub />} />
-          <Route path="/knowledge" element={<KnowledgeHub />} />
-          <Route path="/seerah" element={<SeerahTimeline />} />
-          <Route path="/marketplace" element={<Marketplace />} />
-          <Route path="/fatwa" element={<FatwaCenter />} />
-          <Route path="/search" element={<SearchResults />} />
-          <Route path="/deen101" element={<Deen101 />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/competitions" element={<Competitions />} />
-          <Route path="/audio-library" element={<AudioLibrary />} />
-          <Route path="/tools" element={<Tools />} />
-          <Route path="/calligraphy" element={<CalligraphyGallery />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/events" element={<EventsHub />} />
-          <Route path="/sadaqah" element={<SadaqahHub />} />
-          <Route path="/fatwa/archive" element={<FatwaArchive />} />
-          <Route path="/scholar-dashboard" element={<ScholarDashboard />} />
-          <Route path="/scholar/apply" element={<ScholarApply />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
-          <Route path="/profile/:id" element={<PublicProfile />} />
-          <Route path="/forbidden" element={<Forbidden />} />
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/institutions" element={<InstitutionDirectory />} />
+            <Route path="/institution/:id" element={<InstitutionDetail />} />
+            <Route path="/scholars" element={<ScholarDirectory />} />
+            <Route path="/professional" element={<ProfessionalHub />} />
+            <Route path="/knowledge" element={<KnowledgeHub />} />
+            <Route path="/seerah" element={<SeerahTimeline />} />
+            <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/fatwa" element={<FatwaCenter />} />
+            <Route path="/search" element={<SearchResults />} />
+            <Route path="/deen101" element={<Deen101 />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/competitions" element={<Competitions />} />
+            <Route path="/audio-library" element={<AudioLibrary />} />
+            <Route path="/tools" element={<Tools />} />
+            <Route path="/calligraphy" element={<CalligraphyGallery />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/events" element={<EventsHub />} />
+            <Route path="/sadaqah" element={<SadaqahHub />} />
+            <Route path="/fatwa/archive" element={<FatwaArchive />} />
+            <Route path="/scholar-dashboard" element={<ScholarDashboard />} />
+            <Route path="/scholar/apply" element={<ScholarApply />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/profile/:id" element={<PublicProfile />} />
+            <Route path="/forbidden" element={<Forbidden />} />
+          </Routes>
+        </Suspense>
       </div>
     </div>
   );
@@ -189,44 +193,50 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-[#F9FAFB]">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-black focus:text-white focus:px-6 focus:py-3 focus:font-bold">
+        মূল কন্টেন্টে যান
+      </a>
       <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
-      <main className="flex-1 flex flex-col min-h-screen overflow-x-hidden">
+      <main id="main-content" className="flex-1 flex flex-col min-h-screen overflow-x-hidden">
         <Header onMenuToggle={() => setSidebarOpen(!isSidebarOpen)} isSidebarOpen={isSidebarOpen} />
+        <div aria-live="polite" aria-atomic="true" className="sr-only"></div>
         <div className="p-8 md:p-12 max-w-6xl mx-auto w-full">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/institutions" element={<InstitutionDirectory />} />
-            <Route path="/institution/:id" element={<InstitutionDetail />} />
-            <Route path="/scholars" element={<ScholarDirectory />} />
-            <Route path="/professional" element={<ProfessionalHub />} />
-            <Route path="/knowledge" element={<KnowledgeHub />} />
-            <Route path="/seerah" element={<SeerahTimeline />} />
-            <Route path="/marketplace" element={<Marketplace />} />
-            <Route path="/fatwa" element={<FatwaCenter />} />
-            <Route path="/search" element={<SearchResults />} />
-            <Route path="/deen101" element={<Deen101 />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/profile-builder" element={<ProfileBuilder />} />
-            <Route path="/help" element={<InstructionalHelp />} />
-            <Route path="/competitions" element={<Competitions />} />
-            <Route path="/audio-library" element={<AudioLibrary />} />
-            <Route path="/tools" element={<Tools />} />
-            <Route path="/calligraphy" element={<CalligraphyGallery />} />
-            <Route path="/community" element={<Community />} />
-            <Route path="/events" element={<EventsHub />} />
-            <Route path="/sadaqah" element={<SadaqahHub />} />
-            <Route path="/fatwa/archive" element={<FatwaArchive />} />
-            <Route path="/scholar-dashboard" element={<ScholarDashboard />} />
-            <Route path="/scholar/apply" element={<ScholarApply />} />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/profile/:id" element={<PublicProfile />} />
-            <Route path="/forbidden" element={<Forbidden />} />
-            <Route path="/post-job" element={<ProtectedRoute requiredRole="INSTITUTION"><PostJob /></ProtectedRoute>} />
-            <Route path="/erp-preview" element={<ProtectedRoute requiredRole="INSTITUTION"><ERPPreview /></ProtectedRoute>} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
-          </Routes>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/institutions" element={<InstitutionDirectory />} />
+              <Route path="/institution/:id" element={<InstitutionDetail />} />
+              <Route path="/scholars" element={<ScholarDirectory />} />
+              <Route path="/professional" element={<ProfessionalHub />} />
+              <Route path="/knowledge" element={<KnowledgeHub />} />
+              <Route path="/seerah" element={<SeerahTimeline />} />
+              <Route path="/marketplace" element={<Marketplace />} />
+              <Route path="/fatwa" element={<FatwaCenter />} />
+              <Route path="/search" element={<SearchResults />} />
+              <Route path="/deen101" element={<Deen101 />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/profile-builder" element={<ProfileBuilder />} />
+              <Route path="/help" element={<InstructionalHelp />} />
+              <Route path="/competitions" element={<Competitions />} />
+              <Route path="/audio-library" element={<AudioLibrary />} />
+              <Route path="/tools" element={<Tools />} />
+              <Route path="/calligraphy" element={<CalligraphyGallery />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/events" element={<EventsHub />} />
+              <Route path="/sadaqah" element={<SadaqahHub />} />
+              <Route path="/fatwa/archive" element={<FatwaArchive />} />
+              <Route path="/scholar-dashboard" element={<ScholarDashboard />} />
+              <Route path="/scholar/apply" element={<ScholarApply />} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/profile/:id" element={<PublicProfile />} />
+              <Route path="/forbidden" element={<Forbidden />} />
+              <Route path="/post-job" element={<ProtectedRoute requiredRole="INSTITUTION"><PostJob /></ProtectedRoute>} />
+              <Route path="/erp-preview" element={<ProtectedRoute requiredRole="INSTITUTION"><ERPPreview /></ProtectedRoute>} />
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            </Routes>
+          </Suspense>
         </div>
       </main>
     </div>

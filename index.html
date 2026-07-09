@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://esm.sh https://www.google-analytics.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://picsum.photos data:; connect-src 'self' https://generativelanguage.googleapis.com; frame-src 'none'; object-src 'none'">
     <title>Madrasa Connect BD - আধুনিক মাদ্রাসা ইকোসিস্টেম</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://esm.sh">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" as="style">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -45,6 +50,19 @@
             text-transform: uppercase;
             font-size: 0.65rem;
             font-weight: 700;
+        }
+        /* Focus-visible ring for keyboard users */
+        *:focus-visible {
+            outline: 2px solid #111827;
+            outline-offset: 2px;
+        }
+        button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+            outline: 2px solid #111827;
+            outline-offset: 2px;
+        }
+        /* Remove outline for mouse users */
+        *:focus:not(:focus-visible) {
+            outline: none;
         }
         /* Remove all glassmorphism and heavy shadows */
         .no-shadow {

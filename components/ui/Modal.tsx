@@ -36,6 +36,9 @@ const Modal: React.FC<ModalProps> = ({ open, onClose, title, children, size = 'm
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={title || 'Modal'}
       className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm"
       onClick={onClose}
     >
@@ -46,7 +49,7 @@ const Modal: React.FC<ModalProps> = ({ open, onClose, title, children, size = 'm
         {title && (
           <div className="flex justify-between items-center border-b border-gray-100 pb-6">
             <h2 className="text-2xl font-extrabold">{title}</h2>
-            <button onClick={onClose} className="text-gray-400 hover:text-black transition-colors">
+            <button onClick={onClose} aria-label="বন্ধ করুন" className="text-gray-400 hover:text-black transition-colors">
               <X size={24} />
             </button>
           </div>

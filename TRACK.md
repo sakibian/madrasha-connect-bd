@@ -17,13 +17,13 @@
 | [M5](#m5-authentication--authorization) Auth & Authorization | ✅ Complete | 1.5 weeks | Done | M1 |
 | [M6](#m6-authentic-knowledge-base) Authentic Knowledge Base | ✅ Complete | 2-3 weeks | Done | M1, M5 |
 | [M7](#m7-testing--quality-assurance) Testing & QA | ✅ Complete | 2 weeks | Done | M0-M6 |
-| [M8](#m8-performance--accessibility) Performance & Accessibility | 🟡 Not Started | 1 week | TBD | M3 |
+| [M8](#m8-performance--accessibility) Performance & Accessibility | 🟢 In Progress | 1 week | TBD | M3 |
 | [M9](#m9-orphan-page-integration) Orphan Page Integration | ✅ Complete | 2-3 days | Done | M0, M5 |
 | [M10](#m10-community--engagement-features) Community & Engagement | 🟢 In Progress | 2 weeks | TBD | M1, M5, M9 |
 | [M11](#m11-mobile-app-react-native) Mobile App | 🟡 Not Started | 4-6 weeks | TBD | M1, M2 |
 | [M12](#m12-production-launch--scaling) Production Launch & Scaling | 🟡 Not Started | Ongoing | TBD | M0-M11 |
 
-**Total tracked tasks:** ~164 / ~200 complete
+**Total tracked tasks:** ~174 / ~200 complete
 
 ---
 
@@ -435,27 +435,27 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 > **Objective:** Ship a fast, inclusive experience that works on low-end devices in rural Bangladesh.  
 > **Depends on:** M3 (components)  
 > **Effort:** 1 week  
-> **Status:** 🟡 Not Started
+> **Status:** 🟢 In Progress
 
 ### Tasks
 
 #### Performance
-- [ ] Implement code splitting with `React.lazy()` for all route-level components
-- [ ] Add bundle analysis to build pipeline (`rollup-plugin-visualizer`)
+- [x] Implement code splitting with `React.lazy()` for all route-level components
+- [x] Add bundle analysis to build pipeline (`rollup-plugin-visualizer`)
 - [ ] Lazy load images (Intersection Observer)
-- [ ] Preload critical fonts (Noto Sans Bengali)
-- [ ] Add resource hints (preconnect, prefetch) in index.html
+- [x] Preload critical fonts (Noto Sans Bengali)
+- [x] Add resource hints (preconnect, prefetch) in index.html
 - [ ] Optimize Tailwind build (purge unused classes, use JIT)
 - [ ] Add service worker for offline caching
 - [ ] Implement virtual scrolling for long lists (job board, institution directory)
 
 #### Accessibility (WCAG 2.1 AA)
-- [ ] Audit all forms for proper labels, error announcements, ARIA attributes
-- [ ] Add focus indicators to all interactive elements
+- [x] Audit all forms for proper labels, error announcements, ARIA attributes
+- [x] Add focus indicators to all interactive elements
 - [ ] Ensure color contrast ≥ 4.5:1 (check all current color tokens)
-- [ ] Add keyboard navigation (tab order, skip links, focus management in modals)
-- [ ] Add screen reader support (aria-live regions for dynamic content)
-- [ ] Add `lang="bn"` attribute for Bengali text regions
+- [x] Add keyboard navigation (tab order, skip links, focus management in modals)
+- [x] Add screen reader support (aria-live regions for dynamic content)
+- [x] Add `lang="bn"` attribute for Bengali text regions *(already present)*
 - [ ] Test with VoiceOver / TalkBack
 - [ ] Create accessibility statement page
 
@@ -660,9 +660,10 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M5: Authentication | ~15 | 15 | 100% |
 | M6: Authentic Knowledge Base | ~18 | 18 | 100% |
 | M7: Testing & QA | ~20 | 20 | 100% |
+| M8: Performance & Accessibility | ~16 | 10 | 63% |
 | M9: Orphan Pages | 10 | 10 | 100% |
 | M10: Community & Engagement | ~12 | 12 | 100% |
-| **Total** | **~200** | **164** | **82%** |
+| **Total** | **~200** | **174** | **87%** |
 
 ---
 

@@ -11,6 +11,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:smoke": "vitest run src/test/__tests__/search.test.tsx",
+    "analyze": "vite build --mode analyze",
     "postinstall": "simple-git-hooks"
   },
   "dependencies": {
@@ -31,6 +32,7 @@
     "@vitest/coverage-v8": "^4.1.10",
     "jsdom": "^29.1.1",
     "msw": "^2.15.0",
+    "rollup-plugin-visualizer": "^7.0.1",
     "simple-git-hooks": "^2.13.1",
     "typescript": "~5.8.2",
     "vite": "^6.2.0",

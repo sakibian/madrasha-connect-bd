@@ -18,6 +18,7 @@ const NavItem: React.FC<NavItemProps> = ({ to, icon, label, onClick, exact }) =>
     <Link
       to={to}
       onClick={onClick}
+      aria-current={isActive ? 'page' : undefined}
       className={`flex items-center gap-4 px-4 py-3 text-sm transition-all ${
         isActive
           ? 'bg-black text-white font-bold'
