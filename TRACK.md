@@ -577,7 +577,7 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 
 #### Native Features
 - [x] Push notifications (expo-notifications, push_tokens table, save/register on login, sendPushToUser/sendPushToRole utilities)
-- [ ] Offline support (AsyncStorage + SQLite)
+- [x] Offline support (AsyncStorage cache with TTL, useCachedData hook, offline banner on Jobs/Fatwas/Institutions screens)
 - [ ] Prayer time alarms
 - [ ] Image picker for profile/listing photos
 - [ ] Deep linking
@@ -666,8 +666,8 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M8: Performance & Accessibility | ~16 | 15 | 94% |
 | M9: Orphan Pages | 10 | 10 | 100% |
 | M10: Community & Engagement | ~23 | 23 | 100% |
-| M11: Mobile App | ~16 | 11 | 69% |
-| **Total** | **~227** | **196** | **86%** |
+| M11: Mobile App | ~16 | 12 | 75% |
+| **Total** | **~227** | **197** | **87%** |
 
 ---
 

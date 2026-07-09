@@ -1,39 +1,36 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { supabase } from '../services/supabase';
+import { useCachedData } from '../hooks/useCachedData';
 import { Job } from '../types';
 
 const JobsScreen: React.FC = () => {
-  const [jobs, setJobs] = useState<Job[]>([]);
   const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => { loadJobs(); }, []);
-
-  const loadJobs = async () => {
+  const fetchJobs = useCallback(async (): Promise<Job[]> => {
     const { data } = await supabase
       .from('jobs')
       .select('*, institutions(name)')
       .order('created_at', { ascending: false });
-    if (data) {
-      setJobs(data.map(j => ({
-        id: j.id,
-        title: j.title,
-        institution: (j as any).institutions?.name || '',
-        location: j.location || '',
-        salary: j.salary || '',
-        type: j.type,
-        postedAt: j.created_at || '',
-        verified: j.status === 'verified',
-        contactInfo: j.contact_info,
-      })));
-    }
-    setLoading(false);
-  };
+    if (!data) return [];
+    return data.map(j => ({
+      id: j.id,
+      title: j.title,
+      institution: (j as any).institutions?.name || '',
+      location: j.location || '',
+      salary: j.salary || '',
+      type: j.type,
+      postedAt: j.created_at || '',
+      verified: j.status === 'verified',
+      contactInfo: j.contact_info,
+    }));
+  }, []);
 
-  const filtered = jobs.filter(j =>
+  const { data: jobs, loading, isOffline, refresh } = useCachedData<Job[]>('jobs_list', fetchJobs, { ttl: 1000 * 60 * 15 });
+
+  const filtered = (jobs || []).filter(j =>
     j.title.toLowerCase().includes(search.toLowerCase()) ||
     j.institution.toLowerCase().includes(search.toLowerCase()) ||
     j.location.toLowerCase().includes(search.toLowerCase())
@@ -43,8 +40,15 @@ const JobsScreen: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>চাকরি বোর্ড</Text>
-        <Text style={styles.subtitle}>{jobs.length}টি পদ উপলব্ধ</Text>
+        <Text style={styles.subtitle}>{jobs?.length || 0}টি পদ উপলব্ধ</Text>
       </View>
+
+      {isOffline && (
+        <View style={styles.offlineBanner}>
+          <Ionicons name="cloud-offline" size={14} color="#fff" />
+          <Text style={styles.offlineText}>অফলাইন মোড — ক্যাশ থেকে দেখাচ্ছে</Text>
+        </View>
+      )}
 
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={18} color="#9CA3AF" style={{ marginRight: 8 }} />
@@ -61,6 +65,8 @@ const JobsScreen: React.FC = () => {
         data={filtered}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.list}
+        onRefresh={refresh}
+        refreshing={loading}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.jobCard}>
             <View style={styles.jobHeader}>
@@ -94,6 +100,11 @@ const styles = StyleSheet.create({
   header: { padding: 24, paddingBottom: 8 },
   title: { fontSize: 28, fontWeight: '900', color: '#111827' },
   subtitle: { fontSize: 13, color: '#9CA3AF', fontWeight: '600', marginTop: 4 },
+  offlineBanner: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+    backgroundColor: '#F59E0B', padding: 8, gap: 6,
+  },
+  offlineText: { fontSize: 12, fontWeight: '700', color: '#fff' },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',

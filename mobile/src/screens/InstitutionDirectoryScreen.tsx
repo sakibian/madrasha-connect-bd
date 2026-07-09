@@ -1,27 +1,25 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { supabase } from '../services/supabase';
+import { useCachedData } from '../hooks/useCachedData';
 
 const InstitutionDirectoryScreen: React.FC = () => {
-  const [institutions, setInstitutions] = useState<any[]>([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('All');
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => { loadInstitutions(); }, []);
-
-  const loadInstitutions = async () => {
+  const fetchInstitutions = useCallback(async () => {
     const { data } = await supabase
       .from('institutions')
       .select('*')
       .order('name');
-    if (data) setInstitutions(data);
-    setLoading(false);
-  };
+    return data || [];
+  }, []);
 
-  const filtered = institutions.filter(inst => {
+  const { data: institutions, loading, isOffline, refresh } = useCachedData<any[]>('institutions_list', fetchInstitutions, { ttl: 1000 * 60 * 30 });
+
+  const filtered = (institutions || []).filter(inst => {
     const matchesSearch = inst.name?.toLowerCase().includes(search.toLowerCase()) ||
                           inst.location?.toLowerCase().includes(search.toLowerCase());
     const matchesFilter = filter === 'All' || inst.type === filter;
@@ -32,8 +30,15 @@ const InstitutionDirectoryScreen: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>মাদ্রাসা ডিরেক্টরি</Text>
-        <Text style={styles.subtitle}>{institutions.length}টি প্রতিষ্ঠান</Text>
+        <Text style={styles.subtitle}>{institutions?.length || 0}টি প্রতিষ্ঠান</Text>
       </View>
+
+      {isOffline && (
+        <View style={styles.offlineBanner}>
+          <Ionicons name="cloud-offline" size={14} color="#fff" />
+          <Text style={styles.offlineText}>অফলাইন মোড — ক্যাশ থেকে দেখাচ্ছে</Text>
+        </View>
+      )}
 
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={18} color="#9CA3AF" style={{ marginRight: 8 }} />
@@ -64,6 +69,8 @@ const InstitutionDirectoryScreen: React.FC = () => {
         data={filtered}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.list}
+        onRefresh={refresh}
+        refreshing={loading}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.card}>
             <View style={styles.cardHeader}>
@@ -97,6 +104,11 @@ const styles = StyleSheet.create({
   header: { padding: 24, paddingBottom: 8 },
   title: { fontSize: 28, fontWeight: '900', color: '#111827' },
   subtitle: { fontSize: 13, color: '#9CA3AF', fontWeight: '600', marginTop: 4 },
+  offlineBanner: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+    backgroundColor: '#F59E0B', padding: 8, gap: 6,
+  },
+  offlineText: { fontSize: 12, fontWeight: '700', color: '#fff' },
   searchContainer: {
     flexDirection: 'row', alignItems: 'center', backgroundColor: '#F3F4F6',
     margin: 16, marginBottom: 8, padding: 14, borderRadius: 12,

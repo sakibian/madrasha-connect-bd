@@ -1,27 +1,25 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { supabase } from '../services/supabase';
+import { useCachedData } from '../hooks/useCachedData';
 
 const FatwaScreen: React.FC = () => {
-  const [fatwas, setFatwas] = useState<any[]>([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('ALL');
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => { loadFatwas(); }, []);
-
-  const loadFatwas = async () => {
+  const fetchFatwas = useCallback(async () => {
     const { data } = await supabase
       .from('fatwas')
       .select('*')
       .order('created_at', { ascending: false });
-    if (data) setFatwas(data);
-    setLoading(false);
-  };
+    return data || [];
+  }, []);
 
-  const filtered = fatwas.filter(f => {
+  const { data: fatwas, loading, isOffline, refresh } = useCachedData<any[]>('fatwas_list', fetchFatwas, { ttl: 1000 * 60 * 15 });
+
+  const filtered = (fatwas || []).filter(f => {
     const matchesSearch = f.question?.toLowerCase().includes(search.toLowerCase()) ||
                           f.category?.toLowerCase().includes(search.toLowerCase());
     const matchesFilter = filter === 'ALL' || f.status === filter;
@@ -45,6 +43,13 @@ const FatwaScreen: React.FC = () => {
         <Text style={styles.title}>ফতোয়া কেন্দ্র</Text>
         <Text style={styles.subtitle}>আপনার মাসআলা জিজ্ঞাসা করুন</Text>
       </View>
+
+      {isOffline && (
+        <View style={styles.offlineBanner}>
+          <Ionicons name="cloud-offline" size={14} color="#fff" />
+          <Text style={styles.offlineText}>অফলাইন মোড — ক্যাশ থেকে দেখাচ্ছে</Text>
+        </View>
+      )}
 
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={18} color="#9CA3AF" style={{ marginRight: 8 }} />
@@ -84,6 +89,8 @@ const FatwaScreen: React.FC = () => {
         data={filtered}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.list}
+        onRefresh={refresh}
+        refreshing={loading}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.card}>
             <View style={styles.cardHeader}>
@@ -121,6 +128,11 @@ const styles = StyleSheet.create({
   header: { padding: 24, paddingBottom: 8 },
   title: { fontSize: 28, fontWeight: '900', color: '#111827' },
   subtitle: { fontSize: 13, color: '#9CA3AF', fontWeight: '600', marginTop: 4 },
+  offlineBanner: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+    backgroundColor: '#F59E0B', padding: 8, gap: 6,
+  },
+  offlineText: { fontSize: 12, fontWeight: '700', color: '#fff' },
   searchContainer: {
     flexDirection: 'row', alignItems: 'center', backgroundColor: '#F3F4F6',
     margin: 16, marginBottom: 8, padding: 14, borderRadius: 12,
