@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
+import DOMPurify from 'dompurify';
 import { 
   MessageCircle, 
   Send, 
@@ -520,7 +521,7 @@ const PostCard: React.FC<{
       ) : (
         <div>
           <h3 className="font-black text-gray-900 text-xl mb-3 leading-snug">{post.title}</h3>
-          <div className="text-gray-600 text-sm leading-relaxed prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
+          <div className="text-gray-600 text-sm leading-relaxed prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }} />
         </div>
       )}
       <div className="flex items-center gap-8 pt-6 border-t border-gray-50">

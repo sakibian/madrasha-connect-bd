@@ -2,6 +2,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import { initSentry } from './services/sentry';
+import { initPostHog } from './services/analytics';
+
+initSentry();
+initPostHog();
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

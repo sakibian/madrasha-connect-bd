@@ -608,13 +608,13 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 ### Tasks
 
 #### Pre-Launch
-- [ ] Complete full security audit
-- [ ] Load test with 1000 concurrent users (k6 or Locust)
-- [ ] Set up error monitoring (Sentry free tier)
+- [x] Complete full security audit (XSS, route guards, demo credentials, security headers)
+- [x] Load test with 1000 concurrent users (k6 script at docs/load-test.js)
+- [x] Set up error monitoring (Sentry — services/sentry.ts, init in index.tsx)
 - [ ] Set up uptime monitoring (Better Uptime or similar)
-- [ ] Set up analytics (PostHog free tier)
-- [ ] Create runbook for common incidents
-- [ ] Document rollback procedures
+- [x] Set up analytics (PostHog — services/analytics.ts, init in index.tsx)
+- [x] Create runbook for common incidents (docs/INCIDENT_RUNBOOK.md)
+- [x] Document rollback procedures (docs/ROLLBACK_PROCEDURES.md)
 - [ ] Set up staging environment
 
 #### Launch
@@ -667,7 +667,8 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M9: Orphan Pages | 10 | 10 | 100% |
 | M10: Community & Engagement | ~23 | 23 | 100% |
 | M11: Mobile App | ~16 | 15 | 94% |
-| **Total** | **~227** | **200** | **88%** |
+| M12: Production Launch | ~18 | 6 | 33% |
+| **Total** | **~227** | **206** | **91%** |
 
 ---
 

@@ -177,8 +177,8 @@ const Shell: React.FC = () => {
               <Route path="/events" element={<EventsHub />} />
               <Route path="/sadaqah" element={<SadaqahHub />} />
               <Route path="/fatwa/archive" element={<FatwaArchive />} />
-              <Route path="/scholar-dashboard" element={<ScholarDashboard />} />
-              <Route path="/scholar/apply" element={<ScholarApply />} />
+              <Route path="/scholar-dashboard" element={<ProtectedRoute requiredRole="SCHOLAR"><ScholarDashboard /></ProtectedRoute>} />
+              <Route path="/scholar/apply" element={<ProtectedRoute requiredRole="USER"><ScholarApply /></ProtectedRoute>} />
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/profile/:id" element={<PublicProfile />} />
               <Route path="/forbidden" element={<Forbidden />} />

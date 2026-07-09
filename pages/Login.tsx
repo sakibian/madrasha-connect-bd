@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { ShieldCheck, School, User as UserIcon, Loader2, ArrowRight, ArrowLeft, Lock, Mail } from 'lucide-react';
 import { login, resendVerificationEmail } from '../services/authService';
 
-const DEMO_PASSWORD = 'madrasa123';
+const DEMO_PASSWORD = import.meta.env.VITE_ENABLE_DEMO === 'true' ? 'madrasa123' : '';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -72,7 +72,9 @@ const Login: React.FC = () => {
               <ArrowLeft size={18} /> আমাদের সম্পর্কে জানুন
            </Link>
            <div className="pt-4">
-              <p className="text-xs text-gray-600 font-mono">Demo password: <span className="text-bd-green">{DEMO_PASSWORD}</span></p>
+              {import.meta.env.VITE_ENABLE_DEMO === 'true' && (
+                <p className="text-xs text-gray-600 font-mono">Demo password: <span className="text-bd-green">{DEMO_PASSWORD}</span></p>
+              )}
            </div>
         </div>
 
@@ -139,13 +141,14 @@ const Login: React.FC = () => {
             </button>
           </form>
 
+          {import.meta.env.VITE_ENABLE_DEMO === 'true' && (
           <div className="space-y-4">
             <div className="caps-label text-gray-400 text-center">অথবা দ্রুত লগইন</div>
             <div className="space-y-0 bg-gray-100 minimal-border overflow-hidden">
               <LoginRoleButton 
                 icon={<ShieldCheck size={20} />} 
                 label="সিস্টেম অ্যাডমিন" 
-                sub="প্ল্যাটফর্ম নিয়ন্ত্রক"
+                sub="প্ল্যাটফর্ম নিয়ন্ত্রক"
                 onClick={() => handleQuickLogin('admin@madrasa.bd')} 
                 disabled={loading}
               />
@@ -164,6 +167,8 @@ const Login: React.FC = () => {
                 disabled={loading}
               />
             </div>
+          </div>
+          )}
           </div>
 
           <div className="pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
