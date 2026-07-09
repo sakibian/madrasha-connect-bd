@@ -26,7 +26,7 @@ const InstructionalHelp: React.FC = () => {
           <div key={i} className="bg-white p-12 group transition-all hover:bg-black hover:text-white">
             <div className="flex items-center justify-between mb-8">
                <div className="caps-label text-bd-green group-hover:text-gray-400">{video.category}</div>
-               <div className="text-xs font-bold text-gray-300">ভলিউম ০১</div>
+               <div className="text-xs font-bold text-gray-500">ভলিউম ০১</div>
             </div>
             
             <div className="space-y-10">

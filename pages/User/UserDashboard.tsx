@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Briefcase, 
   BookOpen, 
@@ -12,14 +12,34 @@ import {
   Headset,
   History,
   Trophy,
-  ChevronRight
+  ChevronRight,
+  Share2,
+  Users,
+  Copy
 } from 'lucide-react';
 import { getCurrentUser } from '../../services/authService';
+import { dataService } from '../../services/dataService';
 import { Link } from 'react-router-dom';
 import ImageWithFallback from '../../components/ui/ImageWithFallback';
 
 const UserDashboard: React.FC = () => {
   const user = getCurrentUser();
+  const [referralCode, setReferralCode] = useState('');
+  const [referralStats, setReferralStats] = useState({ total: 0, pending: 0, completed: 0 });
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!user) return;
+    dataService.getOrCreateReferralCode(user.id).then(setReferralCode);
+    dataService.getReferralStats(user.id).then(setReferralStats);
+  }, [user]);
+
+  const handleCopyReferral = () => {
+    const link = `${window.location.origin}/register?ref=${referralCode}`;
+    navigator.clipboard.writeText(link);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div className="space-y-16 animate-fadeIn">
@@ -39,6 +59,43 @@ const UserDashboard: React.FC = () => {
            প্রোফাইল আপডেট
         </Link>
       </div>
+
+      {/* Referral Section */}
+      {referralCode && (
+        <div className="bg-gradient-to-br from-emerald-900 to-teal-900 rounded-[2.5rem] p-10 text-white space-y-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="p-4 bg-emerald-400/20 rounded-3xl backdrop-blur-md border border-emerald-400/30">
+                <Users size={24} className="text-emerald-400" />
+              </div>
+              <div>
+                <h2 className="text-xl font-black">বন্ধুদের আমন্ত্রণ জানান</h2>
+                <p className="text-emerald-300 text-sm font-medium">প্রতিটি সফল আমন্ত্রণে ৩০ CP পান</p>
+              </div>
+            </div>
+            {referralStats.total > 0 && (
+              <div className="text-right space-y-1">
+                <div className="text-3xl font-black">{referralStats.completed}</div>
+                <div className="text-[10px] font-bold text-emerald-300 uppercase tracking-widest">সফল আমন্ত্রণ</div>
+              </div>
+            )}
+          </div>
+          <div className="flex items-center gap-3 bg-white/10 border border-emerald-400/30 rounded-2xl p-4 backdrop-blur-sm">
+            <span className="text-sm font-bold text-emerald-200 truncate flex-1">
+              {window.location.origin}/register?ref={referralCode}
+            </span>
+            <button
+              onClick={handleCopyReferral}
+              className={`px-6 py-2.5 text-sm font-bold rounded-xl transition-all flex items-center gap-2 ${
+                copied ? 'bg-white text-emerald-900' : 'bg-emerald-400 text-emerald-900 hover:bg-white'
+              }`}
+            >
+              {copied ? <Check size={16} /> : <Copy size={16} />}
+              {copied ? 'কপি করা হয়েছে!' : 'লিংক কপি করুন'}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-gray-100 minimal-border">
@@ -118,7 +175,7 @@ const ApplicationItem = ({ title, inst, status, date }: any) => {
        <div className="space-y-1">
           <h3 className="font-extrabold text-lg group-hover:text-bd-green transition-colors">{title}</h3>
           <p className="text-sm font-bold text-gray-400">{inst}</p>
-          <p className="text-[10px] font-bold text-gray-300 uppercase mt-2 flex items-center gap-2"><Clock size={12} /> {date}</p>
+          <p className="text-[10px] font-bold text-gray-500 uppercase mt-2 flex items-center gap-2"><Clock size={12} /> {date}</p>
        </div>
        <span className={`text-[9px] font-black px-4 py-1.5 uppercase tracking-widest ${s.color}`}>{s.label}</span>
     </div>

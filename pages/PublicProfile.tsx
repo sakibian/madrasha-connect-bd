@@ -2,12 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
-  User, BadgeCheck, Star, Trophy, Clock, Loader2, ArrowLeft, MessageCircle, GraduationCap, BookOpen, MapPin, Share2, X, Check, ThumbsUp, Plus
+  User, BadgeCheck, Star, Trophy, Clock, Loader2, ArrowLeft, MessageCircle, GraduationCap, BookOpen, MapPin, Share2, X, Check, ThumbsUp, Plus, ExternalLink, FolderOpen
 } from 'lucide-react';
 import { dataService } from '../services/dataService';
 import { getCurrentUser } from '../services/authService';
 import ImageWithFallback from '../components/ui/ImageWithFallback';
-import { getLevelProgress, UserSkill, Scholar } from '../types';
+import { getLevelProgress, UserSkill, Scholar, ScholarPortfolioItem } from '../types';
+
+const PORTFOLIO_TYPE_LABELS: Record<string, string> = {
+  publication: 'প্রকাশনা', video: 'ভিডিও', article: 'আর্টিকেল', lecture: 'লেকচার', other: 'অন্যান্য',
+};
 
 const PublicProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -23,6 +27,7 @@ const PublicProfile: React.FC = () => {
   const [skills, setSkills] = useState<UserSkill[]>([]);
   const [newSkill, setNewSkill] = useState('');
   const [addingSkill, setAddingSkill] = useState(false);
+  const [portfolio, setPortfolio] = useState<ScholarPortfolioItem[]>([]);
 
   const currentUser = getCurrentUser();
   const isOwnProfile = currentUser?.id === id;
@@ -46,6 +51,11 @@ const PublicProfile: React.FC = () => {
       setStats(userStats);
       const userSkills = await dataService.getUserSkills(id, currentUser?.id);
       setSkills(userSkills);
+      const foundScholar = scholars.find(s => s.userId === id);
+      if (foundScholar) {
+        const portfolioItems = await dataService.getScholarPortfolio(id);
+        setPortfolio(portfolioItems);
+      }
       setLoading(false);
     };
     fetch();
@@ -307,6 +317,32 @@ const PublicProfile: React.FC = () => {
                 <p className="font-bold">{scholar.location}</p>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {scholar && portfolio.length > 0 && (
+        <div className="bg-white p-12 minimal-border space-y-6">
+          <h2 className="text-lg font-extrabold flex items-center gap-2"><FolderOpen size={18} /> পোর্টফোলিও</h2>
+          <div className="grid gap-4">
+            {portfolio.map(item => (
+              <div key={item.id} className="flex items-start justify-between gap-4 p-4 bg-gray-50 border border-gray-100 group hover:border-gray-200 transition-all">
+                <div className="space-y-1 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-bold px-2 py-0.5 bg-gray-200 text-gray-600 rounded">
+                      {PORTFOLIO_TYPE_LABELS[item.type] || item.type}
+                    </span>
+                    <h3 className="font-bold text-gray-800">{item.title}</h3>
+                  </div>
+                  {item.description && <p className="text-sm text-gray-500">{item.description}</p>}
+                  {item.url && (
+                    <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:underline mt-1">
+                      <ExternalLink size={12} /> {item.url.slice(0, 40)}...
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}

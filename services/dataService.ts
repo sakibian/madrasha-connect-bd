@@ -1,4 +1,4 @@
-import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication, ContentVersion, UserXP, Badge, UserBadge, XPEvent, UserSkill, ScholarPortfolioItem, AdminAuditLog, getLevel } from '../types';
+import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication, ContentVersion, UserXP, Badge, UserBadge, XPEvent, UserSkill, ScholarPortfolioItem, AdminAuditLog, Referral, getLevel } from '../types';
 import { supabase } from './supabase';
 import { retryWithBackoff } from './retry';
 
@@ -307,6 +307,7 @@ export const dataService = {
     return data.map(p => ({
       id: p.id,
       author: (p as any).user_profiles?.name || p.author_id || '',
+      authorId: p.author_id,
       role: '',
       title: p.title,
       content: p.content,
@@ -330,6 +331,18 @@ export const dataService = {
       if (error) throw error;
       cacheInvalidate(CACHE_KEYS.POSTS);
     });
+  },
+
+  updatePost: async (postId: string, updates: { title?: string; content?: string; category?: string }): Promise<void> => {
+    const { error } = await supabase.from('forum_posts').update(updates).eq('id', postId);
+    if (error) throw error;
+    cacheInvalidate(CACHE_KEYS.POSTS);
+  },
+
+  deletePost: async (postId: string): Promise<void> => {
+    const { error } = await supabase.from('forum_posts').delete().eq('id', postId);
+    if (error) throw error;
+    cacheInvalidate(CACHE_KEYS.POSTS);
   },
 
   // --- Forum Post Likes ---
@@ -1083,6 +1096,58 @@ export const dataService = {
       target_id: targetId,
       details,
     });
+  },
+
+  // --- Referrals ---
+  getOrCreateReferralCode: async (userId: string): Promise<string> => {
+    const { data } = await supabase
+      .from('referrals')
+      .select('referral_code')
+      .eq('referrer_id', userId)
+      .limit(1);
+    if (data && data.length > 0) return data[0].referral_code;
+    const code = `MCBD-${userId.slice(0, 8).toUpperCase()}`;
+    const { error } = await supabase.from('referrals').insert({
+      referrer_id: userId,
+      referral_code: code,
+    });
+    if (error) throw error;
+    return code;
+  },
+
+  getReferralStats: async (userId: string): Promise<{ total: number; pending: number; completed: number }> => {
+    const { data, error } = await supabase
+      .from('referrals')
+      .select('status')
+      .eq('referrer_id', userId);
+    if (error) return { total: 0, pending: 0, completed: 0 };
+    const total = data.length;
+    const pending = data.filter(r => r.status === 'pending').length;
+    const completed = data.filter(r => r.status === 'completed').length;
+    return { total, pending, completed };
+  },
+
+  applyReferral: async (referredUserId: string, referralCode: string): Promise<boolean> => {
+    const { data: referral } = await supabase
+      .from('referrals')
+      .select('id, referrer_id')
+      .eq('referral_code', referralCode)
+      .eq('status', 'pending')
+      .limit(1);
+    if (!referral || referral.length === 0) return false;
+    const { error: updateErr } = await supabase
+      .from('referrals')
+      .update({ referred_id: referredUserId, status: 'completed', completed_at: new Date().toISOString() })
+      .eq('id', referral[0].id);
+    if (updateErr) return false;
+    try {
+      await supabase.from('user_xp').insert({
+        user_id: referral[0].referrer_id,
+        xp: 30,
+        action: 'referral_signup',
+      });
+    } catch {}
+    return true;
   },
 
   getAuditLogs: async (): Promise<AdminAuditLog[]> => {

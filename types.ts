@@ -83,6 +83,7 @@ export interface Course {
 export interface ForumPost {
   id: string;
   author: string;
+  authorId?: string;
   title: string;
   content: string;
   category: string;
@@ -238,6 +239,16 @@ export interface AdminAuditLog {
   createdAt: string;
 }
 
+export interface Referral {
+  id: string;
+  referrerId: string;
+  referredId?: string;
+  referralCode: string;
+  status: 'pending' | 'completed';
+  createdAt: string;
+  completedAt?: string;
+}
+
 export const XP_ACTIONS = {
   ASK_FATWA: { action: 'ask_fatwa', xp: 10 },
   ANSWER_FATWA: { action: 'answer_fatwa', xp: 50 },
@@ -249,6 +260,7 @@ export const XP_ACTIONS = {
   ENROLL_COURSE: { action: 'enroll_course', xp: 25 },
   COMPLETE_COURSE: { action: 'complete_course', xp: 50 },
   FLAG_CONTENT: { action: 'flag_content', xp: 2 },
+  REFERRAL_SIGNUP: { action: 'referral_signup', xp: 30 },
 } as const;
 
 export const getLevel = (xp: number): number => Math.floor(Math.sqrt(xp / 100)) + 1;

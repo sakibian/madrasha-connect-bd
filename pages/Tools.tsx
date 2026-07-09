@@ -173,7 +173,7 @@ const InputField = ({ label, value, onChange, negative, placeholder }: any) => (
   <div className="space-y-3">
     <label className="caps-label text-gray-400">{label}</label>
     <div className="relative">
-      <span className="absolute left-0 top-1/2 -translate-y-1/2 font-bold text-gray-300 text-2xl">{negative ? '−' : '৳'}</span>
+      <span className="absolute left-0 top-1/2 -translate-y-1/2 font-bold text-gray-500 text-2xl">{negative ? '−' : '৳'}</span>
       <input 
         type="number" 
         placeholder={placeholder}

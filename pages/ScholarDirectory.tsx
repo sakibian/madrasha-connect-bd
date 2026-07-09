@@ -121,9 +121,12 @@ const ScholarDirectory: React.FC = () => {
                     <ShieldCheck size={12} /> ভেরিফায়েড
                   </div>
                 )}
-                <button className="w-full py-4 border border-gray-200 font-bold text-xs hover:bg-black hover:text-white transition-all flex items-center justify-center gap-2">
+                <Link
+                  to={`/profile/${scholar.userId}`}
+                  className="w-full py-4 border border-gray-200 font-bold text-xs hover:bg-black hover:text-white transition-all flex items-center justify-center gap-2"
+                >
                   <BookOpen size={16} /> প্রোফাইল দেখুন
-                </button>
+                </Link>
               </div>
             </div>
           ))}

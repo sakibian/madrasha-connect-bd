@@ -14,8 +14,11 @@ import {
   Droplets,
   Plus,
   Flag,
-  X
+  X,
+  Trash2,
+  Edit3
 } from 'lucide-react';
+import { RichTextEditor } from '../components/ui';
 import { askScholar } from '../services/geminiService';
 import { getCurrentUser } from '../services/authService';
 import { dataService } from '../services/dataService';
@@ -246,11 +249,10 @@ const Community: React.FC = () => {
               value={newPostTitle}
               onChange={(e) => setNewPostTitle(e.target.value)}
             />
-            <textarea
-              className="w-full px-0 py-4 text-gray-600 border-b border-gray-200 outline-none focus:border-black transition-all min-h-[100px] resize-none"
+            <RichTextEditor
+              content={newPostContent}
+              onChange={setNewPostContent}
               placeholder="আপনার মতামত লিখুন..."
-              value={newPostContent}
-              onChange={(e) => setNewPostContent(e.target.value)}
             />
             <div>
               <label className="caps-label text-gray-400 block mb-2">ক্যাটাগরি</label>
@@ -306,6 +308,7 @@ const Community: React.FC = () => {
               isLiked={userLikes.includes(post.id)}
               currentUser={currentUser}
               onLike={handleLike}
+              onRefresh={loadPosts}
             />
           ))
         )}
@@ -319,7 +322,8 @@ const PostCard: React.FC<{
   isLiked: boolean;
   currentUser: any;
   onLike: (postId: string) => void;
-}> = ({ post, isLiked, currentUser, onLike }) => {
+  onRefresh?: () => void;
+}> = ({ post, isLiked, currentUser, onLike, onRefresh }) => {
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState<ForumComment[]>([]);
   const [loadingComments, setLoadingComments] = useState(false);
@@ -329,6 +333,15 @@ const PostCard: React.FC<{
   const [flagReason, setFlagReason] = useState('');
   const [flagging, setFlagging] = useState(false);
   const [flagged, setFlagged] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [editTitle, setEditTitle] = useState(post.title);
+  const [editContent, setEditContent] = useState(post.content);
+  const [editCategory, setEditCategory] = useState(post.category);
+  const [saving, setSaving] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const isOwner = currentUser?.id === post.authorId;
 
   const loadComments = async () => {
     setLoadingComments(true);
@@ -355,6 +368,40 @@ const PostCard: React.FC<{
       console.error('Comment failed', e);
     } finally {
       setCommenting(false);
+    }
+  };
+
+  const handleShare = () => {
+    const text = `${post.title}\n\n${post.content}\n\n— ${post.author}`;
+    navigator.clipboard.writeText(text);
+    setShareCopied(true);
+    setTimeout(() => setShareCopied(false), 2000);
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editTitle.trim() || !editContent.trim()) return;
+    setSaving(true);
+    try {
+      await dataService.updatePost(post.id, { title: editTitle, content: editContent, category: editCategory });
+      setEditing(false);
+      onRefresh?.();
+    } catch (e) {
+      console.error('Edit failed', e);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    setDeleting(true);
+    try {
+      await dataService.deletePost(post.id);
+      setShowDeleteConfirm(false);
+      onRefresh?.();
+    } catch (e) {
+      console.error('Delete failed', e);
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -389,8 +436,26 @@ const PostCard: React.FC<{
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          {currentUser && (
+        <div className="flex items-center gap-1">
+          {isOwner && !editing && (
+            <>
+              <button
+                onClick={() => { setEditing(true); setEditTitle(post.title); setEditContent(post.content); setEditCategory(post.category); }}
+                className="text-gray-300 hover:text-blue-500 p-2 transition-all"
+                title="এডিট করুন"
+              >
+                <Edit3 size={16} />
+              </button>
+              <button
+                onClick={() => setShowDeleteConfirm(true)}
+                className="text-gray-300 hover:text-red-500 p-2 transition-all"
+                title="ডিলিট করুন"
+              >
+                <Trash2 size={16} />
+              </button>
+            </>
+          )}
+          {currentUser && !isOwner && (
             <button
               onClick={() => setShowFlagModal(true)}
               className="text-gray-300 hover:text-red-500 p-2 transition-all"
@@ -399,13 +464,65 @@ const PostCard: React.FC<{
               <Flag size={16} />
             </button>
           )}
-          <button className="text-gray-300 hover:text-emerald-700 p-2"><Share2 size={18} /></button>
+          <button
+            onClick={handleShare}
+            className={`p-2 transition-all ${shareCopied ? 'text-emerald-600' : 'text-gray-300 hover:text-emerald-700'}`}
+            title={shareCopied ? 'কপি করা হয়েছে!' : 'শেয়ার করুন'}
+          >
+            <Share2 size={18} />
+          </button>
         </div>
       </div>
-      <div>
-        <h3 className="font-black text-gray-900 text-xl mb-3 leading-snug">{post.title}</h3>
-        <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">{post.content}</p>
-      </div>
+      {editing ? (
+        <div className="space-y-4">
+          <input
+            className="w-full px-0 py-2 text-xl font-black border-b border-gray-200 outline-none focus:border-black transition-all"
+            value={editTitle}
+            onChange={e => setEditTitle(e.target.value)}
+            placeholder="শিরোনাম"
+          />
+          <RichTextEditor
+            content={editContent}
+            onChange={setEditContent}
+            placeholder="বিবরণ"
+          />
+          <div className="flex gap-1 bg-gray-100 rounded-xl p-1">
+            {CATEGORIES.map(cat => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setEditCategory(cat)}
+                className={`flex-1 py-2.5 text-xs font-bold rounded-lg transition-all ${
+                  editCategory === cat ? 'bg-black text-white' : 'text-gray-500 hover:text-black'
+                }`}
+              >
+                {CATEGORY_LABELS[cat]}
+              </button>
+            ))}
+          </div>
+          <div className="flex justify-end gap-3">
+            <button
+              onClick={() => setEditing(false)}
+              className="px-5 py-2 text-sm font-bold text-gray-500 hover:text-black transition-all"
+            >
+              বাতিল
+            </button>
+            <button
+              onClick={handleSaveEdit}
+              disabled={saving || !editTitle.trim() || !editContent.trim()}
+              className="px-5 py-2 bg-black text-white text-sm font-bold hover:bg-gray-800 transition-all disabled:opacity-50 flex items-center gap-2"
+            >
+              {saving ? <Loader2 size={16} className="animate-spin" /> : <CheckCircle size={16} />}
+              সেভ করুন
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <h3 className="font-black text-gray-900 text-xl mb-3 leading-snug">{post.title}</h3>
+          <div className="text-gray-600 text-sm leading-relaxed prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
+        </div>
+      )}
       <div className="flex items-center gap-8 pt-6 border-t border-gray-50">
         <button
           onClick={() => onLike(post.id)}
@@ -500,6 +617,34 @@ const PostCard: React.FC<{
               >
                 {flagging ? <Loader2 size={16} className="animate-spin" /> : null}
                 {flagged ? 'রিপোর্ট করা হয়েছে' : 'রিপোর্ট করুন'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowDeleteConfirm(false)}>
+          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl animate-fadeIn" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-lg font-black">পোস্ট ডিলিট করুন</h3>
+              <button onClick={() => setShowDeleteConfirm(false)} className="text-gray-400 hover:text-black p-1"><X size={20} /></button>
+            </div>
+            <p className="text-gray-600 text-sm leading-relaxed">আপনি কি নিশ্চিত এই পোস্টটি ডিলিট করতে চান? এই কাজ পূর্বাবস্থায় ফেরানো যাবে না।</p>
+            <div className="flex justify-end gap-3 mt-6">
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                className="px-5 py-2.5 text-sm font-bold text-gray-500 hover:text-black transition-all"
+              >
+                বাতিল
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={deleting}
+                className="px-5 py-2.5 bg-red-600 text-white text-sm font-bold hover:bg-red-700 transition-all disabled:opacity-50 flex items-center gap-2"
+              >
+                {deleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
+                ডিলিট করুন
               </button>
             </div>
           </div>

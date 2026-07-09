@@ -156,7 +156,7 @@ const OpportunityRow = ({ title, type, date }: any) => (
         <h4 className="text-xl font-bold group-hover:text-bd-green transition-colors">{title}</h4>
         <div className="flex items-center gap-4 mt-1">
            <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">{type}</span>
-           <span className="text-[10px] font-black uppercase tracking-widest text-gray-300">প্রকাশিত: {date}</span>
+           <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">প্রকাশিত: {date}</span>
         </div>
      </div>
      <ArrowRight size={20} className="text-gray-200 group-hover:text-black transition-all" />

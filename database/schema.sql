@@ -688,3 +688,29 @@ create policy "Admins can insert audit logs"
   on public.admin_audit_log for insert with check (
     exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN')
   );
+
+-- 20. Referrals
+create table public.referrals (
+  id uuid primary key default uuid_generate_v4(),
+  referrer_id uuid not null references auth.users(id) on delete cascade,
+  referred_id uuid references auth.users(id) on delete set null,
+  referral_code text not null unique,
+  status text not null default 'pending' check (status in ('pending', 'completed')),
+  created_at timestamptz default now(),
+  completed_at timestamptz
+);
+
+create index idx_referrals_referrer on public.referrals(referrer_id);
+create index idx_referrals_code on public.referrals(referral_code);
+create index idx_referrals_status on public.referrals(status);
+
+alter table public.referrals enable row level security;
+
+create policy "Users can read own referrals"
+  on public.referrals for select using (auth.uid() = referrer_id);
+
+create policy "Users can create referrals"
+  on public.referrals for insert with check (auth.uid() = referrer_id);
+
+create policy "System can update referrals"
+  on public.referrals for update using (true);

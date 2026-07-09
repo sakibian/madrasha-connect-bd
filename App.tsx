@@ -38,6 +38,7 @@ const ScholarApply = lazy(() => import('./pages/ScholarApply'));
 const Leaderboard = lazy(() => import('./pages/Leaderboard'));
 const PublicProfile = lazy(() => import('./pages/PublicProfile'));
 const Forbidden = lazy(() => import('./pages/Forbidden'));
+const AccessibilityStatement = lazy(() => import('./pages/AccessibilityStatement'));
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
 const VerifyEmail = lazy(() => import('./pages/VerifyEmail'));
 import ProtectedRoute from './components/ProtectedRoute';
@@ -181,6 +182,7 @@ const Shell: React.FC = () => {
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/profile/:id" element={<PublicProfile />} />
               <Route path="/forbidden" element={<Forbidden />} />
+              <Route path="/accessibility" element={<AccessibilityStatement />} />
               <Route path="/profile-builder" element={<ProfileBuilder />} />
               <Route path="/help" element={<InstructionalHelp />} />
               <Route path="/post-job" element={<ProtectedRoute requiredRole="INSTITUTION"><PostJob /></ProtectedRoute>} />

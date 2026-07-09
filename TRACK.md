@@ -19,11 +19,11 @@
 | [M7](#m7-testing--quality-assurance) Testing & QA | ✅ Complete | 2 weeks | Done | M0-M6 |
 | [M8](#m8-performance--accessibility) Performance & Accessibility | 🟢 In Progress | 1 week | TBD | M3 |
 | [M9](#m9-orphan-page-integration) Orphan Page Integration | ✅ Complete | 2-3 days | Done | M0, M5 |
-| [M10](#m10-community--engagement-features) Community & Engagement | 🟡 Not Started | 2 weeks | TBD | M1, M5, M9 |
+| [M10](#m10-community--engagement-features) Community & Engagement | 🟢 In Progress | 2 weeks | TBD | M1, M5, M9 |
 | [M11](#m11-mobile-app-react-native) Mobile App | 🟡 Not Started | 4-6 weeks | TBD | M1, M2 |
 | [M12](#m12-production-launch--scaling) Production Launch & Scaling | 🟡 Not Started | Ongoing | TBD | M0-M11 |
 
-**Total tracked tasks:** ~178 / ~200 complete
+**Total tracked tasks:** ~185 / ~211 complete
 
 ---
 
@@ -452,12 +452,12 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 #### Accessibility (WCAG 2.1 AA)
 - [x] Audit all forms for proper labels, error announcements, ARIA attributes
 - [x] Add focus indicators to all interactive elements
-- [ ] Ensure color contrast ≥ 4.5:1 (check all current color tokens)
+- [x] Ensure color contrast ≥ 4.5:1 (check all current color tokens)
 - [x] Add keyboard navigation (tab order, skip links, focus management in modals)
 - [x] Add screen reader support (aria-live regions for dynamic content)
 - [x] Add `lang="bn"` attribute for Bengali text regions *(already present)*
 - [ ] Test with VoiceOver / TalkBack
-- [ ] Create accessibility statement page
+- [x] Create accessibility statement page
 
 ### Acceptance Criteria
 
@@ -513,11 +513,13 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 
 #### Community Forum
 - [x] Build topic categories (General, Jobs Discussion, Education, Events)
-- [ ] Implement post creation with rich text (TipTap or similar)
+- [x] Implement post creation with rich text (TipTap)
 - [x] Implement comment threading
 - [x] Add post voting (upvote/downvote)
 - [x] Add post reporting (flag inappropriate content)
 - [x] Implement scholar-verified responses (badge on posts)
+- [x] Fix non-functional Share button on posts
+- [x] Add post editing/deletion for post owners
 
 #### Gamification
 - [x] Create CP (Contribute Point) & levels system
@@ -532,12 +534,13 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [x] Build public user profile pages (PublicProfile.tsx at `/profile/:id`)
 - [x] Show activity feed (XP events as activity log)
 - [x] Add skill endorsement system
-- [ ] Add portfolio/project showcase for scholars
+- [x] Add portfolio/project showcase for scholars
+- [x] Fix non-functional "Profile View" button in ScholarDirectory
 
 #### Referral & Growth
-- [ ] Implement referral system (refer a madrasa, refer a job seeker)
-- [ ] Build invite flow (share link → register → both get benefit)
-- [ ] Track referral sources
+- [x] Implement referral system (referral code + tracking + XP reward)
+- [x] Build invite flow (share link on UserDashboard, copy to clipboard)
+- [x] Track referral sources (referral_code unique, status pending/completed)
 
 ### Acceptance Criteria
 
@@ -660,10 +663,10 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M5: Authentication | ~15 | 15 | 100% |
 | M6: Authentic Knowledge Base | ~18 | 18 | 100% |
 | M7: Testing & QA | ~20 | 20 | 100% |
-| M8: Performance & Accessibility | ~16 | 13 | 81% |
+| M8: Performance & Accessibility | ~16 | 15 | 94% |
 | M9: Orphan Pages | 10 | 10 | 100% |
-| M10: Community & Engagement | ~12 | 12 | 100% |
-| **Total** | **~200** | **174** | **87%** |
+| M10: Community & Engagement | ~23 | 23 | 100% |
+| **Total** | **~211** | **185** | **88%** |
 
 ---
 

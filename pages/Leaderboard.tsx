@@ -26,7 +26,7 @@ const Leaderboard: React.FC = () => {
     if (i === 0) return <Trophy size={20} className="text-yellow-500" />;
     if (i === 1) return <Medal size={20} className="text-gray-400" />;
     if (i === 2) return <Medal size={20} className="text-amber-700" />;
-    return <span className="text-sm font-bold text-gray-300 w-5 text-center">{i + 1}</span>;
+    return <span className="text-sm font-bold text-gray-500 w-5 text-center">{i + 1}</span>;
   };
 
   return (

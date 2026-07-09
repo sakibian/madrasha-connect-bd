@@ -77,7 +77,7 @@ const AboutUs: React.FC = () => {
       </main>
 
       <footer className="py-20 text-center border-t border-gray-100">
-         <div className="caps-label text-gray-300">© 2025 Madrasa Connect Bangladesh</div>
+         <div className="caps-label text-gray-500">© 2025 Madrasa Connect Bangladesh</div>
       </footer>
     </div>
   );
