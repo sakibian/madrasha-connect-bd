@@ -9,6 +9,9 @@ import JobsScreen from '../screens/JobsScreen';
 import KnowledgeScreen from '../screens/KnowledgeScreen';
 import CommunityScreen from '../screens/CommunityScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import DashboardScreen from '../screens/DashboardScreen';
+import InstitutionDirectoryScreen from '../screens/InstitutionDirectoryScreen';
+import FatwaScreen from '../screens/FatwaScreen';
 import LoginScreen from '../screens/LoginScreen';
 
 const Tab = createBottomTabNavigator();
@@ -61,11 +64,11 @@ const MainTabs = () => (
       }}
     />
     <Tab.Screen
-      name="Profile"
-      component={ProfileScreen}
+      name="Dashboard"
+      component={DashboardScreen}
       options={{
-        tabBarLabel: 'প্রোফাইল',
-        tabBarIcon: ({ color, size }) => getTabBarIcon('person', color, size),
+        tabBarLabel: 'ড্যাশবোর্ড',
+        tabBarIcon: ({ color, size }) => getTabBarIcon('grid', color, size),
       }}
     />
   </Tab.Navigator>
@@ -77,6 +80,9 @@ const AppNavigation = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Main" component={MainTabs} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="Institutions" component={InstitutionDirectoryScreen} />
+        <Stack.Screen name="Fatwa" component={FatwaScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
