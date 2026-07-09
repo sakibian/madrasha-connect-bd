@@ -1,6 +1,6 @@
 
 import React, { forwardRef } from 'react';
-import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
+import { NavigationContainer, NavigationContainerRef, LinkingOptions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -16,6 +16,27 @@ import LoginScreen from '../screens/LoginScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
+const linking: LinkingOptions<any> = {
+  prefixes: ['islamicbangladesh://', 'https://madrasaconnectbd.com'],
+  config: {
+    screens: {
+      Main: {
+        screens: {
+          Home: '',
+          Jobs: 'jobs',
+          Knowledge: 'knowledge',
+          Community: 'community',
+          Dashboard: 'dashboard',
+        },
+      },
+      Login: 'login',
+      Profile: 'profile/:userId',
+      Institutions: 'institutions',
+      Fatwa: 'fatwa',
+    },
+  },
+};
 
 const getTabBarIcon = (name: string, color: string, size: number) => (
   <Ionicons name={name as any} size={size} color={color} />
@@ -77,7 +98,7 @@ const MainTabs = () => (
 const AppNavigation = forwardRef<NavigationContainerRef<any>>(
   (_props, ref) => {
     return (
-      <NavigationContainer ref={ref}>
+      <NavigationContainer ref={ref} linking={linking}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Main" component={MainTabs} />
           <Stack.Screen name="Login" component={LoginScreen} />

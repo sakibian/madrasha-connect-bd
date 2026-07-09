@@ -580,7 +580,7 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [x] Offline support (AsyncStorage cache with TTL, useCachedData hook, offline banner on Jobs/Fatwas/Institutions screens)
 - [ ] Prayer time alarms
 - [x] Image picker for profile/listing photos (expo-image-picker, pickImage/takePhoto/uploadAvatar/uploadImage, avatar upload on Dashboard)
-- [ ] Deep linking
+- [x] Deep linking (URL scheme islamicbangladesh://, linking config with path mapping for all screens)
 
 #### Release
 - [ ] Android APK build
@@ -666,8 +666,8 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M8: Performance & Accessibility | ~16 | 15 | 94% |
 | M9: Orphan Pages | 10 | 10 | 100% |
 | M10: Community & Engagement | ~23 | 23 | 100% |
-| M11: Mobile App | ~16 | 13 | 81% |
-| **Total** | **~227** | **198** | **87%** |
+| M11: Mobile App | ~16 | 14 | 88% |
+| **Total** | **~227** | **199** | **88%** |
 
 ---
 
