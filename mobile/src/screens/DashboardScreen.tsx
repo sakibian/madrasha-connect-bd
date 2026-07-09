@@ -1,9 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, RefreshControl } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, RefreshControl, Alert, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { supabase } from '../services/supabase';
 import { getCurrentUser } from '../services/auth';
+import { pickImage, uploadAvatar } from '../services/imagePicker';
 import { User } from '../types';
 
 const DashboardScreen: React.FC = () => {
@@ -32,6 +33,17 @@ const DashboardScreen: React.FC = () => {
     setRefreshing(false);
   };
 
+  const handleAvatarPress = async () => {
+    const uri = await pickImage({ aspect: [1, 1], quality: 0.8 });
+    if (!uri || !user) return;
+
+    const url = await uploadAvatar(user.id, uri);
+    if (url) {
+      setUser({ ...user, avatar: url });
+      Alert.alert('সফল', 'প্রোফাইল ছবি আপলোড হয়েছে');
+    }
+  };
+
   const menuItems = [
     { icon: 'briefcase-outline', label: 'আমার আবেদন', screen: 'Jobs' },
     { icon: 'chatbubbles-outline', label: 'আমার পোস্ট', screen: 'Community' },
@@ -46,11 +58,18 @@ const DashboardScreen: React.FC = () => {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={loadDashboard} />}
     >
       <View style={styles.header}>
-        <View style={styles.avatarContainer}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>{user?.name?.charAt(0) || '?'}</Text>
+        <TouchableOpacity style={styles.avatarContainer} onPress={handleAvatarPress}>
+          {user?.avatar ? (
+            <Image source={{ uri: user.avatar }} style={styles.avatarImage} />
+          ) : (
+            <View style={styles.avatar}>
+              <Text style={styles.avatarText}>{user?.name?.charAt(0) || '?'}</Text>
+            </View>
+          )}
+          <View style={styles.avatarEditBadge}>
+            <Ionicons name="camera" size={12} color="#fff" />
           </View>
-        </View>
+        </TouchableOpacity>
         <Text style={styles.name}>{user?.name || 'ব্যবহারকারী'}</Text>
         <Text style={styles.role}>{user?.role || 'USER'}</Text>
       </View>
@@ -100,6 +119,13 @@ const styles = StyleSheet.create({
   header: { alignItems: 'center', padding: 32, paddingBottom: 16 },
   avatarContainer: { position: 'relative' },
   avatar: { width: 80, height: 80, borderRadius: 20, backgroundColor: '#E5E7EB', alignItems: 'center', justifyContent: 'center' },
+  avatarImage: { width: 80, height: 80, borderRadius: 20 },
+  avatarEditBadge: {
+    position: 'absolute', bottom: -2, right: -2,
+    width: 24, height: 24, borderRadius: 12,
+    backgroundColor: '#006a4e', alignItems: 'center', justifyContent: 'center',
+    borderWidth: 2, borderColor: '#fff',
+  },
   avatarText: { fontSize: 32, fontWeight: '900', color: '#6B7280' },
   name: { fontSize: 22, fontWeight: '900', color: '#111827', marginTop: 16 },
   role: { fontSize: 12, color: '#9CA3AF', fontWeight: '700', marginTop: 4, textTransform: 'uppercase' },
