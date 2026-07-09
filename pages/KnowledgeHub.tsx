@@ -6,7 +6,7 @@ import { supabase } from '../services/supabase';
 import { dataService } from '../services/dataService';
 import { addNotification } from '../services/notificationService';
 import CitationBadge from '../components/CitationBadge';
-import { Button, Badge } from '../components/ui';
+import { Button, Badge, ImageWithFallback } from '../components/ui';
 import { useCourseStore, useAuthStore } from '../stores';
 
 const KnowledgeHub: React.FC = () => {
@@ -98,7 +98,7 @@ const KnowledgeHub: React.FC = () => {
             return (
               <div key={course.id} className="bg-white p-8 group flex flex-col h-full">
                 <div className="aspect-video bg-gray-100 mb-8 overflow-hidden relative">
-                  <img src={course.thumbnail} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt={course.title} />
+                  <ImageWithFallback src={course.thumbnail} name={course.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt={course.title} />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
                     <div className="w-12 h-12 bg-white flex items-center justify-center">
                       <Play size={24} fill="black" />

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Search, ShieldCheck, MapPin, BookOpen, BadgeCheck, GraduationCap, ArrowRight, MessageCircle } from 'lucide-react';
 import { Scholar } from '../types';
 import { dataService } from '../services/dataService';
+import ImageWithFallback from '../components/ui/ImageWithFallback';
 
 const ScholarDirectory: React.FC = () => {
   const [scholars, setScholars] = useState<Scholar[]>([]);
@@ -78,7 +79,7 @@ const ScholarDirectory: React.FC = () => {
             <div key={scholar.id} className="bg-white p-10 group transition-all hover:bg-gray-50 h-full flex flex-col items-center text-center">
               <div className="relative mb-8">
                 <div className="w-32 h-32 bg-gray-50 overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700">
-                  <img src={scholar.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={scholar.name} />
+                  <ImageWithFallback src={scholar.image} name={scholar.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={scholar.name} />
                 </div>
                 {scholar.verified && (
                   <div className="absolute -bottom-2 -right-2 bg-bd-green text-white p-1.5">

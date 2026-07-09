@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { MapPin, CheckCircle, ArrowRight } from 'lucide-react';
 import { MOCK_INSTITUTIONS } from '../data/mockData';
 import { Link } from 'react-router-dom';
-import { Button, SearchInput } from '../components/ui';
+import { Button, SearchInput, ImageWithFallback } from '../components/ui';
 
 const InstitutionDirectory: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -48,7 +48,7 @@ const InstitutionDirectory: React.FC = () => {
           <div key={inst.id} className="bg-white p-8 group transition-all hover:bg-gray-50">
              <div className="flex flex-col h-full space-y-8">
                 <div className="aspect-[16/9] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700">
-                   <img src={inst.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={inst.name} />
+                   <ImageWithFallback src={inst.image} name={inst.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={inst.name} />
                 </div>
                 
                 <div className="space-y-4 flex-1">

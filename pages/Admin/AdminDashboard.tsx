@@ -21,7 +21,7 @@ import { dataService } from '../../services/dataService';
 import { Job, Product, User, Fatwa, Source, ContentFlag, ScholarApplication, AdminAuditLog } from '../../types';
 import CitationBadge from '../../components/CitationBadge';
 import CitationPicker from '../../components/CitationPicker';
-import { StatCard, Button, Badge, LoadingSkeleton, EmptyState } from '../../components/ui';
+import { StatCard, Button, Badge, LoadingSkeleton, EmptyState, ImageWithFallback } from '../../components/ui';
 
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'products' | 'users' | 'moderation' | 'audit'>('overview');
@@ -198,7 +198,7 @@ const ManageProducts: React.FC = () => {
               <tr key={p.id} className="hover:bg-gray-50 transition-colors">
                 <td className="px-8 py-6 flex items-center gap-4">
                   <div className="w-10 h-10 bg-gray-100 overflow-hidden grayscale">
-                    <img src={p.image} className="w-full h-full object-cover" alt="" />
+                    <ImageWithFallback src={p.image} className="w-full h-full object-cover" alt="" />
                   </div>
                   <span className="font-bold text-gray-800 text-lg">{p.name}</span>
                 </td>
@@ -257,7 +257,7 @@ const ManageUsers: React.FC = () => {
               {users.map(u => (
                 <tr key={u.id} className={`hover:bg-gray-50 transition-colors ${u.banned ? 'opacity-50' : ''}`}>
                   <td className="px-8 py-6 flex items-center gap-4">
-                    <img src={u.avatar} className="w-10 h-10 bg-gray-50 border border-gray-200" alt="" />
+                    <ImageWithFallback src={u.avatar} name={u.name} className="w-10 h-10 bg-gray-50 border border-gray-200" alt="" />
                     <div>
                       <span className="font-bold text-gray-800 text-lg">{u.name}</span>
                       {u.institutionName && <p className="text-[10px] font-bold text-gray-400">{u.institutionName}</p>}

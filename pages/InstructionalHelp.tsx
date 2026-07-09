@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { PlayCircle, HelpCircle, Laptop, Smartphone, BookOpen, ShieldCheck, CheckCircle, ArrowRight } from 'lucide-react';
+import ImageWithFallback from '../components/ui/ImageWithFallback';
 
 const InstructionalHelp: React.FC = () => {
   const tutorials = [
@@ -30,7 +31,7 @@ const InstructionalHelp: React.FC = () => {
             
             <div className="space-y-10">
                <div className="relative aspect-video bg-gray-50 grayscale group-hover:grayscale-0 transition-all duration-700 overflow-hidden">
-                  <img src={`https://picsum.photos/seed/tut${i}/800/450`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt="" />
+                   <ImageWithFallback src={`https://picsum.photos/seed/tut${i}/800/450`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt="" />
                   <div className="absolute inset-0 flex items-center justify-center">
                      <div className="w-16 h-16 bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
                         <PlayCircle size={32} className="text-white" fill="currentColor" />

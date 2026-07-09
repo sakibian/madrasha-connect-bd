@@ -1,5 +1,6 @@
 
 import React from 'react';
+import ImageWithFallback from './ImageWithFallback';
 
 interface AvatarProps {
   src?: string;
@@ -25,17 +26,17 @@ const Avatar: React.FC<AvatarProps> = ({ src, name, size = 'md', online, classNa
 
   return (
     <div className={`relative inline-flex ${className}`}>
-      {src ? (
-        <img
-          src={src}
-          alt={name || ''}
-          className={`${dims} object-cover minimal-border bg-gray-50`}
-        />
-      ) : (
-        <div className={`${dims} minimal-border bg-gray-100 flex items-center justify-center font-bold text-gray-500`}>
-          {getInitials(name)}
-        </div>
-      )}
+      <ImageWithFallback
+        src={src}
+        name={name}
+        alt={name || ''}
+        className={`${dims} object-cover minimal-border bg-gray-50`}
+        fallback={
+          <div className={`${dims} minimal-border bg-gray-100 flex items-center justify-center font-bold text-gray-500`}>
+            {getInitials(name)}
+          </div>
+        }
+      />
       {online !== undefined && (
         <span
           className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 border-2 border-white rounded-full ${

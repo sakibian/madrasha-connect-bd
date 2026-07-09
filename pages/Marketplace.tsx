@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { ShoppingBag, Heart, Download, Trash2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Button, Badge } from '../components/ui';
+import { Button, Badge, ImageWithFallback } from '../components/ui';
 import { useAuthStore, useProductStore } from '../stores';
 
 const Marketplace: React.FC = () => {
@@ -37,7 +37,7 @@ const Marketplace: React.FC = () => {
           </Link>
         </div>
         <div className="md:w-1/2 grayscale hover:grayscale-0 transition-all duration-1000">
-           <img src="https://picsum.photos/seed/pattern/600/450" className="w-full h-auto object-cover border-8 border-gray-900 shadow-2xl" alt="Featured" />
+           <ImageWithFallback src="https://picsum.photos/seed/pattern/600/450" className="w-full h-auto object-cover border-8 border-gray-900 shadow-2xl" alt="Featured" />
         </div>
       </section>
 
@@ -45,7 +45,7 @@ const Marketplace: React.FC = () => {
         {products.map(product => (
           <div key={product.id} className="bg-white p-8 flex flex-col group h-full">
             <div className="relative aspect-square bg-gray-50 mb-8 overflow-hidden">
-               <img src={product.image} alt={product.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" />
+               <ImageWithFallback src={product.image} name={product.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" alt={product.name} />
                <button className="absolute top-4 right-4 p-3 bg-white text-gray-300 hover:text-black border border-gray-100"><Heart size={18} /></button>
                {product.isFree && <Badge variant="success" className="absolute bottom-4 left-4">Free</Badge>}
             </div>

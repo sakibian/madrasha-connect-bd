@@ -43,7 +43,6 @@ const VerifyEmail = lazy(() => import('./pages/VerifyEmail'));
 import ProtectedRoute from './components/ProtectedRoute';
 
 import { initNotifications } from './services/notificationService';
-import { User } from './types';
 import ErrorBoundary from './components/ErrorBoundary';
 import { SyncStatusProvider } from './contexts/SyncStatusContext';
 import { useAuthStore, useNotificationStore } from './stores';
@@ -60,9 +59,7 @@ const App: React.FC = () => {
 };
 
 const AppRouter: React.FC = () => {
-  const location = useLocation();
   const { user: currentUser, initialized, init } = useAuthStore();
-  const { fetch: fetchNotifications } = useNotificationStore();
 
   useEffect(() => {
     init();
@@ -77,16 +74,29 @@ const AppRouter: React.FC = () => {
     );
   }
 
-  const publicPaths = [
-    '/', '/about', '/institutions', '/knowledge', '/professional', 
-    '/scholars', '/fatwa', '/marketplace', '/seerah', '/calligraphy', 
-    '/search', '/deen101', '/faq', '/competitions', '/audio-library', '/tools',
-    '/fatwa/archive', '/scholar-dashboard', '/scholar/apply', '/leaderboard', '/forbidden',
-    '/community', '/events', '/sadaqah'
-  ];
-  
-  const isPublicPage = publicPaths.includes(location.pathname) || location.pathname.startsWith('/institution/') || location.pathname.startsWith('/profile/');
-  const isAuthPage = ['/login', '/register-user', '/register-institution', '/forgot-password', '/verify-email'].includes(location.pathname);
+  return (
+    <ErrorBoundary>
+      <Shell />
+    </ErrorBoundary>
+  );
+};
+
+const Shell: React.FC = () => {
+  const location = useLocation();
+  const { user: currentUser } = useAuthStore();
+  const { fetch: fetchNotifs } = useNotificationStore();
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchNotifs();
+      initNotifications(currentUser.id);
+    }
+  }, [currentUser?.id]);
+
+  const authPaths = ['/login', '/register-user', '/register-institution', '/forgot-password', '/verify-email'];
+  const isAuthPage = authPaths.includes(location.pathname);
+  const isLandingPage = location.pathname === '/';
 
   if (isAuthPage) {
     if (currentUser) return <Navigate to="/dashboard" replace />;
@@ -103,108 +113,50 @@ const AppRouter: React.FC = () => {
     );
   }
 
-  if (currentUser) {
-    return <ErrorBoundary key="app"><AppLayout currentUser={currentUser} /></ErrorBoundary>;
-  }
-
-  if (isPublicPage) {
-    return <ErrorBoundary key="public"><PublicLayout /></ErrorBoundary>;
-  }
-
-  return <Navigate to="/" replace />;
-};
-
-const PublicLayout: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
-
-  if (location.pathname === '/') return <LandingPage />;
-
-  return (
-    <div className="min-h-screen bg-white">
-      <nav className="bg-white border-b border-gray-100 py-6 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-black flex items-center justify-center text-white font-bold">M</div>
-            <span className="text-xl font-bold tracking-tight">মাদ্রাসা কানেক্ট</span>
-          </Link>
-          <div className="hidden lg:flex items-center gap-8">
-            <Link to="/about" className="text-sm font-bold text-gray-500 hover:text-black">লক্ষ্য</Link>
-            <Link to="/institutions" className="text-sm font-bold text-gray-500 hover:text-black">ডিরেক্টরি</Link>
-            <Link to="/knowledge" className="text-sm font-bold text-gray-500 hover:text-black">শিক্ষা</Link>
-            <Link to="/community" className="text-sm font-bold text-gray-500 hover:text-black">কমিউনিটি</Link>
-            <Link to="/events" className="text-sm font-bold text-gray-500 hover:text-black">ইভেন্ট</Link>
-            <Link to="/professional" className="text-sm font-bold text-gray-500 hover:text-black">ক্যারিয়ার</Link>
-            <Link to="/login" className="text-sm font-bold border-b-2 border-black pb-0.5">লগইন</Link>
-          </div>
-          <button className="lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </nav>
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/institutions" element={<InstitutionDirectory />} />
-            <Route path="/institution/:id" element={<InstitutionDetail />} />
-            <Route path="/scholars" element={<ScholarDirectory />} />
-            <Route path="/professional" element={<ProfessionalHub />} />
-            <Route path="/knowledge" element={<KnowledgeHub />} />
-            <Route path="/seerah" element={<SeerahTimeline />} />
-            <Route path="/marketplace" element={<Marketplace />} />
-            <Route path="/fatwa" element={<FatwaCenter />} />
-            <Route path="/search" element={<SearchResults />} />
-            <Route path="/deen101" element={<Deen101 />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/competitions" element={<Competitions />} />
-            <Route path="/audio-library" element={<AudioLibrary />} />
-            <Route path="/tools" element={<Tools />} />
-            <Route path="/calligraphy" element={<CalligraphyGallery />} />
-            <Route path="/community" element={<Community />} />
-            <Route path="/events" element={<EventsHub />} />
-            <Route path="/sadaqah" element={<SadaqahHub />} />
-            <Route path="/fatwa/archive" element={<FatwaArchive />} />
-            <Route path="/scholar-dashboard" element={<ScholarDashboard />} />
-            <Route path="/scholar/apply" element={<ScholarApply />} />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/profile/:id" element={<PublicProfile />} />
-            <Route path="/forbidden" element={<Forbidden />} />
-          </Routes>
-        </Suspense>
-      </div>
-    </div>
-  );
-};
-
-const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const { fetch: fetchNotifs } = useNotificationStore();
-
-  useEffect(() => {
-    fetchNotifs();
-  }, []);
-
-  useEffect(() => {
-    initNotifications(currentUser.id);
-  }, [currentUser.id]);
-
-  const closeSidebar = () => setSidebarOpen(false);
+  if (isLandingPage && !currentUser) return <LandingPage />;
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-[#F9FAFB]">
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-black focus:text-white focus:px-6 focus:py-3 focus:font-bold">
-        মূল কন্টেন্টে যান
-      </a>
-      <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
+      {currentUser && (
+        <>
+          <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-black focus:text-white focus:px-6 focus:py-3 focus:font-bold">
+            মূল কন্টেন্টে যান
+          </a>
+          <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)} />
+        </>
+      )}
       <main id="main-content" className="flex-1 flex flex-col min-h-screen overflow-x-hidden">
-        <Header onMenuToggle={() => setSidebarOpen(!isSidebarOpen)} isSidebarOpen={isSidebarOpen} />
+        {currentUser && (
+          <Header onMenuToggle={() => setSidebarOpen(s => !s)} isSidebarOpen={isSidebarOpen} />
+        )}
+        {!currentUser && !isLandingPage && (
+          <nav className="bg-white border-b border-gray-100 py-6 sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+              <Link to="/" className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-black flex items-center justify-center text-white font-bold">M</div>
+                <span className="text-xl font-bold tracking-tight">মাদ্রাসা কানেক্ট</span>
+              </Link>
+              <div className="hidden lg:flex items-center gap-8">
+                <Link to="/about" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">লক্ষ্য</Link>
+                <Link to="/institutions" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">ডিরেক্টরি</Link>
+                <Link to="/knowledge" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">শিক্ষা</Link>
+                <Link to="/community" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">কমিউনিটি</Link>
+                <Link to="/events" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">ইভেন্ট</Link>
+                <Link to="/professional" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">ক্যারিয়ার</Link>
+                <Link to="/login" className="text-sm font-bold border-b-2 border-black pb-0.5">লগইন</Link>
+              </div>
+              <button className="lg:hidden" onClick={() => setSidebarOpen(s => !s)}>
+                {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+          </nav>
+        )}
         <div aria-live="polite" aria-atomic="true" className="sr-only"></div>
-        <div className="p-8 md:p-12 max-w-6xl mx-auto w-full">
+        <div className={`w-full ${currentUser ? 'p-8 md:p-12 max-w-6xl mx-auto' : 'max-w-7xl mx-auto px-6 py-12'}`}>
           <Suspense fallback={<PageLoader />}>
             <Routes>
-              <Route path="/" element={<Home />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/about" element={<AboutUs />} />
               <Route path="/institutions" element={<InstitutionDirectory />} />
               <Route path="/institution/:id" element={<InstitutionDetail />} />
               <Route path="/scholars" element={<ScholarDirectory />} />
@@ -216,9 +168,6 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
               <Route path="/search" element={<SearchResults />} />
               <Route path="/deen101" element={<Deen101 />} />
               <Route path="/faq" element={<FAQ />} />
-              <Route path="/about" element={<AboutUs />} />
-              <Route path="/profile-builder" element={<ProfileBuilder />} />
-              <Route path="/help" element={<InstructionalHelp />} />
               <Route path="/competitions" element={<Competitions />} />
               <Route path="/audio-library" element={<AudioLibrary />} />
               <Route path="/tools" element={<Tools />} />
@@ -232,9 +181,12 @@ const AppLayout: React.FC<{ currentUser: User }> = ({ currentUser }) => {
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/profile/:id" element={<PublicProfile />} />
               <Route path="/forbidden" element={<Forbidden />} />
+              <Route path="/profile-builder" element={<ProfileBuilder />} />
+              <Route path="/help" element={<InstructionalHelp />} />
               <Route path="/post-job" element={<ProtectedRoute requiredRole="INSTITUTION"><PostJob /></ProtectedRoute>} />
               <Route path="/erp-preview" element={<ProtectedRoute requiredRole="INSTITUTION"><ERPPreview /></ProtectedRoute>} />
-              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+              {currentUser && <Route path="/" element={<Home />} />}
+              <Route path="*" element={currentUser ? <Navigate to="/dashboard" replace /> : <Navigate to="/" replace />} />
             </Routes>
           </Suspense>
         </div>

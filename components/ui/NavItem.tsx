@@ -19,10 +19,10 @@ const NavItem: React.FC<NavItemProps> = ({ to, icon, label, onClick, exact }) =>
       to={to}
       onClick={onClick}
       aria-current={isActive ? 'page' : undefined}
-      className={`flex items-center gap-4 px-4 py-3 text-sm transition-all ${
+      className={`flex items-center gap-4 px-4 py-3 text-sm ${
         isActive
           ? 'bg-black text-white font-bold'
-          : 'text-gray-500 hover:bg-gray-50 hover:text-black font-medium'
+          : 'text-gray-500 hover:bg-gray-50 hover:text-black font-medium transition-colors'
       }`}
     >
       {icon}

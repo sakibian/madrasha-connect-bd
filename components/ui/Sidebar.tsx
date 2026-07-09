@@ -1,13 +1,14 @@
 
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
-  LayoutDashboard, Users, Briefcase, Building2, ShieldCheck, BookOpen,
-  ShoppingBag, Heart, Wrench, HelpCircle, GraduationCap, Calendar,
-  Trophy, Star, Headset, History, LogOut
+  X, LogOut, User, LayoutDashboard, Users, Calendar, Briefcase,
+  Building2, ShieldCheck, BookOpen, Trophy, Star, Headset, History,
+  ShoppingBag, Heart, Wrench, HelpCircle, GraduationCap
 } from 'lucide-react';
-import NavItem from './NavItem';
 import { useAuthStore } from '../../stores';
+import NavItem from './NavItem';
+import ImageWithFallback from './ImageWithFallback';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -70,7 +71,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
           <div className="pt-8 border-t border-gray-100">
             <div className="flex items-center gap-3 mb-6">
-              <img src={currentUser?.avatar} className="w-10 h-10 minimal-border object-cover bg-gray-50" />
+              <ImageWithFallback src={currentUser?.avatar} name={currentUser?.name} className="w-10 h-10 minimal-border object-cover bg-gray-50" alt="" />
               <div className="flex-1 overflow-hidden">
                 <p className="text-sm font-bold truncate">{currentUser?.name}</p>
                 <p className="text-[9px] font-bold uppercase tracking-widest text-gray-400">{currentUser?.role}</p>

@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { dataService } from '../services/dataService';
 import { getCurrentUser } from '../services/authService';
+import ImageWithFallback from '../components/ui/ImageWithFallback';
 import { getLevelProgress, UserSkill, Scholar } from '../types';
 
 const PublicProfile: React.FC = () => {
@@ -116,7 +117,7 @@ const PublicProfile: React.FC = () => {
       <div className="bg-white p-12 minimal-border space-y-8">
         <div className="flex flex-col md:flex-row items-start gap-8">
           <div className="w-24 h-24 bg-gray-50 overflow-hidden border-2 border-gray-200">
-            <img src={profile.avatar || `https://picsum.photos/seed/${id}/200/200`} className="w-full h-full object-cover" alt="" />
+            <ImageWithFallback src={profile.avatar || `https://picsum.photos/seed/${id}/200/200`} name={profile.name} className="w-full h-full object-cover" alt="" />
           </div>
           <div className="flex-1 space-y-3">
             <div className="flex items-center gap-3">

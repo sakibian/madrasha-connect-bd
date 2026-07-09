@@ -10,6 +10,7 @@ import {
   MessageCircle,
   ArrowUpRight
 } from 'lucide-react';
+import ImageWithFallback from '../components/ui/ImageWithFallback';
 
 const SearchResults: React.FC = () => {
   const { search } = useLocation();
@@ -92,7 +93,7 @@ const SearchResults: React.FC = () => {
                   {results.products.map((prod: any) => (
                     <Link to="/marketplace" key={prod.id} className="bg-white p-6 space-y-4 group transition-all hover:bg-gray-50">
                       <div className="aspect-square bg-gray-50 overflow-hidden grayscale group-hover:grayscale-0">
-                         <img src={prod.image} className="w-full h-full object-cover" />
+                          <ImageWithFallback src={prod.image} name={prod.name} className="w-full h-full object-cover" alt={prod.name} />
                       </div>
                       <div className="space-y-1">
                         <h3 className="text-sm font-bold truncate">{prod.name}</h3>

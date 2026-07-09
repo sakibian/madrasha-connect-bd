@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Heart, Droplets, Book, Home, Sparkles, ArrowRight, CheckCircle, ShieldCheck, Loader2 } from 'lucide-react';
 import { dataService } from '../services/dataService';
 import { SadaqahProject } from '../types';
+import ImageWithFallback from '../components/ui/ImageWithFallback';
 
 const SadaqahHub: React.FC = () => {
   const [projects, setProjects] = useState<SadaqahProject[]>([]);
@@ -51,7 +52,7 @@ const SadaqahHub: React.FC = () => {
             return (
               <div key={proj.id} className="bg-white p-10 flex flex-col group h-full">
                   <div className="aspect-[4/3] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700 mb-8">
-                     <img src={proj.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={proj.title} />
+                     <ImageWithFallback src={proj.image} name={proj.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={proj.title} />
                   </div>
                   <div className="space-y-6 flex-1 flex flex-col">
                      <div className="flex justify-between items-start">

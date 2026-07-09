@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { ShoppingBag } from 'lucide-react';
+import ImageWithFallback from './ImageWithFallback';
 import { Product } from '../../types';
 
 interface ProductCardProps {
@@ -14,7 +15,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => (
     className="bg-white minimal-border overflow-hidden group cursor-pointer hover:border-gray-300 transition-all"
   >
     <div className="aspect-square bg-gray-100 grayscale overflow-hidden">
-      <img src={product.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={product.name} />
+      <ImageWithFallback src={product.image} name={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={product.name} />
     </div>
     <div className="p-6 space-y-3">
       <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">{product.category}</span>

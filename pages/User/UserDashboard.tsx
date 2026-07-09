@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { getCurrentUser } from '../../services/authService';
 import { Link } from 'react-router-dom';
+import ImageWithFallback from '../../components/ui/ImageWithFallback';
 
 const UserDashboard: React.FC = () => {
   const user = getCurrentUser();
@@ -26,7 +27,7 @@ const UserDashboard: React.FC = () => {
       <div className="p-12 minimal-border bg-white flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex items-center gap-8">
           <div className="relative">
-            <img src={user?.avatar} className="w-24 h-24 border-4 border-gray-50 shadow-sm object-cover bg-gray-50" alt="Profile" />
+            <ImageWithFallback src={user?.avatar} name={user?.name} className="w-24 h-24 border-4 border-gray-50 shadow-sm object-cover bg-gray-50" alt="Profile" />
             <div className="absolute -bottom-2 -right-2 bg-black text-white p-1.5"><CheckCircle size={16} /></div>
           </div>
           <div className="space-y-1">

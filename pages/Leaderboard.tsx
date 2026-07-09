@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Trophy, Medal, TrendingUp, Star, Loader2, BadgeCheck, User } from 'lucide-react';
 import { dataService } from '../services/dataService';
+import ImageWithFallback from '../components/ui/ImageWithFallback';
 import { getLevel, getLevelProgress } from '../types';
 
 const Leaderboard: React.FC = () => {
@@ -73,7 +74,7 @@ const Leaderboard: React.FC = () => {
                     <td className="px-8 py-6">
                       <Link to={`/profile/${u.userId}`} className="flex items-center gap-4 group">
                         <div className="w-10 h-10 bg-gray-50 overflow-hidden border border-gray-200">
-                          <img src={u.avatar || `https://picsum.photos/seed/${u.userId}/100/100`} className="w-full h-full object-cover group-hover:scale-110 transition-transform" alt="" />
+                          <ImageWithFallback src={u.avatar || `https://picsum.photos/seed/${u.userId}/100/100`} name={u.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform" alt="" />
                         </div>
                         <span className="font-bold text-gray-800 group-hover:text-black transition-colors">{u.name}</span>
                       </Link>

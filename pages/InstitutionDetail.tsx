@@ -7,6 +7,7 @@ import {
   ArrowRight, Users, Calendar, Building2
 } from 'lucide-react';
 import { MOCK_INSTITUTIONS } from '../data/mockData';
+import ImageWithFallback from '../components/ui/ImageWithFallback';
 
 const InstitutionDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -64,7 +65,7 @@ const InstitutionDetail: React.FC = () => {
             </div>
          </div>
          <div className="lg:col-span-5 aspect-square lg:aspect-auto bg-gray-50 overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000">
-            <img src={institution.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt={institution.name} />
+            <ImageWithFallback src={institution.image} name={institution.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt={institution.name} />
          </div>
       </div>
 

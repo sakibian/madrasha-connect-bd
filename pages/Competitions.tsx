@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Trophy, Star, Award, Calendar, Users, ArrowRight, Sparkles } from 'lucide-react';
+import ImageWithFallback from '../components/ui/ImageWithFallback';
 
 const Competitions: React.FC = () => {
   const activeCompetitions = [
@@ -34,7 +35,7 @@ const Competitions: React.FC = () => {
         {activeCompetitions.map((comp, i) => (
           <div key={i} className="bg-white p-12 group transition-all hover:bg-gray-50 flex flex-col h-full">
             <div className="aspect-[16/9] mb-10 overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-1000">
-               <img src={comp.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt={comp.title} />
+               <ImageWithFallback src={comp.image} name={comp.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt={comp.title} />
             </div>
             
             <div className="space-y-8 flex-1 flex flex-col">

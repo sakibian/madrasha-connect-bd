@@ -19,11 +19,11 @@
 | [M7](#m7-testing--quality-assurance) Testing & QA | ✅ Complete | 2 weeks | Done | M0-M6 |
 | [M8](#m8-performance--accessibility) Performance & Accessibility | 🟢 In Progress | 1 week | TBD | M3 |
 | [M9](#m9-orphan-page-integration) Orphan Page Integration | ✅ Complete | 2-3 days | Done | M0, M5 |
-| [M10](#m10-community--engagement-features) Community & Engagement | 🟢 In Progress | 2 weeks | TBD | M1, M5, M9 |
+| [M10](#m10-community--engagement-features) Community & Engagement | 🟡 Not Started | 2 weeks | TBD | M1, M5, M9 |
 | [M11](#m11-mobile-app-react-native) Mobile App | 🟡 Not Started | 4-6 weeks | TBD | M1, M2 |
 | [M12](#m12-production-launch--scaling) Production Launch & Scaling | 🟡 Not Started | Ongoing | TBD | M0-M11 |
 
-**Total tracked tasks:** ~174 / ~200 complete
+**Total tracked tasks:** ~178 / ~200 complete
 
 ---
 
@@ -442,11 +442,11 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 #### Performance
 - [x] Implement code splitting with `React.lazy()` for all route-level components
 - [x] Add bundle analysis to build pipeline (`rollup-plugin-visualizer`)
-- [ ] Lazy load images (Intersection Observer)
+- [x] Lazy load images (loading="lazy" on ImageWithFallback component)
 - [x] Preload critical fonts (Noto Sans Bengali)
 - [x] Add resource hints (preconnect, prefetch) in index.html
 - [ ] Optimize Tailwind build (purge unused classes, use JIT)
-- [ ] Add service worker for offline caching
+- [x] Add service worker for offline caching (vite-plugin-pwa + Workbox)
 - [ ] Implement virtual scrolling for long lists (job board, institution directory)
 
 #### Accessibility (WCAG 2.1 AA)
@@ -660,7 +660,7 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M5: Authentication | ~15 | 15 | 100% |
 | M6: Authentic Knowledge Base | ~18 | 18 | 100% |
 | M7: Testing & QA | ~20 | 20 | 100% |
-| M8: Performance & Accessibility | ~16 | 10 | 63% |
+| M8: Performance & Accessibility | ~16 | 13 | 81% |
 | M9: Orphan Pages | 10 | 10 | 100% |
 | M10: Community & Engagement | ~12 | 12 | 100% |
 | **Total** | **~200** | **174** | **87%** |

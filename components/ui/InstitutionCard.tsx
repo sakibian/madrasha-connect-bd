@@ -2,6 +2,7 @@
 import React from 'react';
 import { MapPin, Users } from 'lucide-react';
 import Badge from './Badge';
+import ImageWithFallback from './ImageWithFallback';
 import { Institution } from '../../types';
 
 interface InstitutionCardProps {
@@ -16,7 +17,7 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({ institution, onClick 
   >
     <div className="flex items-start gap-6">
       <div className="w-16 h-16 bg-gray-100 overflow-hidden grayscale flex-shrink-0">
-        <img src={institution.image} className="w-full h-full object-cover" alt="" />
+        <ImageWithFallback src={institution.image} name={institution.name} className="w-full h-full object-cover" alt="" />
       </div>
       <div className="flex-1 min-w-0 space-y-3">
         <div className="space-y-1">

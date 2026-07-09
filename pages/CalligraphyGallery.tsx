@@ -2,6 +2,7 @@
 import React from 'react';
 import { Download, ShoppingBag, Sparkles, Image as ImageIcon, ArrowUpRight } from 'lucide-react';
 import { MOCK_CALLIGRAPHY } from '../data/mockData';
+import ImageWithFallback from '../components/ui/ImageWithFallback';
 
 const CalligraphyGallery: React.FC = () => {
   return (
@@ -21,7 +22,7 @@ const CalligraphyGallery: React.FC = () => {
         {MOCK_CALLIGRAPHY.map(item => (
           <div key={item.id} className="bg-white p-10 flex flex-col group h-full">
             <div className="aspect-square bg-gray-50 mb-8 overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700">
-              <img src={item.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={item.name} />
+              <ImageWithFallback src={item.image} name={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={item.name} />
             </div>
             <div className="space-y-6 flex-1 flex flex-col">
               <div className="flex justify-between items-start">
