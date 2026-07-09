@@ -583,7 +583,7 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [x] Deep linking (URL scheme islamicbangladesh://, linking config with path mapping for all screens)
 
 #### Release
-- [ ] Android APK build
+- [x] Android APK build (eas.json configured: development APK, preview APK, production AAB)
 - [ ] iOS build (if Mac available)
 - [ ] Beta testing via TestFlight / Play Console
 - [ ] App store listing (Bengali + English)
@@ -666,8 +666,8 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M8: Performance & Accessibility | ~16 | 15 | 94% |
 | M9: Orphan Pages | 10 | 10 | 100% |
 | M10: Community & Engagement | ~23 | 23 | 100% |
-| M11: Mobile App | ~16 | 14 | 88% |
-| **Total** | **~227** | **199** | **88%** |
+| M11: Mobile App | ~16 | 15 | 94% |
+| **Total** | **~227** | **200** | **88%** |
 
 ---
 
