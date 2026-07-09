@@ -714,3 +714,33 @@ create policy "Users can create referrals"
 
 create policy "System can update referrals"
   on public.referrals for update using (true);
+
+-- 21. Push Tokens (Expo Push Notifications)
+create table public.push_tokens (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  token text not null,
+  platform text not null check (platform in ('ios', 'android', 'web')),
+  is_active boolean default true,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now(),
+  unique(user_id, token)
+);
+
+create index idx_push_tokens_user on public.push_tokens(user_id);
+create index idx_push_tokens_token on public.push_tokens(token);
+create index idx_push_tokens_active on public.push_tokens(is_active);
+
+alter table public.push_tokens enable row level security;
+
+create policy "Users can read own push tokens"
+  on public.push_tokens for select using (auth.uid() = user_id);
+
+create policy "Users can insert own push tokens"
+  on public.push_tokens for insert with check (auth.uid() = user_id);
+
+create policy "Users can update own push tokens"
+  on public.push_tokens for update using (auth.uid() = user_id);
+
+create policy "Users can delete own push tokens"
+  on public.push_tokens for delete using (auth.uid() = user_id);

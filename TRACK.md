@@ -576,7 +576,7 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 - [x] User Dashboard (stats grid, level progress, menu)
 
 #### Native Features
-- [ ] Push notifications (via Supabase Realtime → FCM/APNs)
+- [x] Push notifications (expo-notifications, push_tokens table, save/register on login, sendPushToUser/sendPushToRole utilities)
 - [ ] Offline support (AsyncStorage + SQLite)
 - [ ] Prayer time alarms
 - [ ] Image picker for profile/listing photos
@@ -666,8 +666,8 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M8: Performance & Accessibility | ~16 | 15 | 94% |
 | M9: Orphan Pages | 10 | 10 | 100% |
 | M10: Community & Engagement | ~23 | 23 | 100% |
-| M11: Mobile App | ~16 | 10 | 63% |
-| **Total** | **~227** | **195** | **86%** |
+| M11: Mobile App | ~16 | 11 | 69% |
+| **Total** | **~227** | **196** | **86%** |
 
 ---
 

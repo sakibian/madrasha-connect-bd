@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { forwardRef } from 'react';
+import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -74,18 +74,20 @@ const MainTabs = () => (
   </Tab.Navigator>
 );
 
-const AppNavigation = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Main" component={MainTabs} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="Institutions" component={InstitutionDirectoryScreen} />
-        <Stack.Screen name="Fatwa" component={FatwaScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
+const AppNavigation = forwardRef<NavigationContainerRef<any>>(
+  (_props, ref) => {
+    return (
+      <NavigationContainer ref={ref}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Main" component={MainTabs} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen name="Institutions" component={InstitutionDirectoryScreen} />
+          <Stack.Screen name="Fatwa" component={FatwaScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+);
 
 export default AppNavigation;

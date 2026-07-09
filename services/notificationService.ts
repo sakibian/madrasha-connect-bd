@@ -99,3 +99,61 @@ export const clearNotifications = async () => {
     .eq('user_id', user.id);
   window.dispatchEvent(new CustomEvent('notification_update'));
 };
+
+export const sendPushToUser = async (
+  userId: string,
+  title: string,
+  body: string,
+  data?: Record<string, unknown>
+): Promise<void> => {
+  const { data: tokens } = await supabase
+    .from('push_tokens')
+    .select('token')
+    .eq('user_id', userId)
+    .eq('is_active', true);
+
+  if (!tokens || tokens.length === 0) return;
+
+  const messages = tokens.map((t) => ({
+    to: t.token,
+    sound: 'default',
+    title,
+    body,
+    data: data ?? {},
+  }));
+
+  const batches: typeof messages[] = [];
+  for (let i = 0; i < messages.length; i += 100) {
+    batches.push(messages.slice(i, i + 100));
+  }
+
+  for (const batch of batches) {
+    await fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Accept-encoding': 'gzip, deflate',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(batch),
+    });
+  }
+};
+
+export const sendPushToRole = async (
+  role: string,
+  title: string,
+  body: string,
+  data?: Record<string, unknown>
+): Promise<void> => {
+  const { data: profiles } = await supabase
+    .from('user_profiles')
+    .select('id')
+    .eq('role', role);
+
+  if (!profiles || profiles.length === 0) return;
+
+  for (const profile of profiles) {
+    await sendPushToUser(profile.id, title, body, data);
+  }
+};
