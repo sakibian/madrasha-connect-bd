@@ -20,10 +20,10 @@
 | [M8](#m8-performance--accessibility) Performance & Accessibility | 🟢 In Progress | 1 week | TBD | M3 |
 | [M9](#m9-orphan-page-integration) Orphan Page Integration | ✅ Complete | 2-3 days | Done | M0, M5 |
 | [M10](#m10-community--engagement-features) Community & Engagement | 🟢 In Progress | 2 weeks | TBD | M1, M5, M9 |
-| [M11](#m11-mobile-app-react-native) Mobile App | 🟡 Not Started | 4-6 weeks | TBD | M1, M2 |
+| [M11](#m11-mobile-app-react-native) Mobile App | 🟢 In Progress | 4-6 weeks | TBD | M1, M2 |
 | [M12](#m12-production-launch--scaling) Production Launch & Scaling | 🟡 Not Started | Ongoing | TBD | M0-M11 |
 
-**Total tracked tasks:** ~185 / ~211 complete
+**Total tracked tasks:** ~192 / ~227 complete
 
 ---
 
@@ -557,20 +557,20 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 > **Objective:** Build native Android/iOS app sharing types and API with the web app.  
 > **Depends on:** M1 (backend), M2 (data migration)  
 > **Effort:** 4-6 weeks  
-> **Status:** 🟡 Not Started
+> **Status:** 🟢 In Progress
 
 ### Tasks
 
 #### Foundation
-- [ ] Initialize React Native project with TypeScript
-- [ ] Set up shared types package (shared with web)
-- [ ] Set up navigation (React Navigation — bottom tabs + stack)
-- [ ] Set up Supabase SDK for React Native
+- [x] Initialize React Native project with Expo
+- [x] Set up shared types package (copied from web, to be extracted as shared package)
+- [x] Set up navigation (React Navigation — bottom tabs + stack)
+- [x] Set up Supabase SDK for React Native
 
 #### Core Screens
-- [ ] Landing/Login screen
-- [ ] Home screen with prayer times + daily wisdom
-- [ ] Job Board screen with search/filter
+- [x] Landing/Login screen
+- [x] Home screen with prayer times + daily wisdom
+- [x] Job Board screen with search/filter
 - [ ] Institution Directory screen
 - [ ] Fatwa screen
 - [ ] User Dashboard
@@ -666,7 +666,8 @@ Why: Free tier covers launch needs, handles auth out-of-box, PostgreSQL for rela
 | M8: Performance & Accessibility | ~16 | 15 | 94% |
 | M9: Orphan Pages | 10 | 10 | 100% |
 | M10: Community & Engagement | ~23 | 23 | 100% |
-| **Total** | **~211** | **185** | **88%** |
+| M11: Mobile App | ~16 | 7 | 44% |
+| **Total** | **~227** | **192** | **85%** |
 
 ---
 
