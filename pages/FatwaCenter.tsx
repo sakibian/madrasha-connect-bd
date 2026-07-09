@@ -8,13 +8,14 @@ import { addNotification } from '../services/notificationService';
 import { moderateContent } from '../services/moderationService';
 import CitationBadge from '../components/CitationBadge';
 import FlagButton from '../components/FlagButton';
-import { Button, Modal, SearchInput } from '../components/ui';
+import { Button, Modal, SearchInput, LoadingSkeleton } from '../components/ui';
 import { useAuthStore, useFatwaStore } from '../stores';
 
 const FatwaCenter: React.FC = () => {
   const currentUser = useAuthStore((s) => s.user);
   const { fatwas, fetch: fetchFatwas, ask: askFatwa } = useFatwaStore();
   const [isInitialized, setIsInitialized] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [isAsking, setIsAsking] = useState(false);
@@ -38,6 +39,7 @@ const FatwaCenter: React.FC = () => {
         setAnswerSources(map);
       }
       setIsInitialized(true);
+      setLoading(false);
     };
     if (!isInitialized) init();
   }, [isInitialized]);
@@ -138,7 +140,9 @@ const FatwaCenter: React.FC = () => {
            />
 
            <div className="space-y-6">
-              {filteredFatwas.map(fatwa => (
+              {loading ? (
+                <LoadingSkeleton variant="card" count={3} />
+              ) : filteredFatwas.map(fatwa => (
                 <div key={fatwa.id} className="minimal-border p-10 bg-white space-y-8 group">
                     <div className="flex justify-between items-start">
                        <div className="caps-label text-bd-green">{fatwa.category}</div>

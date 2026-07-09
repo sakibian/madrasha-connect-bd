@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { ShoppingBag, Heart, Download, Trash2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Button, Badge, ImageWithFallback, Modal } from '../components/ui';
+import { Button, Badge, ImageWithFallback, Modal, LoadingSkeleton } from '../components/ui';
 import { useAuthStore, useProductStore } from '../stores';
 
 const Marketplace: React.FC = () => {
   const currentUser = useAuthStore((s) => s.user);
-  const { products, fetch: fetchProducts, remove: deleteProduct } = useProductStore();
+  const { products, loading, fetch: fetchProducts, remove: deleteProduct } = useProductStore();
   const isAdmin = currentUser?.role === 'ADMIN';
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
@@ -43,6 +43,11 @@ const Marketplace: React.FC = () => {
         </div>
       </section>
 
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 bg-gray-100 minimal-border">
+          <LoadingSkeleton variant="card" count={8} />
+        </div>
+      ) : (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 bg-gray-100 minimal-border">
         {products.map(product => (
           <div key={product.id} className="bg-white p-8 flex flex-col group h-full">
@@ -67,6 +72,7 @@ const Marketplace: React.FC = () => {
           </div>
         ))}
       </div>
+      )}
       <Modal open={!!deleteId} onClose={() => setDeleteId(null)} title="পণ্য মুছে ফেলুন">
         <p className="text-gray-600 mb-6">পণ্যটি কি মুছে ফেলতে চান? এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।</p>
         <div className="flex gap-3 justify-end">

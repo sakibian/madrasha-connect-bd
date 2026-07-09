@@ -21,25 +21,39 @@ import { getCurrentUser } from '../../services/authService';
 import { dataService } from '../../services/dataService';
 import { Link } from 'react-router-dom';
 import ImageWithFallback from '../../components/ui/ImageWithFallback';
+import LoadingSkeleton from '../../components/ui/LoadingSkeleton';
 
 const UserDashboard: React.FC = () => {
   const user = getCurrentUser();
   const [referralCode, setReferralCode] = useState('');
   const [referralStats, setReferralStats] = useState({ total: 0, pending: 0, completed: 0 });
   const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user) return;
-    dataService.getOrCreateReferralCode(user.id).then(setReferralCode);
-    dataService.getReferralStats(user.id).then(setReferralStats);
+    Promise.all([
+      dataService.getOrCreateReferralCode(user.id).then(setReferralCode),
+      dataService.getReferralStats(user.id).then(setReferralStats),
+    ]).finally(() => setLoading(false));
   }, [user]);
 
   const handleCopyReferral = () => {
     const link = `${window.location.origin}/register?ref=${referralCode}`;
     navigator.clipboard.writeText(link);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() =>     setCopied(false), 2000);
   };
+
+  if (loading) {
+    return (
+      <div className="space-y-16 animate-fadeIn">
+        <LoadingSkeleton variant="card" />
+        <LoadingSkeleton variant="card" />
+        <LoadingSkeleton variant="list" count={3} />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-16 animate-fadeIn">

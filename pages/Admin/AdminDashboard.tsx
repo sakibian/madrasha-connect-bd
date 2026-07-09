@@ -31,6 +31,7 @@ const AdminDashboard: React.FC = () => {
     users: 0,
     posts: 0
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const load = async () => {
@@ -46,6 +47,7 @@ const AdminDashboard: React.FC = () => {
         users: users.length,
         posts: posts.length,
       });
+      setLoading(false);
     };
     load();
   }, []);
@@ -67,12 +69,18 @@ const AdminDashboard: React.FC = () => {
       </div>
 
       {activeTab === 'overview' && (
+        loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 bg-gray-100 minimal-border">
+            <LoadingSkeleton variant="card" count={4} />
+          </div>
+        ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 bg-gray-100 minimal-border">
           <StatCard icon={<Briefcase size={20} />} label="মোট সার্কুলার" value={stats.jobs} />
           <StatCard icon={<ShoppingBag size={20} />} label="পণ্য সংখ্যা" value={stats.products} />
           <StatCard icon={<Users size={20} />} label="নিবন্ধিত ইউজার" value={stats.users} />
           <StatCard icon={<MessageSquare size={20} />} label="কমিউনিটি পোস্ট" value={stats.posts} />
         </div>
+        )
       )}
 
       {activeTab === 'jobs' && <ManageJobs />}

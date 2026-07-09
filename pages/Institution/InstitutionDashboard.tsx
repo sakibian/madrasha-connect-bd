@@ -18,15 +18,18 @@ import { dataService } from '../../services/dataService';
 import { getCurrentUser } from '../../services/authService';
 import { Job } from '../../types';
 import { Link } from 'react-router-dom';
+import LoadingSkeleton from '../../components/ui/LoadingSkeleton';
 
 const InstitutionDashboard: React.FC = () => {
   const user = getCurrentUser();
   const [myJobs, setMyJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const load = async () => {
       const allJobs = await dataService.getJobs();
       setMyJobs(allJobs.filter(j => j.institution === user?.institutionName));
+      setLoading(false);
     };
     load();
   }, [user]);
@@ -63,11 +66,15 @@ const InstitutionDashboard: React.FC = () => {
       </div>
 
       {/* Stats Section */}
+      {loading ? (
+        <LoadingSkeleton variant="table" />
+      ) : (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-gray-100 minimal-border">
         <DashCard icon={<Briefcase size={20} />} label="পোস্ট সংখ্যা" value={myJobs.length} />
         <DashCard icon={<Users size={20} />} label="আবেদন প্রাপ্ত" value={myJobs.length * 12} />
         <DashCard icon={<CheckCircle size={20} />} label="অনুমোদিত সার্কুলার" value={myJobs.filter(j => j.verified).length} />
       </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="lg:col-span-2 space-y-12">

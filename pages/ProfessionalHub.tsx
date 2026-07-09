@@ -3,12 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { Briefcase, Plus, CheckCircle, Building, MapPin, DollarSign, Clock, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { addNotification } from '../services/notificationService';
-import { Button, Badge, EmptyState, Modal } from '../components/ui';
+import { Button, Badge, EmptyState, Modal, LoadingSkeleton } from '../components/ui';
 import { useAuthStore, useJobStore } from '../stores';
 
 const ProfessionalHub: React.FC = () => {
   const currentUser = useAuthStore((s) => s.user);
-  const { jobs, fetch: fetchJobs, verify: verifyJob, remove: deleteJob } = useJobStore();
+  const { jobs, loading, fetch: fetchJobs, verify: verifyJob, remove: deleteJob } = useJobStore();
   const [filter, setFilter] = useState('All');
   const [deleteId, setDeleteId] = useState<string | null>(null);
   
@@ -69,6 +69,11 @@ const ProfessionalHub: React.FC = () => {
          ))}
       </div>
 
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 bg-gray-100 minimal-border">
+          <LoadingSkeleton variant="card" count={6} />
+        </div>
+      ) : (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 bg-gray-100 minimal-border">
         {filteredJobs.map(job => (
           <div key={job.id} className="bg-white p-10 flex flex-col justify-between group hover:bg-gray-50 transition-all h-[450px]">
@@ -108,6 +113,7 @@ const ProfessionalHub: React.FC = () => {
           </div>
         )}
       </div>
+      )}
       <Modal open={!!deleteId} onClose={() => setDeleteId(null)} title="চাকরি মুছে ফেলুন">
         <p className="text-gray-600 mb-6">এই চাকরির পোস্টটি কি মুছে ফেলতে চান? এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।</p>
         <div className="flex gap-3 justify-end">
