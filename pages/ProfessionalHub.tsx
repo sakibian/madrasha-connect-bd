@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { Briefcase, Plus, CheckCircle, Building, MapPin, DollarSign, Clock, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { addNotification } from '../services/notificationService';
-import { Button, Badge, EmptyState } from '../components/ui';
+import { Button, Badge, EmptyState, Modal } from '../components/ui';
 import { useAuthStore, useJobStore } from '../stores';
 
 const ProfessionalHub: React.FC = () => {
   const currentUser = useAuthStore((s) => s.user);
   const { jobs, fetch: fetchJobs, verify: verifyJob, remove: deleteJob } = useJobStore();
   const [filter, setFilter] = useState('All');
+  const [deleteId, setDeleteId] = useState<string | null>(null);
   
   const isAdmin = currentUser?.role === 'ADMIN';
   const canPost = currentUser?.role === 'INSTITUTION' || isAdmin;
@@ -29,9 +30,10 @@ const ProfessionalHub: React.FC = () => {
     fetchJobs();
   };
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('মুছে ফেলতে চান?')) {
-      await deleteJob(id);
+  const handleDelete = async () => {
+    if (deleteId) {
+      await deleteJob(deleteId);
+      setDeleteId(null);
       fetchJobs();
     }
   };
@@ -90,7 +92,7 @@ const ProfessionalHub: React.FC = () => {
                {isAdmin ? (
                 <div className="flex gap-2 pt-4">
                   {!job.verified && <Button variant="primary" size="sm" onClick={() => handleVerify(job.id)}>অনুমোদন</Button>}
-                  <Button variant="danger" size="sm" onClick={() => handleDelete(job.id)}>মুছুন</Button>
+                   <Button variant="danger" size="sm" onClick={() => setDeleteId(job.id)}>মুছুন</Button>
                 </div>
               ) : (
                 <Button variant="primary" size="lg" className="w-full">
@@ -106,6 +108,13 @@ const ProfessionalHub: React.FC = () => {
           </div>
         )}
       </div>
+      <Modal open={!!deleteId} onClose={() => setDeleteId(null)} title="চাকরি মুছে ফেলুন">
+        <p className="text-gray-600 mb-6">এই চাকরির পোস্টটি কি মুছে ফেলতে চান? এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।</p>
+        <div className="flex gap-3 justify-end">
+          <Button variant="outline" onClick={() => setDeleteId(null)}>বাতিল</Button>
+          <Button variant="danger" onClick={handleDelete}>মুছে ফেলুন</Button>
+        </div>
+      </Modal>
     </div>
   );
 };

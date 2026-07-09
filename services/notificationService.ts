@@ -1,8 +1,8 @@
-
+import { RealtimeChannel } from '@supabase/supabase-js';
 import { AppNotification } from '../types';
 import { supabase } from './supabase';
 
-let realtimeChannel: any = null;
+let realtimeChannel: RealtimeChannel | null = null;
 
 export const initNotifications = async (userId: string) => {
   if (realtimeChannel) {

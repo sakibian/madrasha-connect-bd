@@ -1,4 +1,4 @@
-import { Job, Product, ForumPost, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication, ContentVersion, UserXP, Badge, UserBadge, XPEvent, UserSkill, ScholarPortfolioItem, AdminAuditLog, Referral, getLevel } from '../types';
+import { Job, Product, ForumPost, ForumComment, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication, ContentVersion, UserXP, Badge, UserBadge, XPEvent, UserSkill, ScholarPortfolioItem, AdminAuditLog, Referral, getLevel, Event, JobRow, FatwaRow, ForumPostRow, ForumCommentRow, ScholarRow, ContentSourceRow, ContentVersionRow, LeaderboardRow, UserBadgeRow } from '../types';
 import { supabase } from './supabase';
 import { retryWithBackoff } from './retry';
 
@@ -87,10 +87,10 @@ export const dataService = {
       .order('created_at', { ascending: false });
     if (error) return cacheGet<Job[]>(CACHE_KEYS.JOBS) || [];
     cacheSet(CACHE_KEYS.JOBS, data);
-    return data.map(j => ({
+    return (data as JobRow[]).map(j => ({
       id: j.id,
       title: j.title,
-      institution: (j as any).institutions?.name || j.institution_id || '',
+      institution: j.institutions?.name || j.institution_id || '',
       location: j.location,
       salary: j.salary || '',
       type: j.type as Job['type'],
@@ -147,8 +147,8 @@ export const dataService = {
     const { data, error } = await query;
     if (error) return cacheGet<Fatwa[]>(CACHE_KEYS.FATWAS) || [];
     cacheSet(CACHE_KEYS.FATWAS, data);
-    return data.map(f => {
-      const answer = (f as any).fatwa_answers;
+    return (data as FatwaRow[]).map(f => {
+      const answer = f.fatwa_answers;
       return {
         id: f.id,
         question: f.question,
@@ -188,8 +188,8 @@ export const dataService = {
       .eq('status', 'pending')
       .order('created_at', { ascending: false });
     if (error) return [];
-    return data.map(f => {
-      const answer = (f as any).fatwa_answers;
+    return (data as FatwaRow[]).map(f => {
+      const answer = f.fatwa_answers;
       return {
         id: f.id,
         question: f.question,
@@ -304,9 +304,9 @@ export const dataService = {
       .order('created_at', { ascending: false });
     if (error) return cacheGet<ForumPost[]>(CACHE_KEYS.POSTS) || [];
     cacheSet(CACHE_KEYS.POSTS, data);
-    return data.map(p => ({
+    return (data as ForumPostRow[]).map(p => ({
       id: p.id,
-      author: (p as any).user_profiles?.name || p.author_id || '',
+      author: p.user_profiles?.name || p.author_id || '',
       authorId: p.author_id,
       role: '',
       title: p.title,
@@ -349,21 +349,15 @@ export const dataService = {
   likePost: async (postId: string): Promise<void> => {
     const user = (await supabase.auth.getSession()).data.session?.user;
     if (!user) throw new Error('Must be logged in to like');
-    const { error } = await supabase.from('forum_post_likes').upsert({
-      post_id: postId,
-      user_id: user.id,
-    }, { onConflict: 'post_id,user_id' });
-    if (error && !error.message.includes('duplicate')) throw error;
-    const { data: post } = await supabase.from('forum_posts').select('likes').eq('id', postId).single();
-    await supabase.from('forum_posts').update({ likes: (post?.likes || 0) + 1 }).eq('id', postId);
+    const { error } = await supabase.rpc('atomic_like_post', { p_post_id: postId, p_user_id: user.id });
+    if (error) throw error;
   },
 
   unlikePost: async (postId: string): Promise<void> => {
     const user = (await supabase.auth.getSession()).data.session?.user;
     if (!user) throw new Error('Must be logged in');
-    await supabase.from('forum_post_likes').delete().eq('post_id', postId).eq('user_id', user.id);
-    const { data: post } = await supabase.from('forum_posts').select('likes').eq('id', postId).single();
-    await supabase.from('forum_posts').update({ likes: Math.max(0, (post?.likes || 1) - 1) }).eq('id', postId);
+    const { error } = await supabase.rpc('atomic_unlike_post', { p_post_id: postId, p_user_id: user.id });
+    if (error) throw error;
   },
 
   getUserLikes: async (userId: string): Promise<string[]> => {
@@ -376,17 +370,17 @@ export const dataService = {
   },
 
   // --- Forum Comments ---
-  getComments: async (postId: string): Promise<any[]> => {
+  getComments: async (postId: string): Promise<ForumComment[]> => {
     const { data, error } = await supabase
       .from('forum_comments')
       .select('*, user_profiles(name)')
       .eq('post_id', postId)
       .order('created_at', { ascending: true });
     if (error) return [];
-    return data.map(c => ({
+    return (data as ForumCommentRow[]).map(c => ({
       id: c.id,
       postId: c.post_id,
-      author: (c as any).user_profiles?.name || c.author_id,
+      author: c.user_profiles?.name || c.author_id,
       content: c.content,
       createdAt: c.created_at,
     }));
@@ -457,10 +451,10 @@ export const dataService = {
       .order('created_at');
     if (error) return cacheGet<Scholar[]>(CACHE_KEYS.SCHOLARS) || [];
     cacheSet(CACHE_KEYS.SCHOLARS, data);
-    return data.map(s => ({
+    return (data as ScholarRow[]).map(s => ({
       id: s.id,
       userId: s.user_id,
-      name: (s as any).user_profiles?.name || '',
+      name: s.user_profiles?.name || '',
       title: s.title,
       specialization: s.specialization,
       institution: s.institution || '',
@@ -505,12 +499,12 @@ export const dataService = {
   },
 
   // --- Events ---
-  getEvents: async (): Promise<any[]> => {
+  getEvents: async (): Promise<Event[]> => {
     const { data, error } = await supabase
       .from('events')
       .select('*')
       .order('event_date');
-    if (error) return cacheGet<any[]>(CACHE_KEYS.EVENTS) || [];
+    if (error) return cacheGet<Event[]>(CACHE_KEYS.EVENTS) || [];
     cacheSet(CACHE_KEYS.EVENTS, data);
     return data;
   },
@@ -572,7 +566,7 @@ export const dataService = {
       .eq('content_type', contentType)
       .eq('content_id', contentId);
     if (error) return [];
-    return data.map((cs: any) => cs.sources).filter(Boolean) as Source[];
+    return data.map((cs: ContentSourceRow) => cs.sources).filter(Boolean) as Source[];
   },
 
   // --- Content Flags (Moderation) ---
@@ -628,13 +622,13 @@ export const dataService = {
       .eq('content_id', contentId)
       .order('created_at', { ascending: false });
     if (error) return [];
-    return data.map(v => ({
+    return (data as ContentVersionRow[]).map(v => ({
       id: v.id,
       contentType: v.content_type,
       contentId: v.content_id,
       title: v.title || undefined,
       body: v.body,
-      changedBy: (v as any).user_profiles?.name || v.changed_by,
+      changedBy: v.user_profiles?.name || v.changed_by,
       changeSummary: v.change_summary || undefined,
       createdAt: v.created_at,
     }));
@@ -678,22 +672,14 @@ export const dataService = {
   },
 
   addXP: async (userId: string, action: string, points: number): Promise<void> => {
-    const { data: existing } = await supabase
-      .from('user_xp')
-      .select('*')
-      .eq('user_id', userId)
-      .single();
-
-    const newXp = (existing?.xp || 0) + points;
-    const newLevel = getLevel(newXp);
-
-    if (existing) {
-      await supabase.from('user_xp').update({ xp: newXp, level: newLevel, updated_at: new Date().toISOString() }).eq('user_id', userId);
-    } else {
-      await supabase.from('user_xp').insert({ user_id: userId, xp: newXp, level: newLevel });
+    const { error } = await supabase.rpc('atomic_add_xp', {
+      p_user_id: userId,
+      p_action: action,
+      p_points: points,
+    });
+    if (error) {
+      console.error('Failed to add XP:', error.message);
     }
-
-    await supabase.from('xp_events').insert({ user_id: userId, action, xp: points });
   },
 
   getLeaderboard: async (limit: number = 50): Promise<(UserXP & { name: string; avatar?: string })[]> => {
@@ -703,14 +689,14 @@ export const dataService = {
       .order('xp', { ascending: false })
       .limit(limit);
     if (error) return [];
-    return data.map(u => ({
+    return (data as LeaderboardRow[]).map(u => ({
       id: u.id,
       userId: u.user_id,
       xp: u.xp,
       level: u.level,
       updatedAt: u.updated_at,
-      name: (u as any).user_profiles?.name || 'Unknown',
-      avatar: (u as any).user_profiles?.avatar_url || undefined,
+      name: u.user_profiles?.name || 'Unknown',
+      avatar: u.user_profiles?.avatar_url || undefined,
     }));
   },
 
@@ -726,12 +712,12 @@ export const dataService = {
       .select('*, badges(*)')
       .eq('user_id', userId);
     if (error) return [];
-    return data.map(ub => ({
+    return (data as UserBadgeRow[]).map(ub => ({
       id: ub.id,
       userId: ub.user_id,
       badgeId: ub.badge_id,
       earnedAt: ub.earned_at,
-      badge: (ub as any).badges as Badge,
+      badge: ub.badges,
     }));
   },
 
@@ -986,28 +972,18 @@ export const dataService = {
       createdAt: s.created_at,
     }));
 
-    if (currentUserId) {
-      const { data: endorsements } = await supabase
-        .from('skill_endorsements')
-        .select('skill_id')
-        .eq('endorsed_by', currentUserId);
-      const endorsedIds = new Set(endorsements?.map(e => e.skill_id) || []);
+    const { data: endorsementData } = await supabase.rpc('get_skill_endorsement_counts', {
+      p_user_id: currentUserId || userId,
+    });
 
+    if (endorsementData) {
+      const endorsementMap = new Map(
+        endorsementData.map((e: { skill_id: string; endorsement_count: number; endorsed_by_me: boolean }) => [e.skill_id, e])
+      );
       for (const skill of skills) {
-        const { count } = await supabase
-          .from('skill_endorsements')
-          .select('*', { count: 'exact', head: true })
-          .eq('skill_id', skill.id);
-        skill.endorsementsCount = count || 0;
-        skill.endorsedByMe = endorsedIds.has(skill.id);
-      }
-    } else {
-      for (const skill of skills) {
-        const { count } = await supabase
-          .from('skill_endorsements')
-          .select('*', { count: 'exact', head: true })
-          .eq('skill_id', skill.id);
-        skill.endorsementsCount = count || 0;
+        const info = endorsementMap.get(skill.id);
+        skill.endorsementsCount = info?.endorsement_count || 0;
+        skill.endorsedByMe = info?.endorsed_by_me || false;
       }
     }
 

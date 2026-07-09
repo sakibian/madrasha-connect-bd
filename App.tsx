@@ -2,6 +2,7 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { ToastProvider } from './components/ui/Toast';
 
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Home = lazy(() => import('./pages/Home'));
@@ -77,7 +78,9 @@ const AppRouter: React.FC = () => {
 
   return (
     <ErrorBoundary>
-      <Shell />
+      <ToastProvider>
+        <Shell />
+      </ToastProvider>
     </ErrorBoundary>
   );
 };

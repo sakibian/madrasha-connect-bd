@@ -3,6 +3,7 @@ const MODERATION_FN_URL = 'https://qazcxnldkrklxdmunfgj.functions.supabase.co/co
 
 interface ModerationResult {
   safe: boolean;
+  pending_review: boolean;
   feedback: string;
   flaggedCategories: string[];
   layer: number;
@@ -18,11 +19,11 @@ export const moderateContent = async (text: string, contentType: string = 'gener
     });
     if (!res.ok) {
       console.error('Moderation API error:', res.status);
-      return { safe: true, feedback: '', flaggedCategories: [], layer: 0, content_type: contentType };
+      return { safe: false, pending_review: true, feedback: 'Moderation service unavailable — queued for manual review', flaggedCategories: [], layer: 0, content_type: contentType };
     }
     return await res.json();
   } catch (err) {
     console.error('Moderation service error:', err);
-    return { safe: true, feedback: '', flaggedCategories: [], layer: 0, content_type: contentType };
+    return { safe: false, pending_review: true, feedback: 'Moderation service unavailable — queued for manual review', flaggedCategories: [], layer: 0, content_type: contentType };
   }
 };

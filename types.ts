@@ -249,6 +249,124 @@ export interface Referral {
   completedAt?: string;
 }
 
+export interface Event {
+  id: string;
+  title: string;
+  description?: string;
+  event_date: string;
+  location?: string;
+  organizer?: string;
+  type: 'competition' | 'seminar' | 'workshop' | 'other';
+  created_at: string;
+}
+
+export interface JobRow {
+  id: string;
+  title: string;
+  institution_id: string;
+  location: string;
+  salary: string;
+  type: string;
+  created_at: string;
+  status: string;
+  contact_info: string;
+  institutions?: { name: string } | null;
+}
+
+export interface FatwaRow {
+  id: string;
+  question: string;
+  category: string;
+  asked_by: string;
+  created_at: string;
+  ai_suggestion: string;
+  status: string;
+  fatwa_answers?: {
+    answer: string;
+    answered_by: string;
+    created_at: string;
+    sources: string[];
+  } | null;
+}
+
+export interface ForumPostRow {
+  id: string;
+  author_id: string;
+  title: string;
+  content: string;
+  category: string;
+  likes: number;
+  comments_count: number;
+  verified: boolean;
+  created_at: string;
+  user_profiles?: { name: string } | null;
+}
+
+export interface ForumCommentRow {
+  id: string;
+  post_id: string;
+  author_id: string;
+  content: string;
+  created_at: string;
+  user_profiles?: { name: string } | null;
+}
+
+export interface ScholarRow {
+  id: string;
+  user_id: string;
+  title: string;
+  specialization: string;
+  institution: string;
+  image_url: string;
+  verified: boolean;
+  location: string;
+  user_profiles?: { name: string } | null;
+}
+
+export interface ContentSourceRow {
+  sources: Source | null;
+}
+
+export interface ContentVersionRow {
+  id: string;
+  content_type: string;
+  content_id: string;
+  title: string;
+  body: string;
+  changed_by: string;
+  change_summary: string;
+  created_at: string;
+  user_profiles?: { name: string } | null;
+}
+
+export interface LeaderboardRow {
+  id: string;
+  user_id: string;
+  xp: number;
+  level: number;
+  updated_at: string;
+  user_profiles?: { name: string; avatar_url: string } | null;
+}
+
+export interface UserBadgeRow {
+  id: string;
+  user_id: string;
+  badge_id: string;
+  earned_at: string;
+  badges: Badge;
+}
+
+export interface AuditLogRow {
+  id: string;
+  admin_id: string;
+  action: string;
+  target_type: string;
+  target_id: string;
+  details: Record<string, unknown>;
+  created_at: string;
+  admin?: { name: string } | null;
+}
+
 export const XP_ACTIONS = {
   ASK_FATWA: { action: 'ask_fatwa', xp: 10 },
   ANSWER_FATWA: { action: 'answer_fatwa', xp: 50 },

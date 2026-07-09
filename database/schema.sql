@@ -744,3 +744,60 @@ create policy "Users can update own push tokens"
 
 create policy "Users can delete own push tokens"
   on public.push_tokens for delete using (auth.uid() = user_id);
+
+-- 22. Atomic database functions for concurrency safety
+
+-- Atomic like count increment
+create or replace function public.atomic_like_post(p_post_id uuid, p_user_id uuid)
+returns void as $$
+begin
+  insert into public.forum_post_likes (post_id, user_id) values (p_post_id, p_user_id)
+  on conflict (post_id, user_id) do nothing;
+  update public.forum_posts set likes = likes + 1 where id = p_post_id;
+end;
+$$ language plpgsql security definer;
+
+-- Atomic like count decrement
+create or replace function public.atomic_unlike_post(p_post_id uuid, p_user_id uuid)
+returns void as $$
+begin
+  delete from public.forum_post_likes where post_id = p_post_id and user_id = p_user_id;
+  update public.forum_posts set likes = greatest(0, likes - 1) where id = p_post_id;
+end;
+$$ language plpgsql security definer;
+
+-- Atomic XP increment
+create or replace function public.atomic_add_xp(p_user_id uuid, p_action text, p_points int)
+returns void as $$
+declare
+  current_xp int;
+begin
+  select xp into current_xp from public.user_xp where user_id = p_user_id;
+  if found then
+    update public.user_xp set xp = xp + p_points, level = floor(sqrt((xp + p_points) / 100.0)) + 1, updated_at = now() where user_id = p_user_id;
+  else
+    insert into public.user_xp (user_id, xp, level) values (p_user_id, p_points, floor(sqrt(p_points / 100.0)) + 1);
+  end if;
+  insert into public.xp_events (user_id, action, xp) values (p_user_id, p_action, p_points);
+end;
+$$ language plpgsql security definer;
+
+-- Batch endorsement count (avoids N+1)
+create or replace function public.get_skill_endorsement_counts(p_user_id uuid)
+returns table(skill_id uuid, endorsement_count bigint, endorsed_by_me boolean) as $$
+begin
+  return query
+  select
+    s.id as skill_id,
+    coalesce_counts.count as endorsement_count,
+    coalesce(my_endorsements.skill_id is not null, false) as endorsed_by_me
+  from public.user_skills s
+  left join lateral (
+    select count(*) as count from public.skill_endorsements se where se.skill_id = s.id
+  ) coalesce_counts on true
+  left join lateral (
+    select se.skill_id from public.skill_endorsements se where se.skill_id = s.id and se.endorsed_by = p_user_id limit 1
+  ) my_endorsements on true
+  where s.user_id = p_user_id;
+end;
+$$ language plpgsql security definer;

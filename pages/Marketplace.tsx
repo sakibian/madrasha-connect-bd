@@ -1,22 +1,24 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ShoppingBag, Heart, Download, Trash2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Button, Badge, ImageWithFallback } from '../components/ui';
+import { Button, Badge, ImageWithFallback, Modal } from '../components/ui';
 import { useAuthStore, useProductStore } from '../stores';
 
 const Marketplace: React.FC = () => {
   const currentUser = useAuthStore((s) => s.user);
   const { products, fetch: fetchProducts, remove: deleteProduct } = useProductStore();
   const isAdmin = currentUser?.role === 'ADMIN';
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('পণ্যটি কি মুছে ফেলতে চান?')) {
-      await deleteProduct(id);
+  const handleDelete = async () => {
+    if (deleteId) {
+      await deleteProduct(deleteId);
+      setDeleteId(null);
     }
   };
 
@@ -55,9 +57,9 @@ const Marketplace: React.FC = () => {
               <div className="pt-6 border-t border-gray-100 flex items-center justify-between">
                  <span className="text-2xl font-extrabold text-black">{product.isFree ? 'ফ্রি' : `৳ ${product.price}`}</span>
                  <div className="flex gap-2">
-                    {isAdmin && (
-                      <Button variant="danger" size="sm" onClick={() => handleDelete(product.id)} icon={<Trash2 size={18} />} />
-                    )}
+                     {isAdmin && (
+                       <Button variant="danger" size="sm" onClick={() => setDeleteId(product.id)} icon={<Trash2 size={18} />} />
+                     )}
                     <Button variant={product.isFree ? 'primary' : 'outline'} size="sm" icon={product.isFree ? <Download size={20} /> : <ShoppingBag size={20} />} />
                  </div>
               </div>
@@ -65,6 +67,13 @@ const Marketplace: React.FC = () => {
           </div>
         ))}
       </div>
+      <Modal open={!!deleteId} onClose={() => setDeleteId(null)} title="পণ্য মুছে ফেলুন">
+        <p className="text-gray-600 mb-6">পণ্যটি কি মুছে ফেলতে চান? এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।</p>
+        <div className="flex gap-3 justify-end">
+          <Button variant="outline" onClick={() => setDeleteId(null)}>বাতিল</Button>
+          <Button variant="danger" onClick={handleDelete}>মুছে ফেলুন</Button>
+        </div>
+      </Modal>
     </div>
   );
 };

@@ -115,7 +115,7 @@ async function layer2AI(text: string): Promise<ModerationResult> {
 
     if (!res.ok) {
       console.error('Gemini API error:', await res.text());
-      return { safe: true, feedback: '', flaggedCategories: [] };
+      return { safe: false, feedback: 'AI moderation unavailable — queued for manual review', flaggedCategories: ['service_unavailable'] };
     }
 
     const data = await res.json();
@@ -123,7 +123,7 @@ async function layer2AI(text: string): Promise<ModerationResult> {
     return JSON.parse(text);
   } catch (err) {
     console.error('Layer 2 error:', err);
-    return { safe: true, feedback: '', flaggedCategories: [] };
+    return { safe: false, feedback: 'AI moderation unavailable — queued for manual review', flaggedCategories: ['service_unavailable'] };
   }
 }
 

@@ -14,7 +14,14 @@ interface AuthState {
   logout: () => Promise<void>;
   refreshUser: () => void;
   setUser: (user: User | null) => void;
+  cleanup: () => void;
 }
+
+const handleAuthChange = () => {
+  useAuthStore.getState().refreshUser();
+};
+
+let listenerAttached = false;
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
@@ -27,6 +34,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     await initAuth();
     const user = getCurrentUser();
     set({ user, loading: false, initialized: true });
+
+    if (!listenerAttached) {
+      window.addEventListener('auth_change', handleAuthChange);
+      listenerAttached = true;
+    }
   },
 
   login: async (email: string, password: string) => {
@@ -52,8 +64,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   setUser: (user) => set({ user }),
-}));
 
-window.addEventListener('auth_change', () => {
-  useAuthStore.getState().refreshUser();
-});
+  cleanup: () => {
+    window.removeEventListener('auth_change', handleAuthChange);
+    listenerAttached = false;
+  },
+}));
