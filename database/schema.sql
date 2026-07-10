@@ -4,6 +4,19 @@
 -- 0. Extensions
 create extension if not exists "uuid-ossp";
 
+-- 0.1 Helper function to check user role (SECURITY DEFINER to avoid RLS recursion)
+create or replace function public.get_user_role(uid uuid)
+returns text
+language sql
+security definer
+stable
+as $$
+  select role from public.user_profiles where id = uid;
+$$;
+
+grant execute on function public.get_user_role(uuid) to authenticated;
+grant execute on function public.get_user_role(uuid) to anon;
+
 -- 1. User Profiles (extends Supabase auth.users)
 create table public.user_profiles (
   id uuid primary key references auth.users(id) on delete cascade,
@@ -419,22 +432,22 @@ create policy "Users can create flags"
   on public.content_flags for insert with check (auth.uid() = flagged_by);
 
 create policy "Users can read own flags"
-  on public.content_flags for select using (auth.uid() = flagged_by or exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN'));
+  on public.content_flags for select using (auth.uid() = flagged_by or public.get_user_role(auth.uid()) = 'ADMIN');
 
 create policy "Admins can update flags"
-  on public.content_flags for update using (exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN'));
+  on public.content_flags for update using (public.get_user_role(auth.uid()) = 'ADMIN');
 
--- Admin access policies (role-based)
+-- Admin access policies (role-based, using SECURITY DEFINER function to avoid recursion)
 create policy "Admins can read all profiles"
   on public.user_profiles for select
   using (
-    exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN')
+    public.get_user_role(auth.uid()) = 'ADMIN'
   );
 
 create policy "Admins can update all profiles"
   on public.user_profiles for update
   using (
-    exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN')
+    public.get_user_role(auth.uid()) = 'ADMIN'
   );
 
 -- 21. Scholar Applications (verification workflow)
@@ -469,13 +482,13 @@ create policy "Users can create applications"
 create policy "Admins can read all applications"
   on public.scholar_applications for select
   using (
-    exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN')
+    public.get_user_role(auth.uid()) = 'ADMIN'
   );
 
 create policy "Admins can update applications"
   on public.scholar_applications for update
   using (
-    exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN')
+    public.get_user_role(auth.uid()) = 'ADMIN'
   );
 
 -- 22. Content Versions (audit trail for edits)
@@ -681,12 +694,12 @@ alter table public.admin_audit_log enable row level security;
 
 create policy "Admins can read audit logs"
   on public.admin_audit_log for select using (
-    exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN')
+    public.get_user_role(auth.uid()) = 'ADMIN'
   );
 
 create policy "Admins can insert audit logs"
   on public.admin_audit_log for insert with check (
-    exists (select 1 from public.user_profiles where id = auth.uid() and role = 'ADMIN')
+    public.get_user_role(auth.uid()) = 'ADMIN'
   );
 
 -- 20. Referrals
