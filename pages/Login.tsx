@@ -169,7 +169,6 @@ const Login: React.FC = () => {
             </div>
           </div>
           )}
-          </div>
 
           <div className="pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
              <span className="text-sm font-bold text-gray-400">আপনার কি কোনো অ্যাকাউন্ট নেই?</span>
