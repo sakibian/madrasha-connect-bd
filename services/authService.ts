@@ -44,21 +44,54 @@ export const initAuth = async (): Promise<void> => {
   return initPromise;
 };
 
-export const login = async (email: string, password: string): Promise<User | null> => {
+export type LoginResult = {
+  user: User | null;
+  error: string | null;
+  needsConfirmation: boolean;
+};
+
+export const login = async (email: string, password: string): Promise<LoginResult> => {
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error || !data.user) return null;
+
+  if (error) {
+    if (error.message.toLowerCase().includes('email not confirmed')) {
+      return { user: null, error: null, needsConfirmation: true };
+    }
+    return { user: null, error: error.message, needsConfirmation: false };
+  }
+
+  if (!data.user) {
+    return { user: null, error: 'ইমেইল বা পাসওয়ার্ড ভুল।', needsConfirmation: false };
+  }
 
   const profile = await fetchUserProfile(data.user.id);
-  if (profile?.banned) {
+
+  if (profile === null) {
+    // Auth succeeded but the profile row is missing — don't report "wrong password".
     await supabase.auth.signOut();
     currentUser = null;
     window.dispatchEvent(new CustomEvent('auth_change'));
-    return null;
+    return {
+      user: null,
+      error: 'আপনার প্রোফাইল পাওয়া যায়নি। অনুগ্রহ করে সাপোর্টের সাথে যোগাযোগ করুন।',
+      needsConfirmation: false,
+    };
+  }
+
+  if (profile.banned) {
+    await supabase.auth.signOut();
+    currentUser = null;
+    window.dispatchEvent(new CustomEvent('auth_change'));
+    return {
+      user: null,
+      error: 'আপনার অ্যাকাউন্ট বন্ধ করা হয়েছে।',
+      needsConfirmation: false,
+    };
   }
 
   currentUser = profile;
   window.dispatchEvent(new CustomEvent('auth_change'));
-  return currentUser;
+  return { user: currentUser, error: null, needsConfirmation: false };
 };
 
 export const registerUser = async (userData: {

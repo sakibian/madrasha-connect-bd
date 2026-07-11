@@ -20,9 +20,10 @@ const Login: React.FC = () => {
     setLoading(true);
     setError('');
     setUnconfirmedEmail('');
-    const user = await login(demoEmail, DEMO_PASSWORD);
-    if (user) navigate('/dashboard');
-    else setError('ডেমো অ্যাকাউন্ট পাওয়া যায়নি। অনুগ্রহ করে রেজিস্ট্রেশন করুন।');
+    const result = await login(demoEmail, DEMO_PASSWORD);
+    if (result.user) navigate('/dashboard');
+    else if (result.needsConfirmation) setUnconfirmedEmail(demoEmail);
+    else setError(result.error || 'ডেমো অ্যাকাউন্ট পাওয়া যায়নি। অনুগ্রহ করে রেজিস্ট্রেশন করুন।');
     setLoading(false);
   };
 
@@ -32,16 +33,13 @@ const Login: React.FC = () => {
     setLoading(true);
     setError('');
     setUnconfirmedEmail('');
-    const user = await login(email, password);
-    if (user) navigate('/dashboard');
-    else {
-      const { error: signInError } = await (await import('../services/supabase')).supabase.auth.signInWithPassword({ email, password });
-      if (signInError?.message?.toLowerCase().includes('email not confirmed')) {
-        setUnconfirmedEmail(email);
-        setError('');
-      } else {
-        setError('ইমেইল বা পাসওয়ার্ড ভুল।');
-      }
+    const result = await login(email, password);
+    if (result.user) navigate('/dashboard');
+    else if (result.needsConfirmation) {
+      setUnconfirmedEmail(email);
+      setError('');
+    } else {
+      setError(result.error || 'ইমেইল বা পাসওয়ার্ড ভুল।');
     }
     setLoading(false);
   };
