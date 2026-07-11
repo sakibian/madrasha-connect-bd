@@ -11,8 +11,14 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [unconfirmedEmail, setUnconfirmedEmail] = useState('');
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(() => sessionStorage.getItem('login_email') || '');
   const [password, setPassword] = useState('');
+
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    if (value) sessionStorage.setItem('login_email', value);
+    else sessionStorage.removeItem('login_email');
+  };
 
   const handleQuickLogin = async (demoEmail: string) => {
     setEmail(demoEmail);
@@ -96,7 +102,7 @@ const Login: React.FC = () => {
                   type="email"
                   placeholder="ইমেইল"
                   value={email}
-                  onChange={e => setEmail(e.target.value)}
+                  onChange={e => handleEmailChange(e.target.value)}
                   className="w-full pl-14 pr-6 py-5 bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium text-lg"
                   required
                 />

@@ -1,5 +1,7 @@
 /* Seed 4 test users with password: Test1234! */
 
+create extension if not exists pgcrypto;
+
 insert into auth.users (
   id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at
 ) values
