@@ -1,42 +1,11 @@
-/* Seed 4 test users with password: Test1234! */
+/* Seed test user PROFILES + scholar data (password: Test1234!).
+ *
+ * NOTE: the auth.users rows themselves must be created via the Auth Admin API
+ * (see scripts/seed-auth-users.mjs) — raw INSERTs into auth.users are fragile on
+ * Supabase cloud and cause "Invalid login credentials" / "Database error querying schema".
+ * Run that script first so these fixed UUIDs exist, then run this SQL for the profiles. */
 
 create extension if not exists pgcrypto;
-
-/* Resolve the project's auth instance id so users appear in the dashboard and can log in.
-   GoTrue only knows the correct instance_id, so read it from any existing user it created
-   (e.g. one made via the dashboard). Fall back to JWT claim / auth.instances. */
-do $$
-declare
-  v_instance uuid;
-begin
-  select instance_id into v_instance from auth.users where instance_id is not null limit 1;
-  if v_instance is null then
-    begin
-      select (current_setting('request.jwt.claims', true)::json->>'instance_id')::uuid into v_instance;
-    exception when others then v_instance := null;
-    end;
-  end if;
-  if v_instance is null then
-    select id into v_instance from auth.instances limit 1;
-  end if;
-  insert into auth.users (
-    id, instance_id, aud, role, email, encrypted_password,
-    email_confirmed_at, raw_app_meta_data, created_at, updated_at
-  ) values
-    ('11111111-1111-1111-1111-111111111111', v_instance, 'authenticated', 'authenticated',
-     'admin@test.com', crypt('Test1234!', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', now(), now()),
-    ('22222222-2222-2222-2222-222222222222', v_instance, 'authenticated', 'authenticated',
-     'scholar@test.com', crypt('Test1234!', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', now(), now()),
-    ('33333333-3333-3333-3333-333333333333', v_instance, 'authenticated', 'authenticated',
-     'institution@test.com', crypt('Test1234!', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', now(), now()),
-    ('44444444-4444-4444-4444-444444444444', v_instance, 'authenticated', 'authenticated',
-     'user@test.com', crypt('Test1234!', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', now(), now())
-  on conflict (id) do update set
-    instance_id = excluded.instance_id,
-    encrypted_password = excluded.encrypted_password,
-    email_confirmed_at = excluded.email_confirmed_at,
-    raw_app_meta_data = excluded.raw_app_meta_data;
-end $$;
 
 /* Create their profiles */
 insert into public.user_profiles (id, name, role, avatar_url, phone) values
