@@ -2,16 +2,20 @@
 
 create extension if not exists pgcrypto;
 
-/* Resolve the project's auth instance id so users appear in the dashboard.
-   Prefer the request JWT claim (reliable on Supabase cloud); fall back to auth.instances. */
+/* Resolve the project's auth instance id so users appear in the dashboard and can log in.
+   GoTrue only knows the correct instance_id, so read it from any existing user it created
+   (e.g. one made via the dashboard). Fall back to JWT claim / auth.instances. */
 do $$
 declare
   v_instance uuid;
 begin
-  begin
-    select (current_setting('request.jwt.claims', true)::json->>'instance_id')::uuid into v_instance;
-  exception when others then v_instance := null;
-  end;
+  select instance_id into v_instance from auth.users where instance_id is not null limit 1;
+  if v_instance is null then
+    begin
+      select (current_setting('request.jwt.claims', true)::json->>'instance_id')::uuid into v_instance;
+    exception when others then v_instance := null;
+    end;
+  end if;
   if v_instance is null then
     select id into v_instance from auth.instances limit 1;
   end if;
