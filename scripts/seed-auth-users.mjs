@@ -38,6 +38,21 @@ const admin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
   auth: { autoRefreshToken: false, persistSession: false },
 });
 
+// Connectivity / auth probe
+try {
+  const probe = await fetch(`${SUPABASE_URL}/auth/v1/settings`, {
+    headers: { apikey: SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}` },
+  });
+  console.log(`Probe /auth/v1/settings → HTTP ${probe.status}`);
+  if (probe.status === 401) {
+    console.error('Service role key rejected (401). Check SUPABASE_SERVICE_ROLE_KEY.');
+    process.exit(1);
+  }
+} catch (e) {
+  console.error('Probe failed:', e?.message || e);
+  process.exit(1);
+}
+
 for (const u of users) {
   // Remove any pre-existing (possibly malformed) row so we create a clean one.
   await admin.auth.admin.deleteUser(u.id).catch(() => {});
@@ -51,7 +66,7 @@ for (const u of users) {
   });
 
   if (error) {
-    console.error(`✗ ${u.email}: ${error.message}`);
+    console.error(`✗ ${u.email}:`, JSON.stringify(error, null, 2));
     continue;
   }
   console.log(`✓ ${u.email}: created`);
