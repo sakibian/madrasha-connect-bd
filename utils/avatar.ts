@@ -1,17 +1,16 @@
 /**
- * Gender-aware avatar helpers.
+ * Gender-aware avatar helpers (M21 refactor).
  *
- * DiceBear's `avataaars` sprite ignores its seed's semantics and can produce
- * a feminine avatar for a masculine name (or vice-versa). To keep profile
- * pictures gender-appropriate we:
+ * We used to hit `api.dicebear.com` for every rendered avatar, which:
+ *   - added a third-party network round-trip on every page render,
+ *   - leaked user information (avatar seed = user name) to a third party,
+ *   - required cache-busting whenever DiceBear updated the sprite.
  *
- *   1. Infer a probable gender from the display name using a curated list
- *      of Bangla / Arabic / English masculine + feminine tokens.
- *   2. Pin the DiceBear avatar's `top` (hair/hijab) options so male seeds
- *      never render long hair and female seeds always render hijab.
- *
- * This is a best-effort inference — users can always upload a real photo
- * to `avatar_url` which bypasses the helper entirely.
+ * Now we render avatars locally using `boring-avatars` (MIT, 16 KB, pure SVG).
+ * This module keeps the *gender inference* logic — that still matters, because
+ * we pick a warmer or cooler brand palette based on it so the avatar reads as
+ * gender-appropriate for our audience — but the actual pixel generation has
+ * moved into `components/ui/Avatar.tsx`.
  */
 
 export type InferredGender = 'male' | 'female' | 'unknown';
@@ -131,41 +130,45 @@ export function inferGenderFromName(name?: string | null): InferredGender {
 }
 
 /**
- * Build a DiceBear `avataaars` URL that respects the inferred gender.
+ * Brand-aligned colour palettes for boring-avatars.
  *
- * - Male   → short/close-cropped hair, no hijab.
- * - Female → hijab-1 style top (respectful for a Bangladeshi Muslim audience).
- * - Unknown → neutral seed (no hair/hijab pinning), same behaviour as before.
+ * We use tone families derived from our M16 semantic tokens so avatars sit
+ * naturally inside the rest of the UI:
+ *   - Male   → cool greens + charcoal (bd-green family).
+ *   - Female → warm plums + soft rose (still on-brand, different hue).
+ *   - Unknown → neutral slate.
  *
- * When a real photo URL is provided it is returned unchanged.
+ * `boring-avatars` needs an array of 5 hex strings.
  */
-export function getGenderedAvatarUrl(
-  name?: string | null,
-  existingUrl?: string | null,
-  seed?: string | null,
-): string {
-  // If the caller already has a real photo, respect it.
-  if (existingUrl && !/dicebear\.com/.test(existingUrl) && !/picsum\.photos\/seed\/user/.test(existingUrl)) {
-    return existingUrl;
-  }
+const MALE_PALETTE   = ['#006a4e', '#008660', '#34d399', '#0f172a', '#f8fafc'];
+const FEMALE_PALETTE = ['#b91c1c', '#f59e0b', '#fecaca', '#0f172a', '#f8fafc'];
+const NEUTRAL_PALETTE = ['#334155', '#64748b', '#e2e8f0', '#0f172a', '#f8fafc'];
 
+export function getAvatarPalette(gender: InferredGender): string[] {
+  if (gender === 'male') return MALE_PALETTE;
+  if (gender === 'female') return FEMALE_PALETTE;
+  return NEUTRAL_PALETTE;
+}
+
+/**
+ * Convenience: infer gender AND grab the palette in one call.
+ * Used by `components/ui/Avatar.tsx`.
+ */
+export function getAvatarStyleFromName(name?: string | null): {
+  gender: InferredGender;
+  colors: string[];
+} {
   const gender = inferGenderFromName(name);
-  const safeSeed = encodeURIComponent(seed || name || 'muslim-community-bd');
-  const base = `https://api.dicebear.com/7.x/avataaars/svg?seed=${safeSeed}`;
+  return { gender, colors: getAvatarPalette(gender) };
+}
 
-  if (gender === 'male') {
-    // Short/close-cropped tops only. `facialHairProbability=40` gives an
-    // occasional beard which reads as masculine in Bangladeshi context.
-    return (
-      `${base}` +
-      `&top=shortHair,shortHairShortFlat,shortHairShortCurly,shortHairShortRound,shortHairSides` +
-      `&facialHairProbability=40`
-    );
-  }
-  if (gender === 'female') {
-    // Force hijab and disable facial hair.
-    return `${base}&top=hijab&facialHairProbability=0`;
-  }
-  // Unknown — keep original behaviour.
-  return base;
+/**
+ * Returns true when the given URL is a real uploaded photo we should respect
+ * (i.e. NOT one of the legacy DiceBear or picsum stubs).
+ */
+export function isRealPhotoUrl(url?: string | null): boolean {
+  if (!url) return false;
+  if (/dicebear\.com/.test(url)) return false;
+  if (/picsum\.photos\/seed\/user/.test(url)) return false;
+  return true;
 }

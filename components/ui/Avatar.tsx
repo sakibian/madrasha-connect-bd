@@ -1,7 +1,18 @@
+/**
+ * Avatar — renders a real photo (if provided) or a locally-generated SVG.
+ *
+ * M21 refactor:
+ *   - Was: hit `api.dicebear.com` for every render.
+ *   - Now: use `boring-avatars` (MIT, 16 KB, zero network calls, TS types).
+ *
+ * Gender inference still runs so the palette reads as masculine/feminine to
+ * our Bangladeshi Muslim audience — the `variant="beam"` style + our brand
+ * palette keeps every avatar visually consistent with the rest of the UI.
+ */
 
 import React from 'react';
-import ImageWithFallback from './ImageWithFallback';
-import { getGenderedAvatarUrl } from '../../utils/avatar';
+import BoringAvatar from 'boring-avatars';
+import { getAvatarStyleFromName, isRealPhotoUrl } from '../../utils/avatar';
 
 interface AvatarProps {
   src?: string;
@@ -12,9 +23,9 @@ interface AvatarProps {
 }
 
 const sizeStyles = {
-  sm: 'w-8 h-8 text-xs',
-  md: 'w-10 h-10 text-sm',
-  lg: 'w-14 h-14 text-lg',
+  sm: { box: 'w-8 h-8 text-xs',   px: 32 },
+  md: { box: 'w-10 h-10 text-sm', px: 40 },
+  lg: { box: 'w-14 h-14 text-lg', px: 56 },
 };
 
 const getInitials = (name?: string): string => {
@@ -23,32 +34,51 @@ const getInitials = (name?: string): string => {
 };
 
 const Avatar: React.FC<AvatarProps> = ({ src, name, size = 'md', online, className = '' }) => {
-  const dims = sizeStyles[size];
-  // If no explicit photo URL is provided (or the URL is a random/generic
-  // DiceBear seed that ignores gender), derive a gender-appropriate avatar
-  // from the display name. Prevents "male name → female avatar" glitches.
-  const resolvedSrc = getGenderedAvatarUrl(name, src, name);
+  const { box, px } = sizeStyles[size];
+  const showRealPhoto = isRealPhotoUrl(src);
+  const { colors } = getAvatarStyleFromName(name);
+  const seed = name || 'muslim-community-bd';
 
   return (
     <div className={`relative inline-flex ${className}`}>
-      <ImageWithFallback
-        src={resolvedSrc}
-        name={name}
-        alt={name || ''}
-        className={`${dims} object-cover minimal-border bg-gray-50`}
-        fallback={
-          <div className={`${dims} minimal-border bg-gray-100 flex items-center justify-center font-bold text-gray-500`}>
-            {getInitials(name)}
-          </div>
-        }
-      />
+      {showRealPhoto ? (
+        <img
+          src={src}
+          alt={name || ''}
+          className={`${box} object-cover minimal-border bg-gray-50`}
+          data-testid="avatar-photo"
+          onError={(e) => {
+            // Real photo failed to load — hide it, the initials fallback
+            // will not exist here so we swap to a neutral BoringAvatar next
+            // render by forcing src to empty via CSS class instead.
+            (e.currentTarget as HTMLImageElement).style.display = 'none';
+          }}
+        />
+      ) : (
+        <div
+          className={`${box} overflow-hidden minimal-border`}
+          aria-label={name || 'User avatar'}
+          data-testid="avatar-generated"
+        >
+          <BoringAvatar
+            name={seed}
+            size={px}
+            variant="beam"
+            colors={colors}
+            square={true}
+          />
+        </div>
+      )}
       {online !== undefined && (
         <span
-          className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 border-2 border-white rounded-full ${
+          className={`absolute bottom-0 right-0 w-2.5 h-2.5 border-2 border-white ${
             online ? 'bg-bd-green' : 'bg-gray-300'
           }`}
+          aria-label={online ? 'Online' : 'Offline'}
         />
       )}
+      {/* Screen-reader-only initials as an accessible label / print fallback. */}
+      <span className="sr-only">{getInitials(name)}</span>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ShieldCheck, School, User as UserIcon, Loader2, ArrowRight, ArrowLeft, Lock, Mail, Phone, KeyRound } from 'lucide-react';
 import { login, resendVerificationEmail, sendPhoneOtp, verifyPhoneOtp } from '../services/authService';
+import PasswordInput from '../components/ui/PasswordInput';
 
 const DEMO_PASSWORD = import.meta.env.VITE_ENABLE_DEMO === 'true' ? 'madrasa123' : '';
 
@@ -245,17 +246,14 @@ const Login: React.FC = () => {
                   required
                 />
               </div>
-              <div className="relative">
-                <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
-                <input
-                  type="password"
-                  placeholder="পাসওয়ার্ড"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  className="w-full pl-14 pr-6 py-5 bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium text-lg"
-                  required
-                />
-              </div>
+              <PasswordInput
+                leadingIcon={<Lock size={18} />}
+                placeholder="পাসওয়ার্ড"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                autoComplete="current-password"
+                required
+              />
             </div>
 
             <div className="flex justify-end">

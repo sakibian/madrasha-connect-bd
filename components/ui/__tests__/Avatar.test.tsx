@@ -1,52 +1,40 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import Avatar from '../Avatar';
 
+// Mock boring-avatars so tests don't have to render its SVG.
+vi.mock('boring-avatars', () => ({
+  default: ({ name }: { name: string }) => <svg data-testid="boring-avatar" data-name={name} />,
+}));
+
 describe('Avatar', () => {
-  it('renders image when src is provided', () => {
+  it('renders a real uploaded photo when src is a real URL', () => {
     render(<Avatar src="https://example.com/photo.jpg" name="John Doe" />);
-    const img = screen.getByRole('img');
-    expect(img).toHaveAttribute('src', 'https://example.com/photo.jpg');
-    expect(img).toHaveAttribute('alt', 'John Doe');
+    const img = screen.getByTestId('avatar-photo') as HTMLImageElement;
+    expect(img.src).toBe('https://example.com/photo.jpg');
+    expect(img.alt).toBe('John Doe');
   });
 
-  it('falls back to a gender-aware dicebear URL when no src is provided', () => {
-    render(<Avatar name="John Doe" />);
-    const img = screen.getByRole('img');
-    // Should still render an <img> tag pointing to dicebear (not initials text)
-    expect(img).toHaveAttribute('src', expect.stringContaining('dicebear.com'));
-    expect(img).toHaveAttribute('alt', 'John Doe');
+  it('renders a local boring-avatar when no real src is provided', () => {
+    render(<Avatar name="Muhammad Abdullah" />);
+    const svg = screen.getByTestId('boring-avatar');
+    expect(svg).toBeInTheDocument();
+    expect(svg.getAttribute('data-name')).toBe('Muhammad Abdullah');
   });
 
-  it('renders neutral dicebear seed even for single-name input', () => {
-    render(<Avatar name="John" />);
-    const img = screen.getByRole('img');
-    expect(img).toHaveAttribute('src', expect.stringContaining('dicebear.com'));
+  it('renders a local avatar for the legacy dicebear src', () => {
+    // Legacy seed URLs should now bypass to the local generator.
+    render(<Avatar src="https://api.dicebear.com/7.x/avataaars/svg?seed=x" name="Anyone" />);
+    expect(screen.getByTestId('boring-avatar')).toBeInTheDocument();
   });
 
-  it('renders neutral dicebear seed when no name is supplied', () => {
-    const { container } = render(<Avatar />);
-    // Empty alt makes the image role="presentation", so query the DOM directly.
-    const img = container.querySelector('img');
-    expect(img).not.toBeNull();
-    expect(img!.getAttribute('src')).toContain('dicebear.com');
-  });
-
-  it('pins short-hair top for masculine Bangla names', () => {
-    render(<Avatar name="আব্দুল্লাহ আহমেদ" />);
-    const img = screen.getByRole('img');
-    expect(img).toHaveAttribute('src', expect.stringContaining('top=shortHair'));
-    expect(img).not.toHaveAttribute('src', expect.stringContaining('hijab'));
-  });
-
-  it('pins hijab top for feminine Bangla names', () => {
-    render(<Avatar name="আয়েশা সিদ্দিকা" />);
-    const img = screen.getByRole('img');
-    expect(img).toHaveAttribute('src', expect.stringContaining('top=hijab'));
+  it('renders a local avatar for the picsum stub src', () => {
+    render(<Avatar src="https://picsum.photos/seed/user/100/100" name="Anyone" />);
+    expect(screen.getByTestId('boring-avatar')).toBeInTheDocument();
   });
 
   it('shows online indicator when online is true', () => {
-    const { container } = render(<Avatar name="John" online={true} />);
+    const { container } = render(<Avatar name="John" online />);
     expect(container.querySelector('.bg-bd-green')).toBeInTheDocument();
   });
 
@@ -55,20 +43,25 @@ describe('Avatar', () => {
     expect(container.querySelector('.bg-gray-300')).toBeInTheDocument();
   });
 
-  it('does not show indicator when online is undefined', () => {
+  it('does not show any indicator when online is undefined', () => {
     const { container } = render(<Avatar name="John" />);
     expect(container.querySelector('.bg-bd-green')).not.toBeInTheDocument();
     expect(container.querySelector('.bg-gray-300')).not.toBeInTheDocument();
   });
 
-  it('applies size classes to the image', () => {
-    const { rerender } = render(<Avatar name="A" size="sm" />);
-    expect(screen.getByRole('img').className).toContain('w-8');
+  it('applies size classes to the outer box', () => {
+    const { container, rerender } = render(<Avatar name="A" size="sm" />);
+    expect(container.querySelector('.w-8')).toBeInTheDocument();
 
     rerender(<Avatar name="A" size="md" />);
-    expect(screen.getByRole('img').className).toContain('w-10');
+    expect(container.querySelector('.w-10')).toBeInTheDocument();
 
     rerender(<Avatar name="A" size="lg" />);
-    expect(screen.getByRole('img').className).toContain('w-14');
+    expect(container.querySelector('.w-14')).toBeInTheDocument();
+  });
+
+  it('provides a screen-reader-only initials label', () => {
+    render(<Avatar name="John Doe" />);
+    expect(screen.getByText('JD')).toBeInTheDocument();
   });
 });

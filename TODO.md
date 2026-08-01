@@ -248,6 +248,24 @@
 
 ---
 
+## 🔐 M21 — Password Show/Hide + Local Avatar Library
+
+### M21.1 Password toggle
+- [x] `components/ui/PasswordInput.tsx` — reusable field with eye/eye-off toggle (44×44 tap target, aria-pressed, forwards refs)
+- [x] Swap into `pages/Login.tsx` email-tab password
+- [x] Swap into `pages/RegisterUser.tsx`
+- [x] Swap into `pages/RegisterInstitution.tsx`
+- [x] 5-scenario Vitest coverage for the component
+
+### M21.2 boring-avatars
+- [x] `npm i boring-avatars`
+- [x] Rewrite `utils/avatar.ts` — kept gender inference; new `getAvatarPalette` + `getAvatarStyleFromName` + `isRealPhotoUrl` helpers
+- [x] Rewrite `components/ui/Avatar.tsx` — renders local `<BoringAvatar variant="beam">` for stub URLs, `<img>` for real photos
+- [x] `database/seed.sql` — dropped dicebear.com URLs (avatar_url now NULL for seed users)
+- [x] Rewrote `utils/__tests__/avatar.test.ts` + `components/ui/__tests__/Avatar.test.tsx` (17 new/updated tests total)
+
+---
+
 ## 🛠️ Cross-cutting
 
 - [x] `components/Citation.tsx` — reusable citation badge (`source`, `url`, `verifiedAt`)

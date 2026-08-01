@@ -13,7 +13,7 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-08-01 23:18 UTC · **Latest deploy:** pending push (session 11 — 5-step integration sweep: confirm-toast, push triggers, permission primer wiring, M14 UI rewires, deploy runbook)
+**Last updated:** 2026-08-01 23:30 UTC · **Latest deploy:** pending push (session 12 — M21 PasswordInput show/hide + boring-avatars swap: no more third-party avatar API + eye toggle on every password field)
 
 ---
 
@@ -55,6 +55,33 @@
 ---
 
 ## ✅ Completed (chronological)
+
+### 2026-08-01 (session 12 — M21 password toggle + local avatars)
+
+Two small but high-visibility UX wins.
+
+**M21.1 — Password show/hide toggle**
+- `components/ui/PasswordInput.tsx` — reusable password field with eye/eye-off button.
+  - 44×44 tap target (iOS HIG); `aria-pressed`; Bengali aria-label.
+  - Forwards refs + arbitrary input props (name/autoComplete/required/etc.).
+  - Optional `leadingIcon` prop mirrors the auth-screen visual style.
+- Wired into `pages/Login.tsx` (email tab), `pages/RegisterUser.tsx`, `pages/RegisterInstitution.tsx`.
+
+**M21.2 — Swap DiceBear → boring-avatars (open-source, TS-friendly, MIT)**
+- `npm i boring-avatars` (16 KB, generates SVG procedurally in the client — zero network calls).
+- `utils/avatar.ts` — kept the `inferGenderFromName` logic (works well for our Bangladeshi audience); added:
+  - `getAvatarPalette(gender)` — brand-consistent 5-hex palettes (bd-green for male, warm plum/amber for female, slate for unknown).
+  - `getAvatarStyleFromName(name)` — one-call helper used by Avatar.
+  - `isRealPhotoUrl(url)` — treats legacy `api.dicebear.com` and `picsum.photos/seed/user` as stubs to bypass.
+- `components/ui/Avatar.tsx` — rewritten:
+  - Real uploaded photos → `<img>` as before (with graceful onError hide).
+  - Otherwise → `<BoringAvatar variant="beam" size colors square>` from `boring-avatars`.
+  - Online-status dot + sizing API preserved.
+  - Added screen-reader-only initials label for a11y.
+- `database/seed.sql` — dropped hardcoded `api.dicebear.com` URLs; avatar_url is now `NULL` for the 4 seed accounts so the client generates locally.
+- Tests: rewrote `utils/__tests__/avatar.test.ts` (17 cases) + `components/ui/__tests__/Avatar.test.tsx` (9 cases) — every legacy stub URL now falls back to local generator.
+
+**Tests:** 236/236 green (was 228 → +8).
 
 ### 2026-08-01 (session 11 — 5-step integration sweep)
 

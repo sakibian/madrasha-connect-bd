@@ -428,7 +428,53 @@ Sessions 1–4 built the *shell* of the platform (auth, i18n, SEO, payments, adm
 
 ---
 
-## ✅ Definition of "production-ready" after M14 + M15 + M16 + M17 + M18 + M19 + M20
+---
+
+## 🔐 M21 — Password Show/Hide + Local Avatar Library (**new**)
+
+**Objective:** Two small but visible UX fixes:
+
+1. **Password fields need a show/hide toggle** — currently all three password
+   inputs (Login email, RegisterUser, RegisterInstitution) hide typing forever,
+   which trips up users on mobile keyboards.
+2. **Replace DiceBear API-based avatars with a locally-generated open-source
+   library** — DiceBear phones home on every render (adds ~300 ms + a
+   privacy-leaking third-party request per avatar). Best OSS, TS-friendly
+   swap is [`boring-avatars`](https://boringavatars.com) — MIT, procedural
+   SVG, generates in the client, zero network calls.
+
+### M21.1 — Password show/hide (~30 min)
+
+- New `components/ui/PasswordInput.tsx` — wraps `<Input>` with an eye/eye-off toggle button, respects `min-h-[44px]` tap target, aria-labelled ("Show password / Hide password"), toggles `type` between `password` and `text`.
+- Swap raw `<input type="password">` in:
+  - `pages/Login.tsx` (email tab password field)
+  - `pages/RegisterUser.tsx`
+  - `pages/RegisterInstitution.tsx`
+  - `pages/ForgotPassword.tsx` (if a password confirm exists)
+
+### M21.2 — Swap DiceBear → boring-avatars (~1 h)
+
+- `npm i boring-avatars` (16 KB, MIT, TypeScript types included).
+- Rewrite `utils/avatar.ts`:
+  - Keep `inferGenderFromName` as-is (it works well for our audience).
+  - Delete `getGenderedAvatarUrl` — no more URL building.
+  - New `getAvatarPalette(gender)` returns a brand-consistent 5-colour palette (green tones for masculine, warmer tones for feminine, neutral for unknown).
+- Rewrite `components/ui/Avatar.tsx`:
+  - If `src` is a real photo → render `<img>` as before.
+  - Otherwise render `<Avatar name={name} variant="beam" size={..} colors={palette} />` from `boring-avatars`.
+  - Keep the online-status dot + sizing API unchanged.
+- Update `database/seed.sql` — remove hardcoded `dicebear.com` URLs; leave `avatar_url` null so the client generates locally.
+- Update tests + docs.
+
+**Definition of done:**
+- Every password field has a working eye toggle.
+- No page in the client makes a network call to `api.dicebear.com`.
+- Avatars still look gender-appropriate.
+- 228+ tests still pass.
+
+---
+
+## ✅ Definition of "production-ready" after M14 + M15 + M16 + M17 + M18 + M19 + M20 + M21
 
 - Landing page shows today's Hijri date + local prayer times from real APIs.
 - `/quran` reads any surah with Bengali translation, live from Al-Quran Cloud.

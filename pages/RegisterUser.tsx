@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { User as UserIcon, Mail, Lock, ArrowRight, ArrowLeft, Loader2, Menu, X } from 'lucide-react';
 import { registerUser } from '../services/authService';
 import { addNotification } from '../services/notificationService';
+import PasswordInput from '../components/ui/PasswordInput';
 
 const RegisterUser: React.FC = () => {
   const navigate = useNavigate();
@@ -118,7 +119,13 @@ const RegisterUser: React.FC = () => {
                 </div>
                 <div className="space-y-2 md:col-span-2">
                   <label className="caps-label text-gray-400">Password</label>
-                  <input required type="password" placeholder="পাসওয়ার্ড" className="w-full p-4 bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-black outline-none font-medium text-lg" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} />
+                  <PasswordInput
+                    required
+                    placeholder="পাসওয়ার্ড"
+                    autoComplete="new-password"
+                    value={formData.password}
+                    onChange={e => setFormData({ ...formData, password: e.target.value })}
+                  />
                 </div>
               </div>
             </div>

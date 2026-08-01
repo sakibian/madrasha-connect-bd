@@ -160,6 +160,7 @@ cd mobile && npx expo start   # React Native dev server
 | [docs/MANUAL_TESTING.md](./docs/MANUAL_TESTING.md) | **Role-based browser test playbook** — Guest, User, Scholar, Institution, Admin | Founder / QA / any tester |
 | [docs/QA_CHECKLIST.md](./docs/QA_CHECKLIST.md) | 30-minute pre-release smoke test | Founder / QA / release owner |
 | [docs/INCIDENT_RUNBOOK.md](./docs/INCIDENT_RUNBOOK.md) | Incident response + post-mortem template | On-call |
+| [docs/DEPLOY_RUNBOOK.md](./docs/DEPLOY_RUNBOOK.md) | **Copy-paste deploy commands** — migrations, edge fns, secrets, vercel | Ops / release owner |
 | [docs/ROLLBACK_PROCEDURES.md](./docs/ROLLBACK_PROCEDURES.md) | Deploy rollback steps | On-call |
 | [database/schema.sql](./database/schema.sql) | Master schema (33 tables + RLS) | Backend |
 | [database/migrations/](./database/migrations/) | Incremental migrations (now including content_cache, seerah_events, curriculum) | Backend |

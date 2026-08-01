@@ -5,6 +5,7 @@ import { School, MapPin, Phone, Mail, Lock, ArrowRight, ArrowLeft, Loader2, Buil
 import { registerUser } from '../services/authService';
 import { addNotification } from '../services/notificationService';
 import { supabase } from '../services/supabase';
+import PasswordInput from '../components/ui/PasswordInput';
 
 const RegisterInstitution: React.FC = () => {
   const navigate = useNavigate();
@@ -148,7 +149,13 @@ const RegisterInstitution: React.FC = () => {
                 </div>
                 <div className="space-y-2">
                   <label className="caps-label text-gray-400">Password</label>
-                  <input required type="password" placeholder="পাসওয়ার্ড" className="w-full p-4 bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-black outline-none font-medium text-lg" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} />
+                  <PasswordInput
+                    required
+                    placeholder="পাসওয়ার্ড"
+                    autoComplete="new-password"
+                    value={formData.password}
+                    onChange={e => setFormData({ ...formData, password: e.target.value })}
+                  />
                 </div>
               </div>
             </div>

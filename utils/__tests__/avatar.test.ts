@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { inferGenderFromName, getGenderedAvatarUrl } from '../avatar';
+import {
+  inferGenderFromName,
+  getAvatarPalette,
+  getAvatarStyleFromName,
+  isRealPhotoUrl,
+} from '../avatar';
 
 describe('inferGenderFromName', () => {
   it('detects common Bangla male tokens', () => {
@@ -28,28 +33,56 @@ describe('inferGenderFromName', () => {
   });
 });
 
-describe('getGenderedAvatarUrl', () => {
-  it('pins short-hair top for male names', () => {
-    const url = getGenderedAvatarUrl('Abdullah Ahmed');
-    expect(url).toContain('top=shortHair');
-    expect(url).not.toContain('hijab');
+describe('getAvatarPalette', () => {
+  it('returns 5-colour arrays for every gender', () => {
+    expect(getAvatarPalette('male')).toHaveLength(5);
+    expect(getAvatarPalette('female')).toHaveLength(5);
+    expect(getAvatarPalette('unknown')).toHaveLength(5);
   });
 
-  it('pins hijab top for female names', () => {
-    const url = getGenderedAvatarUrl('Aisha Sultana');
-    expect(url).toContain('top=hijab');
-    expect(url).toContain('facialHairProbability=0');
+  it('picks the bd-green tone for masculine names', () => {
+    const male = getAvatarPalette('male');
+    expect(male).toContain('#006a4e'); // bd-green national colour
   });
 
-  it('respects a real uploaded photo URL', () => {
-    const real = 'https://cdn.example.com/photo.jpg';
-    expect(getGenderedAvatarUrl('Anyone', real)).toBe(real);
+  it('picks a warmer distinct palette for female', () => {
+    const female = getAvatarPalette('female');
+    expect(female).not.toEqual(getAvatarPalette('male'));
+  });
+});
+
+describe('getAvatarStyleFromName', () => {
+  it('bundles gender inference + palette in one call', () => {
+    const male = getAvatarStyleFromName('Abdullah Ahmed');
+    expect(male.gender).toBe('male');
+    expect(male.colors[0]).toBe('#006a4e');
+
+    const female = getAvatarStyleFromName('Aisha Sultana');
+    expect(female.gender).toBe('female');
+    expect(female.colors).not.toEqual(male.colors);
+
+    const unknown = getAvatarStyleFromName('Team X');
+    expect(unknown.gender).toBe('unknown');
+  });
+});
+
+describe('isRealPhotoUrl', () => {
+  it('accepts real uploaded photos', () => {
+    expect(isRealPhotoUrl('https://cdn.example.com/user.jpg')).toBe(true);
+    expect(isRealPhotoUrl('https://mysupabase.co/storage/v1/xyz.png')).toBe(true);
   });
 
-  it('falls back to a neutral dicebear seed when gender is unknown', () => {
-    const url = getGenderedAvatarUrl('Team Deen101');
-    expect(url).toContain('dicebear.com');
-    expect(url).not.toContain('top=hijab');
-    expect(url).not.toContain('top=shortHair');
+  it('rejects legacy dicebear URLs', () => {
+    expect(isRealPhotoUrl('https://api.dicebear.com/7.x/avataaars/svg?seed=x')).toBe(false);
+  });
+
+  it('rejects picsum stub URLs', () => {
+    expect(isRealPhotoUrl('https://picsum.photos/seed/user/100/100')).toBe(false);
+  });
+
+  it('rejects empty / undefined values', () => {
+    expect(isRealPhotoUrl(undefined)).toBe(false);
+    expect(isRealPhotoUrl(null)).toBe(false);
+    expect(isRealPhotoUrl('')).toBe(false);
   });
 });
