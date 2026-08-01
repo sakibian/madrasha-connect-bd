@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom';
 import { Source } from '../types';
 import CitationBadge from '../components/CitationBadge';
 import { callEdgeFunction } from '../services/edgeFunctions';
+import DailyIslamicWidget from '../components/DailyIslamicWidget';
 
 const Home: React.FC = () => {
   const [dailyDeen, setDailyDeen] = useState<{ text: string; source: string } | null>(null);
@@ -72,21 +73,12 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Grid: Prayer & Stats */}
+      {/* Grid: Live prayer + Hijri + Ayah widget + Stats */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-1 bg-gray-100 minimal-border">
-         {/* Prayer Times Widget */}
-         <div className="lg:col-span-8 bg-white p-12 space-y-10">
-            <div className="flex justify-between items-center">
-               <h2 className="text-3xl font-extrabold">নামাজের সময়</h2>
-               <div className="text-xs font-bold text-gray-400 uppercase tracking-widest">ঢাকা • ১৫ ফেব্রুয়ারি ২০২৫</div>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-               <PrayerCard label="ফজর" time="৫:১৬" icon={<Sunrise size={18} />} />
-               <PrayerCard label="জোহর" time="১২:১২" icon={<Sun size={18} />} />
-               <PrayerCard label="আসর" time="৪:১৩" icon={<CloudSun size={18} />} />
-               <PrayerCard label="মাগরিব" time="৫:৫৬" icon={<Sunset size={18} />} />
-               <PrayerCard label="এশা" time="৭:১১" icon={<Moon size={18} />} />
-            </div>
+         {/* Real-time Islamic widget — Hijri date + next prayer + ayah-of-the-day.
+             Fetched live from Aladhan + Al-Quran Cloud via services/content/*. */}
+         <div className="lg:col-span-8">
+            <DailyIslamicWidget city="Dhaka" ayahRef="2:255" className="h-full" />
          </div>
          {/* Simple Stats */}
          <div className="lg:col-span-4 bg-gray-50 p-12 flex flex-col justify-between">

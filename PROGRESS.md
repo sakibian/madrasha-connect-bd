@@ -13,7 +13,7 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-08-01 23:07 UTC · **Latest deploy:** pending push (session 10 — M20 Public LanguageSwitcher in Header + IP-geo auto-detect with dev override)
+**Last updated:** 2026-08-01 23:18 UTC · **Latest deploy:** pending push (session 11 — 5-step integration sweep: confirm-toast, push triggers, permission primer wiring, M14 UI rewires, deploy runbook)
 
 ---
 
@@ -55,6 +55,43 @@
 ---
 
 ## ✅ Completed (chronological)
+
+### 2026-08-01 (session 11 — 5-step integration sweep)
+
+Executed the follow-up shortlist from previous sessions as one coherent commit,
+in strict order: confirmation UX → push triggers → primer wiring → M14 UI
+rewires → deploy runbook.
+
+**Step 1 — Confirm-dialog UX**
+- `pages/Institution/InstitutionDashboard.tsx` — replaced the browser `confirm()` (only remaining native modal) with a **Sonner action toast** that has "হ্যাঁ, মুছে ফেলুন" + "বাতিল" buttons, then wraps the deletion in `toast.promise()` for loading/success/error.
+- Services already used the `{ok, error}` pattern so no `alert()` remained to sweep.
+
+**Step 2 — Push triggers**
+- `services/pushNotify.ts` — thin wrapper around `push-send` edge function. `sendPushNotification()` + `sendPushToMany()` — fire-and-forget, never throws, logs to console on failure.
+- `services/dataService.ts`:
+  - `approveFatwa()` now fetches the fatwa row and pushes "আপনার ফতোয়ার উত্তর প্রস্তুত" to the original asker with a deep-link.
+  - `verifyJob()` fans out "নতুন চাকরি আপনার জন্য" to subscribers of the (feature-gated) `job_alert_subscribers` view.
+
+**Step 3 — Permission primer wiring**
+- `pages/FatwaCenter.tsx` — after a successful fatwa submit, shows `<NotificationPermissionPrimer>` with contextual copy "উত্তর পেলে জানাতে চান?" (respects the 7-day dismiss cooldown from session 8).
+- Also added a proper `toast.success()` on submit + `toast.error()` on failure.
+
+**Step 4 — M14 UI rewires (highest visible impact)**
+- `pages/Home.tsx` — replaced the hardcoded "নামাজের সময়" block with `<DailyIslamicWidget city="Dhaka" ayahRef="2:255" />`. Users now see live Hijri date + real Aladhan prayer times + Ayatul Kursi from Al-Quran Cloud.
+- `pages/SeerahTimeline.tsx` — added a new "সম্পূর্ণ সীরাত কালরেখা" section rendered from `SEERAH_EVENTS` (M14.3 dataset), with every event showing its Quran.com / Sunnah.com citation as a clickable external link.
+- `pages/Deen101.tsx` — added a new "৩০ দিনের সম্পূর্ণ যাত্রা" grid rendered from `DEEN101_LESSONS`, showing each lesson's day #, category pill, duration, XP reward, and source citation.
+
+**Step 5 — Deploy runbook**
+- `docs/DEPLOY_RUNBOOK.md` — exact copy-paste commands for deploying end-to-end:
+  - Prereqs + Supabase/Vercel login + link.
+  - `supabase db push` (all 6 new migrations).
+  - `supabase functions deploy` (8 edge functions).
+  - `supabase secrets set` for Sunnah API key + VAPID keys + bKash merchant/personal + Gemini.
+  - `vercel env add` for `VITE_*` client-side envs.
+  - `vercel --prod` deploy.
+  - Post-deploy smoke + rollback commands.
+
+**Tests:** 228/228 green (no change — behaviour-preserving edits).
 
 ### 2026-08-01 (session 10 — M20 Public Language Switcher + IP-Geo)
 

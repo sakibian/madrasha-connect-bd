@@ -10,6 +10,8 @@ import CitationBadge from '../components/CitationBadge';
 import FlagButton from '../components/FlagButton';
 import { Button, Modal, SearchInput, LoadingSkeleton } from '../components/ui';
 import { useAuthStore, useFatwaStore } from '../stores';
+import NotificationPermissionPrimer, { isPrimerSuppressed } from '../components/NotificationPermissionPrimer';
+import { toast } from '../services/toast';
 
 const FatwaCenter: React.FC = () => {
   const currentUser = useAuthStore((s) => s.user);
@@ -24,6 +26,7 @@ const FatwaCenter: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [moderationFeedback, setModerationFeedback] = useState<string | null>(null);
   const [answerSources, setAnswerSources] = useState<Record<string, Source[]>>({});
+  const [showPushPrimer, setShowPushPrimer] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -80,8 +83,17 @@ const FatwaCenter: React.FC = () => {
       setQuestion('');
       setIsAsking(false);
       fetchFatwas();
+      toast.success('আপনার প্রশ্ন জমা হয়েছে', 'একজন মুফতি শীঘ্রই যাচাই করবেন।');
+
+      // Ask for push permission — user just did a high-value action so the
+      // reason ("we'll ping you when it's answered") is crystal clear. The
+      // primer itself respects a 7-day suppression cooldown.
+      if (currentUser && !isPrimerSuppressed()) {
+        setShowPushPrimer(true);
+      }
     } catch (error) {
       console.error(error);
+      toast.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -208,6 +220,17 @@ const FatwaCenter: React.FC = () => {
           </Button>
         </form>
       </Modal>
+
+      {/* Push permission primer — appears once after a successful fatwa submit
+          so users get notified when the answer is published. Respects a
+          7-day suppression cooldown on dismiss. */}
+      <NotificationPermissionPrimer
+        open={showPushPrimer}
+        onClose={() => setShowPushPrimer(false)}
+        title="উত্তর পেলে জানাতে চান?"
+        description="আপনার প্রশ্নের উত্তর প্রস্তুত হলে সাথে সাথে ব্রাউজার নোটিফিকেশনের মাধ্যমে আমরা জানিয়ে দেব।"
+        vapidPublicKey={import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined}
+      />
     </div>
   );
 };

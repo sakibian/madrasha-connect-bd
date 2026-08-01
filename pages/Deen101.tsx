@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Book, CheckCircle, ArrowRight, Sun, Sparkles, Heart, HelpCircle, Trophy, ArrowLeft, ExternalLink } from 'lucide-react';
+import { Book, CheckCircle, ArrowRight, Sun, Sparkles, Heart, HelpCircle, Trophy, ArrowLeft, ExternalLink, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Source } from '../types';
 import CitationBadge from '../components/CitationBadge';
+import { DEEN101_LESSONS, DEEN101_TOTAL_XP, type Deen101Category } from '../data/curriculum/deen101';
+import Citation from '../components/Citation';
 
 interface Module {
   title: string;
@@ -233,8 +235,71 @@ const Deen101: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* -----------------------------------------------------------------
+          30-day starter journey (M14.5 curriculum).
+          Rendered from data/curriculum/deen101.ts — every lesson sourced.
+          ----------------------------------------------------------------- */}
+      <section className="space-y-8 border-t border-gray-100 pt-16">
+        <div className="space-y-3">
+          <div className="caps-label text-bd-green">M14.5 · 30-day Starter Journey</div>
+          <h2 className="text-3xl md:text-4xl font-extrabold">৩০ দিনের সম্পূর্ণ যাত্রা</h2>
+          <p className="text-gray-500 max-w-2xl leading-relaxed">
+            {DEEN101_LESSONS.length}টি সংক্ষিপ্ত পাঠ · মোট <strong>{DEEN101_TOTAL_XP} XP</strong> · প্রতিটি পাঠের সাথে কুরআন / হাদিসের রেফারেন্স।
+          </p>
+        </div>
+
+        <ol className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {DEEN101_LESSONS.map(l => (
+            <li key={l.slug} className="bg-white border border-gray-100 p-5 flex gap-4 group hover:border-bd-green transition-colors">
+              <div className="w-12 h-12 shrink-0 bg-black text-white flex items-center justify-center font-extrabold">
+                {l.day}
+              </div>
+              <div className="flex-1 min-w-0 space-y-2">
+                <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                  <CategoryPill category={l.category} />
+                  <span className="flex items-center gap-1"><Calendar size={10} /> {l.durationMin} min</span>
+                  <span className="text-bd-green">+{l.xpReward} XP</span>
+                </div>
+                <h3 className="text-base font-extrabold leading-snug">{l.titleBn}</h3>
+                <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed">{l.summaryBn}</p>
+                <div className="pt-1">
+                  {l.sourceUrl ? (
+                    <a
+                      href={l.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-bd-green hover:underline"
+                    >
+                      {l.sourceName} <ExternalLink size={10} />
+                    </a>
+                  ) : (
+                    <Citation source={l.sourceName} />
+                  )}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
     </div>
   );
 };
+
+function CategoryPill({ category }: { category: Deen101Category }) {
+  const label: Record<Deen101Category, string> = {
+    'iman-aqeedah':    'ঈমান',
+    'salah':           'সালাত',
+    'zakat-fasting':   'জাকাত',
+    'hajj-umrah':      'হজ',
+    'family-manners':  'পরিবার',
+    'halal-living':    'হালাল',
+  };
+  return (
+    <span className="px-2 py-0.5 bg-brand-50 text-brand-700 border border-brand-200">
+      {label[category]}
+    </span>
+  );
+}
 
 export default Deen101;

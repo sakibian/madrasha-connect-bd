@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import {
   History, Star, Shield, Map, Heart, Compass, BookOpen, Search, ArrowRight, Sparkles, User,
-  Sword, ScrollText, Flag, ArrowLeft
+  Sword, ScrollText, Flag, ArrowLeft, ExternalLink
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Source } from '../types';
 import CitationBadge from '../components/CitationBadge';
+import { SEERAH_EVENTS, type SeerahEvent } from '../data/seerah/events';
+import Citation from '../components/Citation';
 
 interface TimelineEvent {
   id: string;
@@ -303,6 +305,69 @@ const SeerahTimeline: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* ---------------------------------------------------------------------
+          Complete cited timeline (M14.3 dataset).
+          Rendered directly from data/seerah/events.ts — every event has a
+          Quran.com / Sunnah.com citation URL. This is the source-of-truth
+          data set; the curated card timeline above is the "editorial" view.
+          --------------------------------------------------------------------- */}
+      <section className="space-y-8" id="complete-timeline">
+        <div className="border-t border-gray-100 pt-16 space-y-3">
+          <div className="caps-label text-bd-green">M14.3 · Sourced Dataset</div>
+          <h2 className="text-3xl md:text-4xl font-extrabold">সম্পূর্ণ সীরাত কালরেখা</h2>
+          <p className="text-gray-500 max-w-2xl leading-relaxed">
+            জন্ম থেকে ওফাত পর্যন্ত {SEERAH_EVENTS.length}টি প্রধান ঘটনা — প্রতিটির সাথে কুরআন / সহীহ হাদিসের সরাসরি রেফারেন্স।
+          </p>
+        </div>
+        <ol className="space-y-6">
+          {SEERAH_EVENTS.map((e: SeerahEvent) => (
+            <li key={e.id} className="bg-white border border-gray-100 p-6 md:p-8 grid grid-cols-1 md:grid-cols-[120px_1fr] gap-6">
+              <div className="space-y-1">
+                <div className="text-xl font-extrabold">{e.gregorianYear}</div>
+                {e.hijriYear && <div className="text-xs font-bold text-bd-green">{e.hijriYear}</div>}
+                {e.approxAge !== undefined && (
+                  <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                    বয়স {e.approxAge}
+                  </div>
+                )}
+              </div>
+              <div className="space-y-3">
+                <div>
+                  <h3 className="text-lg font-extrabold leading-snug">{e.titleBn}</h3>
+                  <p className="text-xs text-gray-500 font-medium">
+                    {e.titleEn}
+                    {e.titleAr && <> · <span dir="rtl" lang="ar">{e.titleAr}</span></>}
+                  </p>
+                </div>
+                {e.location && (
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                    📍 {e.location}
+                  </p>
+                )}
+                <p className="text-sm text-gray-700 leading-relaxed">{e.descriptionBn}</p>
+                <div className="flex flex-wrap gap-3 pt-2 border-t border-gray-50">
+                  {e.citations.map((c, i) => (
+                    c.url ? (
+                      <a
+                        key={i}
+                        href={c.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-bd-green hover:underline"
+                      >
+                        {c.reference} <ExternalLink size={10} />
+                      </a>
+                    ) : (
+                      <Citation key={i} source={c.reference} />
+                    )
+                  ))}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
 
       <div className="bg-black text-white p-16 flex flex-col md:flex-row items-center gap-12">
         <div className="w-16 h-16 bg-white text-black flex items-center justify-center font-bold text-2xl">S</div>

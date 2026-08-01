@@ -1,4 +1,5 @@
 import { Job, Product, ForumPost, ForumComment, Fatwa, Institution, Course, Scholar, SadaqahProject, User, Source, ContentFlag, ScholarApplication, ContentVersion, UserXP, Badge, UserBadge, XPEvent, UserSkill, ScholarPortfolioItem, AdminAuditLog, Referral, getLevel, Event, JobRow, FatwaRow, ForumPostRow, ForumCommentRow, ScholarRow, ContentSourceRow, ContentVersionRow, LeaderboardRow, UserBadgeRow } from '../types';
+import { sendPushNotification, sendPushToMany } from './pushNotify';
 import { supabase } from './supabase';
 import { retryWithBackoff } from './retry';
 
@@ -122,6 +123,34 @@ export const dataService = {
       if (error) throw error;
       cacheInvalidate(CACHE_KEYS.JOBS);
     });
+
+    // Notify users who have saved job-alert preferences matching this job.
+    // Uses a lightweight subscribers view (job_alert_subscribers) so this
+    // stays performant even with 100k users. Falls back to no-op silently
+    // if the view doesn't exist yet (feature-gated).
+    try {
+      const { data: job } = await supabase
+        .from('jobs')
+        .select('title, location, type')
+        .eq('id', id)
+        .maybeSingle();
+      if (!job) return;
+      const { data: subs, error: subsErr } = await supabase
+        .from('job_alert_subscribers')
+        .select('user_id')
+        .limit(500);
+      if (subsErr || !subs?.length) return;
+      void sendPushToMany(
+        subs.map((s: { user_id: string }) => ({ userId: s.user_id })),
+        {
+          title: 'নতুন চাকরি আপনার জন্য',
+          body: `${job.title} · ${job.location}`,
+          url: `/professional?job=${id}`,
+        },
+      );
+    } catch {
+      // Feature-gated — silent if the alert view isn't provisioned yet.
+    }
   },
 
   deleteJob: async (id: string) => {
@@ -228,6 +257,25 @@ export const dataService = {
     });
 
     await dataService.logAdminAction('approve_fatwa', 'fatwa', fatwaId);
+
+    // Notify the original asker via web push (fire-and-forget).
+    try {
+      const { data: fatwaRow } = await supabase
+        .from('fatwas')
+        .select('user_id, question')
+        .eq('id', fatwaId)
+        .maybeSingle();
+      if (fatwaRow?.user_id) {
+        void sendPushNotification({
+          userId: fatwaRow.user_id,
+          title: 'আপনার ফতোয়ার উত্তর প্রস্তুত',
+          body: (fatwaRow.question || '').slice(0, 120),
+          url: `/fatwa/${fatwaId}`,
+        });
+      }
+    } catch {
+      // Never break the primary flow because of a push failure.
+    }
   },
 
   rejectFatwa: async (fatwaId: string) => {

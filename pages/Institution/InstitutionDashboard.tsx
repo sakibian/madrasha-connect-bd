@@ -19,6 +19,8 @@ import { getCurrentUser } from '../../services/authService';
 import { Job } from '../../types';
 import { Link } from 'react-router-dom';
 import LoadingSkeleton from '../../components/ui/LoadingSkeleton';
+import { toast as sonner } from 'sonner';
+import { toast } from '../../services/toast';
 
 const InstitutionDashboard: React.FC = () => {
   const user = getCurrentUser();
@@ -34,12 +36,38 @@ const InstitutionDashboard: React.FC = () => {
     load();
   }, [user]);
 
-  const handleDelete = async (id: string) => {
-    if (confirm('সার্কুলারটি কি চিরতরে মুছে ফেলতে চান?')) {
-      await dataService.deleteJob(id);
-      const allJobs = await dataService.getJobs();
-      setMyJobs(allJobs.filter(j => j.institution === user?.institutionName));
-    }
+  const performDelete = async (id: string) => {
+    try {
+      await toast.promise(
+        (async () => {
+          await dataService.deleteJob(id);
+          const allJobs = await dataService.getJobs();
+          setMyJobs(allJobs.filter(j => j.institution === user?.institutionName));
+        })(),
+        {
+          loading: 'মুছে ফেলা হচ্ছে…',
+          success: 'সার্কুলার মুছে ফেলা হয়েছে।',
+          error: 'মুছে ফেলা যায়নি — একটু পরে আবার চেষ্টা করুন।',
+        },
+      );
+    } catch { /* toast.promise already surfaced the error */ }
+  };
+
+  const handleDelete = (id: string) => {
+    // Replace the native browser confirm() with a Sonner action toast —
+    // matches our design system + works consistently across mobile browsers.
+    sonner('সার্কুলারটি চিরতরে মুছে ফেলতে চান?', {
+      description: 'এই কাজটি ফিরিয়ে নেওয়া যাবে না।',
+      action: {
+        label: 'হ্যাঁ, মুছে ফেলুন',
+        onClick: () => performDelete(id),
+      },
+      cancel: {
+        label: 'বাতিল',
+        onClick: () => {},
+      },
+      duration: 8000,
+    });
   };
 
   return (
