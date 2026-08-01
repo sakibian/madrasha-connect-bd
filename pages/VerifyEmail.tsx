@@ -45,14 +45,14 @@ const VerifyEmail: React.FC = () => {
         </div>
 
         {sent && (
-          <div className="p-5 bg-brand-50 border border-brand-100 rounded-2xl flex items-center gap-3">
+          <div className="p-5 bg-brand-50 border border-brand-100 flex items-center gap-3">
             <CheckCircle size={20} className="text-brand-600 shrink-0" />
             <p className="text-sm font-bold text-brand-700">ভেরিফিকেশন ইমেইল পুনরায় পাঠানো হয়েছে!</p>
           </div>
         )}
 
         {error && (
-          <div className="p-5 bg-danger-50 border border-danger-100 rounded-2xl text-danger-600 text-sm font-bold">
+          <div className="p-5 bg-danger-50 border border-danger-100 text-danger-600 text-sm font-bold">
             {error}
           </div>
         )}
@@ -61,7 +61,7 @@ const VerifyEmail: React.FC = () => {
           <button
             onClick={handleResend}
             disabled={sending}
-            className="w-full py-5 bg-black text-white font-extrabold text-lg flex items-center justify-center gap-3 hover:bg-gray-800 transition-all disabled:opacity-50 rounded-2xl"
+            className="w-full py-5 bg-black text-white font-extrabold text-lg flex items-center justify-center gap-3 hover:bg-gray-800 transition-all disabled:opacity-50"
           >
             {sending ? <Loader2 size={22} className="animate-spin" /> : <RefreshCw size={22} />}
             {sending ? 'পাঠানো হচ্ছে...' : 'পুনরায় ইমেইল পাঠান'}
@@ -69,7 +69,7 @@ const VerifyEmail: React.FC = () => {
 
           <button
             onClick={() => navigate('/login')}
-            className="w-full py-5 border border-gray-200 text-gray-600 font-extrabold text-lg flex items-center justify-center gap-3 hover:bg-gray-50 transition-all rounded-2xl"
+            className="w-full py-5 border border-gray-200 text-gray-600 font-extrabold text-lg flex items-center justify-center gap-3 hover:bg-gray-50 transition-all"
           >
             লগইন পৃষ্ঠায় যান <ArrowRight size={22} />
           </button>

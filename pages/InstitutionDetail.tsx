@@ -1,6 +1,7 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { toast } from '../services/toast';
 import { 
   MapPin, CheckCircle, ArrowLeft, 
   Phone, Globe, Mail, Info, Award, BookOpen, MessageSquare,
@@ -12,6 +13,8 @@ import ImageWithFallback from '../components/ui/ImageWithFallback';
 const InstitutionDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const institution = MOCK_INSTITUTIONS.find(i => i.id === id);
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [message, setMessage] = useState('');
 
   if (!institution) {
     return (
@@ -116,7 +119,10 @@ const InstitutionDetail: React.FC = () => {
                  <ContactBlock icon={<Mail size={20} />} label="ইমেইল অ্যাড্রেস" value="info@madrasa.bd" />
                  <ContactBlock icon={<Globe size={20} />} label="ওয়েবসাইট" value="www.madrasa.bd" />
               </div>
-              <button className="w-full py-5 bg-white text-black font-bold text-sm hover:bg-gray-100 transition-all flex items-center justify-center gap-3">
+              <button 
+                onClick={() => setShowMessageModal(true)}
+                className="w-full py-5 bg-white text-black font-bold text-sm hover:bg-gray-100 transition-all flex items-center justify-center gap-3"
+              >
                  মেসেজ দিন <ArrowRight size={18} />
               </button>
            </div>
@@ -173,7 +179,10 @@ const ContactBlock = ({ icon, label, value }: any) => (
 );
 
 const SideAction = ({ icon, text }: any) => (
-  <button className="w-full flex items-center gap-4 p-4 hover:bg-gray-50 transition-all border-b border-gray-50 last:border-none group">
+  <button 
+    onClick={() => toast.info('এই বৈশিষ্ট্যটি শীঘ্রই আসছে।')}
+    className="w-full flex items-center gap-4 p-4 hover:bg-gray-50 transition-all border-b border-gray-50 last:border-none group"
+  >
      <div className="text-gray-300 group-hover:text-black">{icon}</div>
      <span className="text-sm font-bold text-gray-600 group-hover:text-black">{text}</span>
   </button>

@@ -120,7 +120,7 @@ const AccessibilityStatement: React.FC = () => {
         <p className="text-gray-600 leading-relaxed">
           আপনি যদি কোনো প্রবেশযোগ্যতা সমস্যার সম্মুখীন হন, অনুগ্রহ করে আমাদের সাথে যোগাযোগ করুন:
         </p>
-        <div className="bg-gray-50 p-6 rounded-2xl">
+        <div className="bg-gray-50 p-6 border border-gray-100">
           <p className="font-bold text-gray-800">ইমেইল: accessibility@madrasaconnectbd.com</p>
           <p className="text-sm text-gray-500 mt-2">আমরা ৪৮ ঘণ্টার মধ্যে উত্তর দেওয়ার চেষ্টা করব।</p>
         </div>

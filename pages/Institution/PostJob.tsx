@@ -64,7 +64,7 @@ const PostJob: React.FC = () => {
         return;
       }
 
-      const newJob: Job = {
+      const newJob: Job & { description?: string } = {
         id: `job-${Date.now()}`,
         title: formData.title,
         institution: formData.institution,
@@ -72,6 +72,7 @@ const PostJob: React.FC = () => {
         salary: formData.salary,
         type: formData.type,
         contactInfo: formData.contactInfo,
+        description: formData.description,
         postedAt: 'এইমাত্র',
         verified: false
       };

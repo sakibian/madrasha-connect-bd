@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { dataService } from '../services/dataService';
+import { useAuthStore } from '../stores';
+import { toast } from '../services/toast';
 import { Book, CheckCircle, ArrowRight, Sun, Sparkles, Heart, HelpCircle, Trophy, ArrowLeft, ExternalLink, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Source } from '../types';

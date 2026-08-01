@@ -77,10 +77,10 @@ const UserDashboard: React.FC = () => {
 
       {/* Referral Section */}
       {referralCode && (
-        <div className="bg-gradient-to-br from-brand-900 to-brand-900 rounded-[2.5rem] p-10 text-white space-y-6">
+        <div className="bg-black p-10 text-white border border-gray-900 space-y-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="p-4 bg-brand-400/20 rounded-3xl backdrop-blur-md border border-brand-400/30">
+              <div className="p-4 bg-white/5 border border-white/10">
                 <Users size={24} className="text-brand-400" />
               </div>
               <div>
@@ -95,7 +95,7 @@ const UserDashboard: React.FC = () => {
               </div>
             )}
           </div>
-          <div className="flex items-center gap-3 bg-white/10 border border-brand-400/30 rounded-2xl p-4 backdrop-blur-sm">
+          <div className="flex items-center gap-3 bg-white/5 border border-white/10 p-4">
             <span className="text-sm font-bold text-brand-200 truncate flex-1">
               {window.location.origin}/register?ref={referralCode}
             </span>

@@ -1,13 +1,44 @@
 
-import React from 'react';
-import { Play, Headset, Clock, Search, Heart, Share2, MoreVertical, Disc, ArrowUpRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { Play, Headset, Clock, Search, Heart, Share2, MoreVertical, Disc, ArrowUpRight, X, Pause } from 'lucide-react';
 
 const AudioLibrary: React.FC = () => {
+  const [playing, setPlaying] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
   const tracks = [
-    { title: 'সূরা আর-রহমান (তিলাওয়াত)', artist: 'ক্বারী আব্দুল বাসিত', duration: '১৫:৪৫', type: 'TILAWAT' },
-    { title: 'সীরাতুন নবী - পর্ব ১', artist: 'মাওলানা তারিক জামিল', duration: '৪৫:০০', type: 'LECTURE' },
-    { title: 'সহজ তাজবীদ শিক্ষা', artist: 'ক্বারী সাঈদ বিন নূর', duration: '১২:৩০', type: 'LEARNING' },
-    { title: 'আযকার ও মাসনুন দোয়া', artist: 'মুফতি আব্দুল্লাহ', duration: '০৮:২০', type: 'ZIKR' },
+    { 
+      id: '1',
+      title: 'সূরা আর-রহমান (তিলাওয়াত)', 
+      artist: 'ক্বারী আব্দুল বাসিত', 
+      duration: '১৫:৪৫', 
+      type: 'TILAWAT',
+      youtubeId: 'dQw4w9WgXcQ' // Replace with actual YouTube ID
+    },
+    { 
+      id: '2',
+      title: 'সীরাতুন নবী - পর্ব ১', 
+      artist: 'মাওলানা তারিক জামিল', 
+      duration: '৪৫:০০', 
+      type: 'LECTURE',
+      youtubeId: 'dQw4w9WgXcQ' // Replace with actual YouTube ID
+    },
+    { 
+      id: '3',
+      title: 'সহজ তাজবীদ শিক্ষা', 
+      artist: 'ক্বারী সাঈদ বিন নূর', 
+      duration: '১২:৩০', 
+      type: 'LEARNING',
+      youtubeId: 'dQw4w9WgXcQ' // Replace with actual YouTube ID
+    },
+    { 
+      id: '4',
+      title: 'আযকার ও মাসনুন দোয়া', 
+      artist: 'মুফতি আব্দুল্লাহ', 
+      duration: '০৮:২০', 
+      type: 'ZIKR',
+      youtubeId: 'dQw4w9WgXcQ' // Replace with actual YouTube ID
+    },
   ];
 
   return (
@@ -29,11 +60,22 @@ const AudioLibrary: React.FC = () => {
         <div className="lg:col-span-4 space-y-12">
            <div className="bg-black text-white p-12 space-y-8 h-full flex flex-col justify-between">
               <div className="space-y-6">
-                <Disc size={48} className="text-bd-green animate-spin-slow" />
+                <Disc size={48} className={`text-bd-green ${playing ? 'animate-spin-slow' : ''}`} />
                 <div className="caps-label text-gray-500">Currently Streaming</div>
-                <h3 className="text-2xl font-extrabold leading-tight">কোনো অডিও সেশন চলছে না।</h3>
+                <h3 className="text-2xl font-extrabold leading-tight">
+                  {playing ? tracks.find(t => t.id === playing)?.title : 'কোনো অডিও সেশন চলছে না।'}
+                </h3>
               </div>
-              <p className="text-sm font-bold text-gray-600">নিচের তালিকা থেকে একটি অডিও ট্র‍্যাক নির্বাচন করে শুরু করুন।</p>
+              {playing ? (
+                <button 
+                  onClick={() => setPlaying(null)}
+                  className="w-full py-4 bg-danger-600 text-white font-bold text-sm hover:bg-danger-700 transition-all"
+                >
+                  বন্ধ করুন
+                </button>
+              ) : (
+                <p className="text-sm font-bold text-gray-600">নিচের তালিকা থেকে একটি অডিও ট্র‍্যাক নির্বাচন করে শুরু করুন।</p>
+              )}
            </div>
            
            <div className="space-y-8">
@@ -49,11 +91,19 @@ const AudioLibrary: React.FC = () => {
 
         {/* Track List */}
         <div className="lg:col-span-8 space-y-1 bg-gray-100 minimal-border">
-           {tracks.map((track, i) => (
-             <div key={i} className="bg-white p-10 flex items-center justify-between group hover:bg-black hover:text-white transition-all cursor-pointer">
+           {tracks.map((track, i) => {
+             const isPlaying = playing === track.id;
+             return (
+             <div 
+               key={i} 
+               onClick={() => setPlaying(isPlaying ? null : track.id)}
+               className="bg-white p-10 flex items-center justify-between group hover:bg-black hover:text-white transition-all cursor-pointer"
+             >
                 <div className="flex items-center gap-8">
-                   <div className="w-16 h-16 bg-gray-50 flex items-center justify-center text-bd-green group-hover:bg-bd-green group-hover:text-white transition-all">
-                      <Play size={24} fill="currentColor" />
+                   <div className={`w-16 h-16 flex items-center justify-center transition-all ${
+                     isPlaying ? 'bg-bd-green text-white' : 'bg-gray-50 text-bd-green group-hover:bg-bd-green group-hover:text-white'
+                   }`}>
+                      {isPlaying ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" />}
                    </div>
                    <div>
                       <div className="caps-label text-bd-green group-hover:text-gray-400 mb-2">{track.type}</div>
@@ -66,14 +116,45 @@ const AudioLibrary: React.FC = () => {
                       <span className="text-xs font-black uppercase tracking-widest text-gray-500 group-hover:text-gray-600 flex items-center gap-2"><Clock size={12} /> {track.duration}</span>
                    </div>
                    <div className="flex gap-4">
-                      <button className="p-3 border border-gray-100 group-hover:border-gray-800 text-gray-300 group-hover:text-white transition-all hover:text-bd-green"><Heart size={18} /></button>
-                      <button className="p-3 border border-gray-100 group-hover:border-gray-800 text-gray-300 group-hover:text-white transition-all"><MoreVertical size={18} /></button>
+                      <button onClick={(e) => e.stopPropagation()} className="p-3 border border-gray-100 group-hover:border-gray-800 text-gray-300 group-hover:text-white transition-all hover:text-bd-green"><Heart size={18} /></button>
+                      <button onClick={(e) => e.stopPropagation()} className="p-3 border border-gray-100 group-hover:border-gray-800 text-gray-300 group-hover:text-white transition-all"><MoreVertical size={18} /></button>
                    </div>
                 </div>
              </div>
-           ))}
+             );
+           })}
         </div>
       </div>
+
+      {/* YouTube Player Modal */}
+      {playing && (
+        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4" onClick={() => setPlaying(null)}>
+          <div className="max-w-4xl w-full" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-white font-bold text-lg">
+                {tracks.find(t => t.id === playing)?.title}
+              </h3>
+              <button onClick={() => setPlaying(null)} className="text-white hover:text-bd-green p-2">
+                <X size={24} />
+              </button>
+            </div>
+            <div className="aspect-video bg-black">
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/${tracks.find(t => t.id === playing)?.youtubeId}?autoplay=1`}
+                title="Audio Player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+            <p className="text-white text-sm mt-4 text-center opacity-75">
+              শিগগিরই আমরা নিজস্ব অডিও প্লেয়ার যুক্ত করব। এখনকার জন্য YouTube এর মাধ্যমে উপভোগ করুন।
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

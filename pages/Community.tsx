@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import DOMPurify from 'dompurify';
 import { 
-  MessageCircle, 
+  MessageCircle,
+  Phone, 
   Send, 
   CheckCircle, 
   Share2, 
@@ -41,6 +42,16 @@ const Community: React.FC = () => {
   const [aiResponse, setAiResponse] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [bloodSearch, setBloodSearch] = useState('');
+  const [bloodDonors, setBloodDonors] = useState<any[]>([]);
+  const [searchingDonors, setSearchingDonors] = useState(false);
+  const [showDonorRegistration, setShowDonorRegistration] = useState(false);
+  const [isDonor, setIsDonor] = useState(false);
+  const [donorForm, setDonorForm] = useState({
+    bloodGroup: 'A+',
+    location: '',
+    district: '',
+    phone: '',
+  });
   const [posts, setPosts] = useState<ForumPost[]>([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
   const [showCreatePost, setShowCreatePost] = useState(false);
@@ -57,8 +68,15 @@ const Community: React.FC = () => {
     loadPosts();
     if (currentUser) {
       dataService.getUserLikes(currentUser.id).then(setUserLikes);
+      checkIfDonor();
     }
   }, [currentUser]);
+
+  const checkIfDonor = async () => {
+    if (!currentUser) return;
+    const profile = await dataService.getMyDonorProfile();
+    setIsDonor(!!profile);
+  };
 
   const loadPosts = async () => {
     setLoadingPosts(true);
@@ -102,6 +120,29 @@ const Community: React.FC = () => {
       console.error('Like failed', e);
     }
   }, [currentUser, userLikes]);
+
+  const handleDonorRegistration = async () => {
+    if (!donorForm.location.trim() || !donorForm.district.trim() || !donorForm.phone.trim()) {
+      toast.warning('সব তথ্য পূরণ করুন।');
+      return;
+    }
+
+    try {
+      await dataService.registerAsDonor({
+        bloodGroup: donorForm.bloodGroup,
+        location: donorForm.location,
+        district: donorForm.district,
+        phone: donorForm.phone,
+        publicProfile: true,
+      });
+      toast.success('আপনি সফলভাবে রক্তদাতা হিসেবে নিবন্ধিত হয়েছেন!');
+      setShowDonorRegistration(false);
+      setIsDonor(true);
+      setDonorForm({ bloodGroup: 'A+', location: '', district: '', phone: '' });
+    } catch (error: any) {
+      toast.error(error?.message || 'নিবন্ধন করতে সমস্যা হয়েছে।');
+    }
+  };
 
   const handleAskScholar = async () => {
     if (!question.trim()) return;
@@ -195,8 +236,21 @@ const Community: React.FC = () => {
               <h2 className="text-xl font-extrabold tracking-tight">মাদ্রাসা ব্লাড ব্যাংক</h2>
             </div>
           </div>
-          <button className="text-xs font-bold uppercase tracking-widest text-bd-green border border-bd-green px-4 py-3 hover:bg-bd-green hover:text-white transition-all min-h-[44px]">
-            দাতা হিসেবে যোগ দিন
+          <button 
+            onClick={() => {
+              if (!currentUser) {
+                toast.warning('দাতা হতে প্রথমে লগইন করুন।');
+                return;
+              }
+              if (isDonor) {
+                toast.info('আপনি ইতিমধ্যে রক্তদাতা হিসেবে নিবন্ধিত।');
+                return;
+              }
+              setShowDonorRegistration(true);
+            }}
+            className="text-xs font-bold uppercase tracking-widest text-bd-green border border-bd-green px-4 py-3 hover:bg-bd-green hover:text-white transition-all min-h-[44px]"
+          >
+            {isDonor ? 'আপনি দাতা' : 'দাতা হিসেবে যোগ দিন'}
           </button>
         </div>
         <div className="relative">
@@ -205,24 +259,56 @@ const Community: React.FC = () => {
             className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
             placeholder="রক্তের গ্রুপ বা এলাকা (উদা: A+, ঢাকা) লিখে খুঁজুন"
             value={bloodSearch}
-            onChange={(e) => setBloodSearch(e.target.value)}
+            onChange={async (e) => {
+              setBloodSearch(e.target.value);
+              if (e.target.value.trim().length > 0) {
+                setSearchingDonors(true);
+                const results = await dataService.searchBloodDonors({
+                  bloodGroup: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].find(bg => 
+                    e.target.value.toUpperCase().includes(bg)
+                  ),
+                  location: e.target.value,
+                });
+                setBloodDonors(results);
+                setSearchingDonors(false);
+              } else {
+                setBloodDonors([]);
+              }
+            }}
           />
         </div>
         {bloodSearch && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 animate-fadeIn">
-            <div className="bg-white border border-gray-100 p-4 flex items-center gap-4">
-              <div className="w-12 h-12 bg-bd-green text-white flex items-center justify-center font-black text-xl">A+</div>
-              <div className="flex-1 min-w-0">
-                <p className="font-bold text-gray-800 text-sm truncate">মাওলানা জাহিদ</p>
-                <p className="text-xs text-gray-400 flex items-center gap-1"><MapPin size={10} /> মিরপুর, ঢাকা</p>
+          <div className="space-y-3 animate-fadeIn">
+            {searchingDonors ? (
+              <div className="text-center py-8 text-gray-400 font-medium">খুঁজছি...</div>
+            ) : bloodDonors.length === 0 ? (
+              <div className="text-center py-8 text-gray-400 font-medium">
+                কোনো দাতা পাওয়া যায়নি
               </div>
-              <button
-                aria-label="যোগাযোগ করুন"
-                className="min-h-[44px] min-w-[44px] flex items-center justify-center border border-gray-200 text-bd-green hover:bg-bd-green hover:text-white transition-all"
-              >
-                <Heart size={16} />
-              </button>
-            </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {bloodDonors.map(donor => (
+                  <div key={donor.id} className="bg-white border border-gray-100 p-4 flex items-center gap-4">
+                    <div className="w-12 h-12 bg-bd-green text-white flex items-center justify-center font-black text-xl">
+                      {donor.bloodGroup}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-gray-800 text-sm truncate">{donor.name}</p>
+                      <p className="text-xs text-gray-400 flex items-center gap-1">
+                        <MapPin size={10} /> {donor.location}, {donor.district}
+                      </p>
+                    </div>
+                    <a
+                      href={`tel:${donor.phone}`}
+                      aria-label="যোগাযোগ করুন"
+                      className="min-h-[44px] min-w-[44px] flex items-center justify-center border border-gray-200 text-bd-green hover:bg-bd-green hover:text-white transition-all"
+                    >
+                      <Phone size={16} />
+                    </a>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </section>
@@ -268,7 +354,7 @@ const Community: React.FC = () => {
         </div>
 
         {showCreatePost && (
-          <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 space-y-4 animate-fadeIn">
+          <div className="bg-white p-8 border border-gray-100 space-y-4 animate-fadeIn">
             <input
               className="w-full px-0 py-2 text-xl font-black border-b border-gray-200 outline-none focus:border-black transition-all"
               placeholder="শিরোনাম"
@@ -446,10 +532,10 @@ const PostCard: React.FC<{
   };
 
   return (
-    <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 space-y-6 hover:shadow-md transition-all group">
+    <div className="bg-white p-8 border border-gray-100 space-y-6 hover:border-bd-green transition-all group">
       <div className="flex justify-between items-start">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-gray-100 rounded-2xl overflow-hidden border border-gray-100">
+          <div className="w-12 h-12 bg-gray-100 overflow-hidden border border-gray-100">
             <img src={`https://picsum.photos/seed/${post.author}/100/100`} alt={post.author} />
           </div>
           <div>
@@ -580,7 +666,7 @@ const PostCard: React.FC<{
           ) : (
             <div className="space-y-3">
               {comments.map(c => (
-                <div key={c.id} className="flex gap-3 bg-gray-50 p-4 rounded-2xl">
+                <div key={c.id} className="flex gap-3 bg-gray-50 p-4 border border-gray-100">
                   <div className="w-8 h-8 bg-gray-200 rounded-full shrink-0 flex items-center justify-center">
                     <span className="text-[10px] font-black text-gray-500">{c.author.charAt(0)}</span>
                   </div>
@@ -618,13 +704,13 @@ const PostCard: React.FC<{
 
       {showFlagModal && (
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowFlagModal(false)}>
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl animate-fadeIn" onClick={e => e.stopPropagation()}>
+          <div className="bg-white p-8 max-w-md w-full border border-gray-200 animate-fadeIn" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-lg font-black">পোস্ট রিপোর্ট করুন</h3>
               <button onClick={() => setShowFlagModal(false)} className="text-gray-400 hover:text-black p-1"><X size={20} /></button>
             </div>
             <textarea
-              className="w-full px-4 py-3 border border-gray-200 rounded-2xl text-sm outline-none focus:border-brand-300 transition-all min-h-[100px] resize-none"
+              className="w-full px-4 py-3 border border-gray-200 text-sm outline-none focus:border-bd-green transition-all min-h-[100px] resize-none"
               placeholder="কেন এই পোস্টটি রিপোর্ট করছেন? (বিস্তারিত লিখুন)"
               value={flagReason}
               onChange={(e) => setFlagReason(e.target.value)}
@@ -651,7 +737,7 @@ const PostCard: React.FC<{
 
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowDeleteConfirm(false)}>
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl animate-fadeIn" onClick={e => e.stopPropagation()}>
+          <div className="bg-white p-8 max-w-md w-full border border-gray-200 animate-fadeIn" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-lg font-black">পোস্ট ডিলিট করুন</h3>
               <button onClick={() => setShowDeleteConfirm(false)} className="text-gray-400 hover:text-black p-1"><X size={20} /></button>
@@ -671,6 +757,89 @@ const PostCard: React.FC<{
               >
                 {deleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
                 ডিলিট করুন
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Donor Registration Modal */}
+      {showDonorRegistration && (
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowDonorRegistration(false)}>
+          <div className="bg-white p-8 max-w-md w-full border border-gray-200 animate-fadeIn" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-black">রক্তদাতা হিসেবে নিবন্ধন</h3>
+              <button onClick={() => setShowDonorRegistration(false)} className="text-gray-400 hover:text-black p-1">
+                <X size={20} />
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">রক্তের গ্রুপ</label>
+                <select
+                  value={donorForm.bloodGroup}
+                  onChange={(e) => setDonorForm({...donorForm, bloodGroup: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
+                >
+                  {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(bg => (
+                    <option key={bg} value={bg}>{bg}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">এলাকা</label>
+                <input
+                  type="text"
+                  value={donorForm.location}
+                  onChange={(e) => setDonorForm({...donorForm, location: e.target.value})}
+                  placeholder="উদা: মিরপুর-১০"
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">জেলা</label>
+                <input
+                  type="text"
+                  value={donorForm.district}
+                  onChange={(e) => setDonorForm({...donorForm, district: e.target.value})}
+                  placeholder="উদা: ঢাকা"
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">ফোন নম্বর</label>
+                <input
+                  type="tel"
+                  value={donorForm.phone}
+                  onChange={(e) => setDonorForm({...donorForm, phone: e.target.value})}
+                  placeholder="01XXXXXXXXX"
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
+                />
+              </div>
+
+              <div className="bg-info-50 border border-info-100 p-4">
+                <p className="text-xs text-info-700 font-medium">
+                  আপনার নাম, রক্তের গ্রুপ, এলাকা এবং ফোন নম্বর অন্যান্য ব্যবহারকারীদের কাছে প্রকাশ করা হবে।
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-3 justify-end mt-6 pt-6 border-t border-gray-100">
+              <button
+                onClick={() => setShowDonorRegistration(false)}
+                className="px-6 py-3 border border-gray-200 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all"
+              >
+                বাতিল
+              </button>
+              <button
+                onClick={handleDonorRegistration}
+                className="px-6 py-3 bg-bd-green text-white font-bold text-sm hover:brightness-110 transition-all"
+              >
+                নিবন্ধন করুন
               </button>
             </div>
           </div>

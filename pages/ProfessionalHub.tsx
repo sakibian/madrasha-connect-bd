@@ -5,12 +5,16 @@ import { Link } from 'react-router-dom';
 import { addNotification } from '../services/notificationService';
 import { Button, Badge, EmptyState, Modal, LoadingSkeleton } from '../components/ui';
 import { useAuthStore, useJobStore } from '../stores';
+import NotificationPermissionPrimer, { isPrimerSuppressed } from '../components/NotificationPermissionPrimer';
+import { toast } from '../services/toast';
+import { dataService } from '../services/dataService';
 
 const ProfessionalHub: React.FC = () => {
   const currentUser = useAuthStore((s) => s.user);
   const { jobs, loading, fetch: fetchJobs, verify: verifyJob, remove: deleteJob } = useJobStore();
   const [filter, setFilter] = useState('All');
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [showPushPrimer, setShowPushPrimer] = useState(false);
   
   const isAdmin = currentUser?.role === 'ADMIN';
   const canPost = currentUser?.role === 'INSTITUTION' || isAdmin;
@@ -100,7 +104,29 @@ const ProfessionalHub: React.FC = () => {
                    <Button variant="danger" size="sm" onClick={() => setDeleteId(job.id)}>মুছুন</Button>
                 </div>
               ) : (
-                <Button variant="primary" size="lg" className="w-full">
+                <Button 
+                  variant="primary" 
+                  size="lg" 
+                  className="w-full"
+                  onClick={async () => {
+                    if (!currentUser) {
+                      toast.warning('আবেদনের জন্য প্রথমে লগইন করুন।');
+                      return;
+                    }
+                    
+                    try {
+                      await dataService.applyForJob(job.id);
+                      toast.success('আবেদন জমা হয়েছে!', 'প্রতিষ্ঠান শীঘ্রই আপনার সাথে যোগাযোগ করবে।');
+                      
+                      // Show push primer after successful job application
+                      if (currentUser && !isPrimerSuppressed()) {
+                        setShowPushPrimer(true);
+                      }
+                    } catch (error: any) {
+                      toast.error(error?.message || 'আবেদন জমা দিতে সমস্যা হয়েছে।');
+                    }
+                  }}
+                >
                   আবেদন করুন <ArrowRight size={18} />
                 </Button>
               )}
@@ -121,6 +147,15 @@ const ProfessionalHub: React.FC = () => {
           <Button variant="danger" onClick={handleDelete}>মুছে ফেলুন</Button>
         </div>
       </Modal>
+
+      {/* Push permission primer — appears after job application submit */}
+      <NotificationPermissionPrimer
+        open={showPushPrimer}
+        onClose={() => setShowPushPrimer(false)}
+        title="নতুন চাকরি পেতে চান?"
+        description="আপনার যোগ্যতা অনুযায়ী নতুন চাকরি পোস্ট হলে সাথে সাথে জানিয়ে দেব।"
+        vapidPublicKey={import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined}
+      />
     </div>
   );
 };

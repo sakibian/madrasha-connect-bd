@@ -349,13 +349,13 @@ const PublicProfile: React.FC = () => {
 
       {showShareCard && (
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowShareCard(false)}>
-          <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl animate-fadeIn" onClick={e => e.stopPropagation()}>
+          <div className="bg-white max-w-md w-full border border-gray-200 animate-fadeIn" onClick={e => e.stopPropagation()}>
             <div className="p-8 space-y-6">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-black">অ্যাচিভমেন্ট কার্ড</h3>
                 <button onClick={() => setShowShareCard(false)} className="text-gray-400 hover:text-black p-1"><X size={20} /></button>
               </div>
-              <div className="bg-gradient-to-br from-brand-900 to-brand-900 p-8 text-white rounded-2xl space-y-4 text-center">
+              <div className="bg-black p-8 text-white space-y-4 text-center">
                 <div className="w-16 h-16 bg-white/10 mx-auto rounded-full flex items-center justify-center text-2xl font-black border-2 border-white/20">
                   {profile.name.charAt(0)}
                 </div>

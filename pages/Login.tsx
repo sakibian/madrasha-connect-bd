@@ -337,7 +337,7 @@ const UnconfirmedEmailBanner: React.FC<{ email: string }> = ({ email }) => {
   };
 
   return (
-    <div className="p-5 bg-warning-50 border border-warning-100 rounded-2xl space-y-3">
+    <div className="p-5 bg-warning-50 border border-warning-100 space-y-3">
       <div className="flex items-start gap-3">
         <Mail size={20} className="text-warning-600 shrink-0 mt-0.5" />
         <div>

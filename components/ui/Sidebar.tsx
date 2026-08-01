@@ -48,7 +48,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <NavItem to="/events" icon={<Calendar size={18} />} label={t('nav.events')} onClick={onClose} />
               <NavItem to="/professional" icon={<Briefcase size={18} />} label={t('nav.careers')} onClick={onClose} />
               <NavItem to="/institutions" icon={<Building2 size={18} />} label={t('nav.directory')} onClick={onClose} />
-              <NavItem to="/fatwa" icon={<ShieldCheck size={18} />} label={t('nav.fatwa')} onClick={onClose} />
+              <NavItem to="/qawmi-system" icon={<GraduationCap size={18} />} label="কওমি সিস্টেম" onClick={onClose} />
+              <NavItem to="/fatwa" icon={<ShieldCheck size={18} />} label={t('nav.fatwa')} onClick={onClose} exact />
               <NavItem to="/fatwa/archive" icon={<BookOpen size={18} />} label={t('nav.fatwaArchive')} onClick={onClose} />
               <NavItem to="/competitions" icon={<Trophy size={18} />} label={t('nav.competitions')} onClick={onClose} />
               <NavItem to="/leaderboard" icon={<Star size={18} />} label={t('nav.leaderboard')} onClick={onClose} />

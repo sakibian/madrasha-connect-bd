@@ -1,15 +1,19 @@
 
 import React, { useEffect, useState } from 'react';
-import { ShoppingBag, Heart, Download, Trash2, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Heart, Download, Trash2, ArrowRight, X, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button, Badge, ImageWithFallback, Modal, LoadingSkeleton } from '../components/ui';
 import { useAuthStore, useProductStore } from '../stores';
+import { toast } from '../services/toast';
 
 const Marketplace: React.FC = () => {
   const currentUser = useAuthStore((s) => s.user);
   const { products, loading, fetch: fetchProducts, remove: deleteProduct } = useProductStore();
   const isAdmin = currentUser?.role === 'ADMIN';
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
+  const [showPurchaseModal, setShowPurchaseModal] = useState(false);
 
   useEffect(() => {
     fetchProducts();
@@ -20,6 +24,24 @@ const Marketplace: React.FC = () => {
       await deleteProduct(deleteId);
       setDeleteId(null);
     }
+  };
+
+  const handleDownload = (product: any) => {
+    if (!currentUser) {
+      toast.warning('ডাউনলোড করতে প্রথমে লগইন করুন।');
+      return;
+    }
+    setSelectedProduct(product);
+    setShowDownloadModal(true);
+  };
+
+  const handlePurchase = (product: any) => {
+    if (!currentUser) {
+      toast.warning('কেনাকাটা করতে প্রথমে লগইন করুন।');
+      return;
+    }
+    setSelectedProduct(product);
+    setShowPurchaseModal(true);
   };
 
   return (
@@ -65,7 +87,12 @@ const Marketplace: React.FC = () => {
                      {isAdmin && (
                        <Button variant="danger" size="sm" onClick={() => setDeleteId(product.id)} icon={<Trash2 size={18} />} />
                      )}
-                    <Button variant={product.isFree ? 'primary' : 'outline'} size="sm" icon={product.isFree ? <Download size={20} /> : <ShoppingBag size={20} />} />
+                    <Button 
+                      variant={product.isFree ? 'primary' : 'outline'} 
+                      size="sm" 
+                      icon={product.isFree ? <Download size={20} /> : <ShoppingBag size={20} />}
+                      onClick={() => product.isFree ? handleDownload(product) : handlePurchase(product)}
+                    />
                  </div>
               </div>
             </div>
@@ -80,6 +107,126 @@ const Marketplace: React.FC = () => {
           <Button variant="danger" onClick={handleDelete}>মুছে ফেলুন</Button>
         </div>
       </Modal>
+
+      {/* Download Modal for Free Items */}
+      {showDownloadModal && selectedProduct && (
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowDownloadModal(false)}>
+          <div className="bg-white p-8 max-w-md w-full border border-gray-200 animate-fadeIn" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-black">ফ্রি ডাউনলোড</h3>
+              <button onClick={() => setShowDownloadModal(false)} className="text-gray-400 hover:text-black p-1">
+                <X size={20} />
+              </button>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="aspect-square bg-gray-50 overflow-hidden">
+                <ImageWithFallback 
+                  src={selectedProduct.image} 
+                  name={selectedProduct.name} 
+                  className="w-full h-full object-cover" 
+                  alt={selectedProduct.name} 
+                />
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="text-lg font-bold">{selectedProduct.name}</h4>
+                <p className="text-sm text-gray-500">{selectedProduct.category}</p>
+              </div>
+
+              <div className="bg-bd-green/5 border border-bd-green/20 p-4">
+                <p className="text-sm text-gray-700 font-medium">
+                  এই ফাইলটি সম্পূর্ণ ফ্রি! নিচের বাটনে ক্লিক করে ডাউনলোড করুন।
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <a
+                  href={selectedProduct.image}
+                  download={selectedProduct.name}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-4 bg-bd-green text-white font-bold text-sm hover:brightness-110 transition-all flex items-center justify-center gap-3"
+                  onClick={() => {
+                    toast.success('ডাউনলোড শুরু হয়েছে!');
+                    setShowDownloadModal(false);
+                  }}
+                >
+                  <Download size={20} /> এখনই ডাউনলোড করুন
+                </a>
+                <button
+                  onClick={() => setShowDownloadModal(false)}
+                  className="w-full py-4 border border-gray-200 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all"
+                >
+                  বাতিল
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Purchase Modal for Paid Items */}
+      {showPurchaseModal && selectedProduct && (
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowPurchaseModal(false)}>
+          <div className="bg-white p-8 max-w-md w-full border border-gray-200 animate-fadeIn" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-black">পণ্য ক্রয়</h3>
+              <button onClick={() => setShowPurchaseModal(false)} className="text-gray-400 hover:text-black p-1">
+                <X size={20} />
+              </button>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="aspect-square bg-gray-50 overflow-hidden">
+                <ImageWithFallback 
+                  src={selectedProduct.image} 
+                  name={selectedProduct.name} 
+                  className="w-full h-full object-cover" 
+                  alt={selectedProduct.name} 
+                />
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="text-lg font-bold">{selectedProduct.name}</h4>
+                <p className="text-sm text-gray-500">{selectedProduct.category}</p>
+                <p className="text-3xl font-extrabold">৳ {selectedProduct.price}</p>
+              </div>
+
+              <div className="bg-warning-50 border border-warning-100 p-4">
+                <p className="text-sm text-warning-700 font-medium">
+                  <strong>অনলাইন পেমেন্ট শীঘ্রই আসছে।</strong> এখনই কিনতে চাইলে আমাদের সাথে যোগাযোগ করুন:
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <a
+                  href="mailto:marketplace@mcbd.org?subject=Product Purchase: {selectedProduct.name}"
+                  className="w-full py-4 bg-black text-white font-bold text-sm hover:bg-gray-800 transition-all flex items-center justify-center gap-3"
+                  onClick={() => {
+                    toast.success('ইমেইল ক্লায়েন্ট খোলা হচ্ছে...');
+                    setShowPurchaseModal(false);
+                  }}
+                >
+                  <ExternalLink size={20} /> ইমেইলে অর্ডার করুন
+                </a>
+                <a
+                  href="tel:+8801XXXXXXXXX"
+                  className="w-full py-4 bg-bd-green text-white font-bold text-sm hover:brightness-110 transition-all flex items-center justify-center gap-3"
+                >
+                  <ShoppingBag size={20} /> ফোনে অর্ডার করুন
+                </a>
+                <button
+                  onClick={() => setShowPurchaseModal(false)}
+                  className="w-full py-4 border border-gray-200 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all"
+                >
+                  বাতিল
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

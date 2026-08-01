@@ -101,14 +101,44 @@ export const dataService = {
     }));
   },
 
-  saveJob: async (job: Job) => {
+  saveJob: async (job: Job, institutionId?: string) => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in to post a job');
+
+    // institution_id is required by DB — accept as param or derive from user profile
+    let instId = institutionId;
+    if (!instId) {
+      const { data: profile } = await supabase
+        .from('user_profiles')
+        .select('institution_name')
+        .eq('id', user.id)
+        .maybeSingle();
+      
+      // Try to match institution_name to institutions table
+      if (profile?.institution_name) {
+        const { data: inst } = await supabase
+          .from('institutions')
+          .select('id')
+          .eq('name', profile.institution_name)
+          .maybeSingle();
+        instId = inst?.id;
+      }
+    }
+
+    if (!instId) {
+      throw new Error('Institution not found. Please register your institution first.');
+    }
+
     await retryWithBackoff(async () => {
       const { error } = await supabase.from('jobs').upsert({
         id: job.id,
+        institution_id: instId,
+        posted_by: user.id,
         title: job.title,
         type: job.type,
         location: job.location,
         salary: job.salary,
+        description: (job as any).description || null,
         contact_info: job.contactInfo,
         status: 'pending',
       });
@@ -158,6 +188,90 @@ export const dataService = {
       const { error } = await supabase.from('jobs').delete().eq('id', id);
       if (error) throw error;
       cacheInvalidate(CACHE_KEYS.JOBS);
+    });
+  },
+
+  // --- Job Applications ---
+  applyForJob: async (jobId: string, coverNote?: string) => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in to apply');
+
+    await retryWithBackoff(async () => {
+      const { error } = await supabase.from('job_applications').insert({
+        job_id: jobId,
+        applicant_id: user.id,
+        cover_note: coverNote || null,
+        status: 'pending',
+      });
+      if (error) {
+        // Duplicate application error (unique constraint)
+        if (error.code === '23505') {
+          throw new Error('আপনি এই চাকরির জন্য ইতিমধ্যে আবেদন করেছেন।');
+        }
+        throw error;
+      }
+    });
+  },
+
+  getJobApplications: async (userId: string): Promise<Array<{
+    id: string;
+    jobId: string;
+    jobTitle: string;
+    institution: string;
+    status: string;
+    appliedAt: string;
+  }>> => {
+    const { data, error } = await supabase
+      .from('job_applications')
+      .select('*, jobs(id, title, institutions(name))')
+      .eq('applicant_id', userId)
+      .order('created_at', { ascending: false });
+    
+    if (error) return [];
+    
+    return data.map((app: any) => ({
+      id: app.id,
+      jobId: app.job_id,
+      jobTitle: app.jobs?.title || '',
+      institution: app.jobs?.institutions?.name || '',
+      status: app.status,
+      appliedAt: app.created_at,
+    }));
+  },
+
+  getApplicationsForJob: async (jobId: string): Promise<Array<{
+    id: string;
+    applicantName: string;
+    applicantId: string;
+    coverNote: string | null;
+    status: string;
+    appliedAt: string;
+  }>> => {
+    const { data, error } = await supabase
+      .from('job_applications')
+      .select('*, user_profiles(name)')
+      .eq('job_id', jobId)
+      .order('created_at', { ascending: false });
+    
+    if (error) return [];
+    
+    return data.map((app: any) => ({
+      id: app.id,
+      applicantId: app.applicant_id,
+      applicantName: app.user_profiles?.name || 'Unknown',
+      coverNote: app.cover_note,
+      status: app.status,
+      appliedAt: app.created_at,
+    }));
+  },
+
+  updateApplicationStatus: async (applicationId: string, status: 'shortlisted' | 'accepted' | 'rejected') => {
+    await retryWithBackoff(async () => {
+      const { error } = await supabase
+        .from('job_applications')
+        .update({ status })
+        .eq('id', applicationId);
+      if (error) throw error;
     });
   },
 
@@ -555,6 +669,224 @@ export const dataService = {
     if (error) return cacheGet<Event[]>(CACHE_KEYS.EVENTS) || [];
     cacheSet(CACHE_KEYS.EVENTS, data);
     return data;
+  },
+
+  // --- Blood Donors ---
+  registerAsDonor: async (donorData: {
+    bloodGroup: string;
+    location: string;
+    district: string;
+    phone: string;
+    lastDonationDate?: string;
+    publicProfile?: boolean;
+  }) => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in to register as donor');
+
+    await retryWithBackoff(async () => {
+      const { error } = await supabase.from('blood_donors').upsert({
+        user_id: user.id,
+        blood_group: donorData.bloodGroup,
+        location: donorData.location,
+        district: donorData.district,
+        phone: donorData.phone,
+        last_donation_date: donorData.lastDonationDate || null,
+        public_profile: donorData.publicProfile !== false,
+        available: true,
+      });
+      if (error) throw error;
+    });
+  },
+
+  searchBloodDonors: async (filters: {
+    bloodGroup?: string;
+    district?: string;
+    location?: string;
+  }): Promise<Array<{
+    id: string;
+    userId: string;
+    name: string;
+    avatar?: string;
+    bloodGroup: string;
+    location: string;
+    district: string;
+    phone: string;
+    lastDonationDate?: string;
+  }>> => {
+    let query = supabase
+      .from('blood_donors_view')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (filters.bloodGroup) {
+      query = query.eq('blood_group', filters.bloodGroup);
+    }
+    if (filters.district) {
+      query = query.ilike('district', `%${filters.district}%`);
+    }
+    if (filters.location) {
+      query = query.ilike('location', `%${filters.location}%`);
+    }
+
+    const { data, error } = await query.limit(50);
+    if (error) return [];
+
+    return data.map((d: any) => ({
+      id: d.id,
+      userId: d.user_id,
+      name: d.name,
+      avatar: d.avatar_url,
+      bloodGroup: d.blood_group,
+      location: d.location,
+      district: d.district,
+      phone: d.phone,
+      lastDonationDate: d.last_donation_date,
+    }));
+  },
+
+  getMyDonorProfile: async (): Promise<{
+    id: string;
+    bloodGroup: string;
+    location: string;
+    district: string;
+    phone: string;
+    lastDonationDate?: string;
+    available: boolean;
+    publicProfile: boolean;
+  } | null> => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) return null;
+
+    const { data, error } = await supabase
+      .from('blood_donors')
+      .select('*')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (error || !data) return null;
+
+    return {
+      id: data.id,
+      bloodGroup: data.blood_group,
+      location: data.location,
+      district: data.district,
+      phone: data.phone,
+      lastDonationDate: data.last_donation_date,
+      available: data.available,
+      publicProfile: data.public_profile,
+    };
+  },
+
+  toggleDonorAvailability: async (available: boolean) => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+
+    await retryWithBackoff(async () => {
+      const { error } = await supabase
+        .from('blood_donors')
+        .update({ available })
+        .eq('user_id', user.id);
+      if (error) throw error;
+    });
+  },
+
+  // --- Competitions ---
+  getCompetitions: async (): Promise<Array<{
+    id: string;
+    title: string;
+    description: string;
+    prize: string;
+    deadline: string;
+    category: string;
+    maxParticipants?: number;
+    imageUrl?: string;
+    requirements?: string;
+    registrationOpen: boolean;
+    participantCount: number;
+  }>> => {
+    const { data, error } = await supabase
+      .from('competitions')
+      .select('*, competition_registrations(count)')
+      .eq('registration_open', true)
+      .order('deadline', { ascending: true });
+
+    if (error) return [];
+
+    return data.map((comp: any) => ({
+      id: comp.id,
+      title: comp.title,
+      description: comp.description,
+      prize: comp.prize,
+      deadline: comp.deadline,
+      category: comp.category,
+      maxParticipants: comp.max_participants,
+      imageUrl: comp.image_url,
+      requirements: comp.requirements,
+      registrationOpen: comp.registration_open,
+      participantCount: comp.competition_registrations?.[0]?.count || 0,
+    }));
+  },
+
+  registerForCompetition: async (competitionId: string, submissionUrl?: string, notes?: string) => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in to register');
+
+    await retryWithBackoff(async () => {
+      const { error } = await supabase.from('competition_registrations').insert({
+        competition_id: competitionId,
+        user_id: user.id,
+        submission_url: submissionUrl || null,
+        submission_notes: notes || null,
+        status: 'pending',
+      });
+      if (error) {
+        // Duplicate registration error
+        if (error.code === '23505') {
+          throw new Error('আপনি ইতিমধ্যে এই প্রতিযোগিতায় নিবন্ধিত।');
+        }
+        throw error;
+      }
+    });
+  },
+
+  getMyCompetitionRegistrations: async (): Promise<string[]> => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) return [];
+
+    const { data, error } = await supabase
+      .from('competition_registrations')
+      .select('competition_id')
+      .eq('user_id', user.id);
+
+    if (error) return [];
+    return data.map(r => r.competition_id);
+  },
+
+  // --- Sadaqah Funding Applications ---
+  applyForSadaqahFunding: async (application: {
+    institutionId: string;
+    projectTitle: string;
+    category: string;
+    amountRequested: number;
+    description: string;
+    justification: string;
+  }) => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+
+    await retryWithBackoff(async () => {
+      const { error } = await supabase.from('sadaqah_funding_applications').insert({
+        institution_id: application.institutionId,
+        applicant_id: user.id,
+        project_title: application.projectTitle,
+        category: application.category,
+        amount_requested: application.amountRequested,
+        description: application.description,
+        justification: application.justification,
+        status: 'pending',
+      });
+      if (error) throw error;
+    });
   },
 
   // --- Enrollments ---
