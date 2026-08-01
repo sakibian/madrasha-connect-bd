@@ -44,6 +44,12 @@
     "learn": "Learn",
     "profile": "Profile"
   },
+  "notifications": {
+    "title": "Notifications",
+    "bellLabel": "Open notifications",
+    "markAllRead": "Mark all read",
+    "empty": "No notifications yet."
+  },
   "auth": {
     "login": "Sign In",
     "loginSubtitle": "Continue with a phone OTP or your email and password.",

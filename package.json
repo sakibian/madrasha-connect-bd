@@ -16,6 +16,7 @@
     "postinstall": "simple-git-hooks || true"
   },
   "dependencies": {
+    "@radix-ui/react-popover": "^1.1.23",
     "@sentry/react": "^10.64.0",
     "@supabase/supabase-js": "^2.110.0",
     "@tiptap/extension-placeholder": "^3.27.3",
@@ -33,6 +34,7 @@
     "react-i18next": "^17.0.11",
     "react-router-dom": "^7.13.0",
     "react-window": "^2.2.7",
+    "sonner": "^2.0.7",
     "vite-plugin-pwa": "^1.3.0",
     "zustand": "^5.0.14"
   },

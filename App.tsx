@@ -60,6 +60,7 @@ import { SyncStatusProvider } from './contexts/SyncStatusContext';
 import { useAuthStore, useNotificationStore } from './stores';
 import { Header, Sidebar, PageLoader } from './components/ui';
 import BottomNav from './components/ui/BottomNav';
+import { Toaster } from 'sonner';
 
 const App: React.FC = () => {
   return (
@@ -232,6 +233,13 @@ const Shell: React.FC = () => {
       <BottomNav />
       {/* PWA install prompt — appears after 3 route visits */}
       <PWAInstallPrompt />
+      {/* Global toast surface — top-centre on mobile, rich colours + close button. */}
+      <Toaster
+        position="top-center"
+        richColors
+        closeButton
+        toastOptions={{ className: 'font-sans', duration: 4000 }}
+      />
     </div>
   );
 };

@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Bell, Menu, X } from 'lucide-react';
+import { Search, Menu, X } from 'lucide-react';
 import SyncStatus from '../SyncStatus';
-import { useNotificationStore } from '../../stores';
+import NotificationBell from '../NotificationBell';
 
 interface HeaderProps {
   onMenuToggle: () => void;
@@ -13,9 +13,6 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ onMenuToggle, isSidebarOpen }) => {
   const navigate = useNavigate();
   const [searchVal, setSearchVal] = useState('');
-  const notifications = useNotificationStore((s) => s.notifications);
-
-  const unreadCount = notifications.filter((n) => !n.isRead).length;
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,13 +50,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, isSidebarOpen }) => {
       {/* Right cluster — sync + notifications */}
       <div className="flex items-center gap-3 md:gap-6">
         <SyncStatus />
-        <button
-          className="text-gray-400 hover:text-black relative min-h-[44px] min-w-[44px] flex items-center justify-center"
-          aria-label="Notifications"
-        >
-          <Bell size={20} />
-          {unreadCount > 0 && <span className="absolute top-2 right-2 w-2 h-2 bg-bd-green"></span>}
-        </button>
+        <NotificationBell />
       </div>
     </header>
   );

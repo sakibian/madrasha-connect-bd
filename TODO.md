@@ -146,46 +146,80 @@
 
 ## 🎨 M16 — Unified Color System
 
-- [ ] `tailwind.config.js` — add `danger-*`, `warning-*`, `info-*` semantic scales
-- [ ] Sweep `pages/Admin/AdminDashboard.tsx` — replace `red-*` / `amber-*` with tokens
-- [ ] Sweep `pages/User/UserDashboard.tsx`
-- [ ] Sweep `pages/Institution/InstitutionDashboard.tsx`
-- [ ] Sweep `pages/ScholarDashboard.tsx` + other dashboards
-- [ ] Sweep `components/**/*.tsx` for raw red/amber literals
-- [ ] Add `components/ui/StatusBadge.tsx` (pending/approved/rejected/banned)
-- [ ] Update `AGENTS.md` — forbid raw `bg-red-*` / `bg-amber-*` in favour of tokens
+- [x] `tailwind.config.js` — add `danger-*`, `warning-*`, `info-*` semantic scales
+- [x] Sweep `pages/Admin/AdminDashboard.tsx` — replace `red-*` / `amber-*` with tokens
+- [x] Sweep `pages/User/UserDashboard.tsx`
+- [x] Sweep `pages/Institution/InstitutionDashboard.tsx`
+- [x] Sweep `pages/**/*.tsx` — 18 pages total swept
+- [x] Sweep `components/**/*.tsx` for raw red/amber literals — 11 components swept
+- [x] Add `components/ui/StatusBadge.tsx` (pending/approved/rejected/banned/draft/active/archived/flagged)
+- [ ] Update `AGENTS.md` — forbid raw `bg-red-*` / `bg-amber-*` in favour of tokens (do next session)
 
 ---
 
 ## 📲 M17 — PWA Installable + Web Push
 
 ### M17.1 — Manifest + icons
-- [ ] `public/manifest.webmanifest` — bn + en names, theme `#006a4e`, display standalone
-- [ ] `public/icons/icon-192.png` + `icon-512.png` + `icon-maskable-512.png`
-- [ ] `index.html` — link manifest + apple-touch-icon + theme-color meta
+- [x] `public/manifest.webmanifest` — bn + en names, theme `#006a4e`, display standalone
+- [x] Reused existing SVG icons (192 + 512 + maskable) — raster PNG generation deferred until logo finalised
+- [x] `index.html` — link manifest + apple-touch-icon + theme-color + apple-mobile-web-app meta
 
 ### M17.2 — Service worker
-- [ ] `npm i -D vite-plugin-pwa workbox-window`
-- [ ] `vite.config.ts` — VitePWA plugin with workbox runtimeCaching rules
-- [ ] `src/pwa/registerSW.ts` — auto-register + update-available toast
-- [ ] Wire toast into `App.tsx`
+- [ ] `npm i -D vite-plugin-pwa workbox-window` (deferred — hand-rolled SW ships first)
+- [x] `public/sw.js` — hand-rolled service worker with cache strategies + push handler
+- [x] `src/pwa/registerSW.ts` — auto-register + `pwa:update-available` custom event
+- [x] Called from `index.tsx` on app init
 
 ### M17.3 — Web Push
-- [ ] Migration `2026_08_07_push_subscriptions.sql` (table + RLS)
-- [ ] `services/webPush.ts` — subscribe / unsubscribe helpers
-- [ ] `supabase/functions/push-send/index.ts` — VAPID sender
-- [ ] Add `VAPID_PUBLIC_KEY` env to `.env.example` + docs
-- [ ] Trigger push on new fatwa answer + new relevant job
+- [x] Migration `2026_08_07_push_subscriptions.sql` (table + RLS)
+- [x] `services/webPush.ts` — subscribe / unsubscribe / send-to-server helpers
+- [x] `supabase/functions/push-send/index.ts` — VAPID-signed fan-out via `web-push`
+- [x] `supabase/functions/push-subscribe/index.ts` — JWT-authenticated upsert
+- [x] Add `VITE_VAPID_PUBLIC_KEY` env to `.env.example` + docs
+- [ ] Trigger push on new fatwa answer + new relevant job (wire in fatwa/job services next session)
 
 ### M17.4 — Install prompt
-- [ ] `components/PWAInstallPrompt.tsx` — beforeinstallprompt + iOS hint
-- [ ] Show after 3 route visits, 30-day dismiss cooldown via localStorage
-- [ ] Bengali + English + Arabic copy
+- [x] `components/PWAInstallPrompt.tsx` — beforeinstallprompt + iOS hint
+- [x] Show after 3 route visits, 30-day dismiss cooldown via localStorage
+- [x] Bengali copy (English/Arabic i18n keys come with route audit)
+- [x] Mounted in `App.tsx` (above BottomNav on mobile)
 
 ### M17.5 — Test coverage
-- [ ] `src/test/__tests__/manifest.test.ts` — parses + validates manifest.webmanifest
-- [ ] `components/__tests__/PWAInstallPrompt.test.tsx` — show/hide logic
-- [ ] `e2e/pwa.spec.ts` — manifest link, SW registration
+- [x] `src/test/__tests__/manifest.test.ts` — parses + validates manifest.webmanifest
+- [x] `components/__tests__/PWAInstallPrompt.test.tsx` — 3 deterministic scenarios
+- [ ] `e2e/pwa.spec.ts` — manifest link, SW registration (do in follow-up session)
+
+---
+
+## 🔔 M18 — Delightful Notification UX
+
+### M18.1 — Sonner toasts
+- [x] `npm i sonner` (install)
+- [x] `services/toast.ts` — typed wrapper: success/error/info/warning/loading/promise/dismiss
+- [x] Mount `<Toaster />` in `App.tsx` (top-centre, richColors, closeButton)
+- [ ] Replace `alert()` and inline error banners in `services/{authService,donationService,feedbackService}.ts` (do next session)
+
+### M18.2 — Notification centre
+- [x] `npm i @radix-ui/react-popover` (install)
+- [x] `components/NotificationBell.tsx` — Radix Popover with unread badge + list + mark-all-read + empty state
+- [x] Replace plain `<Bell>` icon in `Header.tsx` with `<NotificationBell />`
+- [x] i18n keys under `notifications.*` for bn/en/ar
+
+### M18.3 — Permission primer
+- [x] `components/NotificationPermissionPrimer.tsx` — pre-native prompt card
+- [ ] Trigger on high-value actions (fatwa submit, application submit) — controlled component, wire in parents next session
+- [x] 7-day suppression via localStorage (`isPrimerSuppressed()`)
+- [x] Bengali copy shipped; en/ar copy via later i18n pass
+
+### M18.4 — Deep-link routing
+- [x] `services/notificationRouter.ts` — `handleNotificationClick(url)` helper
+- [x] Used in `NotificationBell` row click
+- [ ] Wire into `public/sw.js` `notificationclick` (already has openWindow — just needs to call helper if we compile SW; deferred)
+
+### M18.5 — Tests
+- [x] `services/__tests__/toast.test.ts` — 5 tests
+- [x] `services/__tests__/notificationRouter.test.ts` — 5 tests
+- [x] `components/__tests__/NotificationPermissionPrimer.test.tsx` — 5 tests
 
 ---
 

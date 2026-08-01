@@ -295,7 +295,57 @@ Sessions 1–4 built the *shell* of the platform (auth, i18n, SEO, payments, adm
 
 ---
 
-## ✅ Definition of "production-ready" after M14 + M15 + M16 + M17
+---
+
+## 🔔 M18 — Delightful Notification UX (**new**)
+
+**Objective:** Give users three distinct, beautiful notification surfaces (transient toasts, an in-app notification centre, and a graceful web-push permission flow) that all feel like part of the same brand system.
+
+### M18.1 — Sonner toasts (~30 min)
+
+- Add **[Sonner](https://sonner.emilkowal.ski/)** — the de-facto React toast lib (used by Vercel, Cal.com, shadcn/ui).
+- Mount `<Toaster />` in `App.tsx` with brand-aligned defaults (top-right on desktop, top-centre on mobile, `bd-green` accent, respects RTL).
+- Add a small typed wrapper `services/toast.ts` — `toast.success(msg)`, `toast.error(err)`, `toast.info(msg)`, `toast.promise(p, {loading, success, error})` — so we never import Sonner directly from feature code (makes future replacement trivial).
+- Replace `alert()` and inline banners across `services/authService.ts`, `donationService.ts`, `feedbackService.ts` with typed toasts.
+
+### M18.2 — In-app notification centre (~1 h)
+
+- New `components/NotificationBell.tsx` — replaces the plain `Bell` icon in `Header.tsx`.
+- Radix Popover with:
+  - Unread count badge (already tracked in `useNotificationStore`).
+  - Scrollable list of past notifications, grouped by day.
+  - "Mark all read" action.
+  - Empty state with helpful copy.
+  - Click a row → deep-link to `n.link` route and mark read.
+- Uses `bd-green` + `info-*` + `warning-*` tokens (no raw colours).
+- Bengali-first, English + Arabic keys added.
+
+### M18.3 — Permission-priming card (~30 min)
+
+- New `components/NotificationPermissionPrimer.tsx` — shows a small in-app card BEFORE we call the browser's native `Notification.requestPermission()`.
+- Triggers on a specific user action (e.g. sending a fatwa) so the ask has clear context.
+- Two buttons: "হ্যাঁ, জানাতে চাই" (calls `subscribeToPush`) and "পরে" (dismiss + 7-day suppression).
+- Handles `Notification.permission === 'denied'` gracefully with a settings-link explainer.
+
+### M18.4 — Deep-link routing (~15 min)
+
+- Both in-app rows and web-push notification-click events route via a single `handleNotificationClick(url)` helper so we don't duplicate logic.
+- Push service worker (`public/sw.js`) already forwards click → URL; we only need the client-side helper.
+
+### M18.5 — Tests (~30 min)
+
+- `services/__tests__/toast.test.ts` — typed helper wraps Sonner correctly.
+- `components/__tests__/NotificationBell.test.tsx` — badge count, popover open/close, mark-read action.
+- `components/__tests__/NotificationPermissionPrimer.test.tsx` — show / dismiss / suppression logic.
+
+**Definition of done for M18:**
+- Zero `alert()` calls remain in `services/`.
+- Header bell shows live unread count + opens a Radix popover with brand-styled rows.
+- No native browser permission dialog fires until the user first accepts our priming card.
+
+---
+
+## ✅ Definition of "production-ready" after M14 + M15 + M16 + M17 + M18
 
 - Landing page shows today's Hijri date + local prayer times from real APIs.
 - `/quran` reads any surah with Bengali translation, live from Al-Quran Cloud.

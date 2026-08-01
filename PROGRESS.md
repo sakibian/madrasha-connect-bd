@@ -13,7 +13,7 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-08-01 22:51 UTC · **Latest deploy:** pending push (session 7 — M16 Unified Color System + M17 PWA installable + Web Push scaffold)
+**Last updated:** 2026-08-01 22:59 UTC · **Latest deploy:** pending push (session 8 — M18 Delightful Notification UX: Sonner toasts + Radix notification centre + permission primer)
 
 ---
 
@@ -55,6 +55,48 @@
 ---
 
 ## ✅ Completed (chronological)
+
+### 2026-08-01 (session 8 — M18 Delightful Notification UX)
+
+Three distinct notification surfaces integrated using the most-loved open-source
+libraries (Sonner + Radix Popover), all styled with our M16 tokens.
+
+- **PLAN.md + TODO.md** — new M18 milestone with sub-phases + definition of done.
+- **Dependencies:** `sonner`, `@radix-ui/react-popover`.
+
+**M18.1 Sonner toasts**
+- `services/toast.ts` — typed wrapper (`success`, `error`, `info`, `warning`, `loading`, `promise`, `dismiss`). Never import sonner directly from feature code; import from here so future replacement is one-file.
+- `App.tsx` — `<Toaster position="top-center" richColors closeButton />` mounted globally.
+
+**M18.2 Notification centre**
+- `components/NotificationBell.tsx` — Radix Popover with:
+  - Live unread badge (bd-green pill, 99+ overflow).
+  - Grouped scrollable list rendered from `useNotificationStore`.
+  - Mark-all-read action.
+  - Empty state with Inbox icon.
+  - Click row → mark read + navigate to `n.link`.
+  - Tokens only (bd-green, brand-*, info-*, warning-*).
+- `components/ui/Header.tsx` — plain Bell icon replaced with `<NotificationBell />`; dead `unreadCount` bookkeeping removed.
+- `locales/{bn,en,ar}/common.json` — new `notifications.*` keys (title, bellLabel, markAllRead, empty).
+
+**M18.3 Permission-priming card**
+- `components/NotificationPermissionPrimer.tsx` — soft ask BEFORE the browser's native permission dialog. Controlled component (parent decides when).
+  - Handles `granted` → renders nothing.
+  - Handles `denied` → renders a small "enable in settings" hint (warning tokens).
+  - "Allow" button subscribes via `services/webPush.ts` + POSTs to `push-subscribe` edge function + toast success.
+  - "Later" button writes `notif-primer-dismissed-at` for 7-day cooldown.
+  - Position: `bottom-24 md:bottom-6` (above BottomNav on mobile).
+
+**M18.4 Deep-link routing**
+- `services/notificationRouter.ts` — `handleNotificationClick(link)` normalises absolute → path for react-router; used by NotificationBell rows.
+- SW `notificationclick` handler in `public/sw.js` already forwards to url (bundling parity deferred).
+
+**M18.5 Tests**
+- `services/__tests__/toast.test.ts` — 5 tests (success forwarding, Error normalisation, unknown fallback, descriptions, promise forwarding).
+- `services/__tests__/notificationRouter.test.ts` — 5 tests (empty, absolute, same-origin strip, cross-origin, bare path).
+- `components/__tests__/NotificationPermissionPrimer.test.tsx` — 5 tests (closed, default permission, granted, denied, dismiss suppression).
+
+**Tests:** 220/220 green (was 205).
 
 ### 2026-08-01 (session 7 — M16 Color System + M17 PWA)
 
