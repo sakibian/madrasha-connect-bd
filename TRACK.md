@@ -1,27 +1,33 @@
 # Madrasa Connect BD — Module Tracking System
 
-> **Master tracker for engineering execution.** Each module is a self-contained unit of work with dependencies, tasks, acceptance criteria, and effort estimates.  
-> **Legend:** 🟡 Not Started | 🟢 In Progress | ✅ Complete | 🔴 Blocked | ⭕ Not Applicable
+> ⚠️ **This file is the module DEEP-DIVE** — task lists, acceptance criteria, effort estimates.
+> For the **live day-to-day status** of every track, see **[`PROGRESS.md`](./PROGRESS.md)** (updated every commit).
+> For **what the founder needs to do outside the code**, see **[`NEXT_STEPS.md`](./NEXT_STEPS.md)**.
+
+> **Legend:** ⚪ Not Started | 🟢 In Progress | ✅ Complete | 🔴 Blocked | ⭕ Not Applicable
+
+**Last updated:** 2026-08-01
 
 ---
 
 ## Quick Status Dashboard
 
-| Module | Status | Effort | ETA | Dependencies |
-|--------|--------|--------|-----|-------------|
-| [M0](#m0-security--quick-fixes) Foundation & Security | ✅ Complete | 2-3 days | Done | None |
-| [M1](#m1-backend-foundation-supabase) Backend Foundation | ✅ Complete | 2-3 weeks | Done | M0 |
-| [M2](#m2-data-migration-localslate-to-supabase) Data Migration | ✅ Complete | 1 week | Done | M1 |
-| [M3](#m3-component-library--design-system) Component Library | ✅ Complete | 2 weeks | Done | None |
-| [M4](#m4-state-management-zustand) State Management | ✅ Complete | 1 week | Done | M3 |
-| [M5](#m5-authentication--authorization) Auth & Authorization | ✅ Complete | 1.5 weeks | Done | M1 |
-| [M6](#m6-authentic-knowledge-base) Authentic Knowledge Base | ✅ Complete | 2-3 weeks | Done | M1, M5 |
-| [M7](#m7-testing--quality-assurance) Testing & QA | ✅ Complete | 2 weeks | Done | M0-M6 |
-| [M8](#m8-performance--accessibility) Performance & Accessibility | 🟢 In Progress | 1 week | TBD | M3 |
-| [M9](#m9-orphan-page-integration) Orphan Page Integration | ✅ Complete | 2-3 days | Done | M0, M5 |
-| [M10](#m10-community--engagement-features) Community & Engagement | 🟢 In Progress | 2 weeks | TBD | M1, M5, M9 |
-| [M11](#m11-mobile-app-react-native) Mobile App | 🟢 In Progress | 4-6 weeks | TBD | M1, M2 |
-| [M12](#m12-production-launch--scaling) Production Launch & Scaling | 🟡 Not Started | Ongoing | TBD | M0-M11 |
+| Module | Status | Effort | Notes |
+|--------|--------|--------|-------|
+| [M0](#m0-security--quick-fixes) Foundation & Security | ✅ Complete | 2-3 days | Hardcoded URLs removed, CSP tightened, Sentry wired |
+| [M1](#m1-backend-foundation-supabase) Backend Foundation | ✅ Complete | 2-3 weeks | 33 tables + RLS on all; awaiting DB migration apply |
+| [M2](#m2-data-migration-localstorage--supabase) Data Migration | ✅ Complete | 1 week | dataService reads/writes Supabase with cache fallback |
+| [M3](#m3-component-library--design-system) Component Library | ✅ Complete | 2 weeks | Plus brand palette + zero off-brand colours |
+| [M4](#m4-state-management-zustand) State Management | ✅ Complete | 1 week | 9 stores in `stores/` |
+| [M5](#m5-authentication--authorization) Auth & Authorization | ✅ Complete | 1.5 weeks | Email + Phone/OTP; reactive ProtectedRoute |
+| [M6](#m6-authentic-knowledge-base) Authentic Knowledge Base | ✅ Complete | 2-3 weeks | Sources, citations, moderation pipeline; scholars TBD |
+| [M7](#m7-testing--quality-assurance) Testing & QA | 🟢 In Progress | 2 weeks | 142 unit tests passing; e2e coming |
+| [M8](#m8-performance--accessibility) Performance & Accessibility | 🟢 In Progress | 1 week | PWA + a11y basics; polish TBD |
+| [M9](#m9-orphan-page-integration) Orphan Page Integration | ✅ Complete | 2-3 days | Community, Events, Sadaqah routed + in sidebar |
+| [M10](#m10-community--engagement-features) Community & Engagement | 🟢 In Progress | 2 weeks | Feedback widget shipped; more coming |
+| [M11](#m11-mobile-app-react-native) Mobile App | 🟢 Scaffold Only | 4-6 weeks | Expo shell exists; real screens TBD |
+| [M12](#m12-production-launch--scaling) Production Launch & Scaling | 🔴 Blocked on founder | Ongoing | See `NEXT_STEPS.md` for the 4 unblocks |
+| **M13** Growth: i18n + SEO/AEO + Payments *(new)* | 🟢 Infra Done | Ongoing | bn/en/ar live, SEO shipped, bKash TBD |
 
 **Total tracked tasks:** ~192 / ~227 complete
 
@@ -639,6 +645,93 @@
 
 ---
 
+## M13: Growth — i18n + SEO/AEO + Payments *(new)*
+
+> **Objective:** Ship the growth-critical pieces that make the platform reach real
+> Bangladeshi users AND get discovered organically. Without these, features
+> exist but nobody finds them and nobody can donate.
+>
+> **Added:** 2026-08-01
+
+### Tasks
+
+#### 13.1 Tri-language (bn / en / ar) — infrastructure
+- [x] Install react-i18next + i18next-browser-languagedetector
+- [x] `i18n/config.ts` with detection order (URL → localStorage → nav → bn)
+- [x] `useI18nSideEffects` hook syncs `<html lang>` + `<html dir>` live
+- [x] `locales/{bn,en,ar}/common.json` (85+ keys each, brand/nav/auth/feedback)
+- [x] `<LanguageSwitcher />` accessible dropdown mounted in Sidebar + top nav
+
+#### 13.2 Tri-language — per-page translation adoption
+- [x] Sidebar + FeedbackWidget + marketing top nav
+- [ ] Home / LandingPage / Dashboard variants
+- [ ] Login / Register / VerifyEmail / ForgotPassword
+- [ ] FatwaCenter / FatwaArchive / Community / EventsHub / SadaqahHub
+- [ ] Marketplace / KnowledgeHub / AudioLibrary / SeerahTimeline
+- [ ] Institution/Scholar/User/Admin dashboards
+- [ ] All auth flow error strings
+
+#### 13.3 SEO / AEO — infrastructure
+- [x] `react-helmet-async` wired via `<HelmetProvider>` in `index.tsx`
+- [x] `<SEO />` component (title, desc, keywords, canonical, hreflang, OG, Twitter, JSON-LD slot)
+- [x] `StructuredData.tsx` factory library (Organization, WebSite+SearchAction, Breadcrumb, FAQ, Article+Speakable, JobPosting, Course, Event)
+- [x] `public/robots.txt` — allow-list search + LLM crawlers, block admin routes
+- [x] `public/sitemap.xml` — 18 curated routes with hreflang xhtml:link alternates
+- [x] `public/llms.txt` — AEO manifest for GPTBot / Claude / Perplexity
+- [x] Site-wide default SEO mounted in App.tsx
+
+#### 13.4 SEO / AEO — per-page rollout
+- [ ] Home / Landing — unique title, description, keywords, Organization+WebSite JSON-LD
+- [ ] `/professional` (jobs) — JobPosting schema per row (Google-for-Jobs eligible)
+- [ ] `/fatwa/archive` — Article + Speakable schema per fatwa
+- [ ] `/faq` — FAQPage schema (rich snippets in Google)
+- [ ] `/institutions` + `/scholars` — BreadcrumbList + per-item schemas
+- [ ] `/knowledge` + `/deen101` — Course schema
+- [ ] `/events` — Event schema
+- [ ] Every deep page has a BreadcrumbList
+
+#### 13.5 Community feedback loop
+- [x] `feedback` DB table + full RLS (anon insert allowed, owner + admin read)
+- [x] `services/feedbackService.ts` — `submitFeedback()`
+- [x] `<FeedbackWidget />` floating trigger + modal on every logged-in page
+- [ ] Admin Feedback Triage panel — read + mark resolved
+
+#### 13.6 Phone / SMS OTP auth
+- [x] `normalizeBdPhone()` accepts 01XXXXXXXXX / +880… / 1XXXXXXXXX
+- [x] `sendPhoneOtp()` + `verifyPhoneOtp()` via Supabase Phone Auth
+- [x] Login page two-tab UI (Phone OTP default, Email fallback)
+- [x] Auto-create `user_profiles` row on first phone login
+- [ ] Enable Phone Auth in Supabase console *(founder task)*
+- [ ] Configure SMS provider (Twilio → later BD-native) *(founder task)*
+
+#### 13.7 Payments — donations
+- [ ] `donations` DB table with RLS
+- [ ] bKash checkout Edge Function (create + execute + query)
+- [ ] Nagad checkout Edge Function
+- [ ] Stripe checkout Edge Function (for diaspora)
+- [ ] Donation flow UI: amount → provider select → checkout → receipt
+- [ ] Admin reconciliation panel
+- [ ] Email receipts (PDF)
+- [ ] Monthly transparency report generator
+
+#### 13.8 Notifications — beyond in-app
+- [x] Supabase Realtime in-app notifications (working)
+- [ ] Web Push (Service Worker + subscription table)
+- [ ] Expo Push (for mobile app)
+- [ ] SMS blasts for critical events (scholar-approved-fatwa, donation-received)
+
+### Acceptance Criteria
+- User can switch bn ↔ en ↔ ar and see the sidebar, feedback widget, and top nav re-render immediately (no reload) ✅
+- `<html dir="rtl">` is set when Arabic is active ✅
+- Every public page produces a valid canonical URL + hreflang alternates ✅ (infra)
+- `sitemap.xml` is served from `/sitemap.xml` and reachable ✅
+- LLM crawlers (GPTBot, ClaudeBot, PerplexityBot) are allowed via `robots.txt` ✅
+- Community feedback lands in `public.feedback` with correct RLS ✅
+- Phone OTP login works end-to-end (blocked on founder enabling Supabase Phone Auth)
+- Donations flow through bKash and land in `donations` (in progress)
+
+---
+
 ## Completion Tracker
 
 | Module | Total Tasks | Completed | Progress |
@@ -656,7 +749,8 @@
 | M10: Community & Engagement | 28 | 28 | 100% |
 | M11: Mobile App | ~19 | 16 | 84% |
 | M12: Production Launch | ~26 | 14 | 54% |
-| **Total** | **~286** | **271** | **95%** |
+| **M13**: Growth (i18n + SEO/AEO + Payments) | ~40 | 21 | 53% |
+| **Total** | **~326** | **292** | **90%** |
 
 ---
 

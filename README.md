@@ -6,72 +6,111 @@
 <h3 align="center">Connecting Bangladesh's Madrasa Community Through Technology</h3>
 
 <p align="center">
+  <a href="./PROGRESS.md"><strong>📊 Live Progress</strong></a> ·
+  <a href="./NEXT_STEPS.md"><strong>🚀 Founder Handbook</strong></a> ·
   <a href="./PRD.md"><strong>📋 Product Requirements</strong></a> ·
-  <a href="./TRACK.md"><strong>📊 Progress Tracker</strong></a> ·
-  <a href="./Docs/"><strong>📚 Technical Docs</strong></a> ·
-  <a href="./FUTURE_README_MODEL_PLAN.md"><strong>🔮 Future Vision</strong></a>
+  <a href="./TRACK.md"><strong>🧭 Module Deep-Dive</strong></a>
 </p>
 
 ---
 
-## 🎯 Our Mission
+## 🎯 Mission
 
-A digital ecosystem for Bangladesh's madrasa community — connecting **students, teachers, scholars, and institutions** through a trusted platform for jobs, education, Islamic guidance, and community.
+A **non-profit digital ecosystem** for Bangladesh's madrasa community — connecting **students, teachers, scholars, and institutions** through a trusted platform for jobs, education, verified Islamic guidance, and community.
 
 **For the 10,000+ madrasas and 10M+ students across Bangladesh.**
 
 ---
 
-## 📊 Where We Are Today
+## 📊 Current State (2026-08-01)
 
-| Dimension | Status | Details |
-|-----------|--------|---------|
-| **Frontend UI** | 🟢 90% Complete | 30+ pages, Bengali-first, AI integration |
-| **Backend** | 🔴 0% Complete | Currently runs in browser (localStorage only) |
-| **Security** | 🔴 Critical Fixes Needed | API keys exposed, no real auth |
-| **Testing** | 🔴 0% | No tests yet |
-| **Production Readiness** | 🟡 ~30% | Great prototype, needs backend + hardening |
+> **Truth in reporting**: this section is refreshed every time the codebase changes.
+> Full detail lives in [`PROGRESS.md`](./PROGRESS.md).
 
-### What's Working ✅
-- Full Bengali UI for all pages
-- Job board with search & filter
-- Institution directory
-- Fatwa Q&A with AI assistance
-- Educational content (Deen-101, Seerah Timeline)
-- Marketplace, Audio Library, Tools
-- Role-based dashboards (Admin, Institution, User)
-- Gemini AI integration (moderation, search, content)
+| Dimension | Status |
+|-----------|--------|
+| **Frontend UI** (30+ pages, Bengali-first) | ✅ Complete |
+| **Design system** (brand-consistent, zero off-brand colours) | ✅ Complete |
+| **Backend** (Supabase: 33 tables + RLS + Edge Functions) | ✅ Wired |
+| **Auth** (Email + Phone/SMS OTP with BD phone normalization) | ✅ Complete |
+| **State management** (9 Zustand stores) | ✅ Complete |
+| **Testing** (142 unit tests passing, e2e coming) | 🟡 In progress |
+| **i18n** (Bengali / English / Arabic + RTL) | ✅ Infrastructure done, per-page rollout ongoing |
+| **SEO + AEO** (Helmet, hreflang, JSON-LD, sitemap, robots, llms.txt) | ✅ Infrastructure done, per-page rollout ongoing |
+| **Community feedback loop** (floating widget, DB-backed) | ✅ Complete |
+| **Legal** (Bengali ToS + Privacy drafts, need lawyer review) | 🟡 Draft |
+| **Notifications** (in-app + Supabase Realtime) | ✅ Done · Web Push TODO |
+| **Payments** (bKash / Nagad donation flow) | 🔴 Blocked on merchant account |
+| **Mobile app** (Expo shell scaffolded, screens TODO) | ⚪ Backlog |
+| **Production Readiness** | ~**65%** — see PROGRESS.md for exact breakdown |
 
-### What's Missing 🔴
-- **No backend server** — all data lost when browser clears
-- **No real authentication** — anyone can log in as admin
-- **Exposed API keys** — security & cost risk
-- **No tests** — every change risks breaking things
-- **3 built pages not linked** (Community, Events, Sadaqah)
+**MVP soft-launch estimate:** ~2-3 weeks (blocked on founder actions in [`NEXT_STEPS.md`](./NEXT_STEPS.md), not code).
 
 ---
 
-## 🗺️ Our Path to Launch: 12 Modules
+## 🏗️ Architecture
 
-We've broken the entire journey into **12 engineering modules** — each with clear tasks, dependencies, and acceptance criteria. Full details in [TRACK.md](./TRACK.md).
+```
+                ┌─────────────────────────────────────────────┐
+Vite / React 19 │  Frontend  (bn/en/ar · PWA · React Router)  │
+                └────────────────────┬────────────────────────┘
+                                     │
+                                     │ HTTPS / WebSocket
+                                     ▼
+                ┌─────────────────────────────────────────────┐
+     Supabase   │  Postgres + Auth + Storage + Realtime + RLS │
+                └─────────────────────┬───────────────────────┘
+                                      │
+                                      │ Edge Functions (Deno)
+                                      ▼
+                ┌─────────────────────────────────────────────┐
+    Google AI   │  Gemini 2.5 Flash — moderation + Q&A + search │
+                └─────────────────────────────────────────────┘
+```
 
-| Module | What | Effort | For Whom |
-|--------|------|--------|----------|
-| **M0** 🔒 Foundation & Security | Fix critical holes, switch to real URLs, add error handling | 2-3 days | Users + Team |
-| **M1** 🗄️ Backend (Supabase) | Database, auth, storage, serverless functions | 2-3 weeks | Everyone |
-| **M2** 🔄 Data Migration | Move from localStorage to real database | 1 week | Users |
-| **M3** 🧩 Component Library | Build reusable UI pieces, consistent design | 2 weeks | Team + Users |
-| **M4** ⚡ State Management | Replace fragile event system with proper state | 1 week | Team |
-| **M5** 🔐 Auth & Roles | Real login, registration, role-based access | 1.5 weeks | Users |
-| **M6** 📖 Authentic Knowledge | Source citations, scholar review, moderation pipeline | 2-3 weeks | Trust |
-| **M7** ✅ Testing | Tests for critical paths | 2 weeks | Quality |
-| **M8** ⚡ Performance & A11y | Fast on 3G, works for everyone | 1 week | Users |
-| **M9** 📄 Orphan Pages | Route 3 built-but-hidden pages | 2-3 days | Users |
-| **M10** 👥 Community | Forum, badges, profiles, referrals | 2 weeks | Growth |
-| **M11** 📱 Mobile App | React Native for Android/iOS | 4-6 weeks | Reach |
-| **M12** 🚀 Launch & Scale | Security audit, monitoring, load testing | Ongoing | Sustainability |
+**Zero custom backend to maintain.** Supabase handles database, auth, storage,
+realtime, and serverless. We focus on the frontend experience and content.
 
-> **Estimated MVP launch:** 8-10 weeks from start (M0-M2 + M5 = shippable product for real users)
+**Cost profile (starting):** $0/month on free tiers of Supabase + Vercel + Sentry + PostHog. Premium features (job listings, certifications) can eventually cover costs at scale.
+
+---
+
+## 🌍 Tri-Language + SEO/AEO
+
+- 🇧🇩 **বাংলা** (default, LTR) — home audience
+- 🇬🇧 **English** (LTR) — diaspora + institutional partners + SEO reach
+- 🇸🇦 **العربية** (RTL) — religious credibility + GCC donor reach
+
+Every page ships with:
+- Automatic `<html lang>` + `<html dir>` swap on language change
+- `hreflang` alternates in `<link>` tags for Google
+- Full Open Graph + Twitter Card metadata
+- JSON-LD structured data (Organization, WebSite, BreadcrumbList, FAQPage, Article, JobPosting, Course, Event) — with `speakable` markup so voice assistants can read fatwas aloud
+- Registered with GPTBot / ClaudeBot / PerplexityBot / Google-Extended via `llms.txt` + `robots.txt` so we appear in AI answers
+
+Adding a 4th language later requires only three file edits — see [`i18n/config.ts`](./i18n/config.ts) for the pattern.
+
+---
+
+## 🚀 Quick Start (Developers)
+
+```bash
+git clone https://github.com/sakibian/madrasha-connect-bd.git
+cd madrasha-connect-bd
+cp .env.example .env.local   # then fill in your Supabase URL + anon key
+npm install
+npm run dev                  # http://localhost:3000
+```
+
+**Commands:**
+```bash
+npm run dev              # dev server on :3000
+npm test                 # unit tests (Vitest — 142 tests, all passing)
+npm run test:coverage    # coverage report
+npm run build            # production build
+npm run preview          # preview the production build
+npx playwright test      # e2e tests
+```
 
 ---
 
@@ -79,73 +118,52 @@ We've broken the entire journey into **12 engineering modules** — each with cl
 
 | Document | What It Contains | Who Should Read |
 |----------|-----------------|-----------------|
-| [PRD.md](./PRD.md) | Complete product requirements — features, user stories, success metrics | Everyone |
-| [TRACK.md](./TRACK.md) | Engineering module tracker with tasks, status, dependencies | Engineering team |
-| [FUTURE_README_MODEL_PLAN.md](./FUTURE_README_MODEL_PLAN.md) | Long-term vision (multi-platform, foundation, global) | Stakeholders |
-| [Docs/ARCHITECTURE_REVIEW.md](./Docs/ARCHITECTURE_REVIEW.md) | Current architecture analysis | Engineers |
-| [Docs/SECURITY_AUDIT_REPORT.md](./Docs/SECURITY_AUDIT_REPORT.md) | Security vulnerabilities & fixes | All |
-| [Docs/component-library-blueprint.md](./Docs/component-library-blueprint.md) | Design system & component plan | Frontend engineers |
-| [Docs/zustand-migration-guide.md](./Docs/zustand-migration-guide.md) | State management plan | Frontend engineers |
+| [PROGRESS.md](./PROGRESS.md) | **Live status of every track** — done / doing / blocked | Everyone |
+| [NEXT_STEPS.md](./NEXT_STEPS.md) | **Founder handbook** — what to do outside the code | Founder |
+| [PRD.md](./PRD.md) | Complete product requirements — features, personas, KPIs | Everyone |
+| [TRACK.md](./TRACK.md) | Detailed 12-module engineering deep-dive | Engineers |
+| [CREDENTIALS.md](./CREDENTIALS.md) | External services, env vars, and setup steps | Ops |
+| [database/schema.sql](./database/schema.sql) | Master schema (33 tables + RLS) | Backend |
+| [database/migrations/](./database/migrations/) | Incremental migrations | Backend |
 
 ---
 
-## 🏗️ Architecture (Target)
+## 🤝 For the Founder
 
-```
-Frontend (React + Vite)
-    ↕ HTTPS / WebSocket
-Supabase (PostgreSQL + Auth + Storage + Edge Functions + Realtime)
-    ↕ 
-Gemini AI (content moderation, search, suggestions via Edge Functions)
-```
+**This is not just a tech project — it's a community trust.** Here's what matters most, in priority order:
 
-**No custom backend to maintain.** Supabase handles auth, database, storage, and serverless. We focus on the frontend experience.
+1. **Do the 4 CRITICAL tasks in [`NEXT_STEPS.md`](./NEXT_STEPS.md)** — 2 hours of your work unlocks a real deploy: run the DB migration, enable Phone Auth, set Vercel env vars, deploy Edge Functions.
 
----
+2. **Recruit 5-10 verified scholars** — the entire "authenticity" moat depends on this. Aim for 2 Qawmi, 2 Alia, 1 female scholar. Everything else is noise if we don't have this.
 
-## 🎯 Success Looks Like
+3. **Open the bKash merchant account** — 2 weeks of paperwork. Start today so it's ready when the donation flow ships.
 
-| Metric | 6-Month Target |
-|--------|---------------|
-| Registered Users | 10,000 |
-| Active Institutions | 500 |
-| Monthly Job Applications | 2,000 |
-| Fatwa Answer Time | < 48 hours |
-| Course Completion Rate | > 60% |
-| Monthly Active Users | 5,000 |
-| Platform Uptime | > 99.5% |
-| Content Authenticity Score | > 95% |
+4. **Legal review** of `pages/TermsOfService.tsx` + `pages/PrivacyPolicy.tsx` — the drafts are good-faith placeholders; a Bangladesh-qualified lawyer must bless them before real launch.
+
+5. **Costs are essentially zero to start** — Supabase free tier + Vercel free tier + Sentry/PostHog free tiers = $0/month for the first ~50K MAU.
 
 ---
 
-## 🤝 For the Non-Profit Owner
+## 📈 Success Targets (6 Months)
 
-**This is not just a tech project — it's a community trust.** Here's what matters most:
+| Metric | Target |
+|--------|--------|
+| Verified users | 10,000 |
+| Active institutions | 500 |
+| Verified scholars | 100 |
+| Monthly job applications | 2,000 |
+| Median fatwa answer time | < 48h |
+| Monthly active users | 5,000 |
+| Google organic sessions | > 15,000/mo |
+| Total monthly donations | ৳ 100,000 |
+| Platform uptime | > 99.5% |
 
-1. **Authenticity is our brand.** Every fatwa, course, and article must trace back to authentic sources. The [Knowledge Base module (M6)](./TRACK.md#m6-authentic-knowledge-base) is our moat.
-
-2. **Launch fast, but launch right.** The fastest path to real-world impact is **Phase 1 (M0-M2)** — get a backend, real auth, and ship the job board + fatwa portal. That alone changes lives.
-
-3. **Costs are minimal.** Supabase free tier + Vercel free tier = $0/mo to start. Premium features (job listings, certifications) can cover costs once we have scale.
-
-4. **We need scholars.** The single biggest risk is content authenticity. Finding 5-10 verified scholars to review fatwas and content is more important than any feature.
-
-5. **Mobile-first.** 80%+ of our users will access via smartphone on 3G. Every decision must optimize for that reality.
-
----
-
-## 🚀 Quick Start for Developers
-
-```bash
-npm install
-npm run dev
-```
-
-Development server runs on `http://localhost:3000`. See [PRD.md](./PRD.md) for product context, [TRACK.md](./TRACK.md) for what to work on next.
+Full KPI table in [`PROGRESS.md`](./PROGRESS.md#-kpis-to-track-after-launch).
 
 ---
 
 <div align="center">
   <p><strong>For the community, by the community.</strong></p>
   <p>মাদ্রাসা কানেক্ট বাংলাদেশ — Authentic Islamic Education, Modern Technology</p>
+  <p><sub>আল্লাহ আপনাকে তওফিক দিন — build slowly, ship honestly, listen relentlessly.</sub></p>
 </div>
