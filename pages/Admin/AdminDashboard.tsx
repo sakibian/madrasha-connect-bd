@@ -22,9 +22,10 @@ import { Job, Product, User, Fatwa, Source, ContentFlag, ScholarApplication, Adm
 import CitationBadge from '../../components/CitationBadge';
 import CitationPicker from '../../components/CitationPicker';
 import { StatCard, Button, Badge, LoadingSkeleton, EmptyState, ImageWithFallback } from '../../components/ui';
+import FeedbackPanel from './FeedbackPanel';
 
 const AdminDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'products' | 'users' | 'moderation' | 'audit'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'products' | 'users' | 'moderation' | 'feedback' | 'audit'>('overview');
   const [stats, setStats] = useState({
     jobs: 0,
     products: 0,
@@ -65,6 +66,7 @@ const AdminDashboard: React.FC = () => {
         <TabButton active={activeTab === 'products'} onClick={() => setActiveTab('products')} icon={<ShoppingBag size={16} />} label="মার্কেটপ্লেস" />
         <TabButton active={activeTab === 'users'} onClick={() => setActiveTab('users')} icon={<Users size={16} />} label="ইউজার" />
         <TabButton active={activeTab === 'moderation'} onClick={() => setActiveTab('moderation')} icon={<Shield size={16} />} label="মডারেশন" />
+        <TabButton active={activeTab === 'feedback'} onClick={() => setActiveTab('feedback')} icon={<MessageSquare size={16} />} label="ফিডব্যাক" />
         <TabButton active={activeTab === 'audit'} onClick={() => setActiveTab('audit')} icon={<History size={16} />} label="অডিট লগ" />
       </div>
 
@@ -87,6 +89,7 @@ const AdminDashboard: React.FC = () => {
       {activeTab === 'products' && <ManageProducts />}
       {activeTab === 'users' && <ManageUsers />}
       {activeTab === 'moderation' && <ModerationHub />}
+      {activeTab === 'feedback' && <FeedbackPanel />}
       {activeTab === 'audit' && <AuditLogViewer />}
     </div>
   );
