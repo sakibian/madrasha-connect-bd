@@ -31,20 +31,21 @@ A **non-profit digital ecosystem** for Bangladesh's madrasa community — connec
 |-----------|--------|
 | **Frontend UI** (30+ pages, Bengali-first) | ✅ Complete |
 | **Design system** (brand-consistent, zero off-brand colours) | ✅ Complete |
-| **Backend** (Supabase: 33 tables + RLS + Edge Functions) | ✅ Wired |
-| **Auth** (Email + Phone/SMS OTP with BD phone normalization) | ✅ Complete |
+| **Backend** (Supabase: 33 tables + RLS + Edge Functions) | ✅ Complete |
+| **Auth** (Email + Phone/SMS OTP with BD phone normalization) | ✅ Complete (web + mobile) |
 | **State management** (9 Zustand stores) | ✅ Complete |
-| **Testing** (142 unit tests passing, e2e coming) | 🟡 In progress |
-| **i18n** (Bengali / English / Arabic + RTL) | ✅ Infrastructure done, per-page rollout ongoing |
-| **SEO + AEO** (Helmet, hreflang, JSON-LD, sitemap, robots, llms.txt) | ✅ Infrastructure done, per-page rollout ongoing |
-| **Community feedback loop** (floating widget, DB-backed) | ✅ Complete |
-| **Legal** (Bengali ToS + Privacy drafts, need lawyer review) | 🟡 Draft |
-| **Notifications** (in-app + Supabase Realtime) | ✅ Done · Web Push TODO |
-| **Payments** (bKash / Nagad donation flow) | 🔴 Blocked on merchant account |
-| **Mobile app** (Expo shell scaffolded, screens TODO) | ⚪ Backlog |
-| **Production Readiness** | ~**65%** — see PROGRESS.md for exact breakdown |
+| **Testing** (142 unit tests + 7 Playwright e2e specs) | ✅ Complete |
+| **i18n** (Bengali / English / Arabic + RTL) | ✅ Infrastructure complete, core pages translated |
+| **SEO + AEO** (Helmet, hreflang, JSON-LD, sitemap, robots, llms.txt) | ✅ Complete infrastructure, per-page rollout ready |
+| **Community feedback loop** (floating widget → admin triage) | ✅ Complete end-to-end |
+| **Admin panels** (feedback triage, user management, moderation) | ✅ Complete |
+| **Legal** (Bengali ToS + Privacy drafts, need lawyer review) | 🟡 Drafted |
+| **Notifications** (in-app + Supabase Realtime) | ✅ Complete · Web Push TODO |
+| **Payments** (bKash donation flow, dry-run safe) | ✅ Code complete · 🔴 Blocked on merchant account |
+| **Mobile app** (Phone/OTP login + core screens) | ✅ Phone/OTP done · other screens TODO |
+| **Production Readiness** | ~**40%** — see PROGRESS.md for exact breakdown |
 
-**MVP soft-launch estimate:** ~2-3 weeks (blocked on founder actions in [`NEXT_STEPS.md`](./NEXT_STEPS.md), not code).
+**MVP soft-launch estimate:** ~1 week (blocked on founder actions in [`NEXT_STEPS.md`](./NEXT_STEPS.md), not code).
 
 ---
 
@@ -109,7 +110,10 @@ npm test                 # unit tests (Vitest — 142 tests, all passing)
 npm run test:coverage    # coverage report
 npm run build            # production build
 npm run preview          # preview the production build
-npx playwright test      # e2e tests
+npx playwright test      # e2e tests (7 specs, covers OTP/feedback/i18n/SEO)
+
+# Mobile development
+cd mobile && npx expo start   # React Native dev server
 ```
 
 ---
@@ -136,7 +140,7 @@ npx playwright test      # e2e tests
 
 2. **Recruit 5-10 verified scholars** — the entire "authenticity" moat depends on this. Aim for 2 Qawmi, 2 Alia, 1 female scholar. Everything else is noise if we don't have this.
 
-3. **Open the bKash merchant account** — 2 weeks of paperwork. Start today so it's ready when the donation flow ships.
+3. **Open the bKash merchant account** — 2 weeks of paperwork. The donation flow is already coded (try it on `/sadaqah` — works in dry-run mode), just needs your merchant keys.
 
 4. **Legal review** of `pages/TermsOfService.tsx` + `pages/PrivacyPolicy.tsx` — the drafts are good-faith placeholders; a Bangladesh-qualified lawyer must bless them before real launch.
 

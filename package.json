@@ -12,6 +12,7 @@
     "test:coverage": "vitest run --coverage",
     "test:smoke": "vitest run src/test/__tests__/search.test.tsx",
     "analyze": "vite build --mode analyze",
+    "sync-readme": "node scripts/sync-readme.js",
     "postinstall": "simple-git-hooks || true"
   },
   "dependencies": {
