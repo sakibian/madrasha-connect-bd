@@ -21,6 +21,7 @@ const ScholarDirectory = lazy(() => import('./pages/ScholarDirectory'));
 const CalligraphyGallery = lazy(() => import('./pages/CalligraphyGallery'));
 const SeerahTimeline = lazy(() => import('./pages/SeerahTimeline'));
 const Deen101 = lazy(() => import('./pages/Deen101'));
+const QawmiSystem = lazy(() => import('./pages/QawmiSystem'));
 const LandingPage = lazy(() => import('./pages/LandingPage'));
 const AboutUs = lazy(() => import('./pages/AboutUs'));
 const PostJob = lazy(() => import('./pages/Institution/PostJob'));
@@ -195,6 +196,7 @@ const Shell: React.FC = () => {
               <Route path="/fatwa" element={<FatwaCenter />} />
               <Route path="/search" element={<SearchResults />} />
               <Route path="/deen101" element={<Deen101 />} />
+              <Route path="/qawmi-system" element={<QawmiSystem />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/competitions" element={<Competitions />} />
               <Route path="/audio-library" element={<AudioLibrary />} />

@@ -13,7 +13,7 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-08-01 19:18 UTC · **Latest deploy:** pending push (session 4 — Gender-aware avatars + bKash personal fallback + Partnerships registry)
+**Last updated:** 2026-08-01 22:31 UTC · **Latest deploy:** pending push (session 5 — M14 Real-Content foundation: Quran/Hadith/Prayer/Hijri APIs + Qawmi System explainer + Seerah dataset + Institutions importer scaffold + Deen-101 30-day curriculum)
 
 ---
 
@@ -55,6 +55,45 @@
 ---
 
 ## ✅ Completed (chronological)
+
+### 2026-08-01 (session 5 — M14 Real Content foundation)
+
+Roadmap + execution list committed as `PLAN.md` + `TODO.md`. This session
+shipped the full M14.1 layer + partial M14.2–M14.5 (data + migrations +
+scaffolds; UI polish continues next session).
+
+- **PLAN.md** — full M14 roadmap (M14.1–M14.5, sequencing, definition of done).
+- **TODO.md** — PR-sized actionable execution list with tick boxes per milestone.
+- **docs/CONTENT_SOURCES.md** — canonical registry of every upstream provider, licence, rate limit.
+- **M14.1 — Public API integration layer** (shipped)
+  - `services/content/errors.ts` — typed `ContentFetchError` + `Result<T>`
+  - `services/content/cache.ts` — deterministic `cacheKey` + read-through helper
+  - `services/content/quran.ts` — Al-Quran Cloud client (surah list, surah, ayah, audio CDN)
+  - `services/content/hadith.ts` — Sunnah.com client (collections, books, hadith)
+  - `services/content/prayer.ts` — Aladhan client (city/coords timings + Qibla)
+  - `services/content/hijri.ts` — today + G↔H conversion
+  - `database/migrations/2026_08_03_content_cache.sql` — `content_cache` table + RLS + purge function
+  - `supabase/functions/{quran,prayer,hadith}-proxy/index.ts` — Edge Function proxies with cache-first
+  - `components/Citation.tsx` — reusable citation badge
+  - `components/DailyIslamicWidget.tsx` — Hijri date + next prayer + ayah-of-the-day, mounts on Home/Dashboard
+- **M14.2 — Qawmi Education System explainer** (shipped)
+  - `data/qawmiBoards.ts` — 6 boards + Al-Haiatul Ulya federation, all with source URLs
+  - `data/marhalaLadder.ts` — 6-stage ladder (Ibtidaiyyah → Dawra-e-Hadith) with subject lists
+  - `pages/QawmiSystem.tsx` — cited data-driven explainer page
+  - `App.tsx` — `/qawmi-system` route mounted
+  - `components/StructuredData.tsx` — added generic `articleSchema`
+- **M14.3 — Real Seerah dataset** (shipped; page rewire next session)
+  - `data/seerah/events.ts` — 26 typed events (Birth → Wafat) w/ Quran/Sunnah.com citation URLs
+  - `database/migrations/2026_08_04_seerah_events.sql` — admin overlay table + RLS
+- **M14.4 — Institutions bootstrap scaffold** (shipped)
+  - `database/migrations/2026_08_05_institutions_source_tracking.sql` — `source_name`, `source_url`, `source_verified_at`, `district`, `division` columns
+  - `scripts/import-institutions/index.mjs` — CLI orchestrator with dry-run + dedup + write
+  - `scripts/import-institutions/sources/{bmeb,befaq,ifb,banbeis}.mjs` — pluggable adapters (stubs)
+  - `scripts/import-institutions/README.md` — full runbook
+- **M14.5 — Knowledge Hub / Deen-101 curriculum** (shipped; page rewire next session)
+  - `database/migrations/2026_08_06_curriculum.sql` — 4 curriculum tables (levels, subjects, lessons, resources) w/ RLS
+  - `data/curriculum/deen101.ts` — full 30-day general-public journey, every lesson sourced
+- **Tests:** 180/180 green (was 155). New: cache-key, errors, quran audio, Qawmi data, Seerah dataset, Deen-101 curriculum.
 
 ### 2026-08-01 (session 4 — Avatar gender fix + bKash personal fallback + Partnerships)
 

@@ -72,6 +72,41 @@ export const breadcrumbSchema = (
   })),
 });
 
+/**
+ * Generic Article schema — use for explainer pages, blog-style content, etc.
+ * (Distinct from `fatwaArticleSchema` which adds Fatwa-specific fields.)
+ */
+export const articleSchema = (article: {
+  title: string;
+  description: string;
+  url: string;
+  datePublished: string;
+  dateModified?: string;
+  author?: string;
+  inLanguage?: string;
+}) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.title,
+  description: article.description,
+  datePublished: article.datePublished,
+  dateModified: article.dateModified || article.datePublished,
+  author: {
+    '@type': 'Organization',
+    name: article.author || 'Madrasa Connect Bangladesh',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Madrasa Connect Bangladesh',
+    logo: { '@type': 'ImageObject', url: LOGO_URL },
+  },
+  inLanguage: article.inLanguage || 'bn',
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': article.url.startsWith('http') ? article.url : `${SITE_URL}${article.url}`,
+  },
+});
+
 /** FAQPage schema — put on FAQ + any Q&A page. */
 export const faqPageSchema = (
   items: { question: string; answer: string }[]
