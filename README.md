@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/tests-228%20passing-brightgreen" alt="tests" />
+  <img src="https://img.shields.io/badge/tests-236%20passing-brightgreen" alt="tests" />
   <img src="https://img.shields.io/badge/e2e-8%20specs-brightgreen" alt="e2e" />
   <img src="https://img.shields.io/badge/mobile-first-orange" alt="mobile-first" />
   <img src="https://img.shields.io/badge/PWA-installable-blue" alt="PWA" />
@@ -51,6 +51,7 @@ A **non-profit digital ecosystem** for Bangladesh's madrasa community — connec
 | **Testing** (220 unit tests + 8 Playwright e2e specs) | ✅ Complete |
 | **Notification UX** (Sonner toasts + Radix notification centre + permission primer) | ✅ Complete (M18) |
 | **Public LanguageSwitcher in Header + IP-geo auto-detect** (dev override `?geo=XX`) | ✅ Complete (M20) |
+| **Password show/hide toggle** (all auth forms) + **local `boring-avatars`** (no more DiceBear API) | ✅ Complete (M21) |
 | **Manual test playbook** (role-based `docs/MANUAL_TESTING.md` + `docs/QA_CHECKLIST.md`) | ✅ Complete (M19) |
 | **Mobile-first UX** (BottomNav + responsive layout + 16 px base + touch-friendly modals) | ✅ Complete (M15) |
 | **Unified color system** (`danger-*` / `warning-*` / `info-*` tokens + `<StatusBadge>`) | ✅ Complete (M16) |
@@ -133,7 +134,7 @@ npm run dev                  # http://localhost:3000
 **Commands:**
 ```bash
 npm run dev              # dev server on :3000
-npm test                 # unit tests (Vitest — 228 tests, all passing)
+npm test                 # unit tests (Vitest — 236 tests, all passing)
 npm run test:coverage    # coverage report
 npm run build            # production build
 npm run preview          # preview the production build

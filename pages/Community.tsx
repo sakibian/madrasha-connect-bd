@@ -126,78 +126,103 @@ const Community: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-fadeIn">
-      {/* AI Scholar Section */}
-      <section className="bg-gradient-to-br from-brand-900 to-brand-900 rounded-[2.5rem] p-8 md:p-10 text-white shadow-2xl shadow-brand-100">
-        <div className="flex items-center gap-4 mb-8">
-          <div className="p-4 bg-brand-400/20 rounded-3xl backdrop-blur-md border border-brand-400/30">
-             <Sparkles className="text-brand-400" size={32} />
+      {/*
+        AI Scholar Section — Brand-consistent redesign (M22).
+        Was: heavy brand-900 gradient + rounded-[2.5rem] blobs + drop-shadows.
+        Now: pure black hero + minimal-border + bd-green accent + no rounded blobs.
+        Matches the rest of the site's minimalist aesthetic.
+      */}
+      <section className="bg-black text-white p-8 md:p-12 space-y-8">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 flex items-center justify-center border border-bd-green">
+            <Sparkles className="text-bd-green" size={20} />
           </div>
-          <div>
-            <h2 className="text-2xl font-black">এআই আলেম (Alpha)</h2>
-            <p className="text-brand-300 font-medium">মুহূর্তেই আপনার মাসআলার প্রাথমিক সমাধান পান</p>
+          <div className="space-y-1">
+            <div className="caps-label text-bd-green">AI Alim · Alpha</div>
+            <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">এআই আলেম</h2>
+            <p className="text-sm text-gray-400 font-medium">মুহূর্তেই আপনার মাসআলার প্রাথমিক সমাধান পান।</p>
           </div>
         </div>
 
         <div className="relative">
-          <textarea 
-            className="w-full bg-white/10 border border-brand-400/30 rounded-[2rem] p-6 pr-16 text-white placeholder-brand-200/50 focus:outline-none focus:ring-2 focus:ring-brand-400 transition-all min-h-[150px] font-medium"
+          <textarea
+            className="w-full bg-white/5 border border-gray-800 p-6 pr-16 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-bd-green transition-all min-h-[150px] font-medium"
             placeholder="আপনার মাসআলা বা প্রশ্নটি এখানে বিস্তারিত লিখুন..."
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
           />
-          <button 
+          <button
             onClick={handleAskScholar}
             disabled={isLoading}
-            className="absolute bottom-6 right-6 p-3 bg-brand-400 text-brand-900 rounded-2xl hover:bg-white transition-all shadow-xl disabled:opacity-50"
+            aria-label="প্রশ্ন পাঠান"
+            className="absolute bottom-4 right-4 min-h-[44px] min-w-[44px] flex items-center justify-center bg-bd-green text-white hover:bg-white hover:text-black transition-all disabled:opacity-50"
           >
-            {isLoading ? <Loader2 size={24} className="animate-spin" /> : <Send size={24} />}
+            {isLoading ? <Loader2 size={20} className="animate-spin" /> : <Send size={20} />}
           </button>
         </div>
 
         {aiResponse && (
-          <div className="mt-8 bg-white/5 border border-white/10 rounded-[2rem] p-8 animate-slideDown shadow-inner">
-            <div className="flex items-start gap-4">
-               <div className="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center shrink-0 shadow-lg">
-                  <span className="text-brand-800 font-black">AI</span>
-               </div>
-               <div className="space-y-4 flex-1">
-                  <p className="text-brand-50 leading-relaxed whitespace-pre-line font-medium text-lg">
-                    {aiResponse}
-                  </p>
-               </div>
+          <div className="border-t border-gray-800 pt-6 animate-slideDown space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-bd-green flex items-center justify-center">
+                <span className="text-white font-black text-xs">AI</span>
+              </div>
+              <div className="caps-label text-gray-500">AI Response · প্রাথমিক পরামর্শ</div>
             </div>
+            <p className="text-white/90 leading-relaxed whitespace-pre-line font-medium text-base md:text-lg">
+              {aiResponse}
+            </p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 pt-2">
+              এটি চূড়ান্ত ফতোয়া নয় — একজন মুফতির যাচাই বাধ্যতামূলক।
+            </p>
           </div>
         )}
       </section>
 
-      {/* Madrasa Blood Bank Section */}
-      <section className="bg-bd-green/5 rounded-[2.5rem] p-8 border border-bd-green/20 shadow-sm space-y-6">
-        <div className="flex justify-between items-center">
-           <div className="flex items-center gap-3">
-              <div className="p-3 bg-bd-green text-white rounded-2xl"><Droplets /></div>
-              <h2 className="text-xl font-bold text-gray-800">মাদ্রাসা ব্লাড ব্যাংক</h2>
-           </div>
-           <button className="text-bd-green text-sm font-bold bg-white px-4 py-2 rounded-xl border border-bd-green/20 hover:bg-bd-green hover:text-white transition-all">দাতা হিসেবে যোগ দিন</button>
+      {/*
+        Madrasa Blood Bank — Brand-consistent redesign (M22).
+        Was: rounded-[2.5rem] card + rounded-2xl input + shadow.
+        Now: crisp minimal-border on white, bd-green accent icon.
+      */}
+      <section className="bg-white border border-gray-100 p-6 md:p-8 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-bd-green text-white flex items-center justify-center">
+              <Droplets size={18} />
+            </div>
+            <div>
+              <div className="caps-label text-gray-400">Community · Blood Donor</div>
+              <h2 className="text-xl font-extrabold tracking-tight">মাদ্রাসা ব্লাড ব্যাংক</h2>
+            </div>
+          </div>
+          <button className="text-xs font-bold uppercase tracking-widest text-bd-green border border-bd-green px-4 py-3 hover:bg-bd-green hover:text-white transition-all min-h-[44px]">
+            দাতা হিসেবে যোগ দিন
+          </button>
         </div>
         <div className="relative">
-           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-300" size={20} />
-           <input 
-              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white border border-brand-100 outline-none focus:ring-2 focus:ring-brand-200"
-              placeholder="রক্তের গ্রুপ বা এলাকা (উদা: A+, ঢাকা) লিখে খুঁজুন"
-              value={bloodSearch}
-              onChange={(e) => setBloodSearch(e.target.value)}
-           />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+          <input
+            className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
+            placeholder="রক্তের গ্রুপ বা এলাকা (উদা: A+, ঢাকা) লিখে খুঁজুন"
+            value={bloodSearch}
+            onChange={(e) => setBloodSearch(e.target.value)}
+          />
         </div>
         {bloodSearch && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-fadeIn">
-             <div className="bg-white p-4 rounded-2xl border border-bd-green/10 flex items-center gap-4">
-                <div className="w-12 h-12 bg-bd-green text-white rounded-xl flex items-center justify-center font-black text-xl">A+</div>
-                <div>
-                   <p className="font-bold text-gray-800 text-sm">মাওলানা জাহিদ</p>
-                   <p className="text-xs text-gray-400 flex items-center gap-1"><MapPin size={10} /> মিরপুর, ঢাকা</p>
-                </div>
-                <button className="ml-auto p-2 bg-bd-green/10 text-bd-green rounded-lg"><Heart size={16} /></button>
-             </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 animate-fadeIn">
+            <div className="bg-white border border-gray-100 p-4 flex items-center gap-4">
+              <div className="w-12 h-12 bg-bd-green text-white flex items-center justify-center font-black text-xl">A+</div>
+              <div className="flex-1 min-w-0">
+                <p className="font-bold text-gray-800 text-sm truncate">মাওলানা জাহিদ</p>
+                <p className="text-xs text-gray-400 flex items-center gap-1"><MapPin size={10} /> মিরপুর, ঢাকা</p>
+              </div>
+              <button
+                aria-label="যোগাযোগ করুন"
+                className="min-h-[44px] min-w-[44px] flex items-center justify-center border border-gray-200 text-bd-green hover:bg-bd-green hover:text-white transition-all"
+              >
+                <Heart size={16} />
+              </button>
+            </div>
           </div>
         )}
       </section>
