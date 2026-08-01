@@ -7,9 +7,19 @@
 
 <p align="center">
   <a href="./PROGRESS.md"><strong>📊 Live Progress</strong></a> ·
+  <a href="./PLAN.md"><strong>📐 M14 Content Roadmap</strong></a> ·
+  <a href="./TODO.md"><strong>✅ Execution List</strong></a> ·
   <a href="./NEXT_STEPS.md"><strong>🚀 Founder Handbook</strong></a> ·
-  <a href="./PRD.md"><strong>📋 Product Requirements</strong></a> ·
+  <a href="./PRD.md"><strong>📋 PRD</strong></a> ·
   <a href="./TRACK.md"><strong>🧭 Module Deep-Dive</strong></a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/tests-180%20passing-brightgreen" alt="tests" />
+  <img src="https://img.shields.io/badge/e2e-7%20specs-brightgreen" alt="e2e" />
+  <img src="https://img.shields.io/badge/i18n-bn%20%C2%B7%20en%20%C2%B7%20ar-blue" alt="i18n" />
+  <img src="https://img.shields.io/badge/backend-Supabase%20%2B%20RLS-blue" alt="backend" />
+  <img src="https://img.shields.io/badge/mobile-Expo%20SDK-purple" alt="mobile" />
 </p>
 
 ---
@@ -106,7 +116,7 @@ npm run dev                  # http://localhost:3000
 **Commands:**
 ```bash
 npm run dev              # dev server on :3000
-npm test                 # unit tests (Vitest — 142 tests, all passing)
+npm test                 # unit tests (Vitest — 180 tests, all passing)
 npm run test:coverage    # coverage report
 npm run build            # production build
 npm run preview          # preview the production build
@@ -123,12 +133,15 @@ cd mobile && npx expo start   # React Native dev server
 | Document | What It Contains | Who Should Read |
 |----------|-----------------|-----------------|
 | [PROGRESS.md](./PROGRESS.md) | **Live status of every track** — done / doing / blocked | Everyone |
+| [PLAN.md](./PLAN.md) | **M14 real-content roadmap** — sources, milestones, DoD | Everyone |
+| [TODO.md](./TODO.md) | **PR-sized execution list** with tick boxes per milestone | Engineers |
 | [NEXT_STEPS.md](./NEXT_STEPS.md) | **Founder handbook** — what to do outside the code | Founder |
 | [PRD.md](./PRD.md) | Complete product requirements — features, personas, KPIs | Everyone |
 | [TRACK.md](./TRACK.md) | Detailed 12-module engineering deep-dive | Engineers |
 | [CREDENTIALS.md](./CREDENTIALS.md) | External services, env vars, and setup steps | Ops |
+| [docs/CONTENT_SOURCES.md](./docs/CONTENT_SOURCES.md) | Registry of every upstream Islamic content provider + licence | Engineers / Legal |
 | [database/schema.sql](./database/schema.sql) | Master schema (33 tables + RLS) | Backend |
-| [database/migrations/](./database/migrations/) | Incremental migrations | Backend |
+| [database/migrations/](./database/migrations/) | Incremental migrations (now including content_cache, seerah_events, curriculum) | Backend |
 
 ---
 
