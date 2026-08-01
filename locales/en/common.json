@@ -37,6 +37,13 @@
     "education": "Education",
     "login": "Login"
   },
+  "bottomNav": {
+    "home": "Home",
+    "explore": "Explore",
+    "ask": "Ask",
+    "learn": "Learn",
+    "profile": "Profile"
+  },
   "auth": {
     "login": "Sign In",
     "loginSubtitle": "Continue with a phone OTP or your email and password.",

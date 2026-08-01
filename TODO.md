@@ -108,6 +108,42 @@
 
 ---
 
+## 📱 M15 — Mobile-First Overhaul
+
+### M15.1 — Layout & spacing
+- [x] Reduce mobile page padding: `App.tsx` container `p-8 md:p-12` → `px-4 py-6 md:p-12`
+- [x] `Header.tsx` `px-10` → `px-4 md:px-10`
+- [x] Hide `Header` search input on `<md`; expose via BottomNav "Explore" tab
+- [x] Ensure sidebar is `fixed` (not flex) on mobile so it never eats horizontal space
+- [x] Add `.tap-target` utility (`min-h-[44px] min-w-[44px]`) and apply to icon buttons
+
+### M15.2 — Bottom tab navigation
+- [x] `components/ui/BottomNav.tsx` — 5 tabs (Home, Explore, Ask, Learn, Profile)
+- [x] Sticky bottom with `env(safe-area-inset-bottom)`
+- [x] `md:hidden` — only visible on phones
+- [x] Active-tab highlight + `aria-current="page"`
+- [x] Mount in `App.tsx` alongside sidebar
+- [x] FeedbackWidget bottom offset `bottom-20 md:bottom-6` so it isn't covered
+
+### M15.3 — Typography & readability
+- [x] `src/index.css` — base body font-size: `16px` on mobile
+- [x] `[lang="bn"]` selector — `line-height: 1.7`
+- [x] `input/select/textarea` `font-size: 16px` (prevents iOS zoom-on-focus)
+- [x] Hero titles keep `text-4xl md:text-5xl` (already correct)
+
+### M15.4 — Touch-friendly interactions
+- [x] `components/ui/Modal.tsx` — bottom sheet on `<sm`, safe-area-inset padding
+- [x] Form inputs: `text-base` (16px) globally — no more iOS zoom-on-focus
+- [x] `components/FeedbackWidget.tsx` — bottom offset applied
+- [x] Sidebar overlay: tap-outside close already works; Escape via focus trap next
+
+### M15.5 — Mobile test coverage
+- [x] `components/ui/__tests__/BottomNav.test.tsx` — 5 tabs + active state + aria-current
+- [x] `e2e/mobile-nav.spec.ts` — viewport iPhone SE, nav renders, tabs route, widget above nav
+- [ ] Add mobile viewport to `playwright.config.ts` projects list (spec uses `test.use(devices)` inline for now)
+
+---
+
 ## 🛠️ Cross-cutting
 
 - [x] `components/Citation.tsx` — reusable citation badge (`source`, `url`, `verifiedAt`)

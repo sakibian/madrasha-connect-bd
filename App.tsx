@@ -58,6 +58,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { SyncStatusProvider } from './contexts/SyncStatusContext';
 import { useAuthStore, useNotificationStore } from './stores';
 import { Header, Sidebar, PageLoader } from './components/ui';
+import BottomNav from './components/ui/BottomNav';
 
 const App: React.FC = () => {
   return (
@@ -134,7 +135,7 @@ const Shell: React.FC = () => {
   if (isLandingPage && !currentUser) return <LandingPage />;
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-[#F9FAFB]">
+    <div className="min-h-screen flex flex-row bg-[#F9FAFB]">
       {/* Site-wide default SEO — individual pages override with their own <SEO />. */}
       <SEO
         title={`${t('brand.name')} — ${t('brand.tagline')}`}
@@ -181,7 +182,7 @@ const Shell: React.FC = () => {
           </nav>
         )}
         <div aria-live="polite" aria-atomic="true" className="sr-only"></div>
-        <div className={`w-full ${currentUser ? 'p-8 md:p-12 max-w-6xl mx-auto' : 'max-w-7xl mx-auto px-6 py-12'}`}>
+        <div className={`w-full ${currentUser ? 'px-4 py-6 md:px-8 md:py-8 lg:p-12 max-w-6xl mx-auto pb-24 md:pb-8' : 'max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12'}`}>
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/dashboard" element={<Dashboard />} />
@@ -226,6 +227,8 @@ const Shell: React.FC = () => {
       </main>
       {/* Feedback widget floats on every page — critical trust-building UX */}
       <FeedbackWidget />
+      {/* Bottom tab bar — mobile only. Primary nav for our 95%-mobile user base. */}
+      <BottomNav />
     </div>
   );
 };

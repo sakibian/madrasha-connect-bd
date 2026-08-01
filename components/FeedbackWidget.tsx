@@ -73,7 +73,7 @@ const FeedbackWidget: React.FC = () => {
         type="button"
         onClick={() => setOpen(true)}
         aria-label={t('feedback.trigger_aria')}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 bg-black text-white pl-4 pr-5 py-3 rounded-full shadow-2xl hover:bg-bd-green hover:scale-105 transition-all"
+        className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-40 flex items-center gap-2 bg-black text-white pl-4 pr-5 py-3 rounded-full shadow-2xl hover:bg-bd-green hover:scale-105 transition-all min-h-[44px]"
       >
         <MessageSquarePlus size={18} />
         <span className="text-xs font-bold tracking-widest uppercase hidden sm:inline">{t('feedback.trigger')}</span>

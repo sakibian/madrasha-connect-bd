@@ -44,7 +44,14 @@ A **non-profit digital ecosystem** for Bangladesh's madrasa community — connec
 | **Backend** (Supabase: 33 tables + RLS + Edge Functions) | ✅ Complete |
 | **Auth** (Email + Phone/SMS OTP with BD phone normalization) | ✅ Complete (web + mobile) |
 | **State management** (9 Zustand stores) | ✅ Complete |
-| **Testing** (142 unit tests + 7 Playwright e2e specs) | ✅ Complete |
+| **Testing** (180 unit tests + 7 Playwright e2e specs) | ✅ Complete |
+| **Real Islamic content APIs** (Quran / Hadith / Prayer / Hijri via Edge proxies + cache) | ✅ Complete (M14.1) |
+| **Qawmi Education System explainer** (`/qawmi-system`, cited data) | ✅ Complete (M14.2) |
+| **Seerah dataset** (26 events w/ Quran.com + Sunnah.com citations) | ✅ Data shipped · page rewire pending (M14.3) |
+| **Institutions bootstrap** (BMEB/Befaq/IFB/Banbeis importer) | 🟡 Scaffold + dedup ready · real fetchers pending (M14.4) |
+| **Deen-101 curriculum** (30-day journey, every lesson sourced) | ✅ Data shipped · page rewire pending (M14.5) |
+| **Partnerships registry** (12 BD Islamic apps/NGOs for outreach) | ✅ Complete |
+| **Gender-aware avatars** (bn/en/ar name inference) | ✅ Complete |
 | **i18n** (Bengali / English / Arabic + RTL) | ✅ Infrastructure complete, core pages translated |
 | **SEO + AEO** (Helmet, hreflang, JSON-LD, sitemap, robots, llms.txt) | ✅ Complete infrastructure, per-page rollout ready |
 | **Community feedback loop** (floating widget → admin triage) | ✅ Complete end-to-end |
@@ -116,7 +123,7 @@ npm run dev                  # http://localhost:3000
 **Commands:**
 ```bash
 npm run dev              # dev server on :3000
-npm test                 # unit tests (Vitest — 180 tests, all passing)
+npm test                 # unit tests (Vitest — 186 tests, all passing)
 npm run test:coverage    # coverage report
 npm run build            # production build
 npm run preview          # preview the production build

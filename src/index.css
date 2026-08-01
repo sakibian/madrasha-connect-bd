@@ -15,7 +15,41 @@ body {
   background-color: var(--pure-white);
   color: var(--pure-black);
   -webkit-font-smoothing: antialiased;
+  /* 16 px base prevents iOS Safari zoom-on-focus for form inputs and
+     improves Bengali script legibility on small screens. */
+  font-size: 16px;
+  line-height: 1.5;
 }
+
+/* Bengali script needs slightly more line-height for the vertical marks
+   (matra, hasant, chandrabindu) not to touch the next line. */
+[lang="bn"], :root {
+  line-height: 1.7;
+}
+
+/* Prevent iOS zoom-on-focus for all form inputs by ensuring text-size ≥ 16px. */
+input, select, textarea {
+  font-size: 16px;
+}
+@media (min-width: 768px) {
+  input, select, textarea {
+    font-size: inherit;
+  }
+}
+
+/* Universal tap-target utility for icon buttons, chips, and small actions.
+   Matches iOS HIG minimum + WCAG 2.5.5 (target size 44 × 44 CSS px). */
+.tap-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Safe-area padding helpers for iPhone notch + home indicator. */
+.safe-top    { padding-top: env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
 
 .minimal-border {
   border: 1px solid var(--border-color);

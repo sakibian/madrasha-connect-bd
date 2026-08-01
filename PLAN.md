@@ -184,7 +184,54 @@ Sessions 1–4 built the *shell* of the platform (auth, i18n, SEO, payments, adm
 
 ---
 
-## ✅ Definition of "production-ready" after M14
+---
+
+## 📱 M15 — Mobile-First Overhaul (**new — critical**)
+
+**Objective:** 95% of our target users access the platform from a phone. The current UI works on mobile but is **not truly mobile-first** — the sidebar-driven navigation, `p-8` mobile padding, `px-10` header, and 14 px body text create a desktop-feeling experience that hurts trust and conversion. M15 restructures the entire mobile experience.
+
+### M15.1 — Layout & spacing (~1 h)
+
+- Reduce mobile page padding: `App.tsx` `p-8 md:p-12` → `px-4 py-6 md:p-12`.
+- `Header.tsx` `px-10` → `px-4 md:px-10`; hide the search input on `< md` (accessible via bottom-nav Search tab).
+- Ensure the sidebar occupies zero horizontal space on mobile when closed (fixed drawer, not flex column).
+- Every interactive element ≥ 44 × 44 px (iOS HIG). Add utility class `.tap-target` where needed.
+
+### M15.2 — Bottom tab navigation (~2 h)
+
+- New `components/ui/BottomNav.tsx` — 5 tabs: **Home · Explore · Ask · Learn · Profile**.
+- Visible only `< md`. Sticky bottom with `env(safe-area-inset-bottom)` support.
+- Active-tab highlight; ARIA-current on the active link; keyboard focusable.
+- Hamburger stays as "More" drawer for less-frequent items (Marketplace, Sadaqah, Tools, Admin…).
+- FeedbackWidget must sit above the bottom nav on mobile (bottom offset).
+
+### M15.3 — Typography & readability (~30 min)
+
+- Base font on mobile: `text-base` (16 px) — matches iOS zoom-avoidance threshold + improves Bengali script legibility.
+- Bengali text (`lang="bn"`): bump `line-height` to `leading-loose`.
+- Card body copy: `text-sm` → `text-base` on mobile, tighten to `text-sm` at `md:` and up.
+
+### M15.4 — Touch-friendly interactions (~1 h)
+
+- Modals: full-screen on mobile (`sm:rounded-none sm:max-h-screen`) instead of centered card.
+- Form inputs: `py-3` + `text-base` so iOS Safari does not auto-zoom on focus.
+- FeedbackWidget: bottom offset above the bottom nav (`bottom-24 md:bottom-6`).
+- Sidebar drawer: swipe-to-close gesture (optional stretch).
+
+### M15.5 — Mobile test coverage (~1 h)
+
+- New Playwright config: viewport 375 × 667 (iPhone SE) + 390 × 844 (iPhone 12).
+- Spec `e2e/mobile-nav.spec.ts` — bottom nav renders on mobile, each tab routes correctly, hamburger opens sidebar drawer, FeedbackWidget is not covered.
+- Unit test `components/ui/__tests__/BottomNav.test.tsx` — 5 tabs render, active state, aria-current.
+
+**Definition of done for M15:**
+- Lighthouse mobile score ≥ 90 for Performance + Accessibility on the Home page.
+- No horizontal scroll at any viewport ≥ 320 px.
+- Every primary user flow (login, ask fatwa, browse jobs, donate) completes without opening the sidebar drawer.
+
+---
+
+## ✅ Definition of "production-ready" after M14 + M15
 
 - Landing page shows today's Hijri date + local prayer times from real APIs.
 - `/quran` reads any surah with Bengali translation, live from Al-Quran Cloud.

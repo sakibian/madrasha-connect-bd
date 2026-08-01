@@ -13,7 +13,7 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-08-01 22:31 UTC · **Latest deploy:** pending push (session 5 — M14 Real-Content foundation: Quran/Hadith/Prayer/Hijri APIs + Qawmi System explainer + Seerah dataset + Institutions importer scaffold + Deen-101 30-day curriculum)
+**Last updated:** 2026-08-01 22:39 UTC · **Latest deploy:** pending push (session 6 — M15 Mobile-First Overhaul: BottomNav + responsive layout + typography + touch-friendly modal + mobile tests)
 
 ---
 
@@ -55,6 +55,43 @@
 ---
 
 ## ✅ Completed (chronological)
+
+### 2026-08-01 (session 6 — M15 Mobile-First Overhaul)
+
+95% of our users are on phones, so the entire chrome was rewired for mobile-first.
+PLAN.md + TODO.md now include the full M15 track.
+
+- **PLAN.md + TODO.md** — added the M15 milestone (5 sub-phases, definition of done).
+- **M15.1 Layout & spacing**
+  - `App.tsx` main container: `p-8 md:p-12` → `px-4 py-6 md:px-8 md:py-8 lg:p-12`
+    with `pb-24 md:pb-8` so content isn't hidden under the new BottomNav.
+  - `App.tsx` root wrapper: dropped `flex-col md:flex-row` → `flex-row` so the
+    fixed sidebar never steals horizontal space on mobile.
+  - `Header.tsx`: `px-10` → `px-4 md:px-10`; height `h-20` → `h-16 md:h-20`;
+    search input hidden on `<md`; hamburger moved to the left (thumb-reachable);
+    every icon button now ≥ 44 × 44 px.
+- **M15.2 Bottom tab navigation**
+  - New `components/ui/BottomNav.tsx` — 5 tabs (Home, Explore, Ask, Learn, Profile).
+  - `md:hidden`, sticky bottom, `pb-[env(safe-area-inset-bottom)]` for iPhone home-indicator.
+  - Active-tab highlighted via `NavLink` + implicit `aria-current="page"`.
+  - Mounted in `App.tsx` alongside `FeedbackWidget`.
+  - Bengali/English/Arabic labels via `locales/{bn,en,ar}/common.json` new `bottomNav` block.
+- **M15.3 Typography & readability**
+  - `src/index.css`: base `font-size: 16px`, `line-height: 1.5` (1.7 for Bengali).
+  - `input/select/textarea` pinned to `16px` — kills iOS Safari zoom-on-focus for good.
+  - New utility classes `.tap-target` (44 × 44 min-hit), `.safe-top`, `.safe-bottom`.
+- **M15.4 Touch-friendly interactions**
+  - `Modal.tsx`: bottom-sheet on `<sm` (docks to bottom edge, no rounded corners,
+    full-width) then centred card on `sm+`. Safe-area-inset padding baked in.
+    Close button now 44×44. Header is sticky inside a scrolling modal.
+  - `FeedbackWidget.tsx`: `bottom-6 right-6` → `bottom-20 md:bottom-6 right-4 md:right-6`
+    so it never sits under the BottomNav.
+- **M15.5 Test coverage**
+  - `components/ui/__tests__/BottomNav.test.tsx` — 6 tests (tab count, labels,
+    aria-label, md:hidden, aria-current on active route).
+  - `e2e/mobile-nav.spec.ts` — Playwright iPhone-SE spec: nav visible on mobile,
+    hidden on desktop, Ask tab routes to /fatwa, FeedbackWidget above nav.
+- **Tests:** 186/186 green (was 180).
 
 ### 2026-08-01 (session 5 — M14 Real Content foundation)
 
