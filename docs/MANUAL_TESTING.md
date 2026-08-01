@@ -84,6 +84,15 @@ Tick the box, or write ❌ + the actual result if it fails.
 - [ ] 2. Language switcher tap → English → Arabic — Expected: content updates, `<html lang>` and `<html dir="rtl">` change; verify with DevTools Elements tab.
 - [ ] 3. Scroll to bottom — Expected: footer visible, no clipped elements, all links tap-target ≥ 44×44 px.
 
+### 1.1.a Language auto-detect (M20)
+- [ ] 1a. Clear `localStorage` (`mc_language` + `mc_geo_lang`) via DevTools → Application → Storage → Clear site data.
+- [ ] 1b. Refresh — Expected: page loads in `bn` initially, then within ~2 s auto-switches to whatever the geo API decides (usually English on VPN-less staging).
+- [ ] 1c. A dismissible Sonner toast appears: **"Showing in <lang> · Tap the language switcher in the header to change."**
+- [ ] 1d. Header language switcher visible on **both** mobile and desktop (top-right cluster, next to the notification bell).
+- [ ] 1e. Dev override: visit `/?geo=SA` → language becomes **Arabic** and `<html dir="rtl">`.
+- [ ] 1f. Dev override: visit `/?geo=BD` → language becomes **Bengali**.
+- [ ] 1g. Choose a language manually → refresh — Expected: choice persists, toast does NOT re-appear (user preference wins for good).
+
 ### 1.2 Registration & login flows
 - [ ] 4. Tap **Sign In** — Expected: `/login` page loads.
 - [ ] 5. Tap **নতুন অ্যাকাউন্ট** (or "Register") — Expected: `/register-user` loads.

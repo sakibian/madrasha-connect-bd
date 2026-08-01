@@ -9,11 +9,15 @@ import { registerServiceWorker } from './src/pwa/registerSW';
 // Initialise i18next before any component renders so that the very first
 // paint already speaks the correct language.
 import './i18n/config';
+import { bootstrapGeoLanguage } from './i18n/geoBootstrap';
 import './src/index.css';
 
 initSentry();
 initPostHog();
 registerServiceWorker();
+// IP-based language auto-detect (only fires when the user has no explicit
+// preference). Async; never blocks first paint. See i18n/geoBootstrap.ts.
+bootstrapGeoLanguage();
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

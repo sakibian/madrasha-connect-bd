@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, Menu, X } from 'lucide-react';
 import SyncStatus from '../SyncStatus';
 import NotificationBell from '../NotificationBell';
+import LanguageSwitcher from '../LanguageSwitcher';
 
 interface HeaderProps {
   onMenuToggle: () => void;
@@ -47,9 +48,11 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, isSidebarOpen }) => {
         </div>
       </form>
 
-      {/* Right cluster — sync + notifications */}
-      <div className="flex items-center gap-3 md:gap-6">
+      {/* Right cluster — sync + language + notifications */}
+      <div className="flex items-center gap-2 md:gap-4">
         <SyncStatus />
+        {/* Public: visible on every viewport, logged-in or not */}
+        <LanguageSwitcher />
         <NotificationBell />
       </div>
     </header>

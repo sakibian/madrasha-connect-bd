@@ -372,7 +372,63 @@ Sessions 1–4 built the *shell* of the platform (auth, i18n, SEO, payments, adm
 
 ---
 
-## ✅ Definition of "production-ready" after M14 + M15 + M16 + M17 + M18 + M19
+---
+
+## 🌍 M20 — Public Language Switcher + IP-Geo Auto-Detect (**new**)
+
+**Objective:** Make the language switcher accessible from **every page for every user** (guest or logged-in, mobile or desktop) AND intelligently pick the right default language based on the visitor's country when we have no saved preference.
+
+**Why this matters:** an Arabic-speaking donor from the UAE currently lands on Bengali and has to hunt for the language switcher (which lives inside the logged-in sidebar or logged-out top nav). We lose them in the first 3 seconds.
+
+### M20.1 — Public LanguageSwitcher (~15 min)
+
+- Mount `<LanguageSwitcher />` directly in `components/ui/Header.tsx` next to the notification bell so **every logged-in mobile user sees it too** (currently only visible in the sidebar).
+- Keep the existing mounts in the logged-out top nav + sidebar as they are.
+
+### M20.2 — IP-based geo detection (~1 h)
+
+- New `i18n/geoDetect.ts` — a small client-side helper that:
+  - Calls a free public geo API (default: `https://ipapi.co/json/`, fallback `https://ipwho.is/`).
+  - Extracts `country_code` + `languages` (comma-separated list of preferred languages).
+  - Maps to one of our 3 supported codes using a country-to-language table:
+    - Bengali countries: `BD` (primary) — India Bengali speakers detected via `languages` header contains `bn`.
+    - Arabic countries: `SA, AE, EG, KW, QA, BH, OM, IQ, JO, LB, SY, YE, LY, DZ, MA, TN, PS, SD`.
+    - Everything else → `en`.
+  - Aggressively caches the result in `localStorage.mc_geo_lang` for 7 days so we don't hit the API on every page load.
+  - Gracefully degrades: if the fetch fails, returns `null` and the existing detector fallback (navigator → `bn`) takes over.
+
+### M20.3 — Wire into detection chain (~15 min)
+
+- Update `i18n/config.ts` detector order to: `querystring → localStorage → geoDetect → navigator → htmlTag → 'bn'`.
+- Register `geoDetect` as a custom `LanguageDetector` module (i18next supports adding custom detectors).
+- Ensure it runs asynchronously without blocking initial render — first paint uses `bn`, then switches to the geo language once resolved (via `i18n.changeLanguage`).
+
+### M20.4 — Auto-detect toast (~15 min)
+
+- When geo-detect changes the language away from the browser/default, fire a Sonner **dismissible toast** for ~8 s:
+  > "Showing in English · আপনার ভাষা পরিবর্তন করুন"
+- Toast has a **Change** action that opens the LanguageSwitcher.
+- Never fire the toast when the user has an explicit `mc_language` — it's only for first-time visitors.
+
+### M20.5 — Tests + docs (~30 min)
+
+- `i18n/__tests__/geoDetect.test.ts` — country-to-lang mapping, cache read/write, network failure fallback.
+- `i18n/__tests__/config.test.ts` — verifies the detector order remains correct.
+- `docs/MANUAL_TESTING.md` — add a "Language auto-detect" section under Guest role covering:
+  - Bangladesh IP → sees Bengali (default is already Bengali, so verify by clearing localStorage).
+  - Arabic country IP (use VPN or `?geo=SA` dev override) → sees Arabic + RTL layout + toast.
+  - Anywhere else → sees English + toast.
+
+**Definition of done:**
+- LanguageSwitcher visible in the Header for every user on every viewport.
+- A first-time visitor from an Arabic country automatically sees Arabic (verified with a VPN or dev query-string override).
+- A first-time visitor from a non-BD, non-Arabic country automatically sees English.
+- The auto-detect toast never re-fires once the user has manually chosen a language.
+- Zero regression to existing i18n tests.
+
+---
+
+## ✅ Definition of "production-ready" after M14 + M15 + M16 + M17 + M18 + M19 + M20
 
 - Landing page shows today's Hijri date + local prayer times from real APIs.
 - `/quran` reads any surah with Bengali translation, live from Al-Quran Cloud.

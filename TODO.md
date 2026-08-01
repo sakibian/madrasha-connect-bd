@@ -234,6 +234,20 @@
 
 ---
 
+## 🌍 M20 — Public Language Switcher + IP-Geo Auto-Detect
+
+- [x] Mount `<LanguageSwitcher />` inside `components/ui/Header.tsx` (visible on every route, every viewport)
+- [x] `i18n/geoDetect.ts` — country→lang mapping + fetch + 7-day localStorage cache + graceful degrade + `?geo=XX` dev override
+- [x] `i18n/geoBootstrap.ts` — async post-init bootstrap; only runs when user has no explicit preference
+- [x] `index.tsx` — calls `bootstrapGeoLanguage()` on app init
+- [x] First-time visitors from Arabic-speaking countries → auto-load Arabic (+RTL)
+- [x] Dismissible Sonner toast when geo overrides the default; suggests using the header switcher to change
+- [x] Never toast when `mc_language` already set
+- [x] `i18n/__tests__/geoDetect.test.ts` — mapping + cache clear (11 tests)
+- [x] `docs/MANUAL_TESTING.md` — Language auto-detect subsection under Guest role
+
+---
+
 ## 🛠️ Cross-cutting
 
 - [x] `components/Citation.tsx` — reusable citation badge (`source`, `url`, `verifiedAt`)

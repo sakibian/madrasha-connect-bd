@@ -13,7 +13,7 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-08-01 23:03 UTC · **Latest deploy:** pending push (session 9 — M19 Manual Browser Test Guide: role-based playbook + 30-min pre-release smoke)
+**Last updated:** 2026-08-01 23:07 UTC · **Latest deploy:** pending push (session 10 — M20 Public LanguageSwitcher in Header + IP-geo auto-detect with dev override)
 
 ---
 
@@ -55,6 +55,41 @@
 ---
 
 ## ✅ Completed (chronological)
+
+### 2026-08-01 (session 10 — M20 Public Language Switcher + IP-Geo)
+
+The language switcher now lives in the Header on every viewport, and
+first-time visitors get their language auto-picked from their IP.
+
+- **PLAN.md + TODO.md** — new M20 milestone with definition of done.
+- **`i18n/geoDetect.ts`** — pure country→lang mapper + cached ipapi.co fetch (7-day localStorage cache) + ipwho.is fallback + `?geo=XX` dev/QA override + 2500 ms AbortController timeout.
+  - Bengali countries: `BD` (+ Bengali speakers detected via `languages` hint).
+  - Arabic League countries: 22 codes including SA, AE, EG, MA, and Palestine.
+  - Everything else → English.
+- **`i18n/geoBootstrap.ts`** — async post-init hook: only runs when the user has no `mc_language` and no `?lang=` param; calls `i18n.changeLanguage()` and fires a Sonner info toast when it overrides the default.
+- **`index.tsx`** — calls `bootstrapGeoLanguage()` on app init, right after PWA + analytics.
+- **`components/ui/Header.tsx`** — `<LanguageSwitcher />` mounted next to the notification bell. First time it's visible for logged-in mobile users (previously buried in the sidebar).
+- **`docs/MANUAL_TESTING.md`** — new §1.1.a "Language auto-detect" — 7 QA steps including `?geo=SA` and `?geo=BD` dev overrides.
+- **Tests:** 228/228 green (was 220 → +8 in `i18n/__tests__/geoDetect.test.ts`).
+
+### 2026-08-01 (session 9 — M19 Manual Browser Test Guide)
+
+Written for humans, not machines — so the founder or a non-technical volunteer
+can smoke-test the platform end-to-end before every release.
+
+- **PLAN.md + TODO.md** — new M19 milestone with definition of done.
+- **`docs/MANUAL_TESTING.md`** — the master playbook.
+  - 5 role-based scenario blocks: Guest → User → Scholar → Institution → Admin.
+  - Cross-role realtime scenario (fatwa answered → user is notified).
+  - Mobile-only checks (BottomNav, install prompt, safe-area, bottom-sheet modals).
+  - Accessibility spot-checks (skip link, Escape, alt, Lighthouse).
+  - Security spot-checks (role guarding, no leaked secrets, JWT hygiene).
+  - Every step has a pass/fail checkbox + expected result + bug-file template.
+- **`docs/QA_CHECKLIST.md`** — 30-minute pre-release smoke:
+  - Automated gates → Guest → User → Admin → cross-role → mobile → sign-off.
+  - Copy-into-issue format so releases have an auditable trail.
+- **README.md** — linked both docs + INCIDENT_RUNBOOK + ROLLBACK_PROCEDURES in the Key Documents table.
+- **AGENTS.md** — new **Manual browser test rule** requiring QA_CHECKLIST before every deploy and MANUAL_TESTING role section for any PR touching auth/payments/notifications/admin; adds "write a test before fixing the bug" rule for manual regressions.
 
 ### 2026-08-01 (session 8 — M18 Delightful Notification UX)
 

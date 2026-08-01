@@ -69,6 +69,8 @@ i18n
       escapeValue: false, // React already escapes
     },
     detection: {
+      // NOTE: geo detection is async so it runs OUTSIDE the sync detector
+      // chain (see i18n/geoBootstrap.ts). Order below is the sync fallback.
       order: ['querystring', 'localStorage', 'navigator', 'htmlTag'],
       lookupQuerystring: 'lang',
       lookupLocalStorage: 'mc_language',
