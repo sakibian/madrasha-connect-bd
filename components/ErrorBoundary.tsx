@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Sentry from '@sentry/react';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
 
 interface ErrorBoundaryState {
@@ -17,6 +18,23 @@ export default class ErrorBoundary extends React.Component<
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    // Forward the error to Sentry so we get real production visibility.
+    // No-op if VITE_SENTRY_DSN isn't set — Sentry.init() will not have run.
+    try {
+      Sentry.withScope((scope) => {
+        scope.setExtras({ componentStack: errorInfo.componentStack });
+        Sentry.captureException(error);
+      });
+    } catch {
+      // Never let observability failures crash the fallback UI.
+    }
+    // Keep a console breadcrumb in dev.
+    if (import.meta.env.MODE !== 'production') {
+      console.error('[ErrorBoundary] Uncaught error:', error, errorInfo);
+    }
   }
 
   handleReset = () => {

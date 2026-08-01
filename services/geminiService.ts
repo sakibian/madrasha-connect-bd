@@ -1,26 +1,15 @@
 
 import { dataService } from "./dataService";
-
-const EDGE_FN_URL = 'https://nkdtlussmrovzjxmquup.functions.supabase.co/gemini-proxy';
+import { callEdgeFunction } from "./edgeFunctions";
 
 const callEdgeFn = async (body: {
   action: string;
   prompt: string;
   systemInstruction?: string;
   schema?: Record<string, unknown>;
-}) => {
-  try {
-    const res = await fetch(EDGE_FN_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.text || null;
-  } catch {
-    return null;
-  }
+}): Promise<string | null> => {
+  const data = await callEdgeFunction<{ text?: string }>('gemini-proxy', body);
+  return data?.text ?? null;
 };
 
 const moderationSchema = {

@@ -1,5 +1,5 @@
 
-const MODERATION_FN_URL = 'https://nkdtlussmrovzjxmquup.functions.supabase.co/content-moderation';
+import { callEdgeFunction } from './edgeFunctions';
 
 interface ModerationResult {
   safe: boolean;
@@ -10,20 +10,22 @@ interface ModerationResult {
   content_type: string;
 }
 
-export const moderateContent = async (text: string, contentType: string = 'general'): Promise<ModerationResult> => {
-  try {
-    const res = await fetch(MODERATION_FN_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text, content_type: contentType }),
-    });
-    if (!res.ok) {
-      console.error('Moderation API error:', res.status);
-      return { safe: false, pending_review: true, feedback: 'Moderation service unavailable — queued for manual review', flaggedCategories: [], layer: 0, content_type: contentType };
-    }
-    return await res.json();
-  } catch (err) {
-    console.error('Moderation service error:', err);
-    return { safe: false, pending_review: true, feedback: 'Moderation service unavailable — queued for manual review', flaggedCategories: [], layer: 0, content_type: contentType };
-  }
+const fallback = (contentType: string): ModerationResult => ({
+  safe: false,
+  pending_review: true,
+  feedback: 'Moderation service unavailable — queued for manual review',
+  flaggedCategories: [],
+  layer: 0,
+  content_type: contentType,
+});
+
+export const moderateContent = async (
+  text: string,
+  contentType: string = 'general'
+): Promise<ModerationResult> => {
+  const data = await callEdgeFunction<ModerationResult>('content-moderation', {
+    text,
+    content_type: contentType,
+  });
+  return data ?? fallback(contentType);
 };
