@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { MessageSquarePlus, X, Loader2, CheckCircle, Send } from 'lucide-react';
 import { submitFeedback, FeedbackCategory } from '../services/feedbackService';
 
@@ -17,15 +18,17 @@ import { submitFeedback, FeedbackCategory } from '../services/feedbackService';
  * triage from the Admin Dashboard once the feedback admin panel is built.
  */
 
-const CATEGORIES: { value: FeedbackCategory; label: string; emoji: string }[] = [
-  { value: 'bug',      label: 'কিছু ভেঙে গেছে',           emoji: '🐞' },
-  { value: 'idea',     label: 'নতুন আইডিয়া / ফিচার',       emoji: '💡' },
-  { value: 'content',  label: 'কন্টেন্ট / ফতোয়া বিষয়ক',    emoji: '📖' },
-  { value: 'donation', label: 'সাদাকাহ / দান বিষয়ক',      emoji: '🤲' },
-  { value: 'other',    label: 'অন্যান্য',                emoji: '✉️' },
+// Category emoji keys stay stable across languages; labels come from i18n.
+const CATEGORY_KEYS: { value: FeedbackCategory; emoji: string }[] = [
+  { value: 'bug',      emoji: '🐞' },
+  { value: 'idea',     emoji: '💡' },
+  { value: 'content',  emoji: '📖' },
+  { value: 'donation', emoji: '🤲' },
+  { value: 'other',    emoji: '✉️' },
 ];
 
 const FeedbackWidget: React.FC = () => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState<FeedbackCategory>('idea');
   const [message, setMessage] = useState('');
@@ -69,11 +72,11 @@ const FeedbackWidget: React.FC = () => {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="ফিডব্যাক পাঠান"
+        aria-label={t('feedback.trigger_aria')}
         className="fixed bottom-6 right-6 z-40 flex items-center gap-2 bg-black text-white pl-4 pr-5 py-3 rounded-full shadow-2xl hover:bg-bd-green hover:scale-105 transition-all"
       >
         <MessageSquarePlus size={18} />
-        <span className="text-xs font-bold tracking-widest uppercase hidden sm:inline">ফিডব্যাক</span>
+        <span className="text-xs font-bold tracking-widest uppercase hidden sm:inline">{t('feedback.trigger')}</span>
       </button>
 
       {!open ? null : (
@@ -91,13 +94,13 @@ const FeedbackWidget: React.FC = () => {
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
               <div className="space-y-1">
                 <div className="caps-label text-gray-400">Community Voice</div>
-                <h2 id="feedback-title" className="text-2xl font-extrabold tracking-tight">আপনার মতামত পাঠান</h2>
+                <h2 id="feedback-title" className="text-2xl font-extrabold tracking-tight">{t('feedback.title')}</h2>
               </div>
               <button
                 type="button"
                 onClick={close}
                 className="p-2 hover:bg-gray-100 transition-all"
-                aria-label="বন্ধ করুন"
+                aria-label={t('feedback.close')}
               >
                 <X size={20} />
               </button>
@@ -109,25 +112,23 @@ const FeedbackWidget: React.FC = () => {
                   <CheckCircle size={32} className="text-bd-green" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-xl font-extrabold">শুকরান!</h3>
-                  <p className="text-gray-500 font-medium">
-                    আপনার মতামত পাঠানো হয়েছে। আমরা প্রতিটি বার্তা পড়ি এবং প্ল্যাটফর্মকে আরও উপকারী করতে ব্যবহার করি।
-                  </p>
+                  <h3 className="text-xl font-extrabold">{t('feedback.successTitle')}</h3>
+                  <p className="text-gray-500 font-medium">{t('feedback.successBody')}</p>
                 </div>
                 <button
                   type="button"
                   onClick={close}
                   className="px-8 py-4 bg-black text-white font-bold text-xs uppercase tracking-widest hover:bg-gray-800 transition-all"
                 >
-                  ঠিক আছে
+                  {t('feedback.ok')}
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 <div className="space-y-3">
-                  <label className="caps-label text-gray-400">Category</label>
+                  <label className="caps-label text-gray-400">{t('feedback.categoryLabel')}</label>
                   <div className="grid grid-cols-1 gap-1 bg-gray-100 minimal-border">
-                    {CATEGORIES.map((c) => (
+                    {CATEGORY_KEYS.map((c) => (
                       <button
                         key={c.value}
                         type="button"
@@ -137,14 +138,14 @@ const FeedbackWidget: React.FC = () => {
                         }`}
                       >
                         <span className="text-lg">{c.emoji}</span>
-                        {c.label}
+                        {t(`feedback.cat_${c.value}`)}
                       </button>
                     ))}
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <label htmlFor="feedback-message" className="caps-label text-gray-400">Message</label>
+                  <label htmlFor="feedback-message" className="caps-label text-gray-400">{t('feedback.messageLabel')}</label>
                   <textarea
                     id="feedback-message"
                     required
@@ -152,7 +153,7 @@ const FeedbackWidget: React.FC = () => {
                     maxLength={4000}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="আপনার মতামত, বাগ, অথবা নতুন আইডিয়া বিস্তারিত লিখুন..."
+                    placeholder={t('feedback.messagePlaceholder')}
                     rows={5}
                     className="w-full p-4 bg-gray-50 border border-gray-100 outline-none focus:ring-2 focus:ring-black font-medium text-base resize-none"
                   />
@@ -163,14 +164,14 @@ const FeedbackWidget: React.FC = () => {
 
                 <div className="space-y-3">
                   <label htmlFor="feedback-contact" className="caps-label text-gray-400">
-                    Contact (optional)
+                    {t('feedback.contactLabel')}
                   </label>
                   <input
                     id="feedback-contact"
                     type="text"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
-                    placeholder="ইমেইল বা ফোন — আমরা যোগাযোগ করতে পারি"
+                    placeholder={t('feedback.contactPlaceholder')}
                     className="w-full p-4 bg-gray-50 border border-gray-100 outline-none focus:ring-2 focus:ring-black font-medium"
                   />
                 </div>
@@ -187,11 +188,11 @@ const FeedbackWidget: React.FC = () => {
                   className="w-full py-4 bg-black text-white font-extrabold text-sm uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {sending ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
-                  {sending ? 'পাঠানো হচ্ছে...' : 'পাঠান'}
+                  {sending ? t('feedback.sending') : t('feedback.send')}
                 </button>
 
                 <p className="text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                  আপনার মতামত সরাসরি অ্যাডমিন টিমের কাছে যায়।
+                  {t('feedback.note')}
                 </p>
               </form>
             )}

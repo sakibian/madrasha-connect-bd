@@ -46,6 +46,11 @@ const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 import ProtectedRoute from './components/ProtectedRoute';
 import FeedbackWidget from './components/FeedbackWidget';
+import LanguageSwitcher from './components/LanguageSwitcher';
+import SEO from './components/SEO';
+import { organizationSchema, websiteSchema } from './components/StructuredData';
+import { useI18nSideEffects } from './i18n/useI18nSideEffects';
+import { useTranslation } from 'react-i18next';
 
 import { initNotifications } from './services/notificationService';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -93,6 +98,11 @@ const Shell: React.FC = () => {
   const { user: currentUser } = useAuthStore();
   const { fetch: fetchNotifs } = useNotificationStore();
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const { t } = useTranslation();
+
+  // Keeps <html lang> and <html dir> synced to the active language so screen
+  // readers, search engines, and CSS locale hooks all agree.
+  useI18nSideEffects();
 
   useEffect(() => {
     if (currentUser) {
@@ -124,10 +134,20 @@ const Shell: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-[#F9FAFB]">
+      {/* Site-wide default SEO — individual pages override with their own <SEO />. */}
+      <SEO
+        title={`${t('brand.name')} — ${t('brand.tagline')}`}
+        description={t('brand.mission')}
+        keywords={[
+          'মাদ্রাসা', 'ফতোয়া', 'মাদ্রাসা চাকরি', 'ইসলামিক শিক্ষা',
+          'madrasa bangladesh', 'islamic jobs bd', 'fatwa online', 'qawmi madrasa',
+        ]}
+        structuredData={[organizationSchema(), websiteSchema()]}
+      />
       {currentUser && (
         <>
           <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-black focus:text-white focus:px-6 focus:py-3 focus:font-bold">
-            মূল কন্টেন্টে যান
+            {t('common.back', 'Go to main content')}
           </a>
           <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)} />
         </>
@@ -144,13 +164,14 @@ const Shell: React.FC = () => {
                 <span className="text-xl font-bold tracking-tight">মাদ্রাসা কানেক্ট</span>
               </Link>
               <div className="hidden lg:flex items-center gap-8">
-                <Link to="/about" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">লক্ষ্য</Link>
-                <Link to="/institutions" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">ডিরেক্টরি</Link>
-                <Link to="/knowledge" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">শিক্ষা</Link>
-                <Link to="/community" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">কমিউনিটি</Link>
-                <Link to="/events" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">ইভেন্ট</Link>
-                <Link to="/professional" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">ক্যারিয়ার</Link>
-                <Link to="/login" className="text-sm font-bold border-b-2 border-black pb-0.5">লগইন</Link>
+                <Link to="/about" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">{t('nav.about')}</Link>
+                <Link to="/institutions" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">{t('nav.directory')}</Link>
+                <Link to="/knowledge" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">{t('nav.education')}</Link>
+                <Link to="/community" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">{t('nav.community')}</Link>
+                <Link to="/events" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">{t('nav.events')}</Link>
+                <Link to="/professional" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">{t('nav.careers')}</Link>
+                <LanguageSwitcher />
+                <Link to="/login" className="text-sm font-bold border-b-2 border-black pb-0.5">{t('nav.login')}</Link>
               </div>
               <button className="lg:hidden" onClick={() => setSidebarOpen(s => !s)}>
                 {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}

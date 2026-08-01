@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   X, LogOut, User, LayoutDashboard, Users, Calendar, Briefcase,
   Building2, ShieldCheck, BookOpen, Trophy, Star, Headset, History,
@@ -9,6 +10,7 @@ import {
 import { useAuthStore } from '../../stores';
 import NavItem from './NavItem';
 import ImageWithFallback from './ImageWithFallback';
+import LanguageSwitcher from '../LanguageSwitcher';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -17,6 +19,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { user: currentUser, logout: storeLogout } = useAuthStore();
 
   const handleLogout = async () => {
@@ -37,48 +40,49 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           </Link>
 
           <nav className="flex-1 space-y-1 overflow-y-auto no-scrollbar pr-2">
-            <NavItem to="/dashboard" icon={<LayoutDashboard size={18} />} label="ড্যাশবোর্ড" onClick={onClose} />
+            <NavItem to="/dashboard" icon={<LayoutDashboard size={18} />} label={t('nav.dashboard')} onClick={onClose} />
 
             <div className="pt-8 pb-2">
-              <p className="caps-label text-gray-400 mb-4 px-2">Community</p>
-              <NavItem to="/community" icon={<Users size={18} />} label="কমিউনিটি" onClick={onClose} />
-              <NavItem to="/events" icon={<Calendar size={18} />} label="ইভেন্ট" onClick={onClose} />
-              <NavItem to="/professional" icon={<Briefcase size={18} />} label="ক্যারিয়ার হাব" onClick={onClose} />
-              <NavItem to="/institutions" icon={<Building2 size={18} />} label="ডিরেক্টরি" onClick={onClose} />
-              <NavItem to="/fatwa" icon={<ShieldCheck size={18} />} label="ফতোয়া পোর্টাল" onClick={onClose} />
-              <NavItem to="/fatwa/archive" icon={<BookOpen size={18} />} label="ফতোয়া আর্কাইভ" onClick={onClose} />
-              <NavItem to="/competitions" icon={<Trophy size={18} />} label="প্রতিযোগিতা" onClick={onClose} />
-              <NavItem to="/leaderboard" icon={<Star size={18} />} label="লিডারবোর্ড" onClick={onClose} />
+              <p className="caps-label text-gray-400 mb-4 px-2">{t('nav.community')}</p>
+              <NavItem to="/community" icon={<Users size={18} />} label={t('nav.community')} onClick={onClose} />
+              <NavItem to="/events" icon={<Calendar size={18} />} label={t('nav.events')} onClick={onClose} />
+              <NavItem to="/professional" icon={<Briefcase size={18} />} label={t('nav.careers')} onClick={onClose} />
+              <NavItem to="/institutions" icon={<Building2 size={18} />} label={t('nav.directory')} onClick={onClose} />
+              <NavItem to="/fatwa" icon={<ShieldCheck size={18} />} label={t('nav.fatwa')} onClick={onClose} />
+              <NavItem to="/fatwa/archive" icon={<BookOpen size={18} />} label={t('nav.fatwaArchive')} onClick={onClose} />
+              <NavItem to="/competitions" icon={<Trophy size={18} />} label={t('nav.competitions')} onClick={onClose} />
+              <NavItem to="/leaderboard" icon={<Star size={18} />} label={t('nav.leaderboard')} onClick={onClose} />
             </div>
 
             <div className="pt-8 pb-2">
-              <p className="caps-label text-gray-400 mb-4 px-2">Knowledge</p>
-              <NavItem to="/knowledge" icon={<BookOpen size={18} />} label="শিক্ষা হাব" onClick={onClose} />
-              <NavItem to="/audio-library" icon={<Headset size={18} />} label="অডিও লাইব্রেরি" onClick={onClose} />
-              <NavItem to="/seerah" icon={<History size={18} />} label="সীরাত টাইমলাইন" onClick={onClose} />
+              <p className="caps-label text-gray-400 mb-4 px-2">{t('nav.knowledge')}</p>
+              <NavItem to="/knowledge" icon={<BookOpen size={18} />} label={t('nav.knowledge')} onClick={onClose} />
+              <NavItem to="/audio-library" icon={<Headset size={18} />} label={t('nav.audioLibrary')} onClick={onClose} />
+              <NavItem to="/seerah" icon={<History size={18} />} label={t('nav.seerah')} onClick={onClose} />
             </div>
 
             <div className="pt-8 pb-2">
-              <p className="caps-label text-gray-400 mb-4 px-2">System</p>
-              <NavItem to="/marketplace" icon={<ShoppingBag size={18} />} label="মার্কেটপ্লেস" onClick={onClose} />
-              <NavItem to="/sadaqah" icon={<Heart size={18} />} label="সাদাকাহ" onClick={onClose} />
-              <NavItem to="/tools" icon={<Wrench size={18} />} label="ইউটিলিটি টুলস" onClick={onClose} />
-              <NavItem to="/faq" icon={<HelpCircle size={18} />} label="সহায়তা কেন্দ্র" onClick={onClose} />
-              <NavItem to="/scholar-dashboard" icon={<GraduationCap size={18} />} label="স্কলার প্যানেল" onClick={onClose} />
-              <NavItem to="/scholar/apply" icon={<ShieldCheck size={18} />} label="স্কলার আবেদন" onClick={onClose} />
+              <p className="caps-label text-gray-400 mb-4 px-2">{t('nav.tools')}</p>
+              <NavItem to="/marketplace" icon={<ShoppingBag size={18} />} label={t('nav.marketplace')} onClick={onClose} />
+              <NavItem to="/sadaqah" icon={<Heart size={18} />} label={t('nav.sadaqah')} onClick={onClose} />
+              <NavItem to="/tools" icon={<Wrench size={18} />} label={t('nav.tools')} onClick={onClose} />
+              <NavItem to="/faq" icon={<HelpCircle size={18} />} label={t('nav.help')} onClick={onClose} />
+              <NavItem to="/scholar-dashboard" icon={<GraduationCap size={18} />} label={t('nav.scholarPanel')} onClick={onClose} />
+              <NavItem to="/scholar/apply" icon={<ShieldCheck size={18} />} label={t('nav.scholarApply')} onClick={onClose} />
             </div>
           </nav>
 
-          <div className="pt-8 border-t border-gray-100">
-            <div className="flex items-center gap-3 mb-6">
+          <div className="pt-8 border-t border-gray-100 space-y-4">
+            <div className="flex items-center gap-3">
               <ImageWithFallback src={currentUser?.avatar} name={currentUser?.name} className="w-10 h-10 minimal-border object-cover bg-gray-50" alt="" />
               <div className="flex-1 overflow-hidden">
                 <p className="text-sm font-bold truncate">{currentUser?.name}</p>
                 <p className="text-[9px] font-bold uppercase tracking-widest text-gray-400">{currentUser?.role}</p>
               </div>
             </div>
+            <LanguageSwitcher align="left" />
             <button onClick={handleLogout} className="w-full text-left text-xs font-bold text-gray-400 hover:text-black flex items-center gap-2">
-              <LogOut size={14} /> সাইন আউট
+              <LogOut size={14} /> {t('nav.signOut')}
             </button>
           </div>
         </div>
