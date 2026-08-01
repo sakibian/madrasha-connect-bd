@@ -34,6 +34,14 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [dryRun, setDryRun] = useState(false);
+  const [personal, setPersonal] = useState<{
+    invoice?: string;
+    personal_number?: string;
+    account_name?: string | null;
+    amount_bdt?: number;
+    instructions_bn?: string;
+    instructions_en?: string;
+  } | null>(null);
 
   if (!isOpen) return null;
 
@@ -43,6 +51,7 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
     e.preventDefault();
     setError(null);
     setDryRun(false);
+    setPersonal(null);
     if (!(effectiveAmount > 0)) {
       setError('অনুগ্রহ করে বৈধ পরিমাণ দিন');
       return;
@@ -59,6 +68,17 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
 
     if (!result.ok) {
       setError(result.error || 'সাদাকাহ প্রক্রিয়া ব্যর্থ হয়েছে।');
+      return;
+    }
+    if (result.mode === 'personal') {
+      setPersonal({
+        invoice: result.invoice,
+        personal_number: result.personal_number,
+        account_name: result.account_name,
+        amount_bdt: result.amount_bdt,
+        instructions_bn: result.instructions_bn,
+        instructions_en: result.instructions_en,
+      });
       return;
     }
     if (result.dry_run) {
@@ -169,6 +189,50 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
                 See <a className="underline font-bold" href="/NEXT_STEPS.md">NEXT_STEPS.md</a>.
                 Your donation intent was still recorded for audit.
               </p>
+            </div>
+          )}
+          {personal && (
+            <div className="p-4 bg-bd-green/10 border border-bd-green/30 text-gray-900 text-sm space-y-3">
+              <p className="font-extrabold text-bd-green uppercase tracking-widest text-xs">
+                bKash Send Money — ম্যানুয়াল কনফার্মেশন
+              </p>
+              <p className="text-xs text-gray-600">
+                merchant অ্যাকাউন্ট এখনো অনুমোদনের অপেক্ষায় — এই সময়ে অনুগ্রহ করে সংগঠনের
+                পারসোনাল bKash নম্বরে <strong>Send Money</strong> করুন। ২৪ ঘণ্টার মধ্যে অ্যাডমিন
+                কনফার্ম করবে।
+              </p>
+              <dl className="grid grid-cols-3 gap-2 text-sm">
+                <dt className="col-span-1 font-bold text-gray-500">নম্বর</dt>
+                <dd className="col-span-2 font-black text-lg tracking-wider">
+                  {personal.personal_number}
+                </dd>
+                {personal.account_name && (
+                  <>
+                    <dt className="col-span-1 font-bold text-gray-500">নাম</dt>
+                    <dd className="col-span-2 font-bold">{personal.account_name}</dd>
+                  </>
+                )}
+                <dt className="col-span-1 font-bold text-gray-500">পরিমাণ</dt>
+                <dd className="col-span-2 font-black">৳{personal.amount_bdt}</dd>
+                <dt className="col-span-1 font-bold text-gray-500">Reference</dt>
+                <dd className="col-span-2 font-mono font-black bg-white px-2 py-1 border border-gray-200 inline-block">
+                  {personal.invoice}
+                </dd>
+              </dl>
+              {personal.invoice && (
+                <button
+                  type="button"
+                  onClick={() => navigator.clipboard?.writeText(personal.invoice!)}
+                  className="text-xs font-bold underline text-bd-green"
+                >
+                  Reference কপি করুন
+                </button>
+              )}
+              {personal.instructions_bn && (
+                <p className="text-xs text-gray-700 border-t border-bd-green/20 pt-2">
+                  {personal.instructions_bn}
+                </p>
+              )}
             </div>
           )}
 

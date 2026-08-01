@@ -113,11 +113,44 @@ They'll use the `/scholar/apply` flow already built into the app. Once approved 
 
 ### 9. Payment integration (donation flow)
 Pick one to start:
-- **bKash Merchant Account** — fastest for local donors, requires NID + trade license
+- **bKash Merchant Account** — fastest for local donors, requires NID + trade license (allow ~4–8 weeks)
 - **Nagad** — similar to bKash, growing fast
 - **Stripe** — needed for diaspora donors (US/UK/AU Bangladeshis are your biggest donors)
 
 For each: add a Supabase Edge Function that handles the webhook (`donation-received`), then write a row to a `donations` table. The UI in `pages/SadaqahHub.tsx` already has the button — it just needs to call the flow.
+
+#### 9a. bKash personal-account fallback (until merchant is approved)
+The Edge Function now supports a supervised **personal-account** mode so you can start accepting sadaqah TODAY without waiting for merchant approval. Users see the company-owned bKash number + a unique invoice reference, `Send Money` manually, and an admin later confirms the SMS from the Admin Donations panel.
+
+**Enable it once you have a dedicated company personal bKash number:**
+```bash
+supabase secrets set BKASH_MODE=personal
+supabase secrets set BKASH_PERSONAL_NUMBER=017XXXXXXXX
+supabase secrets set BKASH_PERSONAL_ACCOUNT_NAME="Madrasa Connect BD"
+# then apply the DB migration so the new status/provider values are accepted:
+psql "$SUPABASE_DB_URL" -f database/migrations/2026_08_02_bkash_personal_fallback.sql
+```
+
+Once the real merchant account is live, unset `BKASH_MODE` (or set to `merchant`) and set `BKASH_APP_KEY / SECRET / USERNAME / PASSWORD` — the automatic tokenized checkout takes over transparently. **No user-facing code changes needed.**
+
+---
+
+### 9b. Strategic partnerships with other Bangladesh Islamic apps / non-profits
+We deliberately don't want to be a walled garden — the sector grows if we all cross-promote. The engineering side ships a typed registry at [`data/partnerships.ts`](./data/partnerships.ts) so the admin panel can eventually track outreach state per partner. **Your job:** work through this list and open real conversations.
+
+**Highest-priority first calls (my read):**
+1. **Islamic Foundation Bangladesh (IFB)** — the official mosque/imam registry. An MoU here auto-validates our institution directory + unlocks a firehose of imam/muazzin job postings.
+2. **Befaq + BMEB** — the two madrasa examination boards. If they'll whitelist their affiliated institutions with us we get an unfakeable "verified" badge.
+3. **As-Sunnah Foundation** — the most trusted zakat brand in the country. A co-branded zakat calculator + donation revenue-share is a huge win for both sides.
+4. **Muslim Bangla / Noor / Salat First / iHadis** — the popular consumer apps. Feature-swap deals cost nothing (they surface our fatwas, we link back their prayer times / hadith deep-links).
+
+**Talking points for every meeting:**
+- We are 100% non-profit and open about our cost model ($0 infra to start).
+- We already ship in Bengali + English + Arabic with SEO/AEO baked in.
+- We already have RLS-secure user data, so integration is a matter of typed API contracts, not "trust us with our DB."
+- Any content we syndicate keeps their author byline + a canonical backlink — SEO stays with the original creator.
+
+Update the `status` field for each partner in `data/partnerships.ts` as conversations progress; that data will render inside the Admin Dashboard in a follow-up ticket.
 
 ### 10. Feedback triage panel
 Users can already submit feedback (floating button, everywhere in the app). But you can't yet SEE the feedback in the Admin Dashboard.

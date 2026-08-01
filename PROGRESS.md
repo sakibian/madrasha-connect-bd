@@ -13,7 +13,7 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-08-01 18:58 UTC · **Latest deploy:** pending push (session 3 — bKash + Admin Feedback + Mobile OTP + Playwright)
+**Last updated:** 2026-08-01 19:18 UTC · **Latest deploy:** pending push (session 4 — Gender-aware avatars + bKash personal fallback + Partnerships registry)
 
 ---
 
@@ -55,6 +55,42 @@
 ---
 
 ## ✅ Completed (chronological)
+
+### 2026-08-01 (session 4 — Avatar gender fix + bKash personal fallback + Partnerships)
+
+- **Gender-aware avatar helper** — fixes long-standing bug where DiceBear
+  `avataaars` seeded by name/role rendered feminine avatars for masculine
+  names (and vice-versa).
+  - `utils/avatar.ts` — `inferGenderFromName` (Bangla/Arabic/English tokens,
+    weak-token tie-breaker so "Aisha Rahman" → female) + `getGenderedAvatarUrl`
+    (pins `top=shortHair` for male, `top=hijab` for female, neutral otherwise;
+    respects real uploaded photos)
+  - `components/ui/Avatar.tsx` — wired to helper; every avatar site-wide now
+    resolves to a gender-appropriate fallback URL
+  - `utils/__tests__/avatar.test.ts` — 8 new tests
+  - `components/ui/__tests__/Avatar.test.tsx` — updated to reflect new
+    "always render dicebear <img>" behaviour + added masculine/feminine
+    top-pinning assertions
+- **bKash personal-account fallback** — lets us start accepting sadaqah
+  today, before the merchant account clears the 4–8 week approval window.
+  - `supabase/functions/bkash-checkout/index.ts` — new `BKASH_MODE=personal`
+    branch; returns invoice ref + `Send Money` instructions instead of a
+    tokenized checkout URL. Rows land as `provider='bkash_personal'` and
+    `status='awaiting_manual_review'` so an admin can confirm the SMS.
+  - `database/migrations/2026_08_02_bkash_personal_fallback.sql` — widens
+    the `provider` + `status` CHECK constraints, adds a partial index for
+    the admin reconciliation queue
+  - `services/donationService.ts` — extended `CreateDonationResult` type
+  - `components/DonationModal.tsx` — new personal-mode instructions card
+    with copy-to-clipboard invoice reference
+  - `NEXT_STEPS.md` §9a — full ops runbook for enabling / disabling the mode
+- **Partnerships registry** — curated shortlist of Bangladesh Islamic apps
+  and non-profits with concrete proposal + outreach status.
+  - `data/partnerships.ts` — typed `Partner` model + 12-entry registry
+    (IFB, Befaq, BMEB, As-Sunnah Foundation, Quantum, Anjuman, Muslim Bangla,
+    Noor, Salat First, iHadis, IOU, Onnorokom)
+  - `data/__tests__/partnerships.test.ts` — schema integrity tests
+  - `NEXT_STEPS.md` §9b — founder-facing outreach playbook + talking points
 
 ### 2026-08-01 (session 3 — bKash + Admin Feedback + Mobile OTP + e2e)
 

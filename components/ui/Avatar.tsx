@@ -1,6 +1,7 @@
 
 import React from 'react';
 import ImageWithFallback from './ImageWithFallback';
+import { getGenderedAvatarUrl } from '../../utils/avatar';
 
 interface AvatarProps {
   src?: string;
@@ -23,11 +24,15 @@ const getInitials = (name?: string): string => {
 
 const Avatar: React.FC<AvatarProps> = ({ src, name, size = 'md', online, className = '' }) => {
   const dims = sizeStyles[size];
+  // If no explicit photo URL is provided (or the URL is a random/generic
+  // DiceBear seed that ignores gender), derive a gender-appropriate avatar
+  // from the display name. Prevents "male name → female avatar" glitches.
+  const resolvedSrc = getGenderedAvatarUrl(name, src, name);
 
   return (
     <div className={`relative inline-flex ${className}`}>
       <ImageWithFallback
-        src={src}
+        src={resolvedSrc}
         name={name}
         alt={name || ''}
         className={`${dims} object-cover minimal-border bg-gray-50`}

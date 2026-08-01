@@ -30,6 +30,14 @@ export interface CreateDonationResult {
   bkashURL?: string;
   donation_id?: string;
   dry_run?: boolean;
+  /** When the server is running in personal-account mode. */
+  mode?: 'personal';
+  invoice?: string;
+  personal_number?: string;
+  account_name?: string | null;
+  amount_bdt?: number;
+  instructions_bn?: string;
+  instructions_en?: string;
   error?: string;
 }
 
@@ -50,6 +58,13 @@ export const createBkashDonation = async (
     bkashURL?: string;
     donation_id?: string;
     dry_run?: boolean;
+    mode?: 'personal';
+    invoice?: string;
+    personal_number?: string;
+    account_name?: string | null;
+    amount_bdt?: number;
+    instructions_bn?: string;
+    instructions_en?: string;
     error?: string;
   }>('bkash-checkout', {
     action: 'create',

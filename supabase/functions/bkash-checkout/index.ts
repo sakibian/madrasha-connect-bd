@@ -19,6 +19,21 @@
 // If bKash secrets are missing, the function short-circuits into DRY-RUN mode
 // so local devs can iterate on the UI without merchant credentials. Dry-run
 // payments record status=failed with failure_reason='dry_run_no_credentials'.
+//
+// ---------------------------------------------------------------------------
+// PERSONAL-ACCOUNT FALLBACK (BKASH_MODE=personal)
+// ---------------------------------------------------------------------------
+// Bangladesh non-profits often wait 4–8 weeks for a bKash merchant account.
+// Until the merchant account is live we allow a supervised "personal account"
+// path: the founder publishes a company-owned personal bKash number and users
+// send money via bKash "Send Money" (Ref: MCBD-<invoice>). The Edge Function
+// records the pledge with status='awaiting_manual_review' and an admin later
+// marks it 'completed' from the Admin Donations panel after cross-checking
+// the bKash SMS.
+//
+// Toggle by setting BKASH_MODE=personal + BKASH_PERSONAL_NUMBER=017XXXXXXXX
+// (optional BKASH_PERSONAL_ACCOUNT_NAME). If BKASH_MODE is unset the code
+// falls back to merchant tokenized checkout as before.
 // ---------------------------------------------------------------------------
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
@@ -30,7 +45,16 @@ const BKASH_USERNAME    = Deno.env.get('BKASH_USERNAME') || '';
 const BKASH_PASSWORD    = Deno.env.get('BKASH_PASSWORD') || '';
 const BKASH_ENV         = (Deno.env.get('BKASH_ENV') || 'sandbox').toLowerCase();
 
-const DRY_RUN = !(BKASH_APP_KEY && BKASH_APP_SECRET && BKASH_USERNAME && BKASH_PASSWORD);
+// Optional personal-account fallback (used until merchant account is approved).
+const BKASH_MODE                  = (Deno.env.get('BKASH_MODE') || 'merchant').toLowerCase();
+const BKASH_PERSONAL_NUMBER       = Deno.env.get('BKASH_PERSONAL_NUMBER') || '';
+const BKASH_PERSONAL_ACCOUNT_NAME = Deno.env.get('BKASH_PERSONAL_ACCOUNT_NAME') || '';
+const PERSONAL_MODE = BKASH_MODE === 'personal' && !!BKASH_PERSONAL_NUMBER;
+
+// True only when we have neither merchant creds nor personal-account fallback.
+const DRY_RUN =
+  !PERSONAL_MODE &&
+  !(BKASH_APP_KEY && BKASH_APP_SECRET && BKASH_USERNAME && BKASH_PASSWORD);
 
 const SUPABASE_URL         = Deno.env.get('SUPABASE_URL') || '';
 const SUPABASE_SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
@@ -155,7 +179,47 @@ serve(async (req) => {
         return json({ error: 'Could not record donation' }, 500);
       }
 
-      // 2. Dry-run short-circuit for local dev / missing credentials.
+      // 2a. Personal-account fallback: no merchant API call, we just return
+      //     the personal bKash number + invoice ref for the user to send money
+      //     to manually. An admin later marks the donation completed after
+      //     matching the bKash SMS.
+      if (PERSONAL_MODE) {
+        await admin
+          .from('donations')
+          .update({
+            status: 'awaiting_manual_review',
+            provider: 'bkash_personal',
+            provider_response: {
+              mode: 'personal',
+              personal_number: BKASH_PERSONAL_NUMBER,
+              account_name: BKASH_PERSONAL_ACCOUNT_NAME || null,
+              invoice: invoiceNumber,
+              instructions_bn:
+                `bKash অ্যাপ খুলুন → Send Money → ${BKASH_PERSONAL_NUMBER} → ` +
+                `টাকার পরিমাণ ${amount} → Reference: ${invoiceNumber}`,
+              instructions_en:
+                `Open bKash app → Send Money → ${BKASH_PERSONAL_NUMBER} → ` +
+                `amount ${amount} BDT → Reference: ${invoiceNumber}`,
+            },
+          })
+          .eq('id', donation.id);
+        return json({
+          mode: 'personal',
+          donation_id: donation.id,
+          invoice: invoiceNumber,
+          personal_number: BKASH_PERSONAL_NUMBER,
+          account_name: BKASH_PERSONAL_ACCOUNT_NAME || null,
+          amount_bdt: amount,
+          instructions_bn:
+            `bKash অ্যাপে Send Money করুন — নম্বর ${BKASH_PERSONAL_NUMBER}, ` +
+            `পরিমাণ ৳${amount}, Reference কোড: ${invoiceNumber}`,
+          instructions_en:
+            `Send money via bKash to ${BKASH_PERSONAL_NUMBER} — ৳${amount} — ` +
+            `use reference ${invoiceNumber}. An admin will confirm within 24 hours.`,
+        });
+      }
+
+      // 2b. Dry-run short-circuit for local dev / missing credentials.
       if (DRY_RUN) {
         await admin
           .from('donations')
@@ -211,6 +275,15 @@ serve(async (req) => {
     // --- EXECUTE -----------------------------------------------------------
     if (body.action === 'execute') {
       if (!body.paymentID) return json({ error: 'paymentID required' }, 400);
+      if (PERSONAL_MODE) {
+        // Personal mode is manual — nothing to execute automatically.
+        return json({
+          mode: 'personal',
+          message:
+            'Personal-account mode: donation stays in awaiting_manual_review ' +
+            'until an admin confirms the bKash SMS.',
+        });
+      }
       if (DRY_RUN) return json({ error: 'DRY_RUN: cannot execute without credentials' }, 400);
 
       const token = await grantToken();
