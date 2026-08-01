@@ -77,32 +77,32 @@ const UserDashboard: React.FC = () => {
 
       {/* Referral Section */}
       {referralCode && (
-        <div className="bg-gradient-to-br from-emerald-900 to-teal-900 rounded-[2.5rem] p-10 text-white space-y-6">
+        <div className="bg-gradient-to-br from-brand-900 to-brand-900 rounded-[2.5rem] p-10 text-white space-y-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="p-4 bg-emerald-400/20 rounded-3xl backdrop-blur-md border border-emerald-400/30">
-                <Users size={24} className="text-emerald-400" />
+              <div className="p-4 bg-brand-400/20 rounded-3xl backdrop-blur-md border border-brand-400/30">
+                <Users size={24} className="text-brand-400" />
               </div>
               <div>
                 <h2 className="text-xl font-black">বন্ধুদের আমন্ত্রণ জানান</h2>
-                <p className="text-emerald-300 text-sm font-medium">প্রতিটি সফল আমন্ত্রণে ৩০ CP পান</p>
+                <p className="text-brand-300 text-sm font-medium">প্রতিটি সফল আমন্ত্রণে ৩০ CP পান</p>
               </div>
             </div>
             {referralStats.total > 0 && (
               <div className="text-right space-y-1">
                 <div className="text-3xl font-black">{referralStats.completed}</div>
-                <div className="text-[10px] font-bold text-emerald-300 uppercase tracking-widest">সফল আমন্ত্রণ</div>
+                <div className="text-[10px] font-bold text-brand-300 uppercase tracking-widest">সফল আমন্ত্রণ</div>
               </div>
             )}
           </div>
-          <div className="flex items-center gap-3 bg-white/10 border border-emerald-400/30 rounded-2xl p-4 backdrop-blur-sm">
-            <span className="text-sm font-bold text-emerald-200 truncate flex-1">
+          <div className="flex items-center gap-3 bg-white/10 border border-brand-400/30 rounded-2xl p-4 backdrop-blur-sm">
+            <span className="text-sm font-bold text-brand-200 truncate flex-1">
               {window.location.origin}/register?ref={referralCode}
             </span>
             <button
               onClick={handleCopyReferral}
               className={`px-6 py-2.5 text-sm font-bold rounded-xl transition-all flex items-center gap-2 ${
-                copied ? 'bg-white text-emerald-900' : 'bg-emerald-400 text-emerald-900 hover:bg-white'
+                copied ? 'bg-white text-brand-900' : 'bg-brand-400 text-brand-900 hover:bg-white'
               }`}
             >
               {copied ? <Check size={16} /> : <Copy size={16} />}

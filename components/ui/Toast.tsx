@@ -49,7 +49,7 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: () => void }
 
   const colors = {
     error: 'bg-red-600 text-white',
-    success: 'bg-emerald-600 text-white',
+    success: 'bg-brand-600 text-white',
     info: 'bg-gray-800 text-white',
   };
 

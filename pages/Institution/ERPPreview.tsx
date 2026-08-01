@@ -44,7 +44,7 @@ const ERPPreview: React.FC = () => {
                     </div>
                     <div className="flex gap-1 bg-gray-100 p-1">
                        <button className="px-6 py-2 bg-white text-black font-black text-[10px] uppercase hover:bg-bd-green hover:text-white transition-all">P</button>
-                       <button className="px-6 py-2 bg-white text-black font-black text-[10px] uppercase hover:bg-red-500 hover:text-white transition-all">A</button>
+                       <button className="px-6 py-2 bg-white text-black font-black text-[10px] uppercase hover:bg-black hover:text-white transition-all">A</button>
                     </div>
                  </div>
                ))}

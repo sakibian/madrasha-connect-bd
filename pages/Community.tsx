@@ -127,20 +127,20 @@ const Community: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-fadeIn">
       {/* AI Scholar Section */}
-      <section className="bg-gradient-to-br from-emerald-900 to-teal-900 rounded-[2.5rem] p-8 md:p-10 text-white shadow-2xl shadow-emerald-100">
+      <section className="bg-gradient-to-br from-brand-900 to-brand-900 rounded-[2.5rem] p-8 md:p-10 text-white shadow-2xl shadow-brand-100">
         <div className="flex items-center gap-4 mb-8">
-          <div className="p-4 bg-emerald-400/20 rounded-3xl backdrop-blur-md border border-emerald-400/30">
-             <Sparkles className="text-emerald-400" size={32} />
+          <div className="p-4 bg-brand-400/20 rounded-3xl backdrop-blur-md border border-brand-400/30">
+             <Sparkles className="text-brand-400" size={32} />
           </div>
           <div>
             <h2 className="text-2xl font-black">এআই আলেম (Alpha)</h2>
-            <p className="text-emerald-300 font-medium">মুহূর্তেই আপনার মাসআলার প্রাথমিক সমাধান পান</p>
+            <p className="text-brand-300 font-medium">মুহূর্তেই আপনার মাসআলার প্রাথমিক সমাধান পান</p>
           </div>
         </div>
 
         <div className="relative">
           <textarea 
-            className="w-full bg-white/10 border border-emerald-400/30 rounded-[2rem] p-6 pr-16 text-white placeholder-emerald-200/50 focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-all min-h-[150px] font-medium"
+            className="w-full bg-white/10 border border-brand-400/30 rounded-[2rem] p-6 pr-16 text-white placeholder-brand-200/50 focus:outline-none focus:ring-2 focus:ring-brand-400 transition-all min-h-[150px] font-medium"
             placeholder="আপনার মাসআলা বা প্রশ্নটি এখানে বিস্তারিত লিখুন..."
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
@@ -148,7 +148,7 @@ const Community: React.FC = () => {
           <button 
             onClick={handleAskScholar}
             disabled={isLoading}
-            className="absolute bottom-6 right-6 p-3 bg-emerald-400 text-emerald-900 rounded-2xl hover:bg-white transition-all shadow-xl disabled:opacity-50"
+            className="absolute bottom-6 right-6 p-3 bg-brand-400 text-brand-900 rounded-2xl hover:bg-white transition-all shadow-xl disabled:opacity-50"
           >
             {isLoading ? <Loader2 size={24} className="animate-spin" /> : <Send size={24} />}
           </button>
@@ -157,11 +157,11 @@ const Community: React.FC = () => {
         {aiResponse && (
           <div className="mt-8 bg-white/5 border border-white/10 rounded-[2rem] p-8 animate-slideDown shadow-inner">
             <div className="flex items-start gap-4">
-               <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center shrink-0 shadow-lg">
-                  <span className="text-emerald-800 font-black">AI</span>
+               <div className="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center shrink-0 shadow-lg">
+                  <span className="text-brand-800 font-black">AI</span>
                </div>
                <div className="space-y-4 flex-1">
-                  <p className="text-emerald-50 leading-relaxed whitespace-pre-line font-medium text-lg">
+                  <p className="text-brand-50 leading-relaxed whitespace-pre-line font-medium text-lg">
                     {aiResponse}
                   </p>
                </div>
@@ -171,18 +171,18 @@ const Community: React.FC = () => {
       </section>
 
       {/* Madrasa Blood Bank Section */}
-      <section className="bg-red-50 rounded-[2.5rem] p-8 border border-red-100 shadow-sm space-y-6">
+      <section className="bg-bd-green/5 rounded-[2.5rem] p-8 border border-bd-green/20 shadow-sm space-y-6">
         <div className="flex justify-between items-center">
            <div className="flex items-center gap-3">
-              <div className="p-3 bg-red-600 text-white rounded-2xl"><Droplets /></div>
+              <div className="p-3 bg-bd-green text-white rounded-2xl"><Droplets /></div>
               <h2 className="text-xl font-bold text-gray-800">মাদ্রাসা ব্লাড ব্যাংক</h2>
            </div>
-           <button className="text-red-600 text-sm font-bold bg-white px-4 py-2 rounded-xl border border-red-100 hover:bg-red-600 hover:text-white transition-all">দাতা হিসেবে যোগ দিন</button>
+           <button className="text-bd-green text-sm font-bold bg-white px-4 py-2 rounded-xl border border-bd-green/20 hover:bg-bd-green hover:text-white transition-all">দাতা হিসেবে যোগ দিন</button>
         </div>
         <div className="relative">
-           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-red-300" size={20} />
+           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-300" size={20} />
            <input 
-              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white border border-red-100 outline-none focus:ring-2 focus:ring-red-200"
+              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white border border-brand-100 outline-none focus:ring-2 focus:ring-brand-200"
               placeholder="রক্তের গ্রুপ বা এলাকা (উদা: A+, ঢাকা) লিখে খুঁজুন"
               value={bloodSearch}
               onChange={(e) => setBloodSearch(e.target.value)}
@@ -190,13 +190,13 @@ const Community: React.FC = () => {
         </div>
         {bloodSearch && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-fadeIn">
-             <div className="bg-white p-4 rounded-2xl border border-red-50 flex items-center gap-4">
-                <div className="w-12 h-12 bg-red-600 text-white rounded-xl flex items-center justify-center font-black text-xl">A+</div>
+             <div className="bg-white p-4 rounded-2xl border border-bd-green/10 flex items-center gap-4">
+                <div className="w-12 h-12 bg-bd-green text-white rounded-xl flex items-center justify-center font-black text-xl">A+</div>
                 <div>
                    <p className="font-bold text-gray-800 text-sm">মাওলানা জাহিদ</p>
                    <p className="text-xs text-gray-400 flex items-center gap-1"><MapPin size={10} /> মিরপুর, ঢাকা</p>
                 </div>
-                <button className="ml-auto p-2 bg-red-50 text-red-600 rounded-lg"><Heart size={16} /></button>
+                <button className="ml-auto p-2 bg-bd-green/10 text-bd-green rounded-lg"><Heart size={16} /></button>
              </div>
           </div>
         )}
@@ -206,7 +206,7 @@ const Community: React.FC = () => {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-            <MessageCircle className="text-emerald-700" size={22} />
+            <MessageCircle className="text-brand-700" size={22} />
             সাম্প্রতিক আলোচনা
           </h2>
           {currentUser && (
@@ -428,9 +428,9 @@ const PostCard: React.FC<{
             <img src={`https://picsum.photos/seed/${post.author}/100/100`} alt={post.author} />
           </div>
           <div>
-            <h4 className="font-bold text-gray-800 flex items-center gap-1 group-hover:text-emerald-700 transition-colors">
+            <h4 className="font-bold text-gray-800 flex items-center gap-1 group-hover:text-brand-700 transition-colors">
               {post.author || 'ব্যবহারকারী'}
-              {post.verified && <CheckCircle size={14} className="text-blue-500" />}
+              {post.verified && <CheckCircle size={14} className="text-bd-green" />}
             </h4>
             <span className="text-[10px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-md inline-block mt-1">
               {CATEGORY_LABELS[post.category] || post.category}
@@ -442,7 +442,7 @@ const PostCard: React.FC<{
             <>
               <button
                 onClick={() => { setEditing(true); setEditTitle(post.title); setEditContent(post.content); setEditCategory(post.category); }}
-                className="text-gray-300 hover:text-blue-500 p-2 transition-all"
+                className="text-gray-300 hover:text-black p-2 transition-all"
                 title="এডিট করুন"
               >
                 <Edit3 size={16} />
@@ -467,7 +467,7 @@ const PostCard: React.FC<{
           )}
           <button
             onClick={handleShare}
-            className={`p-2 transition-all ${shareCopied ? 'text-emerald-600' : 'text-gray-300 hover:text-emerald-700'}`}
+            className={`p-2 transition-all ${shareCopied ? 'text-brand-600' : 'text-gray-300 hover:text-brand-700'}`}
             title={shareCopied ? 'কপি করা হয়েছে!' : 'শেয়ার করুন'}
           >
             <Share2 size={18} />
@@ -528,7 +528,7 @@ const PostCard: React.FC<{
         <button
           onClick={() => onLike(post.id)}
           className={`flex items-center gap-2 text-xs font-black transition-all ${
-            isLiked ? 'text-emerald-700' : 'text-gray-500 hover:text-emerald-700'
+            isLiked ? 'text-brand-700' : 'text-gray-500 hover:text-brand-700'
           }`}
           disabled={!currentUser}
         >
@@ -537,7 +537,7 @@ const PostCard: React.FC<{
         <button
           onClick={toggleComments}
           className={`flex items-center gap-2 text-xs font-black transition-all ${
-            showComments ? 'text-emerald-700' : 'text-gray-500 hover:text-emerald-700'
+            showComments ? 'text-brand-700' : 'text-gray-500 hover:text-brand-700'
           }`}
         >
           <MessageCircle size={18} /> {post.comments} মন্তব্য
@@ -571,7 +571,7 @@ const PostCard: React.FC<{
           {currentUser ? (
             <div className="flex gap-3 pt-2">
               <input
-                className="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-emerald-300 transition-all"
+                className="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm outline-none focus:border-brand-300 transition-all"
                 placeholder="মন্তব্য লিখুন..."
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
@@ -599,7 +599,7 @@ const PostCard: React.FC<{
               <button onClick={() => setShowFlagModal(false)} className="text-gray-400 hover:text-black p-1"><X size={20} /></button>
             </div>
             <textarea
-              className="w-full px-4 py-3 border border-gray-200 rounded-2xl text-sm outline-none focus:border-red-300 transition-all min-h-[100px] resize-none"
+              className="w-full px-4 py-3 border border-gray-200 rounded-2xl text-sm outline-none focus:border-brand-300 transition-all min-h-[100px] resize-none"
               placeholder="কেন এই পোস্টটি রিপোর্ট করছেন? (বিস্তারিত লিখুন)"
               value={flagReason}
               onChange={(e) => setFlagReason(e.target.value)}

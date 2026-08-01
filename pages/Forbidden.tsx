@@ -6,7 +6,7 @@ import { ShieldX, ArrowLeft } from 'lucide-react';
 const Forbidden: React.FC = () => {
   return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center text-center gap-8">
-      <ShieldX size={80} className="text-red-300" />
+      <ShieldX size={80} className="text-gray-300" />
       <div className="space-y-2">
         <h1 className="text-5xl font-extrabold">403</h1>
         <p className="text-xl font-bold text-gray-500">প্রবেশাধিকার অস্বীকৃত</p>

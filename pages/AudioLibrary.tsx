@@ -66,7 +66,7 @@ const AudioLibrary: React.FC = () => {
                       <span className="text-xs font-black uppercase tracking-widest text-gray-500 group-hover:text-gray-600 flex items-center gap-2"><Clock size={12} /> {track.duration}</span>
                    </div>
                    <div className="flex gap-4">
-                      <button className="p-3 border border-gray-100 group-hover:border-gray-800 text-gray-300 group-hover:text-white transition-all hover:text-red-500"><Heart size={18} /></button>
+                      <button className="p-3 border border-gray-100 group-hover:border-gray-800 text-gray-300 group-hover:text-white transition-all hover:text-bd-green"><Heart size={18} /></button>
                       <button className="p-3 border border-gray-100 group-hover:border-gray-800 text-gray-300 group-hover:text-white transition-all"><MoreVertical size={18} /></button>
                    </div>
                 </div>

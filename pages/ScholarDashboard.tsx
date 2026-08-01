@@ -251,7 +251,7 @@ const ScholarDashboard: React.FC = () => {
                         </div>
                         {item.description && <p className="text-sm text-gray-500">{item.description}</p>}
                         {item.url && (
-                          <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:underline">
+                          <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-bd-green hover:underline">
                             <ExternalLink size={12} /> {item.url.slice(0, 40)}...
                           </a>
                         )}

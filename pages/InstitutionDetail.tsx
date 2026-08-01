@@ -133,7 +133,7 @@ const InstitutionDetail: React.FC = () => {
            <div className="p-10 bg-gray-50 border border-gray-100 space-y-6">
               <div className="caps-label text-gray-400">Institutional Aid</div>
               <h4 className="text-xl font-bold leading-tight">এই মাদ্রাসায় সাদাকাহ প্রদান করুন।</h4>
-              <Link to="/marketplace" className="w-full py-4 bg-bd-green text-white font-bold text-xs flex items-center justify-center gap-2 hover:bg-emerald-700 transition-all">
+              <Link to="/marketplace" className="w-full py-4 bg-bd-green text-white font-bold text-xs flex items-center justify-center gap-2 hover:bg-brand-700 transition-all">
                  অনদান দিন <ArrowRight size={16} />
               </Link>
            </div>

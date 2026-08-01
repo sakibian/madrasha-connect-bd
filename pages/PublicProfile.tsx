@@ -118,7 +118,7 @@ const PublicProfile: React.FC = () => {
         </Link>
         <button
           onClick={() => setShowShareCard(true)}
-          className="flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-emerald-700 transition-colors"
+          className="flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-brand-700 transition-colors"
         >
           <Share2 size={16} /> শেয়ার
         </button>
@@ -249,7 +249,7 @@ const PublicProfile: React.FC = () => {
                     <button
                       onClick={() => handleEndorse(s.id, !!s.endorsedByMe)}
                       className={`p-1 rounded transition-all ${
-                        s.endorsedByMe ? 'text-emerald-600 bg-emerald-50' : 'text-gray-300 hover:text-emerald-600 hover:bg-emerald-50'
+                        s.endorsedByMe ? 'text-brand-600 bg-brand-50' : 'text-gray-300 hover:text-brand-600 hover:bg-brand-50'
                       }`}
                       title={s.endorsedByMe ? 'এনডোর্সমেন্ট সরান' : 'এনডোর্স করুন'}
                     >
@@ -262,7 +262,7 @@ const PublicProfile: React.FC = () => {
                         const userSkills = await dataService.getUserSkills(id!, currentUser?.id);
                         setSkills(userSkills);
                       })}
-                      className="p-1 text-gray-200 hover:text-red-500 transition-all opacity-0 group-hover:opacity-100"
+                      className="p-1 text-gray-200 hover:text-red-600 transition-all opacity-0 group-hover:opacity-100"
                     >
                       <X size={12} />
                     </button>
@@ -336,7 +336,7 @@ const PublicProfile: React.FC = () => {
                   </div>
                   {item.description && <p className="text-sm text-gray-500">{item.description}</p>}
                   {item.url && (
-                    <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:underline mt-1">
+                    <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-bd-green hover:underline mt-1">
                       <ExternalLink size={12} /> {item.url.slice(0, 40)}...
                     </a>
                   )}
@@ -355,25 +355,25 @@ const PublicProfile: React.FC = () => {
                 <h3 className="text-lg font-black">অ্যাচিভমেন্ট কার্ড</h3>
                 <button onClick={() => setShowShareCard(false)} className="text-gray-400 hover:text-black p-1"><X size={20} /></button>
               </div>
-              <div className="bg-gradient-to-br from-emerald-900 to-teal-900 p-8 text-white rounded-2xl space-y-4 text-center">
+              <div className="bg-gradient-to-br from-brand-900 to-brand-900 p-8 text-white rounded-2xl space-y-4 text-center">
                 <div className="w-16 h-16 bg-white/10 mx-auto rounded-full flex items-center justify-center text-2xl font-black border-2 border-white/20">
                   {profile.name.charAt(0)}
                 </div>
                 <div>
                   <p className="text-xl font-black">{profile.name}</p>
-                  <p className="text-emerald-300 text-sm font-bold">{scholar?.title || profile.role}</p>
+                  <p className="text-brand-300 text-sm font-bold">{scholar?.title || profile.role}</p>
                 </div>
                 {xp && (
                   <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm space-y-2">
                     <div className="flex justify-center items-center gap-4">
                       <div>
                         <div className="text-3xl font-black">{xp.level}</div>
-                        <div className="text-[10px] font-bold text-emerald-300 uppercase tracking-widest">Level</div>
+                        <div className="text-[10px] font-bold text-brand-300 uppercase tracking-widest">Level</div>
                       </div>
                       <div className="w-px h-10 bg-white/20" />
                       <div>
                         <div className="text-3xl font-black">{xp.xp.toLocaleString()}</div>
-                        <div className="text-[10px] font-bold text-emerald-300 uppercase tracking-widest">CP</div>
+                        <div className="text-[10px] font-bold text-brand-300 uppercase tracking-widest">CP</div>
                       </div>
                     </div>
                   </div>
@@ -383,7 +383,7 @@ const PublicProfile: React.FC = () => {
                     {badges.slice(0, 3).map(ub => (
                       <span key={ub.id} className="text-2xl" title={ub.badge?.name}>{ub.badge?.icon || '🏅'}</span>
                     ))}
-                    {badges.length > 3 && <span className="text-sm text-emerald-300 font-bold flex items-center">+{badges.length - 3}</span>}
+                    {badges.length > 3 && <span className="text-sm text-brand-300 font-bold flex items-center">+{badges.length - 3}</span>}
                   </div>
                 )}
               </div>
