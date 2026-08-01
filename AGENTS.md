@@ -38,8 +38,14 @@ When you ship **major features** (new auth methods, payment flows, admin panels,
 
 - Pre-commit hook runs `npx vitest run --reporter=verbose --changed`
 - If you add new features, add tests (unit for logic, e2e for critical flows)
-- 142 unit tests + 7 Playwright e2e specs must all pass
+- 220+ unit tests + 8 Playwright e2e specs must all pass
 - Never commit broken tests — fix them or mark as `.skip()` with a TODO
+
+### Manual browser test rule
+
+- **Every release** (deploy to `main` on Vercel/production) must be preceded by a run of [`docs/QA_CHECKLIST.md`](./docs/QA_CHECKLIST.md) — the 30-minute smoke.
+- **Every PR that touches auth / payments / notifications / admin** must also run the relevant role section from [`docs/MANUAL_TESTING.md`](./docs/MANUAL_TESTING.md).
+- If a manual regression is found, add a Vitest or Playwright test that would have caught it BEFORE fixing the bug.
 
 ---
 

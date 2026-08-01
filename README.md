@@ -15,11 +15,12 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/tests-205%20passing-brightgreen" alt="tests" />
+  <img src="https://img.shields.io/badge/tests-220%20passing-brightgreen" alt="tests" />
   <img src="https://img.shields.io/badge/e2e-8%20specs-brightgreen" alt="e2e" />
   <img src="https://img.shields.io/badge/mobile-first-orange" alt="mobile-first" />
   <img src="https://img.shields.io/badge/PWA-installable-blue" alt="PWA" />
   <img src="https://img.shields.io/badge/design-tokenized-green" alt="design tokens" />
+  <img src="https://img.shields.io/badge/toasts-Sonner-black" alt="Sonner" />
   <img src="https://img.shields.io/badge/i18n-bn%20%C2%B7%20en%20%C2%B7%20ar-blue" alt="i18n" />
   <img src="https://img.shields.io/badge/backend-Supabase%20%2B%20RLS-blue" alt="backend" />
   <img src="https://img.shields.io/badge/mobile-Expo%20SDK-purple" alt="mobile" />
@@ -47,7 +48,8 @@ A **non-profit digital ecosystem** for Bangladesh's madrasa community — connec
 | **Backend** (Supabase: 33 tables + RLS + Edge Functions) | ✅ Complete |
 | **Auth** (Email + Phone/SMS OTP with BD phone normalization) | ✅ Complete (web + mobile) |
 | **State management** (9 Zustand stores) | ✅ Complete |
-| **Testing** (205 unit tests + 8 Playwright e2e specs) | ✅ Complete |
+| **Testing** (220 unit tests + 8 Playwright e2e specs) | ✅ Complete |
+| **Notification UX** (Sonner toasts + Radix notification centre + permission primer) | ✅ Complete (M18) |
 | **Mobile-first UX** (BottomNav + responsive layout + 16 px base + touch-friendly modals) | ✅ Complete (M15) |
 | **Unified color system** (`danger-*` / `warning-*` / `info-*` tokens + `<StatusBadge>`) | ✅ Complete (M16) |
 | **PWA** (manifest + service worker + install prompt + Web Push scaffold) | ✅ Complete (M17) |
@@ -129,7 +131,7 @@ npm run dev                  # http://localhost:3000
 **Commands:**
 ```bash
 npm run dev              # dev server on :3000
-npm test                 # unit tests (Vitest — 205 tests, all passing)
+npm test                 # unit tests (Vitest — 220 tests, all passing)
 npm run test:coverage    # coverage report
 npm run build            # production build
 npm run preview          # preview the production build
@@ -153,6 +155,10 @@ cd mobile && npx expo start   # React Native dev server
 | [TRACK.md](./TRACK.md) | Detailed 12-module engineering deep-dive | Engineers |
 | [CREDENTIALS.md](./CREDENTIALS.md) | External services, env vars, and setup steps | Ops |
 | [docs/CONTENT_SOURCES.md](./docs/CONTENT_SOURCES.md) | Registry of every upstream Islamic content provider + licence | Engineers / Legal |
+| [docs/MANUAL_TESTING.md](./docs/MANUAL_TESTING.md) | **Role-based browser test playbook** — Guest, User, Scholar, Institution, Admin | Founder / QA / any tester |
+| [docs/QA_CHECKLIST.md](./docs/QA_CHECKLIST.md) | 30-minute pre-release smoke test | Founder / QA / release owner |
+| [docs/INCIDENT_RUNBOOK.md](./docs/INCIDENT_RUNBOOK.md) | Incident response + post-mortem template | On-call |
+| [docs/ROLLBACK_PROCEDURES.md](./docs/ROLLBACK_PROCEDURES.md) | Deploy rollback steps | On-call |
 | [database/schema.sql](./database/schema.sql) | Master schema (33 tables + RLS) | Backend |
 | [database/migrations/](./database/migrations/) | Incremental migrations (now including content_cache, seerah_events, curriculum) | Backend |
 

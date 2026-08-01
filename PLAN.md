@@ -345,7 +345,34 @@ Sessions 1–4 built the *shell* of the platform (auth, i18n, SEO, payments, adm
 
 ---
 
-## ✅ Definition of "production-ready" after M14 + M15 + M16 + M17 + M18
+---
+
+## 🧪 M19 — Manual Browser Test Guide (Role-Based) (**new**)
+
+**Objective:** Give the founder, the ops person, and every new contributor a single **checkable** document to smoke-test the entire app in a real browser before every release, organised by the five user roles the platform supports.
+
+**Deliverables:**
+- `docs/MANUAL_TESTING.md` — the master playbook. Each role has:
+  1. A **setup block** (test account credentials + URL + browser + viewport).
+  2. A **numbered list of steps** with expected result per step.
+  3. A **pass / fail** checkbox next to every step so the tester can copy the section into a GitHub issue for triage.
+- `docs/QA_CHECKLIST.md` — a shorter one-page pre-release smoke test built on top of the master playbook (30 min end-to-end).
+- Roles covered:
+  - **Guest / Anonymous** (landing, register, ask fatwa CTA, PWA install).
+  - **General User** (login, ask fatwa, browse jobs, apply, donate, notifications, feedback).
+  - **Scholar** (login, review pending fatwas, publish answer, dashboard XP).
+  - **Institution** (login, post job, edit profile, review applicants).
+  - **Admin** (login, moderation queue, feedback triage, ban user, donations queue including bKash personal-mode manual confirm).
+- Cross-role scenarios (fatwa → user is notified → clicks in-app bell → deep-links to answer).
+
+**Definition of done:**
+- Every dashboard page + every critical user flow has at least one step.
+- Every step has a pass/fail checkbox.
+- Founder-approved: the doc can be handed to a non-technical volunteer and they can smoke-test in ≤ 30 min.
+
+---
+
+## ✅ Definition of "production-ready" after M14 + M15 + M16 + M17 + M18 + M19
 
 - Landing page shows today's Hijri date + local prayer times from real APIs.
 - `/quran` reads any surah with Bengali translation, live from Al-Quran Cloud.

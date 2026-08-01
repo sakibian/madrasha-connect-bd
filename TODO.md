@@ -223,6 +223,17 @@
 
 ---
 
+## 🧪 M19 — Manual Browser Test Guide
+
+- [x] Write `docs/MANUAL_TESTING.md` — role-based playbook (Guest, User, Scholar, Institution, Admin) + cross-role + mobile + a11y + security spot-checks
+- [x] Write `docs/QA_CHECKLIST.md` — pre-release 30-min smoke with sign-off block
+- [x] Every step has pass/fail checkbox + expected result
+- [x] Includes mobile-only checks (BottomNav, install prompt, notification bell popover, iOS safe-area)
+- [x] Linked both docs from `README.md` under Key Documents
+- [x] Added "Manual test before every release" rule to `AGENTS.md`
+
+---
+
 ## 🛠️ Cross-cutting
 
 - [x] `components/Citation.tsx` — reusable citation badge (`source`, `url`, `verifiedAt`)

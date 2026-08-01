@@ -13,7 +13,7 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-08-01 22:59 UTC · **Latest deploy:** pending push (session 8 — M18 Delightful Notification UX: Sonner toasts + Radix notification centre + permission primer)
+**Last updated:** 2026-08-01 23:03 UTC · **Latest deploy:** pending push (session 9 — M19 Manual Browser Test Guide: role-based playbook + 30-min pre-release smoke)
 
 ---
 
