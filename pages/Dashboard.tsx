@@ -4,6 +4,7 @@ import { getCurrentUser } from '../services/authService';
 import AdminDashboard from './Admin/AdminDashboard';
 import InstitutionDashboard from './Institution/InstitutionDashboard';
 import UserDashboard from './User/UserDashboard';
+import ScholarDashboard from './ScholarDashboard';
 import Home from './Home';
 
 const Dashboard: React.FC = () => {
@@ -16,6 +17,8 @@ const Dashboard: React.FC = () => {
       return <AdminDashboard />;
     case 'INSTITUTION':
       return <InstitutionDashboard />;
+    case 'SCHOLAR':
+      return <ScholarDashboard />;
     case 'USER':
       return <UserDashboard />;
     default:

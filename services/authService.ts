@@ -22,20 +22,45 @@ const fetchUserProfile = async (userId: string): Promise<User | null> => {
   };
 };
 
+const withTimeout = <T,>(p: Promise<T>, ms: number, label: string): Promise<T> =>
+  Promise.race([
+    p,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error(`[auth] ${label} timed out after ${ms}ms`)), ms)
+    ),
+  ]);
+
 export const initAuth = async (): Promise<void> => {
   if (initPromise) return initPromise;
   initPromise = (async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session?.user) {
-      currentUser = await fetchUserProfile(session.user.id);
-    } else {
+    try {
+      const { data: { session }, error } = await withTimeout(
+        supabase.auth.getSession(),
+        10000,
+        'getSession'
+      );
+      if (error) {
+        console.error('[auth] getSession error:', error.message);
+      }
+      if (session?.user) {
+        currentUser = await fetchUserProfile(session.user.id);
+      } else {
+        currentUser = null;
+      }
+    } catch (e) {
+      console.error('[auth] initAuth failed:', e);
       currentUser = null;
     }
 
     supabase.auth.onAuthStateChange(async (event, session) => {
-      if (session?.user) {
-        currentUser = await fetchUserProfile(session.user.id);
-      } else {
+      try {
+        if (session?.user) {
+          currentUser = await fetchUserProfile(session.user.id);
+        } else {
+          currentUser = null;
+        }
+      } catch (e) {
+        console.error('[auth] onAuthStateChange error:', e);
         currentUser = null;
       }
       window.dispatchEvent(new CustomEvent('auth_change'));
@@ -54,8 +79,12 @@ export const login = async (email: string, password: string): Promise<LoginResul
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
+    console.error('[auth] signInWithPassword error:', error.message, error);
     if (error.message.toLowerCase().includes('email not confirmed')) {
       return { user: null, error: null, needsConfirmation: true };
+    }
+    if (error.message.toLowerCase().includes('database') || error.message.toLowerCase().includes('schema') || error.status >= 500) {
+      return { user: null, error: 'সার্ভার ত্রুটি। অনুগ্রহ করে কিছুক্ষণ পর আবার চেষ্টা করুন অথবা সাপোর্টের সাথে যোগাযোগ করুন।', needsConfirmation: false };
     }
     return { user: null, error: error.message, needsConfirmation: false };
   }

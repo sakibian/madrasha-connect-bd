@@ -153,21 +153,21 @@ const Login: React.FC = () => {
                 icon={<ShieldCheck size={20} />} 
                 label="সিস্টেম অ্যাডমিন" 
                 sub="প্ল্যাটফর্ম নিয়ন্ত্রক"
-                onClick={() => handleQuickLogin('admin@madrasa.bd')} 
+                onClick={() => handleQuickLogin('admin@test.com')} 
                 disabled={loading}
               />
               <LoginRoleButton 
                 icon={<School size={20} />} 
                 label="মাদ্রাসা / মসজিদ" 
                 sub="প্রাতিষ্ঠানিক অ্যাকাউন্ট"
-                onClick={() => handleQuickLogin('hathazari@madrasa.bd')} 
+                onClick={() => handleQuickLogin('institution@test.com')} 
                 disabled={loading}
               />
               <LoginRoleButton 
                 icon={<UserIcon size={20} />} 
                 label="শিক্ষার্থী / ব্যবহারকারী" 
                 sub="ব্যক্তিগত অ্যাকাউন্ট"
-                onClick={() => handleQuickLogin('student@madrasa.bd')} 
+                onClick={() => handleQuickLogin('user@test.com')} 
                 disabled={loading}
               />
             </div>

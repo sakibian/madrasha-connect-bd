@@ -4,8 +4,9 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn(
-    'Supabase credentials missing. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file.'
+  console.error(
+    '[supabase] FATAL: VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are not set. ' +
+    'Login will not work. Set these in your .env file or Vercel dashboard → Settings → Environment Variables.'
   );
 }
 

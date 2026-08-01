@@ -6,7 +6,7 @@ const mockUser = { id: '1', name: 'New User', email: 'new@test.com', role: 'USER
 vi.mock('../../../services/authService', () => ({
   getCurrentUser: vi.fn(() => null),
   logout: vi.fn(),
-  login: vi.fn(() => Promise.resolve(mockUser)),
+  login: vi.fn(() => Promise.resolve({ user: mockUser, error: null, needsConfirmation: false })),
   registerUser: vi.fn(() => Promise.resolve({ user: mockUser, needsVerification: false })),
   initAuth: vi.fn(() => Promise.resolve()),
 }));

@@ -12,7 +12,7 @@
     "test:coverage": "vitest run --coverage",
     "test:smoke": "vitest run src/test/__tests__/search.test.tsx",
     "analyze": "vite build --mode analyze",
-    "postinstall": "simple-git-hooks"
+    "postinstall": "simple-git-hooks || true"
   },
   "dependencies": {
     "@sentry/react": "^10.64.0",
@@ -41,8 +41,11 @@
     "@vitest/coverage-v8": "^4.1.10",
     "jsdom": "^29.1.1",
     "msw": "^2.15.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
     "rollup-plugin-visualizer": "^7.0.1",
     "simple-git-hooks": "^2.13.1",
+    "tailwindcss": "^3.4.17",
     "typescript": "~5.8.2",
     "vite": "^6.2.0",
     "vitest": "^4.1.10"

@@ -20,7 +20,7 @@ import {
 import { Link } from 'react-router-dom';
 import { Source } from '../types';
 import CitationBadge from '../components/CitationBadge';
-const EDGE_FN_URL = 'https://qazcxnldkrklxdmunfgj.functions.supabase.co/gemini-proxy';
+const EDGE_FN_URL = 'https://nkdtlussmrovzjxmquup.functions.supabase.co/gemini-proxy';
 
 const Home: React.FC = () => {
   const [dailyDeen, setDailyDeen] = useState<{ text: string; source: string } | null>(null);

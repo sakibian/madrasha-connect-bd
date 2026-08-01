@@ -42,9 +42,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   login: async (email: string, password: string) => {
-    const user = await authLogin(email, password);
-    set({ user });
-    return user;
+    const result = await authLogin(email, password);
+    set({ user: result.user });
+    return result.user;
   },
 
   register: async (data) => {

@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { initSentry } from './services/sentry';
 import { initPostHog } from './services/analytics';
+import './src/index.css';
 
 initSentry();
 initPostHog();

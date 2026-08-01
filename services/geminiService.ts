@@ -1,7 +1,7 @@
 
 import { dataService } from "./dataService";
 
-const EDGE_FN_URL = 'https://qazcxnldkrklxdmunfgj.functions.supabase.co/gemini-proxy';
+const EDGE_FN_URL = 'https://nkdtlussmrovzjxmquup.functions.supabase.co/gemini-proxy';
 
 const callEdgeFn = async (body: {
   action: string;

@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --pure-black: #111827;
+  --pure-white: #ffffff;
+  --bd-green: #006a4e;
+  --soft-grey: #f9fafb;
+  --border-color: #e5e7eb;
+}
+
+body {
+  font-family: 'Noto Sans Bengali', 'Inter', sans-serif;
+  background-color: var(--pure-white);
+  color: var(--pure-black);
+  -webkit-font-smoothing: antialiased;
+}
+
+.minimal-border {
+  border: 1px solid var(--border-color);
+}
+
+.text-balanced {
+  text-wrap: balance;
+}
+
+.hover-darken {
+  transition: all 0.2s ease;
+}
+
+.hover-darken:hover {
+  background-color: var(--pure-black);
+  color: var(--pure-white);
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.caps-label {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+*:focus-visible {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.no-shadow {
+  box-shadow: none !important;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--soft-grey);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--pure-black);
+}

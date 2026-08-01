@@ -1,5 +1,8 @@
--- Madrasa Connect BD — Demo Seed Data
+-- Madrasa Connect BD — MASTER SEED (demo data + test users)
 -- Idempotent: safe to run multiple times
+--
+-- PREREQUISITE: auth.users rows must exist first because many rows FK to them.
+--   Run  node scripts/seed-auth-users.mjs  BEFORE this file, then run schema.sql + this file.
 
 -- Demo Institutions
 insert into public.institutions (id, owner_id, name, type, location, district, established, description, image_url, student_count, verified) values
@@ -238,7 +241,7 @@ insert into public.xp_events (id, user_id, action, xp) values
 on conflict (id) do nothing;
 
 -- Demo Scholar Application
-insert into public.scholar_applications (id, user_id, title, specialization, institution, location, bio, credentials, references, status) values
+insert into public.scholar_applications (id, user_id, title, specialization, institution, location, bio, credentials, "references", status) values
   ('s-app-001', (select id from auth.users limit 1), 'মুফতি', 'ফিকহ ও হাদিস', 'দারুল উলুম মাদ্রাসা', 'ঢাকা', '১০ বছরের বেশি শিক্ষাদানের অভিজ্ঞতা। ফিকহ ও হাদিস বিষয়ে বিশেষজ্ঞ।', '{দাওরায়ে হাদিস, জামিয়া ইসলামিয়া,ফিকহ স্পেশালাইজেশন, মদিনা বিশ্ববিদ্যালয়}', '{মাওলানা আব্দুর রহিম, অধ্যক্ষ, দারুল উলুম}', 'approved')
 on conflict (user_id) do nothing;
 
@@ -254,3 +257,34 @@ insert into public.forum_comments (id, post_id, author_id, content) values
   ('fc-002', 'e490f1ee-6c54-4b01-90e6-d701748f0851', (select id from auth.users limit 1), 'আমি মনে করি পাঠ্যক্রমে আরও বেশি গুরুত্ব দেওয়া উচিত ইসলামী অর্থনীতিতে।'),
   ('fc-003', 'e490f1ee-6c54-4b01-90e6-d701748f0852', (select id from auth.users limit 1), 'শিক্ষক নিয়োগে সবচেয়ে গুরুত্বপূর্ণ বিষয় হলো তাকওয়া ও ইলম।')
 on conflict (id) do nothing;
+
+-- ============================================================
+-- TEST USERS — profiles + scholar/institution/user linking
+-- (password for all: Test1234!)
+-- ============================================================
+create extension if not exists pgcrypto;
+
+insert into public.user_profiles (id, name, role, avatar_url, phone) values
+  ('11111111-1111-1111-1111-111111111111', 'Admin User', 'ADMIN', 'https://api.dicebear.com/7.x/avataaars/svg?seed=admin', '+8801700000001'),
+  ('22222222-2222-2222-2222-222222222222', 'মাওলানা রহিম উদ্দিন', 'SCHOLAR', 'https://api.dicebear.com/7.x/avataaars/svg?seed=scholar', '+8801700000002'),
+  ('33333333-3333-3333-3333-333333333333', 'দারুল উলুম মাদ্রাসা', 'INSTITUTION', 'https://api.dicebear.com/7.x/avataaars/svg?seed=institution', '+8801700000003'),
+  ('44444444-4444-4044-4444-444444444444', 'আব্দুল্লাহ আহমেদ', 'USER', 'https://api.dicebear.com/7.x/avataaars/svg?seed=user', '+8801700000004')
+on conflict (id) do update set
+  name = excluded.name,
+  role = excluded.role,
+  avatar_url = excluded.avatar_url,
+  phone = excluded.phone;
+
+insert into public.scholars (user_id, title, specialization, institution, location, bio, verified) values
+  ('22222222-2222-2222-2222-222222222222', 'মুফতি', 'ফিকহ ও হাদিস', 'দারুল উলুম মাদ্রাসা', 'ঢাকা', '১০ বছরের অভিজ্ঞ আলেম', true)
+on conflict (user_id) do update set
+  title = excluded.title,
+  specialization = excluded.specialization,
+  institution = excluded.institution,
+  location = excluded.location,
+  bio = excluded.bio,
+  verified = excluded.verified;
+
+update public.institutions set owner_id = '33333333-3333-3333-3333-333333333333' where id = 'd290f1ee-6c54-4b01-90e6-d701748f0851';
+update public.fatwas set asked_by = '44444444-4444-4044-4444-444444444444';
+update public.forum_posts set author_id = '44444444-4444-4044-4444-444444444444';

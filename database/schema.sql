@@ -1,17 +1,29 @@
--- Madrasa Connect BD — Database Schema
--- Run this in Supabase SQL Editor after creating your project.
+-- Madrasa Connect BD — MASTER SCHEMA (tables, relations, RLS)
+-- FULL REBUILD: drops & recreates the public schema, so run on a fresh project
+-- (or when you want a clean slate). The auth schema is left untouched.
 
--- 0. Extensions
+-- 0. Reset public schema + re-grant privileges (Supabase drops these grants with the schema)
+drop schema if exists public cascade;
+create schema public;
+grant all on schema public to postgres, anon, authenticated, service_role;
+alter default privileges for role postgres in schema public grant all on tables to postgres, anon, authenticated, service_role;
+alter default privileges for role postgres in schema public grant all on functions to postgres, anon, authenticated, service_role;
+alter default privileges for role postgres in schema public grant all on sequences to postgres, anon, authenticated, service_role;
+
+-- 0.1 Extensions
 create extension if not exists "uuid-ossp";
 
 -- 0.1 Helper function to check user role (SECURITY DEFINER to avoid RLS recursion)
+-- PL/pgSQL so the body is validated at runtime (user_profiles is created later in this file).
 create or replace function public.get_user_role(uid uuid)
 returns text
-language sql
+language plpgsql
 security definer
 stable
 as $$
-  select role from public.user_profiles where id = uid;
+begin
+  return (select role from public.user_profiles where id = uid);
+end;
 $$;
 
 grant execute on function public.get_user_role(uuid) to authenticated;
@@ -293,7 +305,7 @@ create policy "Users can create posts"
 
 -- 13. Forum Comments
 create table public.forum_comments (
-  id uuid primary key default uuid_generate_v4(),
+  id text primary key,
   post_id uuid not null references public.forum_posts(id) on delete cascade,
   author_id uuid not null references auth.users(id) on delete cascade,
   content text not null,
@@ -383,7 +395,7 @@ create policy "Admins can read audit log"
 
 -- 18. Sources (Knowledge Base Authenticity)
 create table public.sources (
-  id uuid primary key default uuid_generate_v4(),
+  id text primary key,
   type text not null check (type in ('quran', 'hadith', 'scholarly', 'book', 'other')),
   reference text not null,
   text text,
@@ -401,9 +413,9 @@ create policy "Anyone can read sources"
 -- 19. Content Sources (Junction)
 create table public.content_sources (
   id uuid primary key default uuid_generate_v4(),
-  source_id uuid not null references public.sources(id) on delete cascade,
+  source_id text not null references public.sources(id) on delete cascade,
   content_type text not null,
-  content_id uuid not null,
+  content_id text not null,
   unique(source_id, content_type, content_id)
 );
 
@@ -452,7 +464,7 @@ create policy "Admins can update all profiles"
 
 -- 21. Scholar Applications (verification workflow)
 create table public.scholar_applications (
-  id uuid primary key default uuid_generate_v4(),
+  id text primary key,
   user_id uuid not null references auth.users(id) on delete cascade unique,
   title text not null,
   specialization text not null,
@@ -460,7 +472,7 @@ create table public.scholar_applications (
   location text,
   bio text,
   credentials text[] default '{}',
-  references text[] default '{}',
+  "references" text[] default '{}',
   status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
   admin_notes text,
   reviewed_by uuid references auth.users(id) on delete set null,
@@ -515,7 +527,7 @@ create policy "Authenticated users can create versions"
 
 -- 23. User XP & Levels (Gamification)
 create table public.user_xp (
-  id uuid primary key default uuid_generate_v4(),
+  id text primary key,
   user_id uuid not null references auth.users(id) on delete cascade unique,
   xp integer default 0,
   level integer default 1,
@@ -535,7 +547,7 @@ create policy "System can update own xp"
 
 -- 24. Badge Definitions
 create table public.badges (
-  id uuid primary key default uuid_generate_v4(),
+  id text primary key,
   name text not null,
   description text,
   icon text,
@@ -549,9 +561,9 @@ create policy "Anyone can read badges"
 
 -- 25. User Badges (earned)
 create table public.user_badges (
-  id uuid primary key default uuid_generate_v4(),
+  id text primary key,
   user_id uuid not null references auth.users(id) on delete cascade,
-  badge_id uuid not null references public.badges(id) on delete cascade,
+  badge_id text not null references public.badges(id) on delete cascade,
   earned_at timestamptz default now(),
   unique(user_id, badge_id)
 );
@@ -568,7 +580,7 @@ create policy "Users can earn badges"
 
 -- 26. XP Events (audit log for XP earning)
 create table public.xp_events (
-  id uuid primary key default uuid_generate_v4(),
+  id text primary key,
   user_id uuid not null references auth.users(id) on delete cascade,
   action text not null,
   xp integer not null,
@@ -654,7 +666,7 @@ create policy "Scholar can delete own portfolio"
 
 -- 30. Forum Post Likes (voting)
 create table public.forum_post_likes (
-  id uuid primary key default uuid_generate_v4(),
+  id text primary key,
   post_id uuid not null references public.forum_posts(id) on delete cascade,
   user_id uuid not null references auth.users(id) on delete cascade,
   created_at timestamptz default now(),

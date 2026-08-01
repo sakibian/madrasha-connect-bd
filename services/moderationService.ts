@@ -1,5 +1,5 @@
 
-const MODERATION_FN_URL = 'https://qazcxnldkrklxdmunfgj.functions.supabase.co/content-moderation';
+const MODERATION_FN_URL = 'https://nkdtlussmrovzjxmquup.functions.supabase.co/content-moderation';
 
 interface ModerationResult {
   safe: boolean;

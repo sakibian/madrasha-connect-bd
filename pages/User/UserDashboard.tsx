@@ -5,6 +5,7 @@ import {
   BookOpen, 
   Heart, 
   CheckCircle, 
+  Check,
   ArrowRight,
   Clock,
   ExternalLink,

@@ -10,7 +10,7 @@
  *   node scripts/seed-auth-users.mjs            # create the 4 users
  *   node scripts/seed-auth-users.mjs --reset     # delete ALL auth.users first, then create
  *
- * Fixed UUIDs match database/seed-test-users.sql so profile/scholar inserts keep working.
+ * Fixed UUIDs match database/seed.sql (test users section) so profile/scholar inserts keep working.
  */
 
 const SUPABASE_URL = (process.env.SUPABASE_URL || 'https://qazcxnldkrklxdmunfgj.supabase.co').replace(/\/$/, '');
@@ -85,5 +85,5 @@ async function api(method, path, body) {
     }
   }
 
-  console.log('\nDone. Now run database/seed-test-users.sql for profiles/scholars.');
+  console.log('\nDone. Now run database/seed.sql for demo data + test user profiles/scholars.');
 })();
