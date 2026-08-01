@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Static sitemap for public marketing routes. Job/fatwa/institution
+  dynamic URLs will be added by a build-time generator (see scripts/gen-sitemap.mjs — TODO)
+  that queries Supabase and appends per-row <url> entries at deploy time.
+
+  Every URL includes xhtml:link alternates for bn / en / ar so Google
+  serves the right language variant to each searcher.
+-->
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://madrasaconnectbd.com/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://madrasaconnectbd.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://madrasaconnectbd.com/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://madrasaconnectbd.com/?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://madrasaconnectbd.com/" />
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/professional</loc>
+    <changefreq>hourly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/institutions</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/scholars</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/fatwa</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/fatwa/archive</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/knowledge</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/seerah</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/community</loc>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/events</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/sadaqah</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/marketplace</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/audio-library</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/tools</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/faq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/terms</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/privacy</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://madrasaconnectbd.com/accessibility</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>

@@ -1,0 +1,40 @@
+# Madrasa Connect BD — crawler policy
+#
+# We WANT to be indexed as broadly as possible; organic search is our
+# primary growth channel. Only private / admin surfaces are disallowed.
+
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /scholar-dashboard
+Disallow: /post-job
+Disallow: /erp-preview
+Disallow: /profile-builder
+Disallow: /verify-email
+Disallow: /forgot-password
+Disallow: /forbidden
+
+# Answer-engine crawlers — explicitly opt-in
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Sitemap
+Sitemap: https://madrasaconnectbd.com/sitemap.xml
