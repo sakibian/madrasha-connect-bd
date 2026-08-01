@@ -1,18 +1,60 @@
 
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ShieldCheck, School, User as UserIcon, Loader2, ArrowRight, ArrowLeft, Lock, Mail } from 'lucide-react';
-import { login, resendVerificationEmail } from '../services/authService';
+import { ShieldCheck, School, User as UserIcon, Loader2, ArrowRight, ArrowLeft, Lock, Mail, Phone, KeyRound } from 'lucide-react';
+import { login, resendVerificationEmail, sendPhoneOtp, verifyPhoneOtp } from '../services/authService';
 
 const DEMO_PASSWORD = import.meta.env.VITE_ENABLE_DEMO === 'true' ? 'madrasa123' : '';
 
+type AuthTab = 'email' | 'phone';
+
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const [tab, setTab] = useState<AuthTab>('email');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [unconfirmedEmail, setUnconfirmedEmail] = useState('');
   const [email, setEmail] = useState(() => sessionStorage.getItem('login_email') || '');
   const [password, setPassword] = useState('');
+
+  // Phone OTP state
+  const [phone, setPhone] = useState('');
+  const [otp, setOtp] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+
+  const handleSendOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!phone) return;
+    setLoading(true);
+    setError('');
+    const result = await sendPhoneOtp(phone);
+    if (result.ok) {
+      setOtpSent(true);
+    } else {
+      setError(result.error || 'ওটিপি পাঠানো যায়নি।');
+    }
+    setLoading(false);
+  };
+
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!phone || !otp) return;
+    setLoading(true);
+    setError('');
+    const result = await verifyPhoneOtp(phone, otp);
+    if (result.user) {
+      navigate('/dashboard');
+    } else {
+      setError(result.error || 'ওটিপি মিলছে না।');
+    }
+    setLoading(false);
+  };
+
+  const resetPhone = () => {
+    setOtpSent(false);
+    setOtp('');
+    setError('');
+  };
 
   const handleEmailChange = (value: string) => {
     setEmail(value);
@@ -91,9 +133,105 @@ const Login: React.FC = () => {
           <div className="space-y-4">
             <div className="caps-label text-gray-400">Authentication</div>
             <h2 className="text-4xl font-extrabold tracking-tight">লগইন করুন।</h2>
-            <p className="text-gray-500 font-medium">ইমেইল ও পাসওয়ার্ড দিয়ে প্রবেশ করুন, অথবা দ্রুত লগইন ব্যবহার করুন।</p>
+            <p className="text-gray-500 font-medium">ফোন ওটিপি অথবা ইমেইল/পাসওয়ার্ড দিয়ে প্রবেশ করুন।</p>
           </div>
 
+          {/* Auth method tabs — Bangladesh-first: phone OTP is the default. */}
+          <div className="grid grid-cols-2 gap-1 bg-gray-100 minimal-border">
+            <button
+              type="button"
+              onClick={() => { setTab('phone'); setError(''); }}
+              className={`py-4 font-extrabold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${
+                tab === 'phone' ? 'bg-black text-white' : 'bg-white text-gray-400 hover:bg-gray-50'
+              }`}
+            >
+              <Phone size={14} /> ফোন OTP
+            </button>
+            <button
+              type="button"
+              onClick={() => { setTab('email'); setError(''); }}
+              className={`py-4 font-extrabold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${
+                tab === 'email' ? 'bg-black text-white' : 'bg-white text-gray-400 hover:bg-gray-50'
+              }`}
+            >
+              <Mail size={14} /> ইমেইল
+            </button>
+          </div>
+
+          {tab === 'phone' && (
+            <form onSubmit={otpSent ? handleVerifyOtp : handleSendOtp} className="space-y-8">
+              <div className="space-y-4">
+                <div className="relative">
+                  <Phone size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    placeholder="01712345678"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    disabled={otpSent}
+                    className="w-full pl-14 pr-6 py-5 bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium text-lg disabled:bg-gray-50 disabled:text-gray-500"
+                    required
+                    aria-label="বাংলাদেশী ফোন নম্বর"
+                  />
+                </div>
+                {otpSent && (
+                  <div className="relative animate-fadeIn">
+                    <KeyRound size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      maxLength={6}
+                      placeholder="৬-সংখ্যার কোড"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, ''))}
+                      className="w-full pl-14 pr-6 py-5 bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium text-lg tracking-widest"
+                      required
+                      autoFocus
+                      aria-label="OTP কোড"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {error && (
+                <div className="p-5 bg-red-50 border border-red-100 text-red-600 text-sm font-bold">
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading || (!otpSent ? !phone : otp.length < 4)}
+                className="w-full py-6 bg-black text-white font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-gray-800 transition-all disabled:opacity-50"
+              >
+                {loading ? (
+                  <Loader2 className="animate-spin" size={24} />
+                ) : otpSent ? (
+                  <>যাচাই করুন <ArrowRight size={24} /></>
+                ) : (
+                  <>OTP পাঠান <ArrowRight size={24} /></>
+                )}
+              </button>
+
+              {otpSent && (
+                <button
+                  type="button"
+                  onClick={resetPhone}
+                  className="w-full text-sm font-bold text-gray-400 hover:text-black transition-colors"
+                >
+                  ফোন নম্বর পরিবর্তন করুন
+                </button>
+              )}
+
+              <p className="text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                বিনামূল্যে SMS ওটিপি • প্ল্যাটফর্ম সম্পূর্ণ অলাভজনক
+              </p>
+            </form>
+          )}
+
+          {tab === 'email' && (
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-4">
               <div className="relative">
@@ -111,7 +249,7 @@ const Login: React.FC = () => {
                 <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="password"
-                  placeholder="পাসওয়ার্ড"
+                  placeholder="পাসওয়ার্ড"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   className="w-full pl-14 pr-6 py-5 bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium text-lg"
@@ -122,7 +260,7 @@ const Login: React.FC = () => {
 
             <div className="flex justify-end">
               <Link to="/forgot-password" className="text-xs font-bold text-gray-400 hover:text-black transition-colors">
-                পাসওয়ার্ড ভুলে গেছেন?
+                পাসওয়ার্ড ভুলে গেছেন?
               </Link>
             </div>
 
@@ -144,6 +282,7 @@ const Login: React.FC = () => {
               {loading ? <Loader2 className="animate-spin" size={24} /> : <>সাইন ইন করুন <ArrowRight size={24} /></>}
             </button>
           </form>
+          )}
 
           {import.meta.env.VITE_ENABLE_DEMO === 'true' && (
           <div className="space-y-4">
@@ -211,7 +350,7 @@ const UnconfirmedEmailBanner: React.FC<{ email: string }> = ({ email }) => {
         </div>
       </div>
       {sent ? (
-        <p className="text-xs font-bold text-emerald-600">✓ পুনরায় পাঠানো হয়েছে!</p>
+        <p className="text-xs font-bold text-brand-600">✓ পুনরায় পাঠানো হয়েছে!</p>
       ) : (
         <button
           onClick={handleResend}

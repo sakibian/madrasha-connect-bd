@@ -42,7 +42,10 @@ const Forbidden = lazy(() => import('./pages/Forbidden'));
 const AccessibilityStatement = lazy(() => import('./pages/AccessibilityStatement'));
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
 const VerifyEmail = lazy(() => import('./pages/VerifyEmail'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 import ProtectedRoute from './components/ProtectedRoute';
+import FeedbackWidget from './components/FeedbackWidget';
 
 import { initNotifications } from './services/notificationService';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -188,6 +191,8 @@ const Shell: React.FC = () => {
               <Route path="/accessibility" element={<AccessibilityStatement />} />
               <Route path="/profile-builder" element={<ProfileBuilder />} />
               <Route path="/help" element={<InstructionalHelp />} />
+              <Route path="/terms" element={<TermsOfService />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/post-job" element={<ProtectedRoute requiredRole="INSTITUTION"><PostJob /></ProtectedRoute>} />
               <Route path="/erp-preview" element={<ProtectedRoute requiredRole="INSTITUTION"><ERPPreview /></ProtectedRoute>} />
               {currentUser && <Route path="/" element={<Home />} />}
@@ -196,6 +201,8 @@ const Shell: React.FC = () => {
           </Suspense>
         </div>
       </main>
+      {/* Feedback widget floats on every page — critical trust-building UX */}
+      <FeedbackWidget />
     </div>
   );
 };
