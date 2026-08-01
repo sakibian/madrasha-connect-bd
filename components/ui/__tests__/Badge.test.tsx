@@ -26,12 +26,12 @@ describe('Badge', () => {
 
   it('applies warning variant with amber', () => {
     render(<Badge variant="warning">Warning</Badge>);
-    expect(screen.getByText('Warning').className).toContain('bg-amber-50');
+    expect(screen.getByText('Warning').className).toContain('bg-warning-50');
   });
 
   it('applies error variant with red', () => {
     render(<Badge variant="error">Error</Badge>);
-    expect(screen.getByText('Error').className).toContain('bg-red-50');
+    expect(screen.getByText('Error').className).toContain('bg-danger-50');
   });
 
   it('applies info variant with brand black (not off-brand blue)', () => {

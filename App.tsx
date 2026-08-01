@@ -47,6 +47,7 @@ const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 import ProtectedRoute from './components/ProtectedRoute';
 import FeedbackWidget from './components/FeedbackWidget';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import SEO from './components/SEO';
 import { organizationSchema, websiteSchema } from './components/StructuredData';
@@ -229,6 +230,8 @@ const Shell: React.FC = () => {
       <FeedbackWidget />
       {/* Bottom tab bar — mobile only. Primary nav for our 95%-mobile user base. */}
       <BottomNav />
+      {/* PWA install prompt — appears after 3 route visits */}
+      <PWAInstallPrompt />
     </div>
   );
 };

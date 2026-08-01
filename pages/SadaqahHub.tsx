@@ -66,10 +66,10 @@ const SadaqahHub: React.FC = () => {
       </div>
 
       {receipt && (
-        <div className={`p-6 border ${receipt.ok ? 'bg-bd-green/5 border-bd-green/30' : 'bg-red-50 border-red-100'} flex items-start gap-4`} role="status">
-          <CheckCircle size={24} className={receipt.ok ? 'text-bd-green shrink-0 mt-1' : 'text-red-600 shrink-0 mt-1'} />
+        <div className={`p-6 border ${receipt.ok ? 'bg-bd-green/5 border-bd-green/30' : 'bg-danger-50 border-danger-100'} flex items-start gap-4`} role="status">
+          <CheckCircle size={24} className={receipt.ok ? 'text-bd-green shrink-0 mt-1' : 'text-danger-600 shrink-0 mt-1'} />
           <div className="space-y-1">
-            <p className={`font-extrabold ${receipt.ok ? 'text-bd-green' : 'text-red-700'}`}>
+            <p className={`font-extrabold ${receipt.ok ? 'text-bd-green' : 'text-danger-700'}`}>
               {receipt.ok ? 'সাদাকাহ গৃহীত' : 'লেনদেন অসম্পূর্ণ'}
             </p>
             <p className="text-sm text-gray-600 font-medium">{receipt.message}</p>

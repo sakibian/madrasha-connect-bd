@@ -35,6 +35,37 @@ export default {
           800: '#00543e',
           900: '#003d2d',
         },
+        /**
+         * Semantic scopes — always use these instead of raw red/amber/blue.
+         * `danger-*`  = destructive actions + hard-error states.
+         * `warning-*` = drafts, pending review, soft-warning states.
+         * `info-*`    = neutral/informational status pills (draft, archived).
+         */
+        danger: {
+          50:  '#fef2f2',
+          100: '#fee2e2',
+          200: '#fecaca',
+          400: '#f87171',
+          500: '#ef4444',
+          600: '#dc2626',
+          700: '#b91c1c',
+        },
+        warning: {
+          50:  '#fffbeb',
+          100: '#fef3c7',
+          200: '#fde68a',
+          500: '#f59e0b',
+          600: '#d97706',
+          700: '#b45309',
+        },
+        info: {
+          50:  '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+        },
       },
       fontFamily: {
         sans: ['"Noto Sans Bengali"', 'Inter', 'sans-serif'],

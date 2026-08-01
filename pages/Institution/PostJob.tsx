@@ -131,7 +131,7 @@ const PostJob: React.FC = () => {
       <div className="bg-white minimal-border p-12 md:p-20 shadow-sm">
         <form onSubmit={handleSubmit} className="space-y-12">
           {error && (
-            <div className="p-6 bg-red-50 border border-red-100 text-red-600 space-y-2 flex items-start gap-4 animate-slideDown">
+            <div className="p-6 bg-danger-50 border border-danger-100 text-danger-600 space-y-2 flex items-start gap-4 animate-slideDown">
               <ShieldCheck className="shrink-0 mt-1" />
               <div>
                 <p className="font-bold">সতর্কতা!</p>

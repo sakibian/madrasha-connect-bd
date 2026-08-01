@@ -70,8 +70,8 @@ const ScholarApply: React.FC = () => {
 
         <div className="max-w-2xl">
           {existingApp.status === 'pending' && (
-            <div className="p-12 bg-amber-50 border border-amber-200 space-y-6">
-              <Clock size={48} className="text-amber-500" />
+            <div className="p-12 bg-warning-50 border border-warning-200 space-y-6">
+              <Clock size={48} className="text-warning-500" />
               <div className="space-y-2">
                 <h2 className="text-2xl font-extrabold">আবেদন পর্যালোচনাধীন</h2>
                 <p className="text-gray-600 font-medium">আপনার আবেদনটি অ্যাডমিন পর্যালোচনার জন্য অপেক্ষা করছে। আমাদের টিম শীঘ্রই এটি পর্যালোচনা করবে।</p>
@@ -110,10 +110,10 @@ const ScholarApply: React.FC = () => {
           )}
 
           {existingApp.status === 'rejected' && (
-            <div className="p-12 bg-red-50 border border-red-200 space-y-6">
-              <XCircle size={48} className="text-red-500" />
+            <div className="p-12 bg-danger-50 border border-danger-200 space-y-6">
+              <XCircle size={48} className="text-danger-500" />
               <div className="space-y-2">
-                <h2 className="text-2xl font-extrabold text-red-600">আবেদন প্রত্যাখ্যাত</h2>
+                <h2 className="text-2xl font-extrabold text-danger-600">আবেদন প্রত্যাখ্যাত</h2>
                 <p className="text-gray-600 font-medium">আপনার আবেদনটি প্রত্যাখ্যান করা হয়েছে।</p>
               </div>
               {existingApp.adminNotes && (
@@ -236,7 +236,7 @@ const ScholarApply: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setCredentials(credentials.filter((_, j) => j !== i))}
-                  className="p-4 text-red-500 hover:bg-red-50 border border-gray-100 transition-all"
+                  className="p-4 text-danger-500 hover:bg-danger-50 border border-gray-100 transition-all"
                 >
                   <Trash2 size={16} />
                 </button>
@@ -274,7 +274,7 @@ const ScholarApply: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setReferences(references.filter((_, j) => j !== i))}
-                  className="p-4 text-red-500 hover:bg-red-50 border border-gray-100 transition-all"
+                  className="p-4 text-danger-500 hover:bg-danger-50 border border-gray-100 transition-all"
                 >
                   <Trash2 size={16} />
                 </button>

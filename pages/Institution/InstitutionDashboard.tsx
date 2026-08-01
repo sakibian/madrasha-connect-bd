@@ -107,7 +107,7 @@ const InstitutionDashboard: React.FC = () => {
                       <td className="px-10 py-8 text-right">
                         <div className="flex justify-end gap-3">
                           <button className="p-3 border border-gray-200 text-black hover:bg-gray-50 transition-all"><Edit2 size={16} /></button>
-                          <button onClick={() => handleDelete(job.id)} className="p-3 border border-gray-200 text-red-600 hover:bg-red-50 transition-all"><Trash2 size={16} /></button>
+                          <button onClick={() => handleDelete(job.id)} className="p-3 border border-gray-200 text-danger-600 hover:bg-danger-50 transition-all"><Trash2 size={16} /></button>
                         </div>
                       </td>
                     </tr>

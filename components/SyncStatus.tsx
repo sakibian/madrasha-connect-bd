@@ -15,7 +15,7 @@ const SyncStatus: React.FC = () => {
     online: { icon: Wifi, label: 'সংযুক্ত', className: 'text-bd-green' },
     offline: { icon: WifiOff, label: 'অফলাইন', className: 'text-gray-500' },
     syncing: { icon: RefreshCw, label: 'সিঙ্ক হচ্ছে...', className: 'text-black' },
-    error: { icon: Cloud, label: 'সিঙ্ক ত্রুটি', className: 'text-red-600' },
+    error: { icon: Cloud, label: 'সিঙ্ক ত্রুটি', className: 'text-danger-600' },
   };
 
   const { icon: Icon, label, className } = config[status];

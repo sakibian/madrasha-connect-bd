@@ -231,7 +231,71 @@ Sessions 1–4 built the *shell* of the platform (auth, i18n, SEO, payments, adm
 
 ---
 
-## ✅ Definition of "production-ready" after M14 + M15
+---
+
+## 🎨 M16 — Unified Color System (**new**)
+
+**Objective:** Every accent on every page must trace back to a single tokenised palette. Today `bd-green`, `brand-*`, raw `red-*`, and raw `amber-*` are used inconsistently, causing subtle mismatches between dashboards and landing pages.
+
+**Deliverables:**
+- `tailwind.config.js`: extend the palette with **semantic scopes** on top of the existing `brand-*` scale:
+  - `danger-*` (destructive actions, error states) — anchored on a single red.
+  - `warning-*` (moderation, pending, drafts) — anchored on a single amber.
+  - `info-*` (neutral status pills) — anchored on a single slate.
+- Replace raw `red-50/500/600/700` and `amber-50/500` in `pages/**/*Dashboard*.tsx` and `components/**/*.tsx` with the new semantic tokens.
+- Introduce a `<StatusBadge status="pending|approved|rejected|banned" />` helper so every dashboard uses the same colour and copy for the same state.
+
+**Definition of done:**
+- `grep -rE "bg-(red|amber)-[0-9]" pages/ components/` returns **0** hits.
+- Only the tokenised palette appears in any file except `tailwind.config.js` / `src/index.css`.
+
+---
+
+## 📲 M17 — PWA Installable + Web Push (**new — critical for 95% mobile users**)
+
+**Objective:** Make the app installable to the home screen, work offline for cached routes, and deliver push notifications so users don't need the store app (yet). The native Expo app remains in mobile/ and will ship later as adoption grows.
+
+### M17.1 — Manifest + icons (~30 min)
+
+- `public/manifest.webmanifest` — full W3C manifest: name (bn + short), theme colour `#006a4e`, background `#ffffff`, `display: standalone`, `start_url: /`, `id: /`, `orientation: portrait`, `icons` for 192 + 512 + maskable.
+- Generate raster icons (PNG 192 + 512 + maskable 512) from the existing SVG — placed under `public/icons/`.
+- Link the manifest + `apple-touch-icon` + `theme-color` from `index.html`.
+
+### M17.2 — Service worker (~1 h)
+
+- Add `vite-plugin-pwa` with **workbox**.
+- Strategy: `NetworkFirst` for HTML/JS, `CacheFirst` (with 30 day expiry) for images/fonts, `StaleWhileRevalidate` for Supabase REST + Islamic content APIs.
+- Precache the app shell + top 10 routes.
+- Emit a **"new version available — refresh"** toast when the SW detects an update.
+
+### M17.3 — Web Push notifications (~2 h)
+
+- New client helper `services/webPush.ts` — subscribes the browser to `PushManager`, sends `endpoint + keys` to a new Supabase table `push_subscriptions`.
+- Migration `2026_08_07_push_subscriptions.sql` — table + RLS (user reads own, service_role writes).
+- New Edge Function `supabase/functions/push-send/index.ts` — takes `{ userId, title, body, url }` and fans out to all `push_subscriptions` rows with `web-push` library (VAPID).
+- Add `VAPID_PUBLIC_KEY` + `VAPID_PRIVATE_KEY` to Supabase secrets.
+- Trigger a push when a fatwa is answered / a job is posted for a saved query (both wired in existing services).
+
+### M17.4 — Install prompt (~1 h)
+
+- `components/PWAInstallPrompt.tsx` — listens to `beforeinstallprompt`, renders a subtle bottom-sheet CTA (Bengali-first) after the user has visited ≥ 3 routes. iOS Safari cannot programmatically install → show the "Add to Home Screen" hint with visual instructions.
+- One-tap dismiss + 30-day suppression via `localStorage`.
+
+### M17.5 — Test coverage (~1 h)
+
+- Vitest unit test that parses `public/manifest.webmanifest` and asserts required fields (name, icons ≥ 2, start_url, theme_color, display).
+- Vitest unit test for `PWAInstallPrompt` showing/hiding logic.
+- Playwright: `e2e/pwa.spec.ts` — asserts manifest link, service worker registration, offline page fallback.
+
+**Definition of done for M17:**
+- Lighthouse **PWA** score ≥ 90.
+- iOS Safari user can Add to Home Screen and launch as standalone.
+- Chrome/Edge shows the browser install prompt.
+- A test push notification arrives on a subscribed device.
+
+---
+
+## ✅ Definition of "production-ready" after M14 + M15 + M16 + M17
 
 - Landing page shows today's Hijri date + local prayer times from real APIs.
 - `/quran` reads any surah with Bengali translation, live from Al-Quran Cloud.

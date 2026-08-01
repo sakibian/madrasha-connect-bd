@@ -262,7 +262,7 @@ const PublicProfile: React.FC = () => {
                         const userSkills = await dataService.getUserSkills(id!, currentUser?.id);
                         setSkills(userSkills);
                       })}
-                      className="p-1 text-gray-200 hover:text-red-600 transition-all opacity-0 group-hover:opacity-100"
+                      className="p-1 text-gray-200 hover:text-danger-600 transition-all opacity-0 group-hover:opacity-100"
                     >
                       <X size={12} />
                     </button>

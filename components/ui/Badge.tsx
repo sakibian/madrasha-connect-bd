@@ -17,8 +17,8 @@ interface BadgeProps {
 //   default           -> neutral gray
 const variantStyles: Record<BadgeVariant, string> = {
   success: 'bg-bd-green/10 text-bd-green',
-  warning: 'bg-amber-50 text-amber-700',
-  error: 'bg-red-50 text-red-600',
+  warning: 'bg-warning-50 text-warning-700',
+  error: 'bg-danger-50 text-danger-600',
   info: 'bg-gray-900 text-white',
   default: 'bg-gray-100 text-gray-500',
 };

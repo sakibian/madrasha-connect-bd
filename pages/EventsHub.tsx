@@ -105,9 +105,9 @@ const EventsHub: React.FC = () => {
            <div className="space-y-6">
               <ReminderItem icon={<Clock />} title="তাহাজ্জুদ সময়" time="০৩:৩০ AM" />
               <ReminderItem icon={<Sparkles />} title="ইশরাক সময়" time="০৬:৪৫ AM" />
-              <div className="p-6 bg-amber-50 rounded-3xl border border-amber-100">
-                 <p className="text-amber-900 font-bold mb-2">বিশেষ নসিহত</p>
-                 <p className="text-sm text-amber-800 leading-relaxed italic">"রমজানের প্রস্তুতির জন্য এখন থেকেই নফল রোজা ও কুরআন তিলাওয়াতের অভ্যাস গড়ে তুলুন।"</p>
+              <div className="p-6 bg-warning-50 rounded-3xl border border-warning-100">
+                 <p className="text-warning-700 font-bold mb-2">বিশেষ নসিহত</p>
+                 <p className="text-sm text-warning-700 leading-relaxed italic">"রমজানের প্রস্তুতির জন্য এখন থেকেই নফল রোজা ও কুরআন তিলাওয়াতের অভ্যাস গড়ে তুলুন।"</p>
               </div>
            </div>
         </div>

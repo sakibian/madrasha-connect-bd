@@ -177,7 +177,7 @@ const FeedbackWidget: React.FC = () => {
                 </div>
 
                 {error && (
-                  <div className="p-4 bg-red-50 border border-red-100 text-red-600 text-sm font-bold">
+                  <div className="p-4 bg-danger-50 border border-danger-100 text-danger-600 text-sm font-bold">
                     {error}
                   </div>
                 )}

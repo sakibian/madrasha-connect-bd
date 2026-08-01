@@ -24,11 +24,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
       )}
       <input
         ref={ref}
-        className={`w-full ${icon ? 'pl-12' : 'px-4'} pr-4 py-4 bg-gray-50 border border-gray-100 outline-none focus:ring-2 focus:ring-black font-bold transition-all ${error ? 'border-red-400 focus:ring-red-400' : ''} ${className}`}
+        className={`w-full ${icon ? 'pl-12' : 'px-4'} pr-4 py-4 bg-gray-50 border border-gray-100 outline-none focus:ring-2 focus:ring-black font-bold transition-all ${error ? 'border-danger-400 focus:ring-danger-400' : ''} ${className}`}
         {...props}
       />
     </div>
-    {error && <p className="text-sm text-red-600 font-medium">{error}</p>}
+    {error && <p className="text-sm text-danger-600 font-medium">{error}</p>}
   </div>
 ));
 

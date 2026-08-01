@@ -13,7 +13,7 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-08-01 22:39 UTC · **Latest deploy:** pending push (session 6 — M15 Mobile-First Overhaul: BottomNav + responsive layout + typography + touch-friendly modal + mobile tests)
+**Last updated:** 2026-08-01 22:51 UTC · **Latest deploy:** pending push (session 7 — M16 Unified Color System + M17 PWA installable + Web Push scaffold)
 
 ---
 
@@ -55,6 +55,38 @@
 ---
 
 ## ✅ Completed (chronological)
+
+### 2026-08-01 (session 7 — M16 Color System + M17 PWA)
+
+Two milestones shipped in parallel. Full PLAN + TODO updated first, then executed.
+
+- **PLAN.md + TODO.md** — new **M16 Unified Color System** + **M17 PWA Installable + Web Push** milestones with sub-phases + definition of done.
+
+**M16 Unified Color System**
+- `tailwind.config.js` — added semantic scales:
+  - `danger-{50,100,200,400,500,600,700}` (destructive actions, errors)
+  - `warning-{50,100,200,500,600,700}` (drafts, pending, moderation)
+  - `info-{50,100,200,500,600,700}` (neutral status pills)
+- `components/ui/StatusBadge.tsx` — the ONE source of truth for status pills (`pending | approved | rejected | banned | draft | active | archived | flagged`), all using tokens.
+- **Global sweep — 29 production files** — every raw `red-*` and `amber-*` Tailwind class replaced with the semantic scope (`danger-*` / `warning-*`).
+- Verified: `grep -rE "bg-(red|amber)-\d"` returns **0** hits in `pages/` and `components/` (excluding tests, which now assert the new tokens).
+
+**M17 PWA Installable + Web Push**
+- `public/manifest.webmanifest` — full W3C manifest (Bangla name, theme `#006a4e`, standalone, portrait, shortcuts for `/fatwa` + `/institutions`).
+- `index.html` — links manifest + apple-touch-icon + theme-color + apple-mobile-web-app meta tags.
+- `public/sw.js` — hand-rolled service worker (`mcbd-v1` cache), NetworkFirst for HTML, CacheFirst for assets, `push` event handler with notification-click routing.
+- `src/pwa/registerSW.ts` — vanilla auto-registration, dispatches `pwa:update-available` on new SW.
+- `index.tsx` — calls `registerServiceWorker()` on init.
+- `services/webPush.ts` — client helpers (`isPushSupported`, `subscribeToPush`, `unsubscribeFromPush`, `sendSubscriptionToServer` with `urlBase64ToUint8Array`).
+- `database/migrations/2026_08_07_push_subscriptions.sql` — table + RLS + user-owned policies.
+- `supabase/functions/push-send/index.ts` — VAPID-signed fan-out via `web-push`, prunes 404/410 subs.
+- `supabase/functions/push-subscribe/index.ts` — JWT-authenticated upsert.
+- `components/PWAInstallPrompt.tsx` — Android install button + iOS Safari "Add to Home Screen" hint; shows after 3 route visits, 30-day dismiss cooldown; mounted in `App.tsx` (above BottomNav on mobile).
+- `.env.example` — new `VITE_VAPID_PUBLIC_KEY` + VAPID setup instructions.
+- Tests: `src/test/__tests__/manifest.test.ts` validates every required manifest field, `components/__tests__/PWAInstallPrompt.test.tsx` covers 3 deterministic scenarios.
+- Follow-up (not blocking): install `vite-plugin-pwa` + `web-push` deps + generate real VAPID keys (`npx web-push generate-vapid-keys`).
+
+**Tests:** 205/205 green (was 186).
 
 ### 2026-08-01 (session 6 — M15 Mobile-First Overhaul)
 

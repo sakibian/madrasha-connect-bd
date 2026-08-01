@@ -115,7 +115,7 @@ const CitationPicker: React.FC<CitationPickerProps> = ({ selected, onChange, onC
               >
                 <div className={`p-2 rounded ${
                   source.type === 'quran' ? 'bg-bd-green/10 text-bd-green' :
-                  source.type === 'hadith' ? 'bg-amber-50 text-amber-700' :
+                  source.type === 'hadith' ? 'bg-warning-50 text-warning-700' :
                   'bg-gray-100 text-black'
                 }`}>
                   {source.type === 'quran' ? <BookOpen size={18} /> :

@@ -5,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import App from './App';
 import { initSentry } from './services/sentry';
 import { initPostHog } from './services/analytics';
+import { registerServiceWorker } from './src/pwa/registerSW';
 // Initialise i18next before any component renders so that the very first
 // paint already speaks the correct language.
 import './i18n/config';
@@ -12,6 +13,7 @@ import './src/index.css';
 
 initSentry();
 initPostHog();
+registerServiceWorker();
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

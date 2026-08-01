@@ -52,7 +52,7 @@ const VerifyEmail: React.FC = () => {
         )}
 
         {error && (
-          <div className="p-5 bg-red-50 border border-red-100 rounded-2xl text-red-600 text-sm font-bold">
+          <div className="p-5 bg-danger-50 border border-danger-100 rounded-2xl text-danger-600 text-sm font-bold">
             {error}
           </div>
         )}

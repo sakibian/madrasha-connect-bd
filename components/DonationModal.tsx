@@ -179,10 +179,10 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
           />
 
           {error && (
-            <div className="p-4 bg-red-50 border border-red-100 text-red-600 text-sm font-bold">{error}</div>
+            <div className="p-4 bg-danger-50 border border-danger-100 text-danger-600 text-sm font-bold">{error}</div>
           )}
           {dryRun && (
-            <div className="p-4 bg-amber-50 border border-amber-100 text-amber-800 text-sm font-medium space-y-1">
+            <div className="p-4 bg-warning-50 border border-warning-100 text-warning-700 text-sm font-medium space-y-1">
               <p className="font-bold">Sandbox mode — bKash credentials not set.</p>
               <p className="text-xs">
                 Ask ops to run <code>supabase secrets set BKASH_APP_KEY=… BKASH_APP_SECRET=…</code> etc.

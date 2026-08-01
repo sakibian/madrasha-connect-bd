@@ -38,7 +38,7 @@ const FlagButton: React.FC<FlagButtonProps> = ({ contentType, contentId }) => {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="p-2 text-gray-300 hover:text-red-500 transition-all"
+        className="p-2 text-gray-300 hover:text-danger-500 transition-all"
         title="রিপোর্ট করুন"
       >
         <Flag size={14} />

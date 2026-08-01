@@ -196,7 +196,7 @@ const Login: React.FC = () => {
               </div>
 
               {error && (
-                <div className="p-5 bg-red-50 border border-red-100 text-red-600 text-sm font-bold">
+                <div className="p-5 bg-danger-50 border border-danger-100 text-danger-600 text-sm font-bold">
                   {error}
                 </div>
               )}
@@ -269,7 +269,7 @@ const Login: React.FC = () => {
             )}
 
             {error && (
-              <div className="p-5 bg-red-50 border border-red-100 text-red-600 text-sm font-bold">
+              <div className="p-5 bg-danger-50 border border-danger-100 text-danger-600 text-sm font-bold">
                 {error}
               </div>
             )}
@@ -339,12 +339,12 @@ const UnconfirmedEmailBanner: React.FC<{ email: string }> = ({ email }) => {
   };
 
   return (
-    <div className="p-5 bg-amber-50 border border-amber-100 rounded-2xl space-y-3">
+    <div className="p-5 bg-warning-50 border border-warning-100 rounded-2xl space-y-3">
       <div className="flex items-start gap-3">
-        <Mail size={20} className="text-amber-600 shrink-0 mt-0.5" />
+        <Mail size={20} className="text-warning-600 shrink-0 mt-0.5" />
         <div>
-          <p className="font-bold text-amber-800 text-sm">ইমেইল ভেরিফাই করুন</p>
-          <p className="text-xs text-amber-600 mt-1">
+          <p className="font-bold text-warning-700 text-sm">ইমেইল ভেরিফাই করুন</p>
+          <p className="text-xs text-warning-600 mt-1">
             আপনার ইমেইল এখনো ভেরিফাই করা হয়নি। অনুগ্রহ করে <strong>{email}</strong>-এ পাঠানো লিংকে ক্লিক করুন।
           </p>
         </div>
@@ -355,7 +355,7 @@ const UnconfirmedEmailBanner: React.FC<{ email: string }> = ({ email }) => {
         <button
           onClick={handleResend}
           disabled={sending}
-          className="text-xs font-bold text-amber-700 underline hover:no-underline disabled:opacity-50"
+          className="text-xs font-bold text-warning-700 underline hover:no-underline disabled:opacity-50"
         >
           {sending ? 'পাঠানো হচ্ছে...' : 'ভেরিফিকেশন ইমেইল পুনরায় পাঠান'}
         </button>

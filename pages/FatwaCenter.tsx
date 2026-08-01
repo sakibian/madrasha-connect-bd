@@ -184,7 +184,7 @@ const FatwaCenter: React.FC = () => {
       <Modal open={isAsking} onClose={() => setIsAsking(false)} title="আপনার মাসআলা লিখুন">
         <form onSubmit={handleAskQuestion} className="space-y-6">
            {moderationFeedback && (
-             <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-sm font-medium">
+             <div className="p-4 bg-danger-50 border border-danger-200 text-danger-700 text-sm font-medium">
                {moderationFeedback}
              </div>
            )}

@@ -24,9 +24,9 @@ const Leaderboard: React.FC = () => {
 
   const rankIcon = (i: number) => {
     // Gold / silver / bronze on the podium — kept as amber shades (never off-brand blue/purple)
-    if (i === 0) return <Trophy size={20} className="text-amber-500" />;
+    if (i === 0) return <Trophy size={20} className="text-warning-500" />;
     if (i === 1) return <Medal size={20} className="text-gray-400" />;
-    if (i === 2) return <Medal size={20} className="text-amber-700" />;
+    if (i === 2) return <Medal size={20} className="text-warning-700" />;
     return <span className="text-sm font-bold text-gray-500 w-5 text-center">{i + 1}</span>;
   };
 

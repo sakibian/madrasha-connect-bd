@@ -15,8 +15,9 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/tests-180%20passing-brightgreen" alt="tests" />
-  <img src="https://img.shields.io/badge/e2e-7%20specs-brightgreen" alt="e2e" />
+  <img src="https://img.shields.io/badge/tests-186%20passing-brightgreen" alt="tests" />
+  <img src="https://img.shields.io/badge/e2e-8%20specs-brightgreen" alt="e2e" />
+  <img src="https://img.shields.io/badge/mobile-first-orange" alt="mobile-first" />
   <img src="https://img.shields.io/badge/i18n-bn%20%C2%B7%20en%20%C2%B7%20ar-blue" alt="i18n" />
   <img src="https://img.shields.io/badge/backend-Supabase%20%2B%20RLS-blue" alt="backend" />
   <img src="https://img.shields.io/badge/mobile-Expo%20SDK-purple" alt="mobile" />
@@ -44,7 +45,8 @@ A **non-profit digital ecosystem** for Bangladesh's madrasa community — connec
 | **Backend** (Supabase: 33 tables + RLS + Edge Functions) | ✅ Complete |
 | **Auth** (Email + Phone/SMS OTP with BD phone normalization) | ✅ Complete (web + mobile) |
 | **State management** (9 Zustand stores) | ✅ Complete |
-| **Testing** (180 unit tests + 7 Playwright e2e specs) | ✅ Complete |
+| **Testing** (186 unit tests + 8 Playwright e2e specs) | ✅ Complete |
+| **Mobile-first UX** (BottomNav + responsive layout + 16 px base + touch-friendly modals) | ✅ Complete (M15) |
 | **Real Islamic content APIs** (Quran / Hadith / Prayer / Hijri via Edge proxies + cache) | ✅ Complete (M14.1) |
 | **Qawmi Education System explainer** (`/qawmi-system`, cited data) | ✅ Complete (M14.2) |
 | **Seerah dataset** (26 events w/ Quran.com + Sunnah.com citations) | ✅ Data shipped · page rewire pending (M14.3) |
@@ -60,7 +62,7 @@ A **non-profit digital ecosystem** for Bangladesh's madrasa community — connec
 | **Notifications** (in-app + Supabase Realtime) | ✅ Complete · Web Push TODO |
 | **Payments** (bKash donation flow, dry-run safe) | ✅ Code complete · 🔴 Blocked on merchant account |
 | **Mobile app** (Phone/OTP login + core screens) | ✅ Phone/OTP done · other screens TODO |
-| **Production Readiness** | ~**40%** — see PROGRESS.md for exact breakdown |
+| **Production Readiness** | ~**39%** — see PROGRESS.md for exact breakdown |
 
 **MVP soft-launch estimate:** ~1 week (blocked on founder actions in [`NEXT_STEPS.md`](./NEXT_STEPS.md), not code).
 

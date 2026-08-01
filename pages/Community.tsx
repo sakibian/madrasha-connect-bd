@@ -449,7 +449,7 @@ const PostCard: React.FC<{
               </button>
               <button
                 onClick={() => setShowDeleteConfirm(true)}
-                className="text-gray-300 hover:text-red-500 p-2 transition-all"
+                className="text-gray-300 hover:text-danger-500 p-2 transition-all"
                 title="ডিলিট করুন"
               >
                 <Trash2 size={16} />
@@ -459,7 +459,7 @@ const PostCard: React.FC<{
           {currentUser && !isOwner && (
             <button
               onClick={() => setShowFlagModal(true)}
-              className="text-gray-300 hover:text-red-500 p-2 transition-all"
+              className="text-gray-300 hover:text-danger-500 p-2 transition-all"
               title="রিপোর্ট করুন"
             >
               <Flag size={16} />
@@ -614,7 +614,7 @@ const PostCard: React.FC<{
               <button
                 onClick={handleFlag}
                 disabled={flagging || !flagReason.trim()}
-                className="px-5 py-2.5 bg-red-600 text-white text-sm font-bold hover:bg-red-700 transition-all disabled:opacity-50 flex items-center gap-2"
+                className="px-5 py-2.5 bg-danger-600 text-white text-sm font-bold hover:bg-danger-700 transition-all disabled:opacity-50 flex items-center gap-2"
               >
                 {flagging ? <Loader2 size={16} className="animate-spin" /> : null}
                 {flagged ? 'রিপোর্ট করা হয়েছে' : 'রিপোর্ট করুন'}
@@ -642,7 +642,7 @@ const PostCard: React.FC<{
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="px-5 py-2.5 bg-red-600 text-white text-sm font-bold hover:bg-red-700 transition-all disabled:opacity-50 flex items-center gap-2"
+                className="px-5 py-2.5 bg-danger-600 text-white text-sm font-bold hover:bg-danger-700 transition-all disabled:opacity-50 flex items-center gap-2"
               >
                 {deleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
                 ডিলিট করুন

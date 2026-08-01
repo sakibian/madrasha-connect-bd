@@ -144,6 +144,51 @@
 
 ---
 
+## 🎨 M16 — Unified Color System
+
+- [ ] `tailwind.config.js` — add `danger-*`, `warning-*`, `info-*` semantic scales
+- [ ] Sweep `pages/Admin/AdminDashboard.tsx` — replace `red-*` / `amber-*` with tokens
+- [ ] Sweep `pages/User/UserDashboard.tsx`
+- [ ] Sweep `pages/Institution/InstitutionDashboard.tsx`
+- [ ] Sweep `pages/ScholarDashboard.tsx` + other dashboards
+- [ ] Sweep `components/**/*.tsx` for raw red/amber literals
+- [ ] Add `components/ui/StatusBadge.tsx` (pending/approved/rejected/banned)
+- [ ] Update `AGENTS.md` — forbid raw `bg-red-*` / `bg-amber-*` in favour of tokens
+
+---
+
+## 📲 M17 — PWA Installable + Web Push
+
+### M17.1 — Manifest + icons
+- [ ] `public/manifest.webmanifest` — bn + en names, theme `#006a4e`, display standalone
+- [ ] `public/icons/icon-192.png` + `icon-512.png` + `icon-maskable-512.png`
+- [ ] `index.html` — link manifest + apple-touch-icon + theme-color meta
+
+### M17.2 — Service worker
+- [ ] `npm i -D vite-plugin-pwa workbox-window`
+- [ ] `vite.config.ts` — VitePWA plugin with workbox runtimeCaching rules
+- [ ] `src/pwa/registerSW.ts` — auto-register + update-available toast
+- [ ] Wire toast into `App.tsx`
+
+### M17.3 — Web Push
+- [ ] Migration `2026_08_07_push_subscriptions.sql` (table + RLS)
+- [ ] `services/webPush.ts` — subscribe / unsubscribe helpers
+- [ ] `supabase/functions/push-send/index.ts` — VAPID sender
+- [ ] Add `VAPID_PUBLIC_KEY` env to `.env.example` + docs
+- [ ] Trigger push on new fatwa answer + new relevant job
+
+### M17.4 — Install prompt
+- [ ] `components/PWAInstallPrompt.tsx` — beforeinstallprompt + iOS hint
+- [ ] Show after 3 route visits, 30-day dismiss cooldown via localStorage
+- [ ] Bengali + English + Arabic copy
+
+### M17.5 — Test coverage
+- [ ] `src/test/__tests__/manifest.test.ts` — parses + validates manifest.webmanifest
+- [ ] `components/__tests__/PWAInstallPrompt.test.tsx` — show/hide logic
+- [ ] `e2e/pwa.spec.ts` — manifest link, SW registration
+
+---
+
 ## 🛠️ Cross-cutting
 
 - [x] `components/Citation.tsx` — reusable citation badge (`source`, `url`, `verifiedAt`)

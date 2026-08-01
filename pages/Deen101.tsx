@@ -203,7 +203,7 @@ const Deen101: React.FC = () => {
                       onClick={() => handleQuizSubmit(idx)}
                       className={`p-6 text-left font-bold transition-all border-2 ${
                         selectedOption === idx
-                          ? (idx === modules[activeModule].quiz.correct ? 'bg-bd-green/10 border-bd-green text-bd-green' : 'bg-red-50 border-red-500 text-red-500')
+                          ? (idx === modules[activeModule].quiz.correct ? 'bg-bd-green/10 border-bd-green text-bd-green' : 'bg-danger-50 border-danger-500 text-danger-500')
                           : 'bg-white border-gray-100 hover:border-black'
                       }`}
                     >
@@ -214,10 +214,10 @@ const Deen101: React.FC = () => {
               </div>
 
               {isCorrect !== null && (
-                <div className={`p-10 text-center space-y-8 animate-slideDown ${isCorrect ? 'bg-gray-50' : 'bg-red-50'}`}>
+                <div className={`p-10 text-center space-y-8 animate-slideDown ${isCorrect ? 'bg-gray-50' : 'bg-danger-50'}`}>
                   <div className="flex items-center justify-center gap-3">
                     {isCorrect ? <Trophy className="text-black" size={32} /> : <Sparkles className="text-gray-400" size={32} />}
-                    <p className={`text-2xl font-extrabold ${isCorrect ? 'text-black' : 'text-red-500'}`}>
+                    <p className={`text-2xl font-extrabold ${isCorrect ? 'text-black' : 'text-danger-500'}`}>
                       {isCorrect ? 'চমৎকার! সঠিক উত্তর।' : 'দুঃখিত, উত্তরটি ভুল ছিল।'}
                     </p>
                   </div>

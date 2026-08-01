@@ -66,7 +66,7 @@ const ForgotPassword: React.FC = () => {
                 </div>
               </div>
 
-              {error && <p className="text-sm text-red-600 font-medium">{error}</p>}
+              {error && <p className="text-sm text-danger-600 font-medium">{error}</p>}
 
               <button
                 type="submit"

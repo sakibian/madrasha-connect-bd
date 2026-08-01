@@ -182,7 +182,7 @@ const ApplicationItem = ({ title, inst, status, date }: any) => {
   const statusLabels: any = {
     Reviewing: { label: 'পর্যালোচনায়', color: 'bg-gray-100 text-gray-500' },
     Shortlisted: { label: 'নির্বাচিত', color: 'bg-bd-green text-white' },
-    Rejected: { label: 'বাতিল', color: 'bg-red-50 text-red-600' }
+    Rejected: { label: 'বাতিল', color: 'bg-danger-50 text-danger-600' }
   };
   const s = statusLabels[status];
   return (

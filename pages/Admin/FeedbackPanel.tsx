@@ -38,7 +38,7 @@ const STATUS_LABELS: Record<FeedbackStatus, string> = {
 
 const STATUS_STYLES: Record<FeedbackStatus, string> = {
   new: 'bg-black text-white',
-  in_progress: 'bg-amber-50 text-amber-700',
+  in_progress: 'bg-warning-50 text-warning-700',
   resolved: 'bg-bd-green/10 text-bd-green',
   archived: 'bg-gray-100 text-gray-500',
 };
@@ -91,7 +91,7 @@ const FeedbackPanel: React.FC = () => {
         <div className="flex flex-wrap gap-6 text-xs font-bold">
           <Stat label="মোট" value={counts.total} />
           <Stat label="নতুন" value={counts.new} accent="bg-black text-white" />
-          <Stat label="কাজ চলছে" value={counts.in_progress} accent="bg-amber-50 text-amber-700" />
+          <Stat label="কাজ চলছে" value={counts.in_progress} accent="bg-warning-50 text-warning-700" />
           <Stat label="সমাধানিত" value={counts.resolved} accent="bg-bd-green/10 text-bd-green" />
         </div>
       </div>
@@ -144,7 +144,7 @@ const FeedbackPanel: React.FC = () => {
                     </span>
                   )}
                   {r.rating && (
-                    <span className="text-[9px] font-black px-2 py-1 uppercase tracking-widest bg-amber-50 text-amber-700">
+                    <span className="text-[9px] font-black px-2 py-1 uppercase tracking-widest bg-warning-50 text-warning-700">
                       ★ {r.rating}
                     </span>
                   )}
@@ -271,7 +271,7 @@ const FeedbackDetail: React.FC<DetailProps> = ({ item, saving, notes, onNotesCha
               type="button"
               onClick={() => onChangeStatus('in_progress')}
               disabled={saving}
-              className="px-5 py-3 bg-amber-500 text-white font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all flex items-center gap-2 disabled:opacity-50"
+              className="px-5 py-3 bg-warning-500 text-white font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all flex items-center gap-2 disabled:opacity-50"
             >
               <Play size={14} /> কাজ শুরু
             </button>
