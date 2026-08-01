@@ -1,9 +1,13 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { HelmetProvider } from 'react-helmet-async';
 import App from './App';
 import { initSentry } from './services/sentry';
 import { initPostHog } from './services/analytics';
+// Initialise i18next before any component renders so that the very first
+// paint already speaks the correct language.
+import './i18n/config';
 import './src/index.css';
 
 initSentry();
@@ -17,6 +21,8 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <App />
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
   </React.StrictMode>
 );
