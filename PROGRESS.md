@@ -13,7 +13,7 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-08-01 18:45 UTC · **Latest deploy:** pending push after i18n/SEO batch
+**Last updated:** 2026-08-01 18:58 UTC · **Latest deploy:** pending push (session 3 — bKash + Admin Feedback + Mobile OTP + Playwright)
 
 ---
 
@@ -45,15 +45,50 @@
 | **Tri-language (bn/en/ar)** | ✅ INFRA DONE (2026-08-01) | Ongoing per-page translation |
 | **SEO (meta, sitemap, JSON-LD)** | ✅ DONE (2026-08-01) | Per-page tags rolling out |
 | **AEO (FAQ, HowTo, Speakable)** | ✅ DONE (2026-08-01) | Schemas ready to wire per-page |
-| Payment integration (bKash) | 🔴 BLOCKED on merchant account | week 4 |
-| Admin feedback triage UI | ⚪ TODO | week 1 |
-| Mobile app (Expo real screens) | ⚪ TODO | month 2 |
+| Payment integration (bKash) | ✅ CODE DONE (2026-08-01) · 🔴 Blocked on merchant account | week 4 |
+| Admin feedback triage UI | ✅ DONE (2026-08-01) | — |
+| Mobile app (Phone/OTP login) | ✅ DONE (2026-08-01) · other screens ongoing | month 2 |
+| Playwright e2e (OTP, feedback, i18n, SEO) | ✅ DONE (2026-08-01) | — |
 | Real deployment (Supabase + Vercel env vars) | 🔴 BLOCKED on founder | THIS WEEK |
 | Scholar onboarding (5 real ones) | 🔴 BLOCKED on founder | THIS MONTH |
 
 ---
 
 ## ✅ Completed (chronological)
+
+### 2026-08-01 (session 3 — bKash + Admin Feedback + Mobile OTP + e2e)
+
+- **README.md rewritten** — accurate current-state table, points at PROGRESS.md
+- **TRACK.md** — status header updated, added **M13 Growth** module with the
+  full task list for i18n / SEO / Payments / Notifications
+- **bKash donation flow (end-to-end scaffold)**
+  - `database/migrations/2026_08_01_donations_and_admin.sql` — donations
+    table with RLS + auto roll-up trigger onto sadaqah_projects.raised
+  - `supabase/functions/bkash-checkout/index.ts` — create / execute / query
+    actions, full lifecycle logging, dry-run fallback when secrets missing
+  - `services/donationService.ts` — client wrapper
+  - `components/DonationModal.tsx` — brand-consistent modal with amount
+    preset chips + custom amount + donor info + optional message
+  - `pages/SadaqahHub.tsx` — hero "Donate" button + per-project button
+    + bKash-return callback handling + success/failure receipt banner
+- **Admin Feedback Triage panel**
+  - `services/adminService.ts` — listFeedback, getFeedbackCounts,
+    updateFeedbackStatus (RLS-scoped to ADMIN)
+  - `pages/Admin/FeedbackPanel.tsx` — filters, list, detail drawer with
+    status transitions (new → in_progress → resolved / archived) + notes
+  - Mounted as a new tab in `pages/Admin/AdminDashboard.tsx`
+- **Mobile OTP login**
+  - `mobile/src/services/auth.ts` — added `normalizeBdPhone`,
+    `sendPhoneOtp`, `verifyPhoneOtp` (mirrors web authService)
+  - `mobile/src/screens/LoginScreen.tsx` — rewrote as two-tab Phone/Email
+    with the same UX as the web
+- **Playwright e2e tests** (`e2e/`)
+  - `phone-otp-login.spec.ts` — tab defaults, error paths, tab switching
+  - `feedback-widget.spec.ts` — modal open, categories, submit gating
+  - `i18n-language-switcher.spec.ts` — html lang/dir per language, RTL for ar,
+    localStorage persistence
+  - `seo-meta.spec.ts` — canonical, hreflang, OG, JSON-LD, robots.txt,
+    sitemap.xml, llms.txt
 
 ### 2026-08-01 (session 2 — i18n + SEO + AEO)
 
