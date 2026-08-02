@@ -2,8 +2,8 @@
 <img width="1200" height="200" alt="Madrasa Connect BD Banner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-<h1 align="center">মাদ্রাসা কানেক্ট — বাংলাদেশ</h1>
-<h3 align="center">Connecting Bangladesh's Madrasa Community Through Technology</h3>
+<h1 align="center">কওমি — Qowmi</h1>
+<h3 align="center">বাংলাদেশের ইসলামী শিক্ষা প্ল্যাটফর্ম</h3>
 
 <p align="center">
   <a href="./PROGRESS.md"><strong>📊 Live Progress</strong></a> ·
@@ -71,7 +71,7 @@ A **non-profit digital ecosystem** for Bangladesh's madrasa community — connec
 | **Notifications** (in-app + Supabase Realtime) | ✅ Complete · Web Push TODO |
 | **Payments** (bKash donation flow, dry-run safe) | ✅ Code complete · 🔴 Blocked on merchant account |
 | **Mobile app** (Phone/OTP login + core screens) | ✅ Phone/OTP done · other screens TODO |
-| **Production Readiness** | ~**40%** — see PROGRESS.md for exact breakdown |
+| **Production Readiness** | ~**42%** — see PROGRESS.md for exact breakdown |
 
 **MVP soft-launch estimate:** ~1 week (blocked on founder actions in [`NEXT_STEPS.md`](./NEXT_STEPS.md), not code).
 
@@ -204,6 +204,6 @@ Full KPI table in [`PROGRESS.md`](./PROGRESS.md#-kpis-to-track-after-launch).
 
 <div align="center">
   <p><strong>For the community, by the community.</strong></p>
-  <p>মাদ্রাসা কানেক্ট বাংলাদেশ — Authentic Islamic Education, Modern Technology</p>
+  <p>কওমি — Qowmi — Authentic Islamic Education, Modern Technology</p>
   <p><sub>আল্লাহ আপনাকে তওফিক দিন — build slowly, ship honestly, listen relentlessly.</sub></p>
 </div>

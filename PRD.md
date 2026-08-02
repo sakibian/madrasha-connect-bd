@@ -1,7 +1,8 @@
-# Product Requirements Document: Madrasa Connect BD
+# Product Requirements Document: Qowmi
 
 > **Status:** Draft v1.0  
-> **Last Updated:** July 2026  
+> **Product:** Qowmi (কওমি — বাংলাদেশের ইসলামী শিক্ষা প্ল্যাটফর্ম)  
+> **Last Updated:** August 2, 2026  
 > **Owner:** Product Team  
 > **Document Purpose:** Define what we build, why, and for whom — single source of truth for all feature decisions.
 

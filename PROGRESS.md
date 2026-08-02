@@ -1,12 +1,12 @@
 <!--
-  PROGRESS.md — single source of truth for engineering work on Madrasa Connect BD.
+  PROGRESS.md — single source of truth for engineering work on Qowmi.
   Update whenever a task starts, completes, or blocks. This file must be kept
   ACCURATE — it replaces stale sections of README/TRACK.
   Format:
     ✅ DONE   |  🟡 DOING   |  ⚪ TODO   |  🔴 BLOCKED
 -->
 
-# Madrasa Connect BD — Live Progress Tracker
+# Qowmi — Live Progress Tracker
 
 > **Purpose:** one file, always up to date, so the founder always knows exactly
 > what's shipped, what's in flight, and what's still to build. Every commit
@@ -55,6 +55,67 @@
 ---
 
 ## ✅ Completed (chronological)
+
+### 2026-08-02 (session 16 — Complete ProfileBuilder with Backend Integration)
+
+**Theme**: Built production-ready ProfileBuilder with full 4-step flow, backend integration, and database migration
+
+- **Database Migration**
+  - `database/migrations/2026_08_08_user_profile_extended_fields.sql` - Added extended profile fields
+  - New columns: `bio`, `district`, `maslak`, `education` (jsonb), `experience` (jsonb), `address`, `date_of_birth`, `gender`
+  - Auto-update trigger for `updated_at` timestamp
+  - Index on district for location-based searches
+
+- **ProfileBuilder Component** (`pages/ProfileBuilder.tsx`)
+  - **Step 1: Basic Info** - Name, phone, district, maslak, bio with validation
+  - **Step 2: Education** - Dynamic education entries (institution, degree, year, result) with add/remove
+  - **Step 3: Experience** - Dynamic work experience entries (title, organization, duration, description) with add/remove
+  - **Step 4: Preview** - Full profile preview before saving
+  - **State Management** - React useState with proper TypeScript interfaces
+  - **Backend Integration** - Supabase load/save with error handling
+  - **Validation** - Required field validation on step navigation
+  - **UX** - Loading states, saving states, success/error toasts
+  - **Responsive** - Mobile-friendly with proper spacing and touch targets
+
+- **Key Features**
+  - Loads existing profile data on mount
+  - Controlled form inputs (value + onChange)
+  - Add/remove dynamic entries for education and experience
+  - Form validation prevents proceeding without required fields
+  - Preview step shows formatted profile
+  - Saves all data to Supabase `user_profiles` table
+  - Toast notifications for user feedback
+
+**Impact**: ProfileBuilder is now production-ready, fully backend-integrated, and provides complete profile management for job seekers. Employers can now view comprehensive candidate profiles.
+
+**Build**: ✅ Success (4.47s) | **ProfileBuilder Bundle**: 12.37 kB (gzipped: 3.36 kB)
+
+### 2026-08-02 (session 15 — Brand Rebrand to Qowmi)
+
+**Theme**: Complete rebrand from "Madrasa Connect BD" to "Qowmi" (কওমি) to match domain qowmi.mvp.bd
+
+- **Brand Identity Update**
+  - `README.md` - Updated header, mission, footer to "Qowmi — কওমি"
+  - `PRD.md` + `PRD.bn.md` - Updated product name and metadata
+  - `locales/{bn,en,ar}/common.json` - Updated brand.name, brand.short, brand.tagline
+  - `package.json` - Already "qowmi-mvp"
+  - `public/manifest.webmanifest` - Already "কওমি - Qowmi"
+  - `index.html` - Already "Qowmi - কওমি শিক্ষা প্ল্যাটফর্ম"
+
+- **UI Component Updates**
+  - `App.tsx` - Logo text updated to "কওমি"
+  - `pages/LandingPage.tsx` - Header, footer, copyright updated
+  - `pages/Login.tsx` - Brand name updated
+  - `pages/Register*.tsx` - All registration pages updated
+  - `pages/VerifyEmail.tsx` - Brand name updated
+  - `pages/AboutUs.tsx` - Footer copyright updated
+  - `components/SEO.tsx` - og:site_name updated to "Qowmi"
+  - `components/StructuredData.tsx` - Organization schema updated
+  - `vite.config.ts` - PWA manifest name and short_name updated
+
+**Impact**: Complete brand consistency across all user-facing surfaces. Domain qowmi.mvp.bd now matches product branding.
+
+**Rationale**: Domain already registered as qowmi.mvp.bd, focused brand name better represents Qowmi education system target audience for MVP launch.
 
 ### 2026-08-02 (session 14 — Complete Color Audit & Mobile PWA Enhancement)
 

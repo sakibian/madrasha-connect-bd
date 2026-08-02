@@ -165,7 +165,7 @@ const Shell: React.FC = () => {
             <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
               <Link to="/" className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-black flex items-center justify-center text-white font-bold">M</div>
-                <span className="text-xl font-bold tracking-tight">মাদ্রাসা কানেক্ট</span>
+                <span className="text-xl font-bold tracking-tight">কওমি</span>
               </Link>
               <div className="hidden lg:flex items-center gap-8">
                 <Link to="/about" className="text-sm font-bold text-gray-500 hover:text-black transition-colors">{t('nav.about')}</Link>

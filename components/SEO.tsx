@@ -97,7 +97,7 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonical} />
       <meta property="og:image" content={socialImage} />
-      <meta property="og:site_name" content="Madrasa Connect BD" />
+      <meta property="og:site_name" content="Qowmi" />
       <meta property="og:locale" content={i18n.language === 'bn' ? 'bn_BD' : i18n.language === 'ar' ? 'ar_SA' : 'en_US'} />
 
       {/* Twitter */}

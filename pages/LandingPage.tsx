@@ -174,7 +174,7 @@ const LandingPage: React.FC = () => {
             <div className="space-y-8 md:col-span-2">
                <div className="flex items-center gap-3 group">
                  <div className="w-6 h-6 bg-white text-black flex items-center justify-center font-bold text-xs group-hover:rotate-6 transition-transform">M</div>
-                 <span className="text-xl font-bold tracking-tight">মাদ্রাসা কানেক্ট</span>
+                 <span className="text-xl font-bold tracking-tight">কওমি</span>
                </div>
                <p className="text-gray-400 max-w-sm text-lg font-medium leading-relaxed">
                  বাংলাদেশের মাদ্রাসা কমিউনিটির শিক্ষা ও পেশাগত উন্নয়নে নিবেদিত প্রথম স্মার্ট প্ল্যাটফর্ম।
@@ -199,7 +199,7 @@ const LandingPage: React.FC = () => {
             </div>
           </div>
           <div className="pt-10 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center gap-6">
-             <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">© 2025 Madrasa Connect BD. All rights reserved.</div>
+             <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">© 2025 Qowmi. All rights reserved.</div>
              <div className="flex gap-10">
                 {['Facebook', 'Twitter', 'YouTube'].map(s => (
                   <a key={s} href="#" className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-white transition-colors">{s}</a>

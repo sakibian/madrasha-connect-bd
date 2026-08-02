@@ -55,7 +55,7 @@ const RegisterUser: React.FC = () => {
       <div className="lg:w-1/3 bg-black text-white p-12 md:p-16 flex flex-col justify-between border-r border-gray-900">
         <Link to="/" className="flex items-center gap-3">
           <div className="w-8 h-8 bg-white text-black flex items-center justify-center font-bold">M</div>
-          <span className="text-xl font-bold tracking-tight">মাদ্রাসা কানেক্ট</span>
+          <span className="text-xl font-bold tracking-tight">কওমি</span>
         </Link>
 
         <div className="space-y-8">

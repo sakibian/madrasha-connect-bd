@@ -100,7 +100,7 @@ const Login: React.FC = () => {
         <div className="z-10">
           <Link to="/" className="flex items-center gap-3 group">
             <div className="w-10 h-10 bg-white text-black flex items-center justify-center font-bold text-xl group-hover:rotate-6 transition-transform">M</div>
-            <span className="text-2xl font-bold tracking-tight">মাদ্রাসা কানেক্ট</span>
+            <span className="text-2xl font-bold tracking-tight">কওমি</span>
           </Link>
         </div>
         

@@ -30,7 +30,7 @@ const VerifyEmail: React.FC = () => {
       <div className="max-w-md w-full text-center space-y-10">
         <Link to="/" className="inline-flex items-center gap-3">
           <div className="w-8 h-8 bg-black text-white flex items-center justify-center font-bold">M</div>
-          <span className="text-xl font-bold tracking-tight">মাদ্রাসা কানেক্ট</span>
+          <span className="text-xl font-bold tracking-tight">কওমি</span>
         </Link>
 
         <div className="space-y-6">

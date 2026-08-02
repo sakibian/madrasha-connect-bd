@@ -16,8 +16,8 @@ export default defineConfig(({ mode }) => {
         registerType: 'autoUpdate',
         includeAssets: ['favicon.svg', 'icon.svg', 'icon-192.svg'],
         manifest: {
-          name: 'Madrasa Connect BD',
-          short_name: 'MCBD',
+          name: 'Qowmi',
+          short_name: 'Qowmi',
           description: 'আধুনিক মাদ্রাসা ইকোসিস্টেম — চাকরি, শিক্ষা, ফতোয়া ও কমিউনিটি',
           theme_color: '#111827',
           background_color: '#ffffff',

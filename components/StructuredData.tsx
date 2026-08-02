@@ -22,8 +22,8 @@ const LOGO_URL = `${SITE_URL}/icon.svg`;
 export const organizationSchema = () => ({
   '@context': 'https://schema.org',
   '@type': 'NGO',
-  name: 'Madrasa Connect Bangladesh',
-  alternateName: 'মাদ্রাসা কানেক্ট বাংলাদেশ',
+  name: 'Qowmi',
+  alternateName: 'কওমি',
   url: SITE_URL,
   logo: LOGO_URL,
   description:
