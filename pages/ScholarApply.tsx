@@ -5,6 +5,7 @@ import {
   GraduationCap, Loader2, CheckCircle, XCircle, Clock, Plus, Trash2, Send, ArrowRight, BadgeCheck
 } from 'lucide-react';
 import { dataService } from '../services/dataService';
+import { toast } from '../services/toast';
 import { ScholarApplication } from '../types';
 
 const ScholarApply: React.FC = () => {
@@ -31,7 +32,10 @@ const ScholarApply: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !specialization.trim()) return;
+    if (!title.trim() || !specialization.trim()) {
+      toast.error('পদবি এবং বিশেষজ্ঞতা প্রয়োজন');
+      return;
+    }
     setSubmitting(true);
     try {
       await dataService.submitScholarApplication({
@@ -45,8 +49,10 @@ const ScholarApply: React.FC = () => {
       });
       const app = await dataService.getMyScholarApplication();
       setExistingApp(app);
-    } catch (err) {
+      toast.success('আপনার আবেদন সফলভাবে জমা হয়েছে! আমরা শীঘ্রই পর্যালোচনা করব।');
+    } catch (err: any) {
       console.error(err);
+      toast.error(err.message || 'আবেদন জমা দিতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
     } finally {
       setSubmitting(false);
     }

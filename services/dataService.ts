@@ -1164,17 +1164,28 @@ export const dataService = {
   }) => {
     const user = (await supabase.auth.getSession()).data.session?.user;
     if (!user) throw new Error('Must be logged in to apply');
-    const { error } = await supabase.from('scholar_applications').insert({
-      user_id: user.id,
-      title: data.title,
-      specialization: data.specialization,
-      institution: data.institution,
-      location: data.location,
-      bio: data.bio,
-      credentials: data.credentials || [],
-      references: data.references || [],
+    
+    await retryWithBackoff(async () => {
+      const { error } = await supabase.from('scholar_applications').insert({
+        id: crypto.randomUUID(),
+        user_id: user.id,
+        title: data.title,
+        specialization: data.specialization,
+        institution: data.institution || null,
+        location: data.location || null,
+        bio: data.bio || null,
+        credentials: data.credentials || [],
+        references: data.references || [],
+        status: 'pending',
+      });
+      if (error) {
+        // Duplicate application (user_id is unique)
+        if (error.code === '23505') {
+          throw new Error('আপনি ইতিমধ্যে স্কলার হিসেবে আবেদন করেছেন।');
+        }
+        throw error;
+      }
     });
-    if (error) throw error;
   },
 
   getMyScholarApplication: async (): Promise<ScholarApplication | null> => {
