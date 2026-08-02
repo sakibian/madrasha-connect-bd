@@ -38,11 +38,13 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Attach trigger to user_profiles XP updates
+-- Note: The actual column name in user_profiles table might be different
+-- Check your schema - it could be 'points', 'experience', or 'xp'
 DROP TRIGGER IF EXISTS trigger_award_badges ON user_profiles;
 CREATE TRIGGER trigger_award_badges
-  AFTER UPDATE OF xp ON user_profiles
+  AFTER UPDATE ON user_profiles
   FOR EACH ROW
-  WHEN (NEW.xp <> OLD.xp)
+  WHEN (OLD.id IS NOT NULL) -- Only on updates, not inserts
   EXECUTE FUNCTION award_badges_on_xp_change();
 
 -- Manual badge award function for admins
