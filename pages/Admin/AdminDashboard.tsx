@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
+import CompetitionManager from './CompetitionManager';
+import SadaqahApprovals from './SadaqahApprovals';
 import { 
   LayoutDashboard, 
   Briefcase, 

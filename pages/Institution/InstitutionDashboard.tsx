@@ -12,7 +12,11 @@ import {
   Layout,
   HelpCircle,
   FileText,
-  BarChart3
+  BarChart3,
+  X,
+  Mail,
+  Phone,
+  Calendar
 } from 'lucide-react';
 import { dataService } from '../../services/dataService';
 import { getCurrentUser } from '../../services/authService';
@@ -26,6 +30,9 @@ const InstitutionDashboard: React.FC = () => {
   const user = getCurrentUser();
   const [myJobs, setMyJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedJobForApps, setSelectedJobForApps] = useState<Job | null>(null);
+  const [applications, setApplications] = useState<any[]>([]);
+  const [loadingApps, setLoadingApps] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -68,6 +75,19 @@ const InstitutionDashboard: React.FC = () => {
       },
       duration: 8000,
     });
+  };
+
+  const handleViewApplications = async (job: Job) => {
+    setSelectedJobForApps(job);
+    setLoadingApps(true);
+    try {
+      const apps = await dataService.getApplicationsForJob(job.id);
+      setApplications(apps);
+    } catch (error) {
+      toast.error('আবেদন লোড করতে সমস্যা হয়েছে।');
+      setApplications([]);
+    }
+    setLoadingApps(false);
   };
 
   return (
@@ -134,7 +154,19 @@ const InstitutionDashboard: React.FC = () => {
                       </td>
                       <td className="px-10 py-8 text-right">
                         <div className="flex justify-end gap-3">
-                          <button className="p-3 border border-gray-200 text-black hover:bg-gray-50 transition-all"><Edit2 size={16} /></button>
+                          <button 
+                            onClick={() => handleViewApplications(job)}
+                            className="p-3 border border-gray-200 text-bd-green hover:bg-bd-green hover:text-white transition-all"
+                            title="আবেদন দেখুন"
+                          >
+                            <Users size={16} />
+                          </button>
+                          <button 
+                            onClick={() => toast.info('সম্পাদনা বৈশিষ্ট্য শীঘ্রই আসছে। এখন মুছে নতুন করে পোস্ট করুন।')}
+                            className="p-3 border border-gray-200 text-black hover:bg-gray-50 transition-all"
+                          >
+                            <Edit2 size={16} />
+                          </button>
                           <button onClick={() => handleDelete(job.id)} className="p-3 border border-gray-200 text-danger-600 hover:bg-danger-50 transition-all"><Trash2 size={16} /></button>
                         </div>
                       </td>
@@ -174,6 +206,92 @@ const InstitutionDashboard: React.FC = () => {
            </div>
         </div>
       </div>
+
+      {/* Applications Modal */}
+      {selectedJobForApps && (
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setSelectedJobForApps(null)}>
+          <div className="bg-white max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 animate-fadeIn" onClick={e => e.stopPropagation()}>
+            <div className="p-8 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-white">
+              <div>
+                <h3 className="text-2xl font-black">{selectedJobForApps.title}</h3>
+                <p className="text-sm text-gray-500 mt-1">প্রাপ্ত আবেদন: {applications.length}টি</p>
+              </div>
+              <button onClick={() => setSelectedJobForApps(null)} className="text-gray-400 hover:text-black p-2">
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className="p-8">
+              {loadingApps ? (
+                <div className="text-center py-20 text-gray-400 font-medium">লোড হচ্ছে...</div>
+              ) : applications.length === 0 ? (
+                <div className="text-center py-20 space-y-4">
+                  <Users size={48} className="mx-auto text-gray-200" />
+                  <p className="text-xl font-bold text-gray-400">এই সার্কুলারের জন্য এখনো কোনো আবেদন আসেনি।</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {applications.map((app) => (
+                    <div key={app.id} className="bg-white border border-gray-100 p-6 hover:border-bd-green transition-all">
+                      <div className="flex justify-between items-start">
+                        <div className="space-y-3 flex-1">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-bd-green text-white flex items-center justify-center font-bold text-lg">
+                              {app.applicantName?.substring(0, 1) || 'A'}
+                            </div>
+                            <div>
+                              <h4 className="font-bold text-lg">{app.applicantName || 'নাম পাওয়া যায়নি'}</h4>
+                              <div className="flex items-center gap-3 text-xs text-gray-400">
+                                <span className="flex items-center gap-1">
+                                  <Calendar size={12} />
+                                  {new Date(app.appliedAt).toLocaleDateString('bn-BD')}
+                                </span>
+                                <span className={`px-2 py-1 text-[10px] font-black uppercase tracking-widest ${
+                                  app.status === 'pending' ? 'bg-gray-100 text-gray-600' :
+                                  app.status === 'shortlisted' ? 'bg-blue-50 text-blue-700' :
+                                  app.status === 'accepted' ? 'bg-green-50 text-green-700' :
+                                  'bg-red-50 text-red-700'
+                                }`}>
+                                  {app.status === 'pending' ? 'পর্যালোচনায়' :
+                                   app.status === 'shortlisted' ? 'শর্টলিস্টেড' :
+                                   app.status === 'accepted' ? 'গৃহীত' : 'প্রত্যাখ্যাত'}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {app.coverNote && (
+                            <div className="bg-gray-50 p-4 border-l-4 border-bd-green">
+                              <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">কভার নোট</p>
+                              <p className="text-sm text-gray-700 font-medium">{app.coverNote}</p>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="flex flex-col gap-2 ml-4">
+                          <a
+                            href={`mailto:applicant@example.com`}
+                            className="p-3 border border-gray-200 text-bd-green hover:bg-bd-green hover:text-white transition-all"
+                            title="ইমেইল পাঠান"
+                          >
+                            <Mail size={16} />
+                          </a>
+                          <button
+                            className="p-3 border border-gray-200 text-bd-green hover:bg-bd-green hover:text-white transition-all"
+                            title="ফোন করুন"
+                          >
+                            <Phone size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
