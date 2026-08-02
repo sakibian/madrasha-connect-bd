@@ -73,7 +73,7 @@ const FeedbackWidget: React.FC = () => {
         type="button"
         onClick={() => setOpen(true)}
         aria-label={t('feedback.trigger_aria')}
-        className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-40 flex items-center gap-2 bg-black text-white pl-4 pr-5 py-3 rounded-full shadow-2xl hover:bg-bd-green hover:scale-105 transition-all min-h-[44px]"
+        className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-40 flex items-center gap-2 bg-black text-white pl-4 pr-5 py-3 rounded-full shadow-2xl hover:bg-black hover:scale-105 transition-all min-h-[44px]"
       >
         <MessageSquarePlus size={18} />
         <span className="text-xs font-bold tracking-widest uppercase hidden sm:inline">{t('feedback.trigger')}</span>
@@ -108,8 +108,8 @@ const FeedbackWidget: React.FC = () => {
 
             {sent ? (
               <div className="p-10 text-center space-y-6">
-                <div className="w-16 h-16 bg-bd-green/10 flex items-center justify-center mx-auto rounded-full">
-                  <CheckCircle size={32} className="text-bd-green" />
+                <div className="w-16 h-16 bg-black/10 flex items-center justify-center mx-auto rounded-full">
+                  <CheckCircle size={32} className="text-black" />
                 </div>
                 <div className="space-y-2">
                   <h3 className="text-xl font-extrabold">{t('feedback.successTitle')}</h3>
@@ -177,7 +177,7 @@ const FeedbackWidget: React.FC = () => {
                 </div>
 
                 {error && (
-                  <div className="p-4 bg-danger-50 border border-danger-100 text-danger-600 text-sm font-bold">
+                  <div className="p-4 bg-gray-100 border border-gray-200 text-gray-900 text-sm font-bold">
                     {error}
                   </div>
                 )}

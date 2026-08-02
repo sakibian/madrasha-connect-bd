@@ -100,7 +100,7 @@ const PostJob: React.FC = () => {
   if (success) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center text-center space-y-8 animate-fadeIn">
-        <div className="w-24 h-24 bg-bd-green text-white flex items-center justify-center rounded-full">
+        <div className="w-24 h-24 bg-black text-white flex items-center justify-center rounded-full">
           <CheckCircle size={48} />
         </div>
         <div className="space-y-4">
@@ -132,7 +132,7 @@ const PostJob: React.FC = () => {
       <div className="bg-white minimal-border p-12 md:p-20 shadow-sm">
         <form onSubmit={handleSubmit} className="space-y-12">
           {error && (
-            <div className="p-6 bg-danger-50 border border-danger-100 text-danger-600 space-y-2 flex items-start gap-4 animate-slideDown">
+            <div className="p-6 bg-gray-100 border border-gray-200 text-gray-900 space-y-2 flex items-start gap-4 animate-slideDown">
               <ShieldCheck className="shrink-0 mt-1" />
               <div>
                 <p className="font-bold">সতর্কতা!</p>
@@ -145,7 +145,7 @@ const PostJob: React.FC = () => {
             {/* Essential Info */}
             <div className="space-y-8">
                <h2 className="text-2xl font-extrabold tracking-tight flex items-center gap-3">
-                 <FileText size={24} className="text-bd-green" /> পদের বিবরণ
+                 <FileText size={24} className="text-black" /> পদের বিবরণ
                </h2>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <FormInput 
@@ -174,7 +174,7 @@ const PostJob: React.FC = () => {
             {/* Location & Compensation */}
             <div className="space-y-8 pt-10 border-t border-gray-50">
                <h2 className="text-2xl font-extrabold tracking-tight flex items-center gap-3">
-                 <MapPin size={24} className="text-bd-green" /> এলাকা ও সম্মানী
+                 <MapPin size={24} className="text-black" /> এলাকা ও সম্মানী
                </h2>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <FormInput 
@@ -211,7 +211,7 @@ const PostJob: React.FC = () => {
             {/* Detailed Description */}
             <div className="space-y-8 pt-10 border-t border-gray-50">
                <h2 className="text-2xl font-extrabold tracking-tight flex items-center gap-3">
-                 <Building2 size={24} className="text-bd-green" /> বিস্তারিত বর্ণনা
+                 <Building2 size={24} className="text-black" /> বিস্তারিত বর্ণনা
                </h2>
                <div className="space-y-3">
                  <label className="caps-label text-gray-400">যোগ্যতা ও শর্তাবলী</label>
@@ -246,7 +246,7 @@ const PostJob: React.FC = () => {
       </div>
 
       <div className="p-12 bg-gray-50 minimal-border flex items-center gap-8">
-        <div className="w-16 h-16 bg-white flex items-center justify-center text-bd-green shadow-sm">
+        <div className="w-16 h-16 bg-white flex items-center justify-center text-black shadow-sm">
           <ShieldCheck size={32} />
         </div>
         <div className="space-y-1">

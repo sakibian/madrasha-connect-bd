@@ -56,7 +56,7 @@ const Home: React.FC = () => {
       {/* Daily Deen: Minimalist Banner */}
       <section className="bg-black text-white p-12 space-y-6">
         <div className="flex items-center gap-3">
-          <Sparkles className="text-bd-green" size={20} />
+          <Sparkles className="text-black" size={20} />
           <div className="caps-label text-gray-400">Daily Wisdom</div>
         </div>
         <div className="max-w-3xl space-y-4">
@@ -114,7 +114,7 @@ const Home: React.FC = () => {
 
 const PrayerCard = ({ label, time, icon }: any) => (
   <div className="space-y-4 text-center p-6 minimal-border hover:bg-black hover:text-white transition-all group">
-    <div className="flex justify-center text-bd-green group-hover:text-white">{icon}</div>
+    <div className="flex justify-center text-black group-hover:text-white">{icon}</div>
     <div className="space-y-1">
       <div className="text-xl font-extrabold">{time}</div>
       <div className="caps-label text-gray-400 group-hover:text-gray-500">{label}</div>
@@ -137,7 +137,7 @@ const JobRow = ({ title, inst, salary }: any) => (
      </div>
      <div className="flex items-center gap-8">
         <span className="text-sm font-bold">{salary}</span>
-        <button className="w-10 h-10 bg-black text-white flex items-center justify-center hover:bg-bd-green transition-all"><ArrowUpRight size={18} /></button>
+        <button className="w-10 h-10 bg-black text-white flex items-center justify-center hover:bg-black transition-all"><ArrowUpRight size={18} /></button>
      </div>
   </div>
 );

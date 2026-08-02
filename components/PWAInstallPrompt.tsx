@@ -95,7 +95,7 @@ const PWAInstallPrompt: React.FC = () => {
       <div className="fixed bottom-24 md:bottom-6 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-40">
         <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-4">
           <div className="flex items-start gap-3">
-            <Share2 className="w-5 h-5 text-bd-green mt-1 flex-shrink-0" />
+            <Share2 className="w-5 h-5 text-black mt-1 flex-shrink-0" />
             <div className="flex-1">
               <h3 className="font-semibold text-gray-900">
                 {t('pwa.iosTitle', 'হোম স্ক্রীনে অ্যাড করুন')}
@@ -133,7 +133,7 @@ const PWAInstallPrompt: React.FC = () => {
         <div className="flex gap-3">
           <button
             onClick={handleInstall}
-            className="flex-1 bg-bd-green text-white px-4 py-2 rounded font-semibold hover:bg-opacity-90 transition-colors"
+            className="flex-1 bg-black text-white px-4 py-2 rounded font-semibold hover:bg-opacity-90 transition-colors"
           >
             {t('pwa.installButton', 'ইনস্টল করুন')}
           </button>

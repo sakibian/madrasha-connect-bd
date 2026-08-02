@@ -84,7 +84,7 @@ const ScholarDashboard: React.FC = () => {
             <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">স্কলার ড্যাশবোর্ড।</h1>
             {myProfile && (
               <div className="flex items-center gap-3 mt-4">
-                <BadgeCheck size={18} className="text-bd-green" />
+                <BadgeCheck size={18} className="text-black" />
                 <span className="font-bold text-gray-600">{myProfile.name}</span>
                 <span className="text-xs text-gray-400">•</span>
                 <span className="text-sm text-gray-500">{myProfile.specialization}</span>
@@ -140,7 +140,7 @@ const ScholarDashboard: React.FC = () => {
                       <div key={fatwa.id} className="bg-white p-10 space-y-6">
                         <div className="flex justify-between items-start">
                           <div className="space-y-2">
-                            <div className="caps-label text-bd-green">{fatwa.category}</div>
+                            <div className="caps-label text-black">{fatwa.category}</div>
                             <h3 className="text-2xl font-extrabold leading-tight">{fatwa.question}</h3>
                             <div className="text-xs font-bold text-gray-400 flex items-center gap-2">
                               <Clock size={12} /> {fatwa.askedAt}
@@ -251,7 +251,7 @@ const ScholarDashboard: React.FC = () => {
                         </div>
                         {item.description && <p className="text-sm text-gray-500">{item.description}</p>}
                         {item.url && (
-                          <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-bd-green hover:underline">
+                          <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-black hover:underline">
                             <ExternalLink size={12} /> {item.url.slice(0, 40)}...
                           </a>
                         )}

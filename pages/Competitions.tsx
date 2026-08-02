@@ -94,7 +94,7 @@ const Competitions: React.FC = () => {
               
               <div className="space-y-8 flex-1 flex flex-col">
                  <div className="flex justify-between items-start">
-                    <div className="caps-label text-bd-green">{isRegistered ? 'REGISTERED' : 'OPEN REGISTRATION'}</div>
+                    <div className="caps-label text-black">{isRegistered ? 'REGISTERED' : 'OPEN REGISTRATION'}</div>
                     <div className="text-[10px] font-black bg-black text-white px-3 py-1 uppercase tracking-widest">
                       {new Date(comp.deadline).toLocaleDateString('bn-BD', {day: 'numeric', month: 'long'})}
                     </div>
@@ -119,7 +119,7 @@ const Competitions: React.FC = () => {
                       className={`w-full py-5 font-bold text-sm flex items-center justify-center gap-3 transition-all ${
                         isRegistered 
                           ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                          : 'bg-black text-white hover:bg-bd-green'
+                          : 'bg-black text-white hover:bg-black'
                       }`}
                     >
                        {isRegistered ? '✓ নিবন্ধিত' : 'অংশগ্রহণ করুন'} <ArrowRight size={20} />
@@ -138,14 +138,14 @@ const Competitions: React.FC = () => {
             <p className="text-xl text-gray-500 font-medium leading-relaxed">
               বিগত বছরের সেরা ফলাফলকারী শিক্ষার্থী ও সফল শিক্ষকদের সম্মাননা তালিকা এবং তাদের সাফল্যের গল্পসমূহ।
             </p>
-            <button className="text-sm font-bold border-b-2 border-white pb-0.5 hover:text-bd-green hover:border-bd-green transition-all">বিজয়ীদের তালিকা দেখুন</button>
+            <button className="text-sm font-bold border-b-2 border-white pb-0.5 hover:text-black hover:border-black transition-all">বিজয়ীদের তালিকা দেখুন</button>
          </div>
          <div className="grid grid-cols-2 gap-1 bg-gray-900 minimal-border">
             {[1,2,3,4].map(i => (
               <div key={i} className="bg-black p-10 flex flex-col items-center text-center space-y-4 border border-gray-900">
                  <div className="w-16 h-16 bg-gray-900 border border-gray-800 rounded-full"></div>
                  <div className="space-y-1">
-                    <p className="text-sm font-black uppercase tracking-widest text-bd-green">RANK #{i}</p>
+                    <p className="text-sm font-black uppercase tracking-widest text-black">RANK #{i}</p>
                     <p className="text-xs font-bold text-gray-400">মাওলানা সাঈদ বিন নূর</p>
                  </div>
               </div>
@@ -175,9 +175,9 @@ const Competitions: React.FC = () => {
               </div>
 
               {selectedComp.requirements && (
-                <div className="bg-info-50 border border-info-100 p-4">
-                  <p className="text-xs font-bold text-info-700 mb-2 uppercase tracking-widest">প্রয়োজনীয়তা</p>
-                  <p className="text-sm text-info-700 font-medium">{selectedComp.requirements}</p>
+                <div className="bg-gray-50 border border-gray-200 p-4">
+                  <p className="text-xs font-bold text-gray-900 mb-2 uppercase tracking-widest">প্রয়োজনীয়তা</p>
+                  <p className="text-sm text-gray-900 font-medium">{selectedComp.requirements}</p>
                 </div>
               )}
 
@@ -190,7 +190,7 @@ const Competitions: React.FC = () => {
                   value={submissionUrl}
                   onChange={(e) => setSubmissionUrl(e.target.value)}
                   placeholder="https://drive.google.com/... অথবা YouTube লিঙ্ক"
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
                 />
                 <p className="text-xs text-gray-400 mt-2 font-medium">
                   আপনার কাজ Google Drive, YouTube বা অন্যান্য প্ল্যাটফর্মে আপলোড করে লিঙ্ক দিন।
@@ -205,12 +205,12 @@ const Competitions: React.FC = () => {
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="আপনার সম্পর্কে কিছু লিখুন..."
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium min-h-[100px] resize-none"
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium min-h-[100px] resize-none"
                 />
               </div>
 
-              <div className="bg-warning-50 border border-warning-100 p-4">
-                <p className="text-xs text-warning-700 font-medium">
+              <div className="bg-gray-50 border border-gray-200 p-4">
+                <p className="text-xs text-gray-900 font-medium">
                   নিবন্ধনের পর আপনি আপনার সাবমিশন আপডেট করতে পারবেন। চূড়ান্ত সাবমিশন শেষ তারিখের আগে জমা দিন।
                 </p>
               </div>
@@ -225,7 +225,7 @@ const Competitions: React.FC = () => {
               </button>
               <button
                 onClick={handleRegister}
-                className="px-6 py-3 bg-bd-green text-white font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2"
+                className="px-6 py-3 bg-black text-white font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2"
               >
                 <Trophy size={18} /> নিবন্ধন নিশ্চিত করুন
               </button>

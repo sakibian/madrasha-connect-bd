@@ -9,7 +9,7 @@ const AboutUs: React.FC = () => {
       {/* Header */}
       <header className="py-8 bg-white border-b border-gray-100 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-sm font-bold hover:text-bd-green transition-colors">
+          <Link to="/" className="flex items-center gap-2 text-sm font-bold hover:text-black transition-colors">
             <ArrowLeft size={18} /> হোম
           </Link>
           <div className="flex flex-col items-center">
@@ -23,7 +23,7 @@ const AboutUs: React.FC = () => {
       <main className="max-w-7xl mx-auto px-6 py-24 space-y-40">
         {/* Story Section */}
         <section className="max-w-4xl space-y-12">
-           <div className="caps-label text-bd-green">Establishment</div>
+           <div className="caps-label text-black">Establishment</div>
            <h1 className="text-6xl md:text-8xl font-extrabold leading-[1.05] tracking-tight">
              ঐতিহ্যের শেকড়, <br /> প্রযুক্তির ডালপালা।
            </h1>
@@ -42,7 +42,7 @@ const AboutUs: React.FC = () => {
               </p>
            </div>
            <div className="py-24 pl-12 space-y-8">
-              <div className="w-12 h-12 bg-bd-green text-white flex items-center justify-center font-bold">V</div>
+              <div className="w-12 h-12 bg-black text-white flex items-center justify-center font-bold">V</div>
               <h2 className="text-4xl font-extrabold">আমাদের ভিশন</h2>
               <p className="text-lg text-gray-500 leading-relaxed font-medium">
                 বাংলাদেশের মাদ্রাসা ইকোসিস্টেমকে বিশ্বের অন্যতম আধুনিক এবং টেকসই শিক্ষা ও পেশাদার নেটওয়ার্ক হিসেবে প্রতিষ্ঠিত করা।
@@ -85,7 +85,7 @@ const AboutUs: React.FC = () => {
 
 const ValueCard = ({ icon, title, desc }: { icon: React.ReactNode, title: string, desc: string }) => (
   <div className="bg-white p-16 space-y-6 hover:bg-gray-50 transition-colors">
-    <div className="text-bd-green">{icon}</div>
+    <div className="text-black">{icon}</div>
     <h3 className="text-2xl font-bold">{title}</h3>
     <p className="text-gray-500 leading-relaxed font-medium text-sm">{desc}</p>
   </div>

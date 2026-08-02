@@ -81,28 +81,28 @@ const UserDashboard: React.FC = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="p-4 bg-white/5 border border-white/10">
-                <Users size={24} className="text-brand-400" />
+                <Users size={24} className="text-gray-600" />
               </div>
               <div>
                 <h2 className="text-xl font-black">বন্ধুদের আমন্ত্রণ জানান</h2>
-                <p className="text-brand-300 text-sm font-medium">প্রতিটি সফল আমন্ত্রণে ৩০ CP পান</p>
+                <p className="text-gray-500 text-sm font-medium">প্রতিটি সফল আমন্ত্রণে ৩০ CP পান</p>
               </div>
             </div>
             {referralStats.total > 0 && (
               <div className="text-right space-y-1">
                 <div className="text-3xl font-black">{referralStats.completed}</div>
-                <div className="text-[10px] font-bold text-brand-300 uppercase tracking-widest">সফল আমন্ত্রণ</div>
+                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">সফল আমন্ত্রণ</div>
               </div>
             )}
           </div>
           <div className="flex items-center gap-3 bg-white/5 border border-white/10 p-4">
-            <span className="text-sm font-bold text-brand-200 truncate flex-1">
+            <span className="text-sm font-bold text-gray-300 truncate flex-1">
               {window.location.origin}/register?ref={referralCode}
             </span>
             <button
               onClick={handleCopyReferral}
               className={`px-6 py-2.5 text-sm font-bold rounded-xl transition-all flex items-center gap-2 ${
-                copied ? 'bg-white text-brand-900' : 'bg-brand-400 text-brand-900 hover:bg-white'
+                copied ? 'bg-white text-black' : 'bg-gray-400 text-black hover:bg-white'
               }`}
             >
               {copied ? <Check size={16} /> : <Copy size={16} />}
@@ -137,13 +137,13 @@ const UserDashboard: React.FC = () => {
           {/* Quick Access Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
              <Link to="/audio-library" className="p-10 bg-white minimal-border group hover:bg-black hover:text-white transition-all">
-                <Headset size={32} className="text-bd-green mb-6 transition-colors group-hover:text-white" />
+                <Headset size={32} className="text-black mb-6 transition-colors group-hover:text-white" />
                 <h3 className="text-xl font-bold mb-2">অডিও লাইব্রেরি</h3>
                 <p className="text-sm text-gray-500 group-hover:text-gray-400 font-medium">তিলাওয়াত ও বয়ান শুনুন এক জায়গায়।</p>
                 <div className="mt-6 flex items-center gap-2 text-xs font-bold border-b border-black group-hover:border-white w-fit pb-1">লাইব্রেরি দেখুন <ChevronRight size={14} /></div>
              </Link>
              <Link to="/competitions" className="p-10 bg-white minimal-border group hover:bg-black hover:text-white transition-all">
-                <Trophy size={32} className="text-bd-green mb-6 transition-colors group-hover:text-white" />
+                <Trophy size={32} className="text-black mb-6 transition-colors group-hover:text-white" />
                 <h3 className="text-xl font-bold mb-2">প্রতিযোগিতা</h3>
                 <p className="text-sm text-gray-500 group-hover:text-gray-400 font-medium">জাতীয় মেধা প্রতিযোগিতায় অংশ নিন।</p>
                 <div className="mt-6 flex items-center gap-2 text-xs font-bold border-b border-black group-hover:border-white w-fit pb-1">অংশ নিন <ChevronRight size={14} /></div>
@@ -170,7 +170,7 @@ const UserDashboard: React.FC = () => {
 
 const StatCard = ({ icon, label, value }: any) => (
   <div className="bg-white p-12 flex flex-col gap-6 group hover:bg-black hover:text-white transition-all">
-    <div className="text-bd-green group-hover:text-white transition-colors">{icon}</div>
+    <div className="text-black group-hover:text-white transition-colors">{icon}</div>
     <div className="space-y-1">
       <div className="text-4xl font-extrabold tracking-tight">{value}</div>
       <div className="caps-label text-gray-400 group-hover:text-gray-500">{label}</div>
@@ -181,14 +181,14 @@ const StatCard = ({ icon, label, value }: any) => (
 const ApplicationItem = ({ title, inst, status, date }: any) => {
   const statusLabels: any = {
     Reviewing: { label: 'পর্যালোচনায়', color: 'bg-gray-100 text-gray-500' },
-    Shortlisted: { label: 'নির্বাচিত', color: 'bg-bd-green text-white' },
-    Rejected: { label: 'বাতিল', color: 'bg-danger-50 text-danger-600' }
+    Shortlisted: { label: 'নির্বাচিত', color: 'bg-black text-white' },
+    Rejected: { label: 'বাতিল', color: 'bg-gray-100 text-gray-900' }
   };
   const s = statusLabels[status];
   return (
     <div className="bg-white p-8 flex justify-between items-center group transition-all">
        <div className="space-y-1">
-          <h3 className="font-extrabold text-lg group-hover:text-bd-green transition-colors">{title}</h3>
+          <h3 className="font-extrabold text-lg group-hover:text-black transition-colors">{title}</h3>
           <p className="text-sm font-bold text-gray-400">{inst}</p>
           <p className="text-[10px] font-bold text-gray-500 uppercase mt-2 flex items-center gap-2"><Clock size={12} /> {date}</p>
        </div>
@@ -200,7 +200,7 @@ const ApplicationItem = ({ title, inst, status, date }: any) => {
 const SavedItem = ({ to, title, category, type }: any) => (
   <Link to={to} className="block p-8 minimal-border bg-white group hover:bg-black hover:text-white transition-all">
      <div className="flex justify-between items-start mb-6">
-        <div className="caps-label text-bd-green group-hover:text-gray-400">{type}</div>
+        <div className="caps-label text-black group-hover:text-gray-400">{type}</div>
         <button className="text-gray-300 group-hover:text-white"><Heart size={20} fill="currentColor" /></button>
      </div>
      <h4 className="text-xl font-extrabold mb-1">{title}</h4>

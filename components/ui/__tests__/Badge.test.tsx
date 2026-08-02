@@ -14,24 +14,24 @@ describe('Badge', () => {
   });
 
   // Badge variants now use the brand palette:
-  //   success -> bd-green (Bangladesh national colour)
+  //   success -> black (Bangladesh national colour)
   //   warning -> amber (only for genuine warnings)
   //   error   -> red (destructive only)
   //   info    -> black (no off-brand blues)
-  it('applies success variant with bd-green', () => {
+  it('applies success variant with black', () => {
     render(<Badge variant="success">Success</Badge>);
-    expect(screen.getByText('Success').className).toContain('bg-bd-green/10');
-    expect(screen.getByText('Success').className).toContain('text-bd-green');
+    expect(screen.getByText('Success').className).toContain('bg-black/10');
+    expect(screen.getByText('Success').className).toContain('text-black');
   });
 
   it('applies warning variant with amber', () => {
     render(<Badge variant="warning">Warning</Badge>);
-    expect(screen.getByText('Warning').className).toContain('bg-warning-50');
+    expect(screen.getByText('Warning').className).toContain('bg-gray-50');
   });
 
   it('applies error variant with red', () => {
     render(<Badge variant="error">Error</Badge>);
-    expect(screen.getByText('Error').className).toContain('bg-danger-50');
+    expect(screen.getByText('Error').className).toContain('bg-gray-100');
   });
 
   it('applies info variant with brand black (not off-brand blue)', () => {

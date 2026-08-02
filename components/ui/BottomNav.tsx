@@ -66,7 +66,7 @@ const BottomNav: React.FC = () => {
                     'min-h-[56px] py-2',
                     'text-[10px] font-bold uppercase tracking-widest',
                     'transition-colors',
-                    isActive ? 'text-bd-green' : 'text-gray-500 hover:text-black',
+                    isActive ? 'text-black' : 'text-gray-500 hover:text-black',
                   ].join(' ')
                 }
                 aria-label={t(tab.labelKey, tab.fallback)}

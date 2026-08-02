@@ -72,7 +72,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, name, size = 'md', online, classNa
       {online !== undefined && (
         <span
           className={`absolute bottom-0 right-0 w-2.5 h-2.5 border-2 border-white ${
-            online ? 'bg-bd-green' : 'bg-gray-300'
+            online ? 'bg-black' : 'bg-gray-300'
           }`}
           aria-label={online ? 'Online' : 'Offline'}
         />

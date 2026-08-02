@@ -37,7 +37,7 @@ const ForgotPassword: React.FC = () => {
 
         {sent ? (
           <div className="bg-white p-12 minimal-border text-center space-y-6">
-            <CheckCircle size={48} className="text-bd-green mx-auto" />
+            <CheckCircle size={48} className="text-black mx-auto" />
             <div className="space-y-2">
               <h1 className="text-2xl font-extrabold">ইমেইল পাঠানো হয়েছে</h1>
               <p className="text-gray-500 font-medium">আপনার ইমেইলে পাসওয়ার্ড রিসেটের লিংক পাঠানো হয়েছে।</p>
@@ -66,7 +66,7 @@ const ForgotPassword: React.FC = () => {
                 </div>
               </div>
 
-              {error && <p className="text-sm text-danger-600 font-medium">{error}</p>}
+              {error && <p className="text-sm text-gray-900 font-medium">{error}</p>}
 
               <button
                 type="submit"

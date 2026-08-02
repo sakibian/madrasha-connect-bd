@@ -75,7 +75,7 @@ const RegisterInstitution: React.FC = () => {
         </div>
 
         <div className="z-10 space-y-8">
-           <div className="caps-label text-bd-green">Institutional Registration</div>
+           <div className="caps-label text-black">Institutional Registration</div>
            <h1 className="text-5xl font-extrabold leading-tight tracking-tight">মাদ্রাসা ও মসজিদ <br />ব্যবস্থাপনার নতুন যুগ।</h1>
            <p className="text-gray-400 text-lg font-medium leading-relaxed">
              আপনার প্রতিষ্ঠানের জন্য একটি ডিজিটাল প্রোফাইল তৈরি করুন এবং নিয়োগ বিজ্ঞপ্তি থেকে শুরু করে ফান্ড ম্যানেজমেন্ট পর্যন্ত সব ফিচার ব্যবহার করুন।
@@ -161,7 +161,7 @@ const RegisterInstitution: React.FC = () => {
             </div>
 
             {error && (
-              <div className="p-5 bg-danger-50 border border-danger-100 text-danger-600 text-sm font-bold">
+              <div className="p-5 bg-gray-100 border border-gray-200 text-gray-900 text-sm font-bold">
                 {error}
               </div>
             )}

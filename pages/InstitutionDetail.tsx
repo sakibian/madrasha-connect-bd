@@ -34,7 +34,7 @@ const InstitutionDetail: React.FC = () => {
         </Link>
         <div className="flex gap-4">
            {institution.verified && (
-             <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-bd-green">
+             <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black">
                 <CheckCircle size={14} /> Verified Institution
              </div>
            )}
@@ -45,7 +45,7 @@ const InstitutionDetail: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-1 bg-gray-100 minimal-border">
          <div className="lg:col-span-7 bg-white p-12 md:p-16 space-y-12 flex flex-col justify-center">
             <div className="space-y-6">
-               <div className="caps-label text-bd-green">{institution.type} • Established {institution.established}</div>
+               <div className="caps-label text-black">{institution.type} • Established {institution.established}</div>
                <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05]">{institution.name}।</h1>
                <div className="flex items-center gap-2 text-xl text-gray-500 font-medium">
                   <MapPin size={22} className="text-gray-300" /> {institution.location}
@@ -63,7 +63,7 @@ const InstitutionDetail: React.FC = () => {
                </div>
                <div className="hidden md:block space-y-1">
                   <div className="caps-label text-gray-400">Status</div>
-                  <div className="text-3xl font-extrabold text-bd-green">সক্রিয়</div>
+                  <div className="text-3xl font-extrabold text-black">সক্রিয়</div>
                </div>
             </div>
          </div>
@@ -113,7 +113,7 @@ const InstitutionDetail: React.FC = () => {
         {/* Sidebar Info */}
         <div className="space-y-8">
            <div className="bg-black text-white p-12 space-y-10">
-              <div className="caps-label text-bd-green">Contact Details</div>
+              <div className="caps-label text-black">Contact Details</div>
               <div className="space-y-8">
                  <ContactBlock icon={<Phone size={20} />} label="ফোন নম্বর" value="+৮৮০ ১৭XXXXXXXX" />
                  <ContactBlock icon={<Mail size={20} />} label="ইমেইল অ্যাড্রেস" value="info@madrasa.bd" />
@@ -139,7 +139,7 @@ const InstitutionDetail: React.FC = () => {
            <div className="p-10 bg-gray-50 border border-gray-100 space-y-6">
               <div className="caps-label text-gray-400">Institutional Aid</div>
               <h4 className="text-xl font-bold leading-tight">এই মাদ্রাসায় সাদাকাহ প্রদান করুন।</h4>
-              <Link to="/marketplace" className="w-full py-4 bg-bd-green text-white font-bold text-xs flex items-center justify-center gap-2 hover:bg-brand-700 transition-all">
+              <Link to="/marketplace" className="w-full py-4 bg-black text-white font-bold text-xs flex items-center justify-center gap-2 hover:bg-black transition-all">
                  অনদান দিন <ArrowRight size={16} />
               </Link>
            </div>
@@ -151,7 +151,7 @@ const InstitutionDetail: React.FC = () => {
 
 const FeatureItem = ({ icon, text }: any) => (
   <div className="flex items-center gap-4 p-5 border border-gray-100">
-    <div className="text-bd-green">{icon}</div>
+    <div className="text-black">{icon}</div>
     <span className="text-sm font-bold text-gray-700">{text}</span>
   </div>
 );
@@ -159,7 +159,7 @@ const FeatureItem = ({ icon, text }: any) => (
 const OpportunityRow = ({ title, type, date }: any) => (
   <div className="bg-white p-8 flex justify-between items-center group cursor-pointer hover:bg-gray-50 transition-all">
      <div>
-        <h4 className="text-xl font-bold group-hover:text-bd-green transition-colors">{title}</h4>
+        <h4 className="text-xl font-bold group-hover:text-black transition-colors">{title}</h4>
         <div className="flex items-center gap-4 mt-1">
            <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">{type}</span>
            <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">প্রকাশিত: {date}</span>

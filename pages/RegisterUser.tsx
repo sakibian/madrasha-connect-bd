@@ -59,7 +59,7 @@ const RegisterUser: React.FC = () => {
         </Link>
 
         <div className="space-y-8">
-           <div className="caps-label text-bd-green">Join Community</div>
+           <div className="caps-label text-black">Join Community</div>
            <h1 className="text-5xl font-extrabold leading-tight tracking-tight">শুরু হোক নতুন ডিজিটাল পথচলা।</h1>
            <p className="text-gray-400 text-lg font-medium leading-relaxed">
              বাংলাদেশের মাদ্রাসা নেটওয়ার্কের অংশ হোন। রিসোর্স ডাউনলোড, ক্যারিয়ার আপডেট এবং কমিউনিটি আলোচনার সুবিধা পান।
@@ -68,7 +68,7 @@ const RegisterUser: React.FC = () => {
 
         <div className="space-y-4">
            <div className="caps-label text-gray-600">Already a member?</div>
-           <Link to="/login" className="inline-flex items-center gap-2 font-bold text-sm hover:text-bd-green transition-colors">
+           <Link to="/login" className="inline-flex items-center gap-2 font-bold text-sm hover:text-black transition-colors">
              লগইন করুন <ArrowRight size={18} />
            </Link>
         </div>
@@ -131,7 +131,7 @@ const RegisterUser: React.FC = () => {
             </div>
 
             {error && (
-              <div className="p-5 bg-danger-50 border border-danger-100 text-danger-600 text-sm font-bold">
+              <div className="p-5 bg-gray-100 border border-gray-200 text-gray-900 text-sm font-bold">
                 {error}
               </div>
             )}

@@ -62,10 +62,10 @@ const NotificationPermissionPrimer: React.FC<Props> = ({
     return (
       <div
         data-testid="notif-primer-denied"
-        className="fixed bottom-24 md:bottom-6 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-40 bg-white border border-warning-200 p-4 space-y-2"
+        className="fixed bottom-24 md:bottom-6 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-40 bg-white border border-gray-300 p-4 space-y-2"
       >
         <div className="flex justify-between items-start">
-          <p className="text-sm font-bold text-warning-700">
+          <p className="text-sm font-bold text-gray-900">
             আপনি বিজ্ঞপ্তি ব্লক করেছেন
           </p>
           <button onClick={onClose} aria-label="Dismiss" className="text-gray-400 hover:text-black">
@@ -118,7 +118,7 @@ const NotificationPermissionPrimer: React.FC<Props> = ({
       className="fixed bottom-24 md:bottom-6 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-40 bg-white border border-gray-200 shadow-2xl p-5 space-y-4 animate-fadeIn"
     >
       <div className="flex items-start gap-3">
-        <div className="w-10 h-10 rounded-full bg-brand-50 flex items-center justify-center text-bd-green shrink-0">
+        <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-black shrink-0">
           <BellRing size={20} />
         </div>
         <div className="flex-1 min-w-0">
@@ -141,13 +141,13 @@ const NotificationPermissionPrimer: React.FC<Props> = ({
         <button
           onClick={handleAllow}
           disabled={busy}
-          className="flex-1 py-3 bg-bd-green text-white font-bold text-sm hover:bg-brand-600 transition-colors disabled:opacity-60"
+          className="flex-1 py-3 bg-black text-white font-bold text-sm hover:bg-black transition-colors disabled:opacity-60"
         >
           {busy ? 'অপেক্ষা করুন…' : 'হ্যাঁ, জানাতে চাই'}
         </button>
         <button
           onClick={handleDismiss}
-          className="px-4 py-3 border border-gray-200 text-gray-600 font-bold text-sm hover:bg-info-50 transition-colors"
+          className="px-4 py-3 border border-gray-200 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-colors"
         >
           পরে
         </button>

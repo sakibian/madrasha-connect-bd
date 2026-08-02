@@ -86,7 +86,7 @@ const DailyIslamicWidget: React.FC<Props> = ({ city = 'Dhaka', ayahRef = '2:255'
           <div className="caps-label text-gray-400 flex items-center gap-1">
             <Sunrise size={12} /> পরবর্তী নামাজ ({city})
           </div>
-          <p className="text-2xl font-extrabold text-bd-green tracking-tight">
+          <p className="text-2xl font-extrabold text-black tracking-tight">
             {next.name} · {next.time}
           </p>
           <ul className="grid grid-cols-3 gap-1 text-xs font-bold text-gray-500 pt-2">

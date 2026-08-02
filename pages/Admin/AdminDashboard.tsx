@@ -122,18 +122,18 @@ const ManageJobs: React.FC = () => {
               </td>
               <td className="px-8 py-6 text-sm font-bold text-gray-500">{job.institution}</td>
               <td className="px-8 py-6">
-                <span className={`text-[9px] font-black px-3 py-1 uppercase tracking-widest ${job.verified ? 'bg-bd-green text-white' : 'bg-gray-100 text-gray-400'}`}>
+                <span className={`text-[9px] font-black px-3 py-1 uppercase tracking-widest ${job.verified ? 'bg-black text-white' : 'bg-gray-100 text-gray-400'}`}>
                   {job.verified ? 'VERIFIED' : 'PENDING'}
                 </span>
               </td>
               <td className="px-8 py-6 text-right">
                 <div className="flex justify-end gap-3">
                   {!job.verified && (
-                    <button onClick={async () => { await dataService.saveJob({...job, verified: true}); loadJobs(); }} className="p-3 bg-black text-white hover:bg-bd-green transition-all">
+                    <button onClick={async () => { await dataService.saveJob({...job, verified: true}); loadJobs(); }} className="p-3 bg-black text-white hover:bg-gray-800 transition-all">
                       <CheckCircle size={16} />
                     </button>
                   )}
-                  <button onClick={async () => { await dataService.deleteJob(job.id); loadJobs(); }} className="p-3 border border-gray-200 text-danger-600 hover:bg-danger-50 transition-all">
+                  <button onClick={async () => { await dataService.deleteJob(job.id); loadJobs(); }} className="p-3 border border-gray-200 text-gray-900 hover:bg-gray-100 transition-all">
                     <Trash2 size={16} />
                   </button>
                 </div>
@@ -218,7 +218,7 @@ const ManageProducts: React.FC = () => {
                 <td className="px-8 py-6 text-sm font-bold text-gray-500">{p.category}</td>
                 <td className="px-8 py-6 font-black text-xl text-black">৳{p.price}</td>
                 <td className="px-8 py-6 text-right">
-                  <button onClick={async () => { await dataService.deleteProduct(p.id); loadProducts(); }} className="p-3 border border-gray-100 text-danger-600 hover:bg-danger-50 transition-all">
+                  <button onClick={async () => { await dataService.deleteProduct(p.id); loadProducts(); }} className="p-3 border border-gray-100 text-gray-900 hover:bg-gray-100 transition-all">
                     <Trash2 size={16} />
                   </button>
                 </td>
@@ -293,9 +293,9 @@ const ManageUsers: React.FC = () => {
                   </td>
                   <td className="px-8 py-6">
                     {u.banned ? (
-                      <span className="text-[9px] font-black px-3 py-1 bg-danger-50 text-danger-600 uppercase tracking-widest">ব্যানড</span>
+                      <span className="text-[9px] font-black px-3 py-1 bg-gray-100 text-gray-900 uppercase tracking-widest">ব্যানড</span>
                     ) : (
-                      <span className="text-[9px] font-black px-3 py-1 bg-bd-green/10 text-bd-green uppercase tracking-widest">সক্রিয়</span>
+                      <span className="text-[9px] font-black px-3 py-1 bg-gray-100 text-gray-900 uppercase tracking-widest">সক্রিয়</span>
                     )}
                   </td>
                   <td className="px-8 py-6 text-right">
@@ -303,7 +303,7 @@ const ManageUsers: React.FC = () => {
                       <button
                         onClick={() => handleBanToggle(u.id, !!u.banned)}
                         className={`text-[10px] font-black uppercase tracking-widest border px-4 py-2 transition-all ${
-                          u.banned ? 'border-bd-green text-bd-green hover:bg-bd-green hover:text-white' : 'border-gray-200 text-gray-500 hover:bg-danger-600 hover:border-danger-600 hover:text-white'
+                          u.banned ? 'border-black text-gray-900 hover:bg-gray-800 hover:text-white' : 'border-gray-200 text-gray-500 hover:bg-black hover:border-black hover:text-white'
                         }`}
                       >
                         {u.banned ? 'আনব্যান' : 'ব্যান'}
@@ -461,7 +461,7 @@ const ManageModeration: React.FC = () => {
             <div key={fatwa.id} className="bg-white p-10 space-y-6">
               <div className="flex justify-between items-start">
                 <div className="space-y-2">
-                  <div className="caps-label text-bd-green">{fatwa.category}</div>
+                  <div className="caps-label text-gray-900">{fatwa.category}</div>
                   <h3 className="text-2xl font-extrabold leading-tight">{fatwa.question}</h3>
                   <div className="text-xs font-bold text-gray-400">{fatwa.askedAt}</div>
                 </div>
@@ -483,7 +483,7 @@ const ManageModeration: React.FC = () => {
                 </button>
                 <button
                   onClick={() => handleReject(fatwa)}
-                  className="px-6 py-3 border border-gray-200 text-danger-600 font-bold text-xs hover:bg-danger-50 transition-all"
+                  className="px-6 py-3 border border-gray-200 text-gray-900 font-bold text-xs hover:bg-gray-100 transition-all"
                 >
                   প্রত্যাখ্যান
                 </button>
@@ -602,7 +602,7 @@ const ManageFlags: React.FC = () => {
       <div className="flex items-center gap-3">
         <Shield size={20} />
         <span className="font-bold text-lg">রিপোর্ট করা কন্টেন্ট</span>
-        <span className="text-[9px] font-black px-2 py-1 bg-danger-50 text-danger-500">{flags.length} টি</span>
+        <span className="text-[9px] font-black px-2 py-1 bg-gray-100 text-gray-500">{flags.length} টি</span>
       </div>
 
       {loading ? (
@@ -636,7 +636,7 @@ const ManageFlags: React.FC = () => {
                     <div className="flex justify-end gap-2">
                       <button
                         onClick={async () => { await dataService.resolveFlag(flag.id); load(); }}
-                        className="px-4 py-2 bg-black text-white font-bold text-[10px] hover:bg-bd-green transition-all"
+                        className="px-4 py-2 bg-black text-white font-bold text-[10px] hover:bg-gray-800 transition-all"
                       >
                         সমাধান
                       </button>
@@ -707,7 +707,7 @@ const ManageScholarApplications: React.FC = () => {
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <span className="text-[9px] font-black px-2 py-1 bg-black text-white uppercase tracking-widest">{app.title}</span>
-                    <span className="caps-label text-bd-green">{app.specialization}</span>
+                    <span className="caps-label text-gray-900">{app.specialization}</span>
                   </div>
                   <h3 className="text-2xl font-extrabold">{app.userId.slice(0, 8)}...</h3>
                   <div className="flex flex-wrap gap-4 text-sm font-bold text-gray-400">
@@ -752,7 +752,7 @@ const ManageScholarApplications: React.FC = () => {
               <div className="space-y-1">
                 <div className="flex items-center gap-3">
                   <span className="text-[9px] font-black px-2 py-1 bg-black text-white uppercase tracking-widest">{reviewing.title}</span>
-                  <span className="caps-label text-bd-green">{reviewing.specialization}</span>
+                  <span className="caps-label text-gray-900">{reviewing.specialization}</span>
                 </div>
                 <h2 className="text-xl font-extrabold">স্কলার আবেদন পর্যালোচনা</h2>
               </div>
@@ -815,13 +815,13 @@ const ManageScholarApplications: React.FC = () => {
             <div className="flex gap-4 pt-4 border-t border-gray-100">
               <button
                 onClick={() => handleApprove(reviewing)}
-                className="flex-1 py-4 bg-bd-green text-white font-bold text-sm hover:brightness-110 transition-all flex items-center justify-center gap-2"
+                className="flex-1 py-4 bg-black text-white font-bold text-sm hover:brightness-110 transition-all flex items-center justify-center gap-2"
               >
                 <CheckCircle size={18} /> অনুমোদন
               </button>
               <button
                 onClick={() => handleReject(reviewing)}
-                className="flex-1 py-4 border border-danger-200 text-danger-600 font-bold text-sm hover:bg-danger-600 hover:text-white transition-all flex items-center justify-center gap-2"
+                className="flex-1 py-4 border border-gray-300 text-gray-900 font-bold text-sm hover:bg-black hover:text-white transition-all flex items-center justify-center gap-2"
               >
                 <X size={18} /> প্রত্যাখ্যান
               </button>

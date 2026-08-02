@@ -9,14 +9,14 @@ interface CitationBadgeProps {
 }
 
 // Brand-aligned citation typology.
-//   quran     -> bd-green (national colour, our primary religious anchor)
+//   quran     -> black (national colour, our primary religious anchor)
 //   hadith    -> amber (paper/parchment feel, distinct but warm)
 //   scholarly -> deep neutral black (authoritative, on-brand)
 //   book      -> soft gray (secondary printed material)
 //   other     -> gray (fallback)
 const typeConfig = {
-  quran: { icon: BookOpen, label: 'কুরআন', color: 'text-bd-green' },
-  hadith: { icon: Book, label: 'হাদিস', color: 'text-warning-700' },
+  quran: { icon: BookOpen, label: 'কুরআন', color: 'text-black' },
+  hadith: { icon: Book, label: 'হাদিস', color: 'text-gray-900' },
   scholarly: { icon: Quote, label: 'গ্রন্থ', color: 'text-black' },
   book: { icon: Book, label: 'বই', color: 'text-gray-700' },
   other: { icon: ExternalLink, label: 'অন্যান্য', color: 'text-gray-500' },

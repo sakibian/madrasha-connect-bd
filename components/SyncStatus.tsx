@@ -7,15 +7,15 @@ const SyncStatus: React.FC = () => {
   const { status, isOnline, lastSyncAt, triggerSync } = useSyncStatus();
 
   // Sync state colours use the brand palette:
-  //   online  -> bd-green (all good)
+  //   online  -> black (all good)
   //   offline -> gray (neutral, avoid alarming users on flaky mobile networks)
   //   syncing -> black (spinner + neutral text; no arbitrary blue)
   //   error   -> red-600 (genuine failure, matches all other error banners)
   const config = {
-    online: { icon: Wifi, label: 'সংযুক্ত', className: 'text-bd-green' },
+    online: { icon: Wifi, label: 'সংযুক্ত', className: 'text-black' },
     offline: { icon: WifiOff, label: 'অফলাইন', className: 'text-gray-500' },
     syncing: { icon: RefreshCw, label: 'সিঙ্ক হচ্ছে...', className: 'text-black' },
-    error: { icon: Cloud, label: 'সিঙ্ক ত্রুটি', className: 'text-danger-600' },
+    error: { icon: Cloud, label: 'সিঙ্ক ত্রুটি', className: 'text-gray-900' },
   };
 
   const { icon: Icon, label, className } = config[status];

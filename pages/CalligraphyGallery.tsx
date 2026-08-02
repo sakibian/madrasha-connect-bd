@@ -13,7 +13,7 @@ const CalligraphyGallery: React.FC = () => {
       </div>
 
       <div className="bg-black text-white p-16 space-y-8">
-         <div className="caps-label text-bd-green">High Resolution</div>
+         <div className="caps-label text-black">High Resolution</div>
          <h2 className="text-5xl font-extrabold leading-tight">ডিজিটাল ক্যালিগ্রাফি <br /> সংগ্রহশালা।</h2>
          <p className="text-gray-400 text-xl max-w-2xl font-medium">৫০০+ হাই-রেজোলিউশন আরবি ক্যালিগ্রাফি। গ্রাফিক ডিজাইনার এবং শিক্ষার্থীদের জন্য একদম ফ্রিতে ডাউনলোডযোগ্য।</p>
       </div>
@@ -27,12 +27,12 @@ const CalligraphyGallery: React.FC = () => {
             <div className="space-y-6 flex-1 flex flex-col">
               <div className="flex justify-between items-start">
                  <div className="caps-label text-gray-400">Vector Collection</div>
-                 {item.isFree && <span className="text-[10px] font-extrabold bg-bd-green text-white px-3 py-1 uppercase tracking-widest">Free</span>}
+                 {item.isFree && <span className="text-[10px] font-extrabold bg-black text-white px-3 py-1 uppercase tracking-widest">Free</span>}
               </div>
               <h3 className="text-2xl font-extrabold flex-1 leading-tight">{item.name}</h3>
               <div className="pt-8 border-t border-gray-100 flex items-center justify-between">
                 <span className="text-2xl font-extrabold">{item.isFree ? 'ফ্রি' : `৳ ${item.price}`}</span>
-                <button className={`w-12 h-12 flex items-center justify-center transition-all ${item.isFree ? 'bg-black text-white hover:bg-bd-green' : 'border border-gray-200 text-black hover:border-black'}`}>
+                <button className={`w-12 h-12 flex items-center justify-center transition-all ${item.isFree ? 'bg-black text-white hover:bg-black' : 'border border-gray-200 text-black hover:border-black'}`}>
                    {item.isFree ? <Download size={20} /> : <ShoppingBag size={20} />}
                 </button>
               </div>

@@ -34,8 +34,8 @@ const VerifyEmail: React.FC = () => {
         </Link>
 
         <div className="space-y-6">
-          <div className="w-20 h-20 bg-brand-100 rounded-full flex items-center justify-center mx-auto">
-            <Mail size={36} className="text-brand-600" />
+          <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto">
+            <Mail size={36} className="text-gray-900" />
           </div>
           <h1 className="text-3xl font-extrabold tracking-tight">ইমেইল ভেরিফিকেশন</h1>
           <p className="text-gray-500 font-medium leading-relaxed">
@@ -45,14 +45,14 @@ const VerifyEmail: React.FC = () => {
         </div>
 
         {sent && (
-          <div className="p-5 bg-brand-50 border border-brand-100 flex items-center gap-3">
-            <CheckCircle size={20} className="text-brand-600 shrink-0" />
-            <p className="text-sm font-bold text-brand-700">ভেরিফিকেশন ইমেইল পুনরায় পাঠানো হয়েছে!</p>
+          <div className="p-5 bg-gray-50 border border-gray-200 flex items-center gap-3">
+            <CheckCircle size={20} className="text-gray-900 shrink-0" />
+            <p className="text-sm font-bold text-black">ভেরিফিকেশন ইমেইল পুনরায় পাঠানো হয়েছে!</p>
           </div>
         )}
 
         {error && (
-          <div className="p-5 bg-danger-50 border border-danger-100 text-danger-600 text-sm font-bold">
+          <div className="p-5 bg-gray-100 border border-gray-200 text-gray-900 text-sm font-bold">
             {error}
           </div>
         )}

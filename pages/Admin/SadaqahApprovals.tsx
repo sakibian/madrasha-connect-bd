@@ -91,7 +91,7 @@ const SadaqahApprovals: React.FC = () => {
           {pendingApps.length > 0 && (
             <div className="space-y-4">
               <h3 className="text-lg font-bold text-gray-700 flex items-center gap-2">
-                <Clock size={18} className="text-amber-500" />
+                <Clock size={18} className="text-gray-800" />
                 পর্যালোচনার জন্য অপেক্ষমান ({pendingApps.length})
               </h3>
               <div className="space-y-3">
@@ -131,11 +131,11 @@ const ApplicationCard: React.FC<{
   reviewed?: boolean;
 }> = ({ app, onApprove, onReject, reviewed }) => {
   return (
-    <div className="bg-white border border-gray-100 p-6 hover:border-bd-green transition-all">
-      <div className="flex justify-between items-start gap-6">
-        <div className="flex-1 space-y-4">
+    <div className="bg-white border border-gray-100 p-4 md:p-6 hover:border-black transition-all">
+      <div className="flex flex-col md:flex-row md:justify-between items-start gap-6">
+        <div className="flex-1 space-y-4 w-full">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-bd-green text-white flex items-center justify-center">
+            <div className="w-12 h-12 bg-black text-white flex items-center justify-center">
               <Building2 size={20} />
             </div>
             <div className="flex-1">
@@ -155,14 +155,14 @@ const ApplicationCard: React.FC<{
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">অনুরোধকৃত পরিমাণ</p>
-              <p className="text-2xl font-black text-bd-green">৳ {app.amount_requested?.toLocaleString('bn-BD')}</p>
+              <p className="text-2xl font-black text-black">৳ {app.amount_requested?.toLocaleString('bn-BD')}</p>
             </div>
             <div>
               <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">অবস্থা</p>
               <span className={`inline-flex items-center gap-2 px-3 py-1 text-xs font-black uppercase tracking-widest ${
-                app.status === 'pending' ? 'bg-amber-50 text-amber-700' :
-                app.status === 'approved' ? 'bg-green-50 text-green-700' :
-                'bg-red-50 text-red-700'
+                app.status === 'pending' ? 'bg-gray-50 text-gray-900' :
+                app.status === 'approved' ? 'bg-gray-100 text-gray-900' :
+                'bg-gray-200 text-gray-900'
               }`}>
                 {app.status === 'pending' && <Clock size={12} />}
                 {app.status === 'approved' && <CheckCircle size={12} />}
@@ -173,7 +173,7 @@ const ApplicationCard: React.FC<{
             </div>
           </div>
 
-          <div className="bg-gray-50 p-4 border-l-4 border-bd-green space-y-3">
+          <div className="bg-gray-50 p-4 border-l-4 border-black space-y-3">
             <div>
               <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">বিবরণ</p>
               <p className="text-sm text-gray-700 font-medium">{app.description}</p>
@@ -186,16 +186,16 @@ const ApplicationCard: React.FC<{
         </div>
 
         {!reviewed && onApprove && onReject && (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-row md:flex-col gap-2 w-full md:w-auto">
             <button
               onClick={onApprove}
-              className="px-6 py-3 bg-green-600 text-white font-bold text-sm hover:bg-green-700 transition-all flex items-center gap-2 whitespace-nowrap"
+              className="px-4 md:px-6 py-3 bg-black text-white font-bold text-sm hover:bg-gray-800 transition-all flex items-center gap-2 whitespace-nowrap"
             >
               <CheckCircle size={16} /> অনুমোদন
             </button>
             <button
               onClick={onReject}
-              className="px-6 py-3 bg-red-600 text-white font-bold text-sm hover:bg-red-700 transition-all flex items-center gap-2 whitespace-nowrap"
+              className="px-4 md:px-6 py-3 bg-gray-200 text-black font-bold text-sm hover:bg-gray-300 transition-all flex items-center gap-2 whitespace-nowrap"
             >
               <XCircle size={16} /> প্রত্যাখ্যান
             </button>

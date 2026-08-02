@@ -129,7 +129,7 @@ const FatwaArchive: React.FC = () => {
           filtered.map(fatwa => (
             <div key={fatwa.id} className="bg-white p-10 space-y-6 group hover:bg-gray-50 transition-all">
               <div className="flex justify-between items-start">
-                <div className="caps-label text-bd-green">{fatwa.category}</div>
+                <div className="caps-label text-black">{fatwa.category}</div>
                 <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400">
                   <Clock size={12} /> {fatwa.answeredAt || fatwa.askedAt}
                 </div>
@@ -157,7 +157,7 @@ const FatwaArchive: React.FC = () => {
       </div>
 
       <div className="bg-black text-white p-12 flex items-center gap-8">
-        <Shield size={32} className="text-bd-green" />
+        <Shield size={32} className="text-black" />
         <div className="space-y-2">
           <h3 className="text-xl font-bold">একটি প্রশ্ন আছে?</h3>
           <p className="text-gray-400 font-medium">আপনার দ্বীনি মাসআলা জিজ্ঞেস করুন এবং নির্ভরযোগ্য সোর্স সহ উত্তর পান।</p>

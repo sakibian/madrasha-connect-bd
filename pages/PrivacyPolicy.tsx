@@ -66,7 +66,7 @@ const PrivacyPolicy: React.FC = () => (
         <li>অ্যাকাউন্ট এবং সমস্ত তথ্য মুছে ফেলার অনুরোধ করতে পারেন</li>
         <li>নোটিফিকেশন প্রেফারেন্স পরিবর্তন করতে পারেন</li>
       </ul>
-      অনুরোধের জন্য <a className="font-bold text-bd-green underline" href="mailto:privacy@madrasaconnectbd.org">privacy@madrasaconnectbd.org</a> এ ইমেইল করুন।
+      অনুরোধের জন্য <a className="font-bold text-black underline" href="mailto:privacy@madrasaconnectbd.org">privacy@madrasaconnectbd.org</a> এ ইমেইল করুন।
     </Section>
 
     <Section title="৬. নিরাপত্তা">

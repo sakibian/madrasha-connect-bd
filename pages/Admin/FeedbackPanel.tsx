@@ -38,8 +38,8 @@ const STATUS_LABELS: Record<FeedbackStatus, string> = {
 
 const STATUS_STYLES: Record<FeedbackStatus, string> = {
   new: 'bg-black text-white',
-  in_progress: 'bg-warning-50 text-warning-700',
-  resolved: 'bg-bd-green/10 text-bd-green',
+  in_progress: 'bg-gray-50 text-gray-900',
+  resolved: 'bg-gray-100 text-gray-900',
   archived: 'bg-gray-100 text-gray-500',
 };
 
@@ -91,8 +91,8 @@ const FeedbackPanel: React.FC = () => {
         <div className="flex flex-wrap gap-6 text-xs font-bold">
           <Stat label="মোট" value={counts.total} />
           <Stat label="নতুন" value={counts.new} accent="bg-black text-white" />
-          <Stat label="কাজ চলছে" value={counts.in_progress} accent="bg-warning-50 text-warning-700" />
-          <Stat label="সমাধানিত" value={counts.resolved} accent="bg-bd-green/10 text-bd-green" />
+          <Stat label="কাজ চলছে" value={counts.in_progress} accent="bg-gray-50 text-gray-900" />
+          <Stat label="সমাধানিত" value={counts.resolved} accent="bg-gray-100 text-gray-900" />
         </div>
       </div>
 
@@ -144,7 +144,7 @@ const FeedbackPanel: React.FC = () => {
                     </span>
                   )}
                   {r.rating && (
-                    <span className="text-[9px] font-black px-2 py-1 uppercase tracking-widest bg-warning-50 text-warning-700">
+                    <span className="text-[9px] font-black px-2 py-1 uppercase tracking-widest bg-gray-50 text-gray-900">
                       ★ {r.rating}
                     </span>
                   )}
@@ -246,7 +246,7 @@ const FeedbackDetail: React.FC<DetailProps> = ({ item, saving, notes, onNotesCha
           {item.page_url && (
             <Meta
               label="পৃষ্ঠা"
-              value={<a href={item.page_url} className="text-bd-green inline-flex items-center gap-1 hover:underline">{item.page_url}<ExternalLink size={10} /></a>}
+              value={<a href={item.page_url} className="text-black inline-flex items-center gap-1 hover:underline">{item.page_url}<ExternalLink size={10} /></a>}
             />
           )}
           {item.rating && <Meta label="রেটিং" value={`★ ${item.rating}`} />}
@@ -271,7 +271,7 @@ const FeedbackDetail: React.FC<DetailProps> = ({ item, saving, notes, onNotesCha
               type="button"
               onClick={() => onChangeStatus('in_progress')}
               disabled={saving}
-              className="px-5 py-3 bg-warning-500 text-white font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all flex items-center gap-2 disabled:opacity-50"
+              className="px-5 py-3 bg-gray-500 text-white font-black text-xs uppercase tracking-widest hover:bg-gray-800 transition-all flex items-center gap-2 disabled:opacity-50"
             >
               <Play size={14} /> কাজ শুরু
             </button>
@@ -281,7 +281,7 @@ const FeedbackDetail: React.FC<DetailProps> = ({ item, saving, notes, onNotesCha
               type="button"
               onClick={() => onChangeStatus('resolved')}
               disabled={saving}
-              className="px-5 py-3 bg-bd-green text-white font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all flex items-center gap-2 disabled:opacity-50"
+              className="px-5 py-3 bg-black text-white font-black text-xs uppercase tracking-widest hover:bg-gray-800 transition-all flex items-center gap-2 disabled:opacity-50"
             >
               <CheckCircle size={14} /> সমাধান
             </button>

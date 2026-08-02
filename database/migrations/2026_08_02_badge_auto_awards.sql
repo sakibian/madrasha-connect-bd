@@ -1,35 +1,36 @@
 -- Badge Auto-Awarding System
 -- Automatically awards badges when users reach XP milestones
+-- NOTE: XP is stored in the user_xp table, not user_profiles
 
 -- Function to award badges based on XP thresholds
 CREATE OR REPLACE FUNCTION award_badges_on_xp_change()
 RETURNS TRIGGER AS $$
 BEGIN
   -- Award "First Steps" badge at 100 XP
-  IF NEW.xp >= 100 AND OLD.xp < 100 THEN
+  IF NEW.xp >= 100 AND (OLD.xp IS NULL OR OLD.xp < 100) THEN
     INSERT INTO user_badges (user_id, badge_id, awarded_at)
-    VALUES (NEW.id, 'first-steps', NOW())
+    VALUES (NEW.user_id, 'first-steps', NOW())
     ON CONFLICT DO NOTHING;
   END IF;
 
   -- Award "Contributor" badge at 500 XP
-  IF NEW.xp >= 500 AND OLD.xp < 500 THEN
+  IF NEW.xp >= 500 AND (OLD.xp IS NULL OR OLD.xp < 500) THEN
     INSERT INTO user_badges (user_id, badge_id, awarded_at)
-    VALUES (NEW.id, 'contributor', NOW())
+    VALUES (NEW.user_id, 'contributor', NOW())
     ON CONFLICT DO NOTHING;
   END IF;
 
   -- Award "Community Leader" badge at 1000 XP
-  IF NEW.xp >= 1000 AND OLD.xp < 1000 THEN
+  IF NEW.xp >= 1000 AND (OLD.xp IS NULL OR OLD.xp < 1000) THEN
     INSERT INTO user_badges (user_id, badge_id, awarded_at)
-    VALUES (NEW.id, 'leader', NOW())
+    VALUES (NEW.user_id, 'leader', NOW())
     ON CONFLICT DO NOTHING;
   END IF;
 
   -- Award "Elite Scholar" badge at 2500 XP
-  IF NEW.xp >= 2500 AND OLD.xp < 2500 THEN
+  IF NEW.xp >= 2500 AND (OLD.xp IS NULL OR OLD.xp < 2500) THEN
     INSERT INTO user_badges (user_id, badge_id, awarded_at)
-    VALUES (NEW.id, 'elite-scholar', NOW())
+    VALUES (NEW.user_id, 'elite-scholar', NOW())
     ON CONFLICT DO NOTHING;
   END IF;
 
@@ -37,14 +38,13 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Attach trigger to user_profiles XP updates
--- Note: The actual column name in user_profiles table might be different
--- Check your schema - it could be 'points', 'experience', or 'xp'
-DROP TRIGGER IF EXISTS trigger_award_badges ON user_profiles;
+-- Attach trigger to user_xp table (NOT user_profiles)
+-- XP is tracked in the separate user_xp table
+DROP TRIGGER IF EXISTS trigger_award_badges ON user_xp;
 CREATE TRIGGER trigger_award_badges
-  AFTER UPDATE ON user_profiles
+  AFTER INSERT OR UPDATE OF xp ON user_xp
   FOR EACH ROW
-  WHEN (OLD.id IS NOT NULL) -- Only on updates, not inserts
+  WHEN (NEW.xp IS NOT NULL)
   EXECUTE FUNCTION award_badges_on_xp_change();
 
 -- Manual badge award function for admins

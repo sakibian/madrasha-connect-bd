@@ -115,10 +115,10 @@ const SadaqahHub: React.FC = () => {
       </div>
 
       {receipt && (
-        <div className={`p-6 border ${receipt.ok ? 'bg-bd-green/5 border-bd-green/30' : 'bg-danger-50 border-danger-100'} flex items-start gap-4`} role="status">
-          <CheckCircle size={24} className={receipt.ok ? 'text-bd-green shrink-0 mt-1' : 'text-danger-600 shrink-0 mt-1'} />
+        <div className={`p-6 border ${receipt.ok ? 'bg-black/5 border-black/30' : 'bg-gray-100 border-gray-200'} flex items-start gap-4`} role="status">
+          <CheckCircle size={24} className={receipt.ok ? 'text-black shrink-0 mt-1' : 'text-gray-900 shrink-0 mt-1'} />
           <div className="space-y-1">
-            <p className={`font-extrabold ${receipt.ok ? 'text-bd-green' : 'text-danger-700'}`}>
+            <p className={`font-extrabold ${receipt.ok ? 'text-black' : 'text-black'}`}>
               {receipt.ok ? 'সাদাকাহ গৃহীত' : 'লেনদেন অসম্পূর্ণ'}
             </p>
             <p className="text-sm text-gray-600 font-medium">{receipt.message}</p>
@@ -127,7 +127,7 @@ const SadaqahHub: React.FC = () => {
       )}
 
       <div className="bg-black text-white p-16 space-y-8">
-         <div className="caps-label text-bd-green">Digital Sadaqah</div>
+         <div className="caps-label text-black">Digital Sadaqah</div>
          <h2 className="text-5xl font-extrabold leading-tight">আপনার দান, <br /> মাদ্রাসার সমৃদ্ধি।</h2>
          <p className="text-gray-400 text-xl max-w-2xl font-medium">আমরা সরাসরি দাতাদের সাথে প্রতিষ্ঠানের যোগাযোগ করিয়ে দিই। কোনো অতিরিক্ত ফি ছাড়াই আপনার পূর্ণ দান পৌঁছাবে কাঙ্ক্ষিত লক্ষ্যে।</p>
          <div className="flex gap-4 pt-6">
@@ -173,13 +173,13 @@ const SadaqahHub: React.FC = () => {
                   <div className="space-y-6 flex-1 flex flex-col">
                      <div className="flex justify-between items-start">
                         <div className="caps-label text-gray-400">{proj.category}</div>
-                        <CheckCircle size={16} className="text-bd-green" />
+                        <CheckCircle size={16} className="text-black" />
                      </div>
                      <h3 className="text-2xl font-extrabold leading-tight">{proj.title}</h3>
                      <p className="text-sm text-gray-500">{proj.institution}</p>
                      <div className="space-y-4 pt-4 mt-auto">
                         <div className="w-full h-1 bg-gray-100">
-                           <div className="h-full bg-bd-green transition-all duration-1000" style={{ width: `${progress}%` }}></div>
+                           <div className="h-full bg-black transition-all duration-1000" style={{ width: `${progress}%` }}></div>
                         </div>
                         <div className="flex justify-between items-end">
                            <div className="space-y-1">
@@ -191,7 +191,7 @@ const SadaqahHub: React.FC = () => {
                      </div>
                      <button
                         onClick={() => openDonate(proj)}
-                        className="w-full py-4 mt-4 bg-black text-white font-bold text-sm hover:bg-bd-green transition-all flex items-center justify-center gap-2"
+                        className="w-full py-4 mt-4 bg-black text-white font-bold text-sm hover:bg-black transition-all flex items-center justify-center gap-2"
                      >
                         অংশ নিন <ArrowRight size={18} />
                      </button>
@@ -228,7 +228,7 @@ const SadaqahHub: React.FC = () => {
                   value={fundingForm.projectTitle}
                   onChange={(e) => setFundingForm({...fundingForm, projectTitle: e.target.value})}
                   placeholder="উদা: মাদ্রাসা লাইব্রেরি নির্মাণ"
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
                 />
               </div>
 
@@ -238,7 +238,7 @@ const SadaqahHub: React.FC = () => {
                   <select
                     value={fundingForm.category}
                     onChange={(e) => setFundingForm({...fundingForm, category: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
+                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
                   >
                     <option value="Infrastructure">অবকাঠামো</option>
                     <option value="Food">খাদ্য সহায়তা</option>
@@ -256,7 +256,7 @@ const SadaqahHub: React.FC = () => {
                     value={fundingForm.amount}
                     onChange={(e) => setFundingForm({...fundingForm, amount: e.target.value})}
                     placeholder="50000"
-                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
+                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
                   />
                 </div>
               </div>
@@ -267,7 +267,7 @@ const SadaqahHub: React.FC = () => {
                   value={fundingForm.description}
                   onChange={(e) => setFundingForm({...fundingForm, description: e.target.value})}
                   placeholder="প্রকল্পটি সম্পর্কে বিস্তারিত লিখুন..."
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium min-h-[120px] resize-none"
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium min-h-[120px] resize-none"
                 />
               </div>
 
@@ -277,12 +277,12 @@ const SadaqahHub: React.FC = () => {
                   value={fundingForm.justification}
                   onChange={(e) => setFundingForm({...fundingForm, justification: e.target.value})}
                   placeholder="আর্থিক প্রয়োজনীয়তার কারণ ব্যাখ্যা করুন..."
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium min-h-[120px] resize-none"
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium min-h-[120px] resize-none"
                 />
               </div>
 
-              <div className="bg-info-50 border border-info-100 p-4">
-                <p className="text-sm text-info-700 font-medium">
+              <div className="bg-gray-50 border border-gray-200 p-4">
+                <p className="text-sm text-gray-900 font-medium">
                   আবেদন জমার পর অ্যাডমিন পর্যালোচনা করবেন। অনুমোদিত হলে আপনার প্রকল্পটি সাদাকাহ তালিকায় যুক্ত হবে।
                 </p>
               </div>
@@ -297,7 +297,7 @@ const SadaqahHub: React.FC = () => {
               </button>
               <button
                 onClick={handleFundingApplication}
-                className="px-6 py-3 bg-bd-green text-white font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2"
+                className="px-6 py-3 bg-black text-white font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2"
               >
                 <Heart size={18} /> আবেদন জমা দিন
               </button>

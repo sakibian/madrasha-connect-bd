@@ -64,7 +64,7 @@ const ResultChecker = () => {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 bg-gray-100 minimal-border">
        <div className="bg-white p-12 md:p-16 space-y-12">
           <div className="space-y-4">
-            <div className="caps-label text-bd-green">Portal Entrance</div>
+            <div className="caps-label text-black">Portal Entrance</div>
             <h2 className="text-3xl font-extrabold tracking-tight">বোর্ড রেজাল্ট পোর্টাল।</h2>
             <p className="text-gray-500 font-medium">বেফাক ও মাদ্রাসা শিক্ষা বোর্ডের ফলাফল দেখুন এখানে।</p>
           </div>
@@ -94,7 +94,7 @@ const ResultChecker = () => {
           {result ? (
             <div className="space-y-10 animate-fadeIn w-full max-w-sm">
                <div className="space-y-4">
-                  <div className="caps-label text-bd-green">Student Profile</div>
+                  <div className="caps-label text-black">Student Profile</div>
                   <h3 className="text-4xl font-extrabold tracking-tight">{result.name}</h3>
                   <p className="text-gray-400 font-bold uppercase text-xs tracking-widest">{result.board} • {result.year}</p>
                </div>
@@ -103,7 +103,7 @@ const ResultChecker = () => {
                   <div className="caps-label text-gray-400 mb-2">Final Result</div>
                   <p className="text-4xl font-black text-black">{result.status}</p>
                   <p className="text-sm font-bold text-gray-400 mt-4">শ্রেণী: {result.class}</p>
-                  <p className="text-xs font-bold text-bd-green mt-1">মোট নম্বর: {result.marks}</p>
+                  <p className="text-xs font-bold text-black mt-1">মোট নম্বর: {result.marks}</p>
                </div>
                
                <button className="text-xs font-black uppercase tracking-widest border-b-2 border-black pb-1 hover:text-gray-500 hover:border-gray-500 transition-all">
@@ -154,7 +154,7 @@ const ZakatCalculator = () => {
       </div>
       <div className="bg-black text-white p-12 md:p-20 flex flex-col items-center justify-center text-center space-y-10">
         <div className="space-y-4">
-           <div className="caps-label text-bd-green">Estimator</div>
+           <div className="caps-label text-black">Estimator</div>
            <p className="text-lg font-bold text-gray-500">আপনার প্রদেয় জাকাত (আনুমানিক)</p>
            <h3 className="text-6xl md:text-7xl font-black tracking-tight">৳ {zakat.toLocaleString()}</h3>
         </div>
@@ -205,7 +205,7 @@ const KhutbahPlanner = () => (
 const KhutbahCard = ({ title, board, active }: any) => (
   <div className={`p-12 flex flex-col justify-between group transition-all h-[350px] cursor-pointer ${active ? 'bg-black text-white' : 'bg-white hover:bg-gray-50'}`}>
     <div className="space-y-6">
-       <Star size={32} className={active ? 'text-bd-green' : 'text-gray-100 group-hover:text-black'} fill="currentColor" />
+       <Star size={32} className={active ? 'text-black' : 'text-gray-100 group-hover:text-black'} fill="currentColor" />
        <div className="space-y-2">
           <div className="caps-label text-gray-500">{board}</div>
           <h4 className="text-2xl font-extrabold tracking-tight leading-tight">{title}</h4>
@@ -213,7 +213,7 @@ const KhutbahCard = ({ title, board, active }: any) => (
     </div>
     <div className="pt-8 border-t border-gray-100 group-hover:border-gray-800 flex items-center justify-between">
        <span className="text-[10px] font-black uppercase tracking-widest">Select Theme</span>
-       <ArrowUpRight size={20} className="text-gray-300 group-hover:text-bd-green" />
+       <ArrowUpRight size={20} className="text-gray-300 group-hover:text-black" />
     </div>
   </div>
 );

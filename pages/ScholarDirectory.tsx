@@ -82,14 +82,14 @@ const ScholarDirectory: React.FC = () => {
                   <ImageWithFallback src={scholar.image} name={scholar.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={scholar.name} />
                 </div>
                 {scholar.verified && (
-                  <div className="absolute -bottom-2 -right-2 bg-bd-green text-white p-1.5">
+                  <div className="absolute -bottom-2 -right-2 bg-black text-white p-1.5">
                     <BadgeCheck size={16} />
                   </div>
                 )}
               </div>
 
               <div className="space-y-4 flex-1">
-                <div className="caps-label text-bd-green">{scholar.title}</div>
+                <div className="caps-label text-black">{scholar.title}</div>
                 <h3 className="text-2xl font-extrabold">{scholar.name}</h3>
 
                 <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-gray-400">
@@ -108,7 +108,7 @@ const ScholarDirectory: React.FC = () => {
                 </div>
 
                 {scholar.answersGiven !== undefined && (
-                  <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-bd-green">
+                  <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-black">
                     <MessageCircle size={14} />
                     <span>{scholar.answersGiven}টি উত্তর</span>
                   </div>
@@ -117,7 +117,7 @@ const ScholarDirectory: React.FC = () => {
 
               <div className="mt-8 w-full space-y-2">
                 {scholar.verified && (
-                  <div className="text-[9px] font-black text-bd-green uppercase tracking-widest flex items-center justify-center gap-1">
+                  <div className="text-[9px] font-black text-black uppercase tracking-widest flex items-center justify-center gap-1">
                     <ShieldCheck size={12} /> ভেরিফায়েড
                   </div>
                 )}

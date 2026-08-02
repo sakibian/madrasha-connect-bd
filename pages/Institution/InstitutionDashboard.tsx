@@ -131,43 +131,43 @@ const InstitutionDashboard: React.FC = () => {
                <h2 className="text-2xl font-extrabold tracking-tight">সার্কুলার ব্যবস্থাপনা</h2>
                <Link to="/professional" className="text-xs font-bold border-b-2 border-black pb-0.5">সবগুলো দেখুন</Link>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left">
+            <div className="overflow-x-auto -mx-4 md:mx-0">
+              <table className="w-full text-left min-w-[600px]">
                 <thead className="bg-gray-50 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100">
                   <tr>
-                    <th className="px-10 py-5">নিয়োগ বিজ্ঞপ্তি / পদবি</th>
-                    <th className="px-10 py-5">অবস্থা</th>
-                    <th className="px-10 py-5 text-right">অ্যাকশন</th>
+                    <th className="px-4 md:px-10 py-4 md:py-5">নিয়োগ বিজ্ঞপ্তি / পদবি</th>
+                    <th className="px-4 md:px-10 py-4 md:py-5">অবস্থা</th>
+                    <th className="px-4 md:px-10 py-4 md:py-5 text-right">অ্যাকশন</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {myJobs.map(job => (
                     <tr key={job.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-10 py-8">
-                        <p className="font-bold text-gray-800 text-xl mb-1">{job.title}</p>
+                      <td className="px-4 md:px-10 py-6 md:py-8">
+                        <p className="font-bold text-gray-800 text-base md:text-xl mb-1">{job.title}</p>
                         <p className="text-[10px] font-bold text-gray-400 flex items-center gap-2 uppercase tracking-widest"><Clock size={12} /> {job.postedAt}</p>
                       </td>
-                      <td className="px-10 py-8">
-                        <span className={`text-[9px] font-black px-4 py-1.5 uppercase tracking-widest ${job.verified ? 'bg-bd-green text-white' : 'bg-gray-100 text-gray-400'}`}>
-                          {job.verified ? 'অনুমোদিত' : 'পর্যালোচনায়'}
+                      <td className="px-4 md:px-10 py-6 md:py-8">
+                        <span className={`text-[9px] font-black px-4 py-1.5 uppercase tracking-widest ${job.verified ? 'bg-black text-white' : 'bg-gray-100 text-gray-400'}`}>
+                          {job.verified ? 'অনুমোদিত' : 'পর্যালোচনায়'}
                         </span>
                       </td>
-                      <td className="px-10 py-8 text-right">
-                        <div className="flex justify-end gap-3">
+                      <td className="px-4 md:px-10 py-6 md:py-8 text-right">
+                        <div className="flex justify-end gap-2 md:gap-3">
                           <button 
                             onClick={() => handleViewApplications(job)}
-                            className="p-3 border border-gray-200 text-bd-green hover:bg-bd-green hover:text-white transition-all"
+                            className="p-2 md:p-3 border border-gray-200 text-black hover:bg-black hover:text-white transition-all tap-target"
                             title="আবেদন দেখুন"
                           >
                             <Users size={16} />
                           </button>
                           <button 
                             onClick={() => toast.info('সম্পাদনা বৈশিষ্ট্য শীঘ্রই আসছে। এখন মুছে নতুন করে পোস্ট করুন।')}
-                            className="p-3 border border-gray-200 text-black hover:bg-gray-50 transition-all"
+                            className="p-2 md:p-3 border border-gray-200 text-black hover:bg-gray-50 transition-all tap-target"
                           >
                             <Edit2 size={16} />
                           </button>
-                          <button onClick={() => handleDelete(job.id)} className="p-3 border border-gray-200 text-danger-600 hover:bg-danger-50 transition-all"><Trash2 size={16} /></button>
+                          <button onClick={() => handleDelete(job.id)} className="p-2 md:p-3 border border-gray-200 text-black hover:bg-gray-200 transition-all tap-target"><Trash2 size={16} /></button>
                         </div>
                       </td>
                     </tr>
@@ -187,7 +187,7 @@ const InstitutionDashboard: React.FC = () => {
 
         <div className="space-y-8">
            <div className="p-10 bg-black text-white space-y-8">
-              <div className="caps-label text-bd-green">Resource Management</div>
+              <div className="caps-label text-gray-400">Resource Management</div>
               <h3 className="text-2xl font-bold leading-tight">মাদ্রাসা অটোমেশন ও শিক্ষার্থী ডাটাবেজ।</h3>
               <p className="text-sm text-gray-400 font-medium leading-relaxed">আপনার মাদ্রাসার শিক্ষার্থীদের উপস্থিতি, ফলাফল এবং ফি ম্যানেজমেন্ট এখন এক জায়গায়।</p>
               <Link to="/erp-preview" className="w-full py-4 bg-white text-black font-bold text-xs flex items-center justify-center gap-3 hover:bg-gray-100 transition-all">
@@ -209,9 +209,9 @@ const InstitutionDashboard: React.FC = () => {
 
       {/* Applications Modal */}
       {selectedJobForApps && (
-        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setSelectedJobForApps(null)}>
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-2 md:p-4" onClick={() => setSelectedJobForApps(null)}>
           <div className="bg-white max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 animate-fadeIn" onClick={e => e.stopPropagation()}>
-            <div className="p-8 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-white">
+            <div className="p-4 md:p-8 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-white">
               <div>
                 <h3 className="text-2xl font-black">{selectedJobForApps.title}</h3>
                 <p className="text-sm text-gray-500 mt-1">প্রাপ্ত আবেদন: {applications.length}টি</p>
@@ -221,7 +221,7 @@ const InstitutionDashboard: React.FC = () => {
               </button>
             </div>
 
-            <div className="p-8">
+            <div className="p-4 md:p-8">
               {loadingApps ? (
                 <div className="text-center py-20 text-gray-400 font-medium">লোড হচ্ছে...</div>
               ) : applications.length === 0 ? (
@@ -232,11 +232,11 @@ const InstitutionDashboard: React.FC = () => {
               ) : (
                 <div className="space-y-4">
                   {applications.map((app) => (
-                    <div key={app.id} className="bg-white border border-gray-100 p-6 hover:border-bd-green transition-all">
+                    <div key={app.id} className="bg-white border border-gray-100 p-4 md:p-6 hover:border-black transition-all">
                       <div className="flex justify-between items-start">
                         <div className="space-y-3 flex-1">
                           <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-bd-green text-white flex items-center justify-center font-bold text-lg">
+                            <div className="w-12 h-12 bg-black text-white flex items-center justify-center font-bold text-lg">
                               {app.applicantName?.substring(0, 1) || 'A'}
                             </div>
                             <div>
@@ -248,9 +248,9 @@ const InstitutionDashboard: React.FC = () => {
                                 </span>
                                 <span className={`px-2 py-1 text-[10px] font-black uppercase tracking-widest ${
                                   app.status === 'pending' ? 'bg-gray-100 text-gray-600' :
-                                  app.status === 'shortlisted' ? 'bg-blue-50 text-blue-700' :
-                                  app.status === 'accepted' ? 'bg-green-50 text-green-700' :
-                                  'bg-red-50 text-red-700'
+                                  app.status === 'shortlisted' ? 'bg-gray-200 text-gray-900' :
+                                  app.status === 'accepted' ? 'bg-black text-white' :
+                                  'bg-gray-300 text-gray-900'
                                 }`}>
                                   {app.status === 'pending' ? 'পর্যালোচনায়' :
                                    app.status === 'shortlisted' ? 'শর্টলিস্টেড' :
@@ -261,23 +261,23 @@ const InstitutionDashboard: React.FC = () => {
                           </div>
                           
                           {app.coverNote && (
-                            <div className="bg-gray-50 p-4 border-l-4 border-bd-green">
+                            <div className="bg-gray-50 p-4 border-l-4 border-black">
                               <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">কভার নোট</p>
                               <p className="text-sm text-gray-700 font-medium">{app.coverNote}</p>
                             </div>
                           )}
                         </div>
 
-                        <div className="flex flex-col gap-2 ml-4">
+                        <div className="flex flex-col gap-2 ml-2 md:ml-4">
                           <a
                             href={`mailto:applicant@example.com`}
-                            className="p-3 border border-gray-200 text-bd-green hover:bg-bd-green hover:text-white transition-all"
+                            className="p-2 md:p-3 border border-gray-200 text-black hover:bg-black hover:text-white transition-all tap-target"
                             title="ইমেইল পাঠান"
                           >
                             <Mail size={16} />
                           </a>
                           <button
-                            className="p-3 border border-gray-200 text-bd-green hover:bg-bd-green hover:text-white transition-all"
+                            className="p-2 md:p-3 border border-gray-200 text-black hover:bg-black hover:text-white transition-all tap-target"
                             title="ফোন করুন"
                           >
                             <Phone size={16} />
@@ -297,10 +297,10 @@ const InstitutionDashboard: React.FC = () => {
 };
 
 const DashCard = ({ icon, label, value }: any) => (
-  <div className="bg-white p-12 flex flex-col gap-6 group hover:bg-black hover:text-white transition-all">
-    <div className="text-bd-green group-hover:text-white transition-colors">{icon}</div>
+  <div className="bg-white p-8 md:p-12 flex flex-col gap-4 md:gap-6 group hover:bg-black hover:text-white transition-all">
+    <div className="text-black group-hover:text-white transition-colors">{icon}</div>
     <div className="space-y-1">
-      <div className="text-4xl font-extrabold tracking-tight">{value}</div>
+      <div className="text-3xl md:text-4xl font-extrabold tracking-tight">{value}</div>
       <div className="caps-label text-gray-400 group-hover:text-gray-500">{label}</div>
     </div>
   </div>

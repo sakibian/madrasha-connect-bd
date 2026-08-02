@@ -24,7 +24,7 @@ describe('Button', () => {
     expect(screen.getByRole('button').className).toContain('border');
 
     rerender(<Button variant="danger">Danger</Button>);
-    expect(screen.getByRole('button').className).toContain('bg-danger-600');
+    expect(screen.getByRole('button').className).toContain('bg-black');
 
     rerender(<Button variant="white">White</Button>);
     expect(screen.getByRole('button').className).toContain('bg-white');

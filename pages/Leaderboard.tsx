@@ -24,9 +24,9 @@ const Leaderboard: React.FC = () => {
 
   const rankIcon = (i: number) => {
     // Gold / silver / bronze on the podium — kept as amber shades (never off-brand blue/purple)
-    if (i === 0) return <Trophy size={20} className="text-warning-500" />;
+    if (i === 0) return <Trophy size={20} className="text-gray-500" />;
     if (i === 1) return <Medal size={20} className="text-gray-400" />;
-    if (i === 2) return <Medal size={20} className="text-warning-700" />;
+    if (i === 2) return <Medal size={20} className="text-gray-900" />;
     return <span className="text-sm font-bold text-gray-500 w-5 text-center">{i + 1}</span>;
   };
 
@@ -85,7 +85,7 @@ const Leaderboard: React.FC = () => {
                         <span className="font-black text-lg">{u.level}</span>
                         <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-bd-green rounded-full transition-all"
+                            className="h-full bg-black rounded-full transition-all"
                             style={{ width: `${Math.min(progress.progress, 100)}%` }}
                           />
                         </div>

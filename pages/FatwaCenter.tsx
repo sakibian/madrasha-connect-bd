@@ -138,7 +138,7 @@ const FatwaCenter: React.FC = () => {
                </div>
            </div>
            <div className="p-8 bg-gray-50 space-y-4">
-              <Sparkles size={24} className="text-bd-green" />
+              <Sparkles size={24} className="text-black" />
               <h4 className="font-bold text-lg">এআই আলেম (Alpha)</h4>
               <p className="text-xs text-gray-500 leading-relaxed">আমাদের এআই আপনার প্রশ্নের একটি প্রাথমিক এবং নির্ভরযোগ্য প্রস্তাবনা তৈরি করবে।</p>
            </div>
@@ -157,7 +157,7 @@ const FatwaCenter: React.FC = () => {
               ) : filteredFatwas.map(fatwa => (
                 <div key={fatwa.id} className="minimal-border p-10 bg-white space-y-8 group">
                     <div className="flex justify-between items-start">
-                       <div className="caps-label text-bd-green">{fatwa.category}</div>
+                       <div className="caps-label text-black">{fatwa.category}</div>
                        <div className="flex items-center gap-2">
                           <span className="text-[10px] font-bold text-gray-400 flex items-center gap-1"><Clock size={12} /> {fatwa.askedAt}</span>
                           <FlagButton contentType="fatwa" contentId={fatwa.id} />
@@ -196,7 +196,7 @@ const FatwaCenter: React.FC = () => {
       <Modal open={isAsking} onClose={() => setIsAsking(false)} title="আপনার মাসআলা লিখুন">
         <form onSubmit={handleAskQuestion} className="space-y-6">
            {moderationFeedback && (
-             <div className="p-4 bg-danger-50 border border-danger-200 text-danger-700 text-sm font-medium">
+             <div className="p-4 bg-gray-100 border border-gray-300 text-black text-sm font-medium">
                {moderationFeedback}
              </div>
            )}

@@ -38,7 +38,7 @@ const FlagButton: React.FC<FlagButtonProps> = ({ contentType, contentId }) => {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="p-2 text-gray-300 hover:text-danger-500 transition-all"
+        className="p-2 text-gray-300 hover:text-gray-500 transition-all"
         title="রিপোর্ট করুন"
       >
         <Flag size={14} />
@@ -54,7 +54,7 @@ const FlagButton: React.FC<FlagButtonProps> = ({ contentType, contentId }) => {
 
             {done ? (
               <div className="py-10 text-center space-y-4">
-                <div className="w-12 h-12 bg-bd-green/10 text-bd-green rounded-full flex items-center justify-center mx-auto">
+                <div className="w-12 h-12 bg-black/10 text-black rounded-full flex items-center justify-center mx-auto">
                   <Flag size={24} />
                 </div>
                 <p className="font-bold">রিপোর্ট করা হয়েছে</p>

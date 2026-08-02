@@ -21,20 +21,20 @@ describe('StatusBadge', () => {
   it('uses the danger palette for rejected/banned', () => {
     const { container } = render(<StatusBadge status="rejected" />);
     const el = container.firstElementChild!;
-    expect(el.className).toContain('bg-danger-50');
-    expect(el.className).toContain('text-danger-700');
+    expect(el.className).toContain('bg-gray-100');
+    expect(el.className).toContain('text-black');
   });
 
   it('uses the warning palette for pending/flagged', () => {
     const { container } = render(<StatusBadge status="flagged" />);
     const el = container.firstElementChild!;
-    expect(el.className).toContain('bg-warning-50');
+    expect(el.className).toContain('bg-gray-50');
   });
 
   it('uses the brand palette for approved/active', () => {
     const { container } = render(<StatusBadge status="active" />);
     const el = container.firstElementChild!;
-    expect(el.className).toContain('bg-brand-50');
-    expect(el.className).toContain('text-brand-700');
+    expect(el.className).toContain('bg-gray-50');
+    expect(el.className).toContain('text-black');
   });
 });

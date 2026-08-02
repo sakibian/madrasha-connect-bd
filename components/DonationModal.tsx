@@ -179,10 +179,10 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
           />
 
           {error && (
-            <div className="p-4 bg-danger-50 border border-danger-100 text-danger-600 text-sm font-bold">{error}</div>
+            <div className="p-4 bg-gray-100 border border-gray-200 text-gray-900 text-sm font-bold">{error}</div>
           )}
           {dryRun && (
-            <div className="p-4 bg-warning-50 border border-warning-100 text-warning-700 text-sm font-medium space-y-1">
+            <div className="p-4 bg-gray-50 border border-gray-200 text-gray-900 text-sm font-medium space-y-1">
               <p className="font-bold">Sandbox mode — bKash credentials not set.</p>
               <p className="text-xs">
                 Ask ops to run <code>supabase secrets set BKASH_APP_KEY=… BKASH_APP_SECRET=…</code> etc.
@@ -192,8 +192,8 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
             </div>
           )}
           {personal && (
-            <div className="p-4 bg-bd-green/10 border border-bd-green/30 text-gray-900 text-sm space-y-3">
-              <p className="font-extrabold text-bd-green uppercase tracking-widest text-xs">
+            <div className="p-4 bg-black/10 border border-black/30 text-gray-900 text-sm space-y-3">
+              <p className="font-extrabold text-black uppercase tracking-widest text-xs">
                 bKash Send Money — ম্যানুয়াল কনফার্মেশন
               </p>
               <p className="text-xs text-gray-600">
@@ -223,13 +223,13 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
                 <button
                   type="button"
                   onClick={() => navigator.clipboard?.writeText(personal.invoice!)}
-                  className="text-xs font-bold underline text-bd-green"
+                  className="text-xs font-bold underline text-black"
                 >
                   Reference কপি করুন
                 </button>
               )}
               {personal.instructions_bn && (
-                <p className="text-xs text-gray-700 border-t border-bd-green/20 pt-2">
+                <p className="text-xs text-gray-700 border-t border-black/20 pt-2">
                   {personal.instructions_bn}
                 </p>
               )}
@@ -237,14 +237,14 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
           )}
 
           <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-            <ShieldCheck size={12} className="text-bd-green" />
+            <ShieldCheck size={12} className="text-black" />
             <span>SSL এনক্রিপ্টেড • ১০০% অলাভজনক • কোনো সেবা ফি নেই</span>
           </div>
 
           <button
             type="submit"
             disabled={submitting || !(effectiveAmount > 0)}
-            className="w-full py-5 bg-bd-green text-white font-extrabold text-lg uppercase tracking-widest flex items-center justify-center gap-3 hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-5 bg-black text-white font-extrabold text-lg uppercase tracking-widest flex items-center justify-center gap-3 hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? (
               <Loader2 size={20} className="animate-spin" />

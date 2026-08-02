@@ -35,7 +35,7 @@ describe('Avatar', () => {
 
   it('shows online indicator when online is true', () => {
     const { container } = render(<Avatar name="John" online />);
-    expect(container.querySelector('.bg-bd-green')).toBeInTheDocument();
+    expect(container.querySelector('.bg-black')).toBeInTheDocument();
   });
 
   it('shows offline indicator when online is false', () => {
@@ -45,7 +45,7 @@ describe('Avatar', () => {
 
   it('does not show any indicator when online is undefined', () => {
     const { container } = render(<Avatar name="John" />);
-    expect(container.querySelector('.bg-bd-green')).not.toBeInTheDocument();
+    expect(container.querySelector('.bg-black')).not.toBeInTheDocument();
     expect(container.querySelector('.bg-gray-300')).not.toBeInTheDocument();
   });
 

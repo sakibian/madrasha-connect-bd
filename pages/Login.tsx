@@ -105,7 +105,7 @@ const Login: React.FC = () => {
         </div>
         
         <div className="z-10 space-y-8 max-w-lg">
-           <div className="caps-label text-bd-green">Security First</div>
+           <div className="caps-label text-black">Security First</div>
            <h1 className="text-6xl md:text-8xl font-extrabold leading-[1.05] tracking-tight">
              নিরাপদ <br />পোর্টালে <br />স্বাগতম।
            </h1>
@@ -120,7 +120,7 @@ const Login: React.FC = () => {
            </Link>
            <div className="pt-4">
               {import.meta.env.VITE_ENABLE_DEMO === 'true' && (
-                <p className="text-xs text-gray-600 font-mono">Demo password: <span className="text-bd-green">{DEMO_PASSWORD}</span></p>
+                <p className="text-xs text-gray-600 font-mono">Demo password: <span className="text-black">{DEMO_PASSWORD}</span></p>
               )}
            </div>
         </div>
@@ -197,7 +197,7 @@ const Login: React.FC = () => {
               </div>
 
               {error && (
-                <div className="p-5 bg-danger-50 border border-danger-100 text-danger-600 text-sm font-bold">
+                <div className="p-5 bg-gray-100 border border-gray-200 text-gray-900 text-sm font-bold">
                   {error}
                 </div>
               )}
@@ -267,7 +267,7 @@ const Login: React.FC = () => {
             )}
 
             {error && (
-              <div className="p-5 bg-danger-50 border border-danger-100 text-danger-600 text-sm font-bold">
+              <div className="p-5 bg-gray-100 border border-gray-200 text-gray-900 text-sm font-bold">
                 {error}
               </div>
             )}
@@ -337,23 +337,23 @@ const UnconfirmedEmailBanner: React.FC<{ email: string }> = ({ email }) => {
   };
 
   return (
-    <div className="p-5 bg-warning-50 border border-warning-100 space-y-3">
+    <div className="p-5 bg-gray-50 border border-gray-200 space-y-3">
       <div className="flex items-start gap-3">
-        <Mail size={20} className="text-warning-600 shrink-0 mt-0.5" />
+        <Mail size={20} className="text-gray-800 shrink-0 mt-0.5" />
         <div>
-          <p className="font-bold text-warning-700 text-sm">ইমেইল ভেরিফাই করুন</p>
-          <p className="text-xs text-warning-600 mt-1">
+          <p className="font-bold text-gray-900 text-sm">ইমেইল ভেরিফাই করুন</p>
+          <p className="text-xs text-gray-800 mt-1">
             আপনার ইমেইল এখনো ভেরিফাই করা হয়নি। অনুগ্রহ করে <strong>{email}</strong>-এ পাঠানো লিংকে ক্লিক করুন।
           </p>
         </div>
       </div>
       {sent ? (
-        <p className="text-xs font-bold text-brand-600">✓ পুনরায় পাঠানো হয়েছে!</p>
+        <p className="text-xs font-bold text-gray-900">✓ পুনরায় পাঠানো হয়েছে!</p>
       ) : (
         <button
           onClick={handleResend}
           disabled={sending}
-          className="text-xs font-bold text-warning-700 underline hover:no-underline disabled:opacity-50"
+          className="text-xs font-bold text-gray-900 underline hover:no-underline disabled:opacity-50"
         >
           {sending ? 'পাঠানো হচ্ছে...' : 'ভেরিফিকেশন ইমেইল পুনরায় পাঠান'}
         </button>
@@ -369,7 +369,7 @@ const LoginRoleButton = ({ icon, label, sub, onClick, disabled }: any) => (
     className="w-full flex items-center justify-between p-8 bg-white border-b border-gray-100 last:border-none hover:bg-black hover:text-white transition-all group text-left"
   >
     <div className="flex items-center gap-6">
-      <div className="text-bd-green group-hover:text-white transition-colors">{icon}</div>
+      <div className="text-black group-hover:text-white transition-colors">{icon}</div>
       <div>
         <span className="block font-extrabold text-xl">{label}</span>
         <span className="block text-[10px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-gray-500">{sub}</span>

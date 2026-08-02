@@ -30,7 +30,7 @@ const Citation: React.FC<CitationProps> = ({ source, url, verifiedAt, className 
       className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-gray-500 ${className}`}
       aria-label={label}
     >
-      {verifiedAt && <ShieldCheck size={10} className="text-bd-green" aria-hidden />}
+      {verifiedAt && <ShieldCheck size={10} className="text-black" aria-hidden />}
       <span>src: {source}</span>
       {url && <ExternalLink size={10} aria-hidden />}
     </span>
@@ -42,7 +42,7 @@ const Citation: React.FC<CitationProps> = ({ source, url, verifiedAt, className 
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex hover:text-bd-green transition-colors"
+      className="inline-flex hover:text-black transition-colors"
       title={label}
     >
       {body}

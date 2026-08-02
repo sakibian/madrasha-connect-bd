@@ -249,11 +249,11 @@ const SeerahTimeline: React.FC = () => {
                   <div className={`p-10 minimal-border bg-white hover:bg-black hover:text-white transition-all group h-full`}>
                     <div className={`flex items-center gap-4 mb-6 ${index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'}`}>
                       {event.importance === 'High' && (
-                        <div className="p-1 bg-bd-green text-white">
+                        <div className="p-1 bg-black text-white">
                           <Star size={10} fill="currentColor" />
                         </div>
                       )}
-                      <div className="caps-label text-bd-green group-hover:text-gray-400">
+                      <div className="caps-label text-black group-hover:text-gray-400">
                         {event.category === 'Makkah' ? 'MAKKAH PHASE' : event.category === 'Madinah' ? 'MADINAH PHASE' : 'CALIPHATE'}
                       </div>
                     </div>
@@ -275,7 +275,7 @@ const SeerahTimeline: React.FC = () => {
                     </div>
 
                     <div className={`mt-8 pt-8 border-t border-gray-100 group-hover:border-gray-800 flex items-center gap-4 ${index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'}`}>
-                      <button className="text-sm font-bold flex items-center gap-2 group-hover:text-bd-green transition-all">
+                      <button className="text-sm font-bold flex items-center gap-2 group-hover:text-black transition-all">
                         বিস্তারিত <ArrowRight size={18} />
                       </button>
                     </div>
@@ -284,7 +284,7 @@ const SeerahTimeline: React.FC = () => {
 
                 <div className="absolute left-8 md:left-1/2 -translate-x-1/2 z-10 flex flex-col items-center">
                   <div className="w-12 h-12 bg-white minimal-border flex items-center justify-center group">
-                    <div className="text-black group-hover:text-bd-green transition-colors">
+                    <div className="text-black group-hover:text-black transition-colors">
                       {React.cloneElement(event.icon as React.ReactElement, { size: 24 })}
                     </div>
                   </div>
@@ -314,7 +314,7 @@ const SeerahTimeline: React.FC = () => {
           --------------------------------------------------------------------- */}
       <section className="space-y-8" id="complete-timeline">
         <div className="border-t border-gray-100 pt-16 space-y-3">
-          <div className="caps-label text-bd-green">M14.3 · Sourced Dataset</div>
+          <div className="caps-label text-black">M14.3 · Sourced Dataset</div>
           <h2 className="text-3xl md:text-4xl font-extrabold">সম্পূর্ণ সীরাত কালরেখা</h2>
           <p className="text-gray-500 max-w-2xl leading-relaxed">
             জন্ম থেকে ওফাত পর্যন্ত {SEERAH_EVENTS.length}টি প্রধান ঘটনা — প্রতিটির সাথে কুরআন / সহীহ হাদিসের সরাসরি রেফারেন্স।
@@ -325,7 +325,7 @@ const SeerahTimeline: React.FC = () => {
             <li key={e.id} className="bg-white border border-gray-100 p-6 md:p-8 grid grid-cols-1 md:grid-cols-[120px_1fr] gap-6">
               <div className="space-y-1">
                 <div className="text-xl font-extrabold">{e.gregorianYear}</div>
-                {e.hijriYear && <div className="text-xs font-bold text-bd-green">{e.hijriYear}</div>}
+                {e.hijriYear && <div className="text-xs font-bold text-black">{e.hijriYear}</div>}
                 {e.approxAge !== undefined && (
                   <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                     বয়স {e.approxAge}
@@ -354,7 +354,7 @@ const SeerahTimeline: React.FC = () => {
                         href={c.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-bd-green hover:underline"
+                        className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-black hover:underline"
                       >
                         {c.reference} <ExternalLink size={10} />
                       </a>

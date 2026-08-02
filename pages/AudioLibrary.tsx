@@ -60,7 +60,7 @@ const AudioLibrary: React.FC = () => {
         <div className="lg:col-span-4 space-y-12">
            <div className="bg-black text-white p-12 space-y-8 h-full flex flex-col justify-between">
               <div className="space-y-6">
-                <Disc size={48} className={`text-bd-green ${playing ? 'animate-spin-slow' : ''}`} />
+                <Disc size={48} className={`text-black ${playing ? 'animate-spin-slow' : ''}`} />
                 <div className="caps-label text-gray-500">Currently Streaming</div>
                 <h3 className="text-2xl font-extrabold leading-tight">
                   {playing ? tracks.find(t => t.id === playing)?.title : 'কোনো অডিও সেশন চলছে না।'}
@@ -69,7 +69,7 @@ const AudioLibrary: React.FC = () => {
               {playing ? (
                 <button 
                   onClick={() => setPlaying(null)}
-                  className="w-full py-4 bg-danger-600 text-white font-bold text-sm hover:bg-danger-700 transition-all"
+                  className="w-full py-4 bg-black text-white font-bold text-sm hover:bg-black transition-all"
                 >
                   বন্ধ করুন
                 </button>
@@ -101,12 +101,12 @@ const AudioLibrary: React.FC = () => {
              >
                 <div className="flex items-center gap-8">
                    <div className={`w-16 h-16 flex items-center justify-center transition-all ${
-                     isPlaying ? 'bg-bd-green text-white' : 'bg-gray-50 text-bd-green group-hover:bg-bd-green group-hover:text-white'
+                     isPlaying ? 'bg-black text-white' : 'bg-gray-50 text-black group-hover:bg-black group-hover:text-white'
                    }`}>
                       {isPlaying ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" />}
                    </div>
                    <div>
-                      <div className="caps-label text-bd-green group-hover:text-gray-400 mb-2">{track.type}</div>
+                      <div className="caps-label text-black group-hover:text-gray-400 mb-2">{track.type}</div>
                       <h4 className="text-2xl font-extrabold tracking-tight group-hover:text-white">{track.title}</h4>
                       <p className="text-sm font-bold text-gray-400 group-hover:text-gray-500">{track.artist}</p>
                    </div>
@@ -116,7 +116,7 @@ const AudioLibrary: React.FC = () => {
                       <span className="text-xs font-black uppercase tracking-widest text-gray-500 group-hover:text-gray-600 flex items-center gap-2"><Clock size={12} /> {track.duration}</span>
                    </div>
                    <div className="flex gap-4">
-                      <button onClick={(e) => e.stopPropagation()} className="p-3 border border-gray-100 group-hover:border-gray-800 text-gray-300 group-hover:text-white transition-all hover:text-bd-green"><Heart size={18} /></button>
+                      <button onClick={(e) => e.stopPropagation()} className="p-3 border border-gray-100 group-hover:border-gray-800 text-gray-300 group-hover:text-white transition-all hover:text-black"><Heart size={18} /></button>
                       <button onClick={(e) => e.stopPropagation()} className="p-3 border border-gray-100 group-hover:border-gray-800 text-gray-300 group-hover:text-white transition-all"><MoreVertical size={18} /></button>
                    </div>
                 </div>
@@ -134,7 +134,7 @@ const AudioLibrary: React.FC = () => {
               <h3 className="text-white font-bold text-lg">
                 {tracks.find(t => t.id === playing)?.title}
               </h3>
-              <button onClick={() => setPlaying(null)} className="text-white hover:text-bd-green p-2">
+              <button onClick={() => setPlaying(null)} className="text-white hover:text-black p-2">
                 <X size={24} />
               </button>
             </div>

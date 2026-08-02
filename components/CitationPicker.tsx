@@ -110,12 +110,12 @@ const CitationPicker: React.FC<CitationPickerProps> = ({ selected, onChange, onC
                 key={source.id}
                 onClick={() => toggleSource(source)}
                 className={`w-full text-left p-4 flex items-start gap-4 transition-all border-b border-gray-50 hover:bg-gray-50 ${
-                  isSelected(source) ? 'bg-bd-green/5' : ''
+                  isSelected(source) ? 'bg-black/5' : ''
                 }`}
               >
                 <div className={`p-2 rounded ${
-                  source.type === 'quran' ? 'bg-bd-green/10 text-bd-green' :
-                  source.type === 'hadith' ? 'bg-warning-50 text-warning-700' :
+                  source.type === 'quran' ? 'bg-black/10 text-black' :
+                  source.type === 'hadith' ? 'bg-gray-50 text-gray-900' :
                   'bg-gray-100 text-black'
                 }`}>
                   {source.type === 'quran' ? <BookOpen size={18} /> :
@@ -130,7 +130,7 @@ const CitationPicker: React.FC<CitationPickerProps> = ({ selected, onChange, onC
                   </div>
                 </div>
                 {isSelected(source) && (
-                  <div className="p-1 bg-bd-green text-white rounded-full">
+                  <div className="p-1 bg-black text-white rounded-full">
                     <Check size={14} />
                   </div>
                 )}

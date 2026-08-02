@@ -36,7 +36,7 @@ A **non-profit digital ecosystem** for Bangladesh's madrasa community — connec
 
 ---
 
-## 📊 Current State (2026-08-01)
+## 📊 Current State (2026-08-02)
 
 > **Truth in reporting**: this section is refreshed every time the codebase changes.
 > Full detail lives in [`PROGRESS.md`](./PROGRESS.md).
@@ -71,7 +71,7 @@ A **non-profit digital ecosystem** for Bangladesh's madrasa community — connec
 | **Notifications** (in-app + Supabase Realtime) | ✅ Complete · Web Push TODO |
 | **Payments** (bKash donation flow, dry-run safe) | ✅ Code complete · 🔴 Blocked on merchant account |
 | **Mobile app** (Phone/OTP login + core screens) | ✅ Phone/OTP done · other screens TODO |
-| **Production Readiness** | ~**39%** — see PROGRESS.md for exact breakdown |
+| **Production Readiness** | ~**40%** — see PROGRESS.md for exact breakdown |
 
 **MVP soft-launch estimate:** ~1 week (blocked on founder actions in [`NEXT_STEPS.md`](./NEXT_STEPS.md), not code).
 

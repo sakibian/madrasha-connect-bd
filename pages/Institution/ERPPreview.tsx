@@ -43,7 +43,7 @@ const ERPPreview: React.FC = () => {
                        </div>
                     </div>
                     <div className="flex gap-1 bg-gray-100 p-1">
-                       <button className="px-6 py-2 bg-white text-black font-black text-[10px] uppercase hover:bg-bd-green hover:text-white transition-all">P</button>
+                       <button className="px-6 py-2 bg-white text-black font-black text-[10px] uppercase hover:bg-black hover:text-white transition-all">P</button>
                        <button className="px-6 py-2 bg-white text-black font-black text-[10px] uppercase hover:bg-black hover:text-white transition-all">A</button>
                     </div>
                  </div>
@@ -58,7 +58,7 @@ const ERPPreview: React.FC = () => {
         <div className="lg:col-span-4 space-y-8">
            <div className="bg-black text-white p-12 space-y-10 h-full flex flex-col justify-between">
               <div className="space-y-6">
-                 <div className="caps-label text-bd-green">Fund Management</div>
+                 <div className="caps-label text-black">Fund Management</div>
                  <h3 className="text-3xl font-extrabold leading-tight">সাদাকাহ ও <br />জাকাত পোর্টাল।</h3>
                  <div className="space-y-4 pt-6">
                     <div className="p-6 bg-gray-900 minimal-border">
@@ -79,7 +79,7 @@ const ERPPreview: React.FC = () => {
 
 const ERPCard = ({ icon, label, value }: any) => (
   <div className="bg-white p-10 flex flex-col gap-6 group hover:bg-black hover:text-white transition-all">
-    <div className="text-bd-green group-hover:text-white transition-colors">{icon}</div>
+    <div className="text-black group-hover:text-white transition-colors">{icon}</div>
     <div className="space-y-1">
       <div className="text-3xl font-extrabold tracking-tight">{value}</div>
       <div className="caps-label text-gray-400 group-hover:text-gray-500">{label}</div>

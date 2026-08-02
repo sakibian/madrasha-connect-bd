@@ -25,7 +25,7 @@ const InstructionalHelp: React.FC = () => {
         {tutorials.map((video, i) => (
           <div key={i} className="bg-white p-12 group transition-all hover:bg-black hover:text-white">
             <div className="flex items-center justify-between mb-8">
-               <div className="caps-label text-bd-green group-hover:text-gray-400">{video.category}</div>
+               <div className="caps-label text-black group-hover:text-gray-400">{video.category}</div>
                <div className="text-xs font-bold text-gray-500">ভলিউম ০১</div>
             </div>
             
@@ -44,7 +44,7 @@ const InstructionalHelp: React.FC = () => {
                
                <div className="space-y-4">
                   <h3 className="text-2xl font-extrabold tracking-tight leading-tight">{video.title}</h3>
-                  <button className="text-xs font-bold flex items-center gap-2 group-hover:text-bd-green transition-all">
+                  <button className="text-xs font-bold flex items-center gap-2 group-hover:text-black transition-all">
                      এখনই দেখুন <ArrowRight size={18} />
                   </button>
                </div>
@@ -55,7 +55,7 @@ const InstructionalHelp: React.FC = () => {
 
       <div className="bg-black text-white p-20 space-y-12">
         <h2 className="text-3xl font-extrabold tracking-tight flex items-center gap-4">
-          <ShieldCheck className="text-bd-green" size={32} /> প্রায়শই জিজ্ঞাসিত সহায়তা
+          <ShieldCheck className="text-black" size={32} /> প্রায়শই জিজ্ঞাসিত সহায়তা
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-4">
            <HelpRow text="ভেরিফাইড অ্যাকাউন্টের সুবিধা কী কী?" />
@@ -69,9 +69,9 @@ const InstructionalHelp: React.FC = () => {
 };
 
 const HelpRow = ({ text }: { text: string }) => (
-  <div className="flex items-center justify-between py-6 border-b border-gray-900 hover:border-bd-green transition-all group cursor-pointer">
+  <div className="flex items-center justify-between py-6 border-b border-gray-900 hover:border-black transition-all group cursor-pointer">
     <p className="text-lg font-bold text-gray-400 group-hover:text-white transition-colors">{text}</p>
-    <CheckCircle size={20} className="text-gray-800 group-hover:text-bd-green transition-colors" />
+    <CheckCircle size={20} className="text-gray-800 group-hover:text-black transition-colors" />
   </div>
 );
 

@@ -53,7 +53,7 @@ const Marketplace: React.FC = () => {
 
       <section className="bg-black text-white p-16 flex flex-col md:flex-row items-center gap-16 relative overflow-hidden">
         <div className="md:w-1/2 z-10 space-y-8">
-          <div className="caps-label text-bd-green">Featured</div>
+          <div className="caps-label text-black">Featured</div>
           <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">ভেক্টর ক্যালিগ্রাফি সংগ্রহ।</h2>
           <p className="text-gray-400 text-xl leading-relaxed">৫০০+ হাই-রেজোলিউশন আরবি ক্যালিগ্রাফি গ্রাফিক ডিজাইনার এবং শিক্ষার্থীদের জন্য একদম ফ্রিতে ডাউনলোডযোগ্য।</p>
           <Link to="/calligraphy" className="bg-white text-black px-10 py-5 font-bold text-lg inline-flex items-center gap-3 hover:bg-gray-100 transition-all">
@@ -134,7 +134,7 @@ const Marketplace: React.FC = () => {
                 <p className="text-sm text-gray-500">{selectedProduct.category}</p>
               </div>
 
-              <div className="bg-bd-green/5 border border-bd-green/20 p-4">
+              <div className="bg-black/5 border border-black/20 p-4">
                 <p className="text-sm text-gray-700 font-medium">
                   এই ফাইলটি সম্পূর্ণ ফ্রি! নিচের বাটনে ক্লিক করে ডাউনলোড করুন।
                 </p>
@@ -146,7 +146,7 @@ const Marketplace: React.FC = () => {
                   download={selectedProduct.name}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-4 bg-bd-green text-white font-bold text-sm hover:brightness-110 transition-all flex items-center justify-center gap-3"
+                  className="w-full py-4 bg-black text-white font-bold text-sm hover:brightness-110 transition-all flex items-center justify-center gap-3"
                   onClick={() => {
                     toast.success('ডাউনলোড শুরু হয়েছে!');
                     setShowDownloadModal(false);
@@ -193,8 +193,8 @@ const Marketplace: React.FC = () => {
                 <p className="text-3xl font-extrabold">৳ {selectedProduct.price}</p>
               </div>
 
-              <div className="bg-warning-50 border border-warning-100 p-4">
-                <p className="text-sm text-warning-700 font-medium">
+              <div className="bg-gray-50 border border-gray-200 p-4">
+                <p className="text-sm text-gray-900 font-medium">
                   <strong>অনলাইন পেমেন্ট শীঘ্রই আসছে।</strong> এখনই কিনতে চাইলে আমাদের সাথে যোগাযোগ করুন:
                 </p>
               </div>
@@ -212,7 +212,7 @@ const Marketplace: React.FC = () => {
                 </a>
                 <a
                   href="tel:+8801XXXXXXXXX"
-                  className="w-full py-4 bg-bd-green text-white font-bold text-sm hover:brightness-110 transition-all flex items-center justify-center gap-3"
+                  className="w-full py-4 bg-black text-white font-bold text-sm hover:brightness-110 transition-all flex items-center justify-center gap-3"
                 >
                   <ShoppingBag size={20} /> ফোনে অর্ডার করুন
                 </a>

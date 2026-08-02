@@ -121,7 +121,7 @@ const FAQ: React.FC = () => {
           <div key={sIndex} className="space-y-8">
             <div className="flex items-center gap-4">
                <div className="h-px bg-gray-200 flex-1"></div>
-               <h2 className="caps-label text-bd-green whitespace-nowrap">{section.category}</h2>
+               <h2 className="caps-label text-black whitespace-nowrap">{section.category}</h2>
                <div className="h-px bg-gray-200 flex-1"></div>
             </div>
             
@@ -146,7 +146,7 @@ const FAQ: React.FC = () => {
       {/* CTA Section */}
       <section className="bg-black text-white p-12 md:p-20 flex flex-col md:flex-row items-center justify-between gap-12 group">
         <div className="space-y-6">
-          <div className="caps-label text-bd-green">Help & Contact</div>
+          <div className="caps-label text-black">Help & Contact</div>
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight">আরও কিছু জানতে চান?</h2>
           <p className="text-xl text-gray-400 max-w-md font-medium">
             আমাদের সাপোর্ট টিম আপনাকে সাহায্য করতে প্রস্তুত। যেকোনো প্রয়োজনে সরাসরি যোগাযোগ করুন।
@@ -165,7 +165,7 @@ const FAQ: React.FC = () => {
       {/* Minimal Footer Info */}
       <div className="flex flex-col md:flex-row justify-between items-center py-12 border-t border-gray-100 gap-6">
          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400">
-            <ShieldCheck size={14} className="text-bd-green" /> Last Updated: February 2025
+            <ShieldCheck size={14} className="text-black" /> Last Updated: February 2025
          </div>
          <div className="flex gap-8">
             <Link to="/tools" className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-black">Terms of Service</Link>

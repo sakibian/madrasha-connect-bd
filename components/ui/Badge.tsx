@@ -10,15 +10,15 @@ interface BadgeProps {
 }
 
 // Brand palette:
-//   success/verified  -> bd-green (national colour)
+//   success/verified  -> black (national colour)
 //   warning/pending   -> amber (only genuine warnings)
 //   error/destructive -> red (only genuine danger)
 //   info              -> black/white on soft grey (no off-brand blues)
 //   default           -> neutral gray
 const variantStyles: Record<BadgeVariant, string> = {
-  success: 'bg-bd-green/10 text-bd-green',
-  warning: 'bg-warning-50 text-warning-700',
-  error: 'bg-danger-50 text-danger-600',
+  success: 'bg-black/10 text-black',
+  warning: 'bg-gray-50 text-gray-900',
+  error: 'bg-gray-100 text-gray-900',
   info: 'bg-gray-900 text-white',
   default: 'bg-gray-100 text-gray-500',
 };

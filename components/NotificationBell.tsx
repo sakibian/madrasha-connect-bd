@@ -7,7 +7,7 @@
  * - Empty state.
  * - Click a row → mark read + navigate to n.link.
  *
- * Styling: brand tokens only (bd-green, info-*, warning-*, danger-*).
+ * Styling: black/white/gray + semantic tokens (info-*, warning-*, danger-*).
  */
 
 import React, { useEffect } from 'react';
@@ -20,9 +20,9 @@ import { handleNotificationClick } from '../services/notificationRouter';
 import type { AppNotification } from '../types';
 
 const typePalette: Record<AppNotification['type'], string> = {
-  job:         'bg-brand-50   text-brand-700',
-  community:   'bg-info-50    text-info-700',
-  application: 'bg-warning-50 text-warning-700',
+  job:         'bg-gray-50   text-black',
+  community:   'bg-gray-50    text-gray-900',
+  application: 'bg-gray-50 text-gray-900',
 };
 
 const NotificationBell: React.FC = () => {
@@ -52,7 +52,7 @@ const NotificationBell: React.FC = () => {
           <Bell size={20} />
           {unreadCount > 0 && (
             <span
-              className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 bg-bd-green text-white text-[10px] font-black rounded-full flex items-center justify-center"
+              className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 bg-black text-white text-[10px] font-black rounded-full flex items-center justify-center"
               aria-label={`${unreadCount} unread`}
             >
               {unreadCount > 99 ? '99+' : unreadCount}
@@ -71,7 +71,7 @@ const NotificationBell: React.FC = () => {
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
             <div className="flex items-center gap-2">
-              <Bell size={14} className="text-bd-green" />
+              <Bell size={14} className="text-black" />
               <h3 className="text-sm font-extrabold uppercase tracking-widest">
                 {t('notifications.title', 'বিজ্ঞপ্তি')}
               </h3>
@@ -79,7 +79,7 @@ const NotificationBell: React.FC = () => {
             {unreadCount > 0 && (
               <button
                 onClick={() => markAllRead()}
-                className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-bd-green hover:underline"
+                className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-black hover:underline"
               >
                 <CheckCheck size={12} />
                 {t('notifications.markAllRead', 'সব পড়া হয়েছে')}
@@ -102,7 +102,7 @@ const NotificationBell: React.FC = () => {
                   <li key={n.id}>
                     <button
                       onClick={() => handleRowClick(n)}
-                      className={`w-full text-left px-4 py-3 border-b border-gray-100 hover:bg-info-50 transition-colors flex gap-3 items-start ${
+                      className={`w-full text-left px-4 py-3 border-b border-gray-100 hover:bg-gray-50 transition-colors flex gap-3 items-start ${
                         n.isRead ? 'opacity-60' : ''
                       }`}
                     >

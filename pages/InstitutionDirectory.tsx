@@ -53,7 +53,7 @@ const InstitutionDirectory: React.FC = () => {
                 
                 <div className="space-y-4 flex-1">
                    <div className="flex justify-between items-start">
-                      <div className="caps-label text-bd-green">{inst.type}</div>
+                      <div className="caps-label text-black">{inst.type}</div>
                       {inst.verified && <CheckCircle size={18} className="text-black" />}
                    </div>
                    <h3 className="text-3xl font-extrabold">{inst.name}</h3>
@@ -72,7 +72,7 @@ const InstitutionDirectory: React.FC = () => {
                    </div>
                 </div>
 
-                <Link to={`/institution/${inst.id}`} className="flex items-center justify-between font-bold text-sm border-t border-gray-100 pt-6 group-hover:text-bd-green">
+                <Link to={`/institution/${inst.id}`} className="flex items-center justify-between font-bold text-sm border-t border-gray-100 pt-6 group-hover:text-black">
                    বিস্তারিত প্রোফাইল <ArrowRight size={18} />
                 </Link>
              </div>

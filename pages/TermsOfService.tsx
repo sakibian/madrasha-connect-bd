@@ -70,7 +70,7 @@ const TermsOfService: React.FC = () => (
     </Section>
 
     <Section title="৮. যোগাযোগ">
-      এই শর্তাবলী সম্পর্কে কোনো প্রশ্ন থাকলে অনুগ্রহ করে <a className="font-bold text-bd-green underline" href="mailto:support@madrasaconnectbd.org">support@madrasaconnectbd.org</a> এ যোগাযোগ করুন।
+      এই শর্তাবলী সম্পর্কে কোনো প্রশ্ন থাকলে অনুগ্রহ করে <a className="font-bold text-black underline" href="mailto:support@madrasaconnectbd.org">support@madrasaconnectbd.org</a> এ যোগাযোগ করুন।
     </Section>
 
     <footer className="pt-10 border-t border-gray-100 text-xs font-bold text-gray-400 uppercase tracking-widest">

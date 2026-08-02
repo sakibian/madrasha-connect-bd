@@ -106,7 +106,7 @@ const KnowledgeHub: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex-1 space-y-4">
-                  <div className="caps-label text-bd-green">{course.category}</div>
+                  <div className="caps-label text-black">{course.category}</div>
                   <h3 className="text-2xl font-extrabold leading-tight">{course.title}</h3>
                   <div className="flex items-center gap-4 text-xs font-bold text-gray-400">
                     <span className="flex items-center gap-1"><Clock size={14} /> {course.duration}</span>
@@ -145,7 +145,7 @@ const KnowledgeHub: React.FC = () => {
           </div>
         </div>
         <div className="bg-white p-12 space-y-10">
-          <h2 className="text-3xl font-extrabold border-l-4 border-bd-green pl-6">আলিয়া সিলেবাস</h2>
+          <h2 className="text-3xl font-extrabold border-l-4 border-black pl-6">আলিয়া সিলেবাস</h2>
           <div className="space-y-4">
             <ListResource title="কামিল (হাদিস বিভাগ)" sub="আরবি বিশ্ববিদ্যালয়" />
             <ListResource title="আলিম (বিজ্ঞান বিভাগ)" sub="মাদ্রাসা শিক্ষা বোর্ড" />

@@ -16,7 +16,7 @@ const StatCard: React.FC<StatCardProps> = ({ icon, label, value, className = '',
       onClick={onClick}
       className={`bg-white p-8 flex flex-col gap-5 group hover:bg-black hover:text-white transition-all text-left ${className}`}
     >
-      <div className="text-bd-green group-hover:text-white transition-colors">{icon}</div>
+      <div className="text-black group-hover:text-white transition-colors">{icon}</div>
       <div className="space-y-1">
         <div className="text-3xl font-extrabold tracking-tight">{value}</div>
         <div className="caps-label text-gray-400 group-hover:text-gray-500">{label}</div>

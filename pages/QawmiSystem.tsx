@@ -52,8 +52,8 @@ const QawmiSystem: React.FC = () => {
       </header>
 
       {/* Government recognition callout */}
-      <section className="bg-bd-green/5 border border-bd-green/20 p-6 md:p-8 space-y-3">
-        <div className="flex items-center gap-2 text-bd-green font-black uppercase tracking-widest text-xs">
+      <section className="bg-black/5 border border-black/20 p-6 md:p-8 space-y-3">
+        <div className="flex items-center gap-2 text-black font-black uppercase tracking-widest text-xs">
           <ShieldCheck size={14} />
           সরকারি স্বীকৃতি · ২০১৮
         </div>
@@ -66,7 +66,7 @@ const QawmiSystem: React.FC = () => {
             href={AL_HAIATUL_ULYA.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline font-bold text-bd-green"
+            className="underline font-bold text-black"
           >
             {AL_HAIATUL_ULYA.nameBn}
           </a>{' '}
@@ -178,7 +178,7 @@ const QawmiSystem: React.FC = () => {
                     href={board.websiteUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs font-bold uppercase tracking-widest text-bd-green underline"
+                    className="text-xs font-bold uppercase tracking-widest text-black underline"
                   >
                     Official website ↗
                   </a>

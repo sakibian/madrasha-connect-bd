@@ -25,14 +25,14 @@ interface StatusBadgeProps {
 }
 
 const STATUS_CONFIG: Record<StatusKind, { bn: string; en: string; cls: string }> = {
-  pending:  { bn: 'পেন্ডিং',   en: 'Pending',  cls: 'bg-warning-50  text-warning-700 border border-warning-200' },
-  approved: { bn: 'অনুমোদিত',  en: 'Approved', cls: 'bg-brand-50    text-brand-700   border border-brand-200'   },
-  rejected: { bn: 'বাতিল',      en: 'Rejected', cls: 'bg-danger-50   text-danger-700  border border-danger-200'  },
-  banned:   { bn: 'ব্যানড',    en: 'Banned',   cls: 'bg-danger-50   text-danger-700  border border-danger-200'  },
-  draft:    { bn: 'ড্রাফট',    en: 'Draft',    cls: 'bg-info-50     text-info-700    border border-info-200'    },
-  active:   { bn: 'সক্রিয়',    en: 'Active',   cls: 'bg-brand-50    text-brand-700   border border-brand-200'   },
-  archived: { bn: 'আর্কাইভড',  en: 'Archived', cls: 'bg-info-50     text-info-700    border border-info-200'    },
-  flagged:  { bn: 'ফ্ল্যাগড',  en: 'Flagged',  cls: 'bg-warning-50  text-warning-700 border border-warning-200' },
+  pending:  { bn: 'পেন্ডিং',   en: 'Pending',  cls: 'bg-gray-50  text-gray-900 border border-gray-300' },
+  approved: { bn: 'অনুমোদিত',  en: 'Approved', cls: 'bg-gray-50    text-black   border border-gray-300'   },
+  rejected: { bn: 'বাতিল',      en: 'Rejected', cls: 'bg-gray-100   text-black  border border-gray-300'  },
+  banned:   { bn: 'ব্যানড',    en: 'Banned',   cls: 'bg-gray-100   text-black  border border-gray-300'  },
+  draft:    { bn: 'ড্রাফট',    en: 'Draft',    cls: 'bg-gray-50     text-gray-900    border border-gray-300'    },
+  active:   { bn: 'সক্রিয়',    en: 'Active',   cls: 'bg-gray-50    text-black   border border-gray-300'   },
+  archived: { bn: 'আর্কাইভড',  en: 'Archived', cls: 'bg-gray-50     text-gray-900    border border-gray-300'    },
+  flagged:  { bn: 'ফ্ল্যাগড',  en: 'Flagged',  cls: 'bg-gray-50  text-gray-900 border border-gray-300' },
 };
 
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status, label, className = '' }) => {

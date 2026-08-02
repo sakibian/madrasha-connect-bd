@@ -109,7 +109,7 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto space-y-20">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-4">
-              <div className="caps-label text-bd-green">Services</div>
+              <div className="caps-label text-black">Services</div>
               <h2 className="text-4xl md:text-5xl font-extrabold">একক প্ল্যাটফর্ম, বহু সমাধান।</h2>
             </div>
             <Link to="/knowledge" className="text-sm font-bold flex items-center gap-2 group">
@@ -183,18 +183,18 @@ const LandingPage: React.FC = () => {
             <div className="space-y-6">
                <div className="caps-label text-gray-500">Platform</div>
                <ul className="space-y-4 text-sm font-bold">
-                 <li><Link to="/professional" className="hover:text-bd-green transition-colors">জব পোর্টাল</Link></li>
-                 <li><Link to="/knowledge" className="hover:text-bd-green transition-colors">শিক্ষা হাব</Link></li>
-                 <li><Link to="/institutions" className="hover:text-bd-green transition-colors">ডিরেক্টরি</Link></li>
-                 <li><Link to="/fatwa" className="hover:text-bd-green transition-colors">ফতোয়া পোর্টাল</Link></li>
+                 <li><Link to="/professional" className="hover:text-black transition-colors">জব পোর্টাল</Link></li>
+                 <li><Link to="/knowledge" className="hover:text-black transition-colors">শিক্ষা হাব</Link></li>
+                 <li><Link to="/institutions" className="hover:text-black transition-colors">ডিরেক্টরি</Link></li>
+                 <li><Link to="/fatwa" className="hover:text-black transition-colors">ফতোয়া পোর্টাল</Link></li>
                </ul>
             </div>
             <div className="space-y-6">
                <div className="caps-label text-gray-500">Resources</div>
                <ul className="space-y-4 text-sm font-bold">
-                 <li><Link to="/faq" className="hover:text-bd-green transition-colors">সাধারণ জিজ্ঞাসা</Link></li>
-                 <li><Link to="/seerah" className="hover:text-bd-green transition-colors">সীরাত টাইমলাইন</Link></li>
-                 <li><Link to="/marketplace" className="hover:text-bd-green transition-colors">মার্কেটপ্লেস</Link></li>
+                 <li><Link to="/faq" className="hover:text-black transition-colors">সাধারণ জিজ্ঞাসা</Link></li>
+                 <li><Link to="/seerah" className="hover:text-black transition-colors">সীরাত টাইমলাইন</Link></li>
+                 <li><Link to="/marketplace" className="hover:text-black transition-colors">মার্কেটপ্লেস</Link></li>
                </ul>
             </div>
           </div>
@@ -225,7 +225,7 @@ const StatItem = ({ label, value }: { label: string, value: string }) => (
 
 const ServiceCard = ({ icon, title, desc, link }: any) => (
   <Link to={link} className="bg-white p-12 hover:bg-black hover:text-white transition-all group h-[400px] flex flex-col justify-between">
-    <div className="text-bd-green group-hover:text-white transition-colors">{icon}</div>
+    <div className="text-black group-hover:text-white transition-colors">{icon}</div>
     <div className="space-y-4">
       <h3 className="text-2xl font-bold">{title}</h3>
       <p className="text-gray-500 group-hover:text-gray-400 leading-relaxed font-medium text-sm">{desc}</p>
@@ -238,7 +238,7 @@ const ServiceCard = ({ icon, title, desc, link }: any) => (
 
 const CheckItem = ({ label }: { label: string }) => (
   <div className="flex items-center gap-4">
-    <div className="w-5 h-5 bg-bd-green flex items-center justify-center text-white">
+    <div className="w-5 h-5 bg-black flex items-center justify-center text-white">
       <Check size={14} strokeWidth={3} />
     </div>
     <span className="font-bold text-gray-700">{label}</span>

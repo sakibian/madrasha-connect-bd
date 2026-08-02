@@ -126,7 +126,7 @@ const Deen101: React.FC = () => {
           <ArrowLeft size={14} /> Back to Library
         </Link>
         <div className="space-y-4">
-          <div className="caps-label text-bd-green">Learning Pathway</div>
+          <div className="caps-label text-black">Learning Pathway</div>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">Deen-101 (মৌলিক দ্বীন শিক্ষা)।</h1>
           <p className="text-xl text-gray-500 max-w-2xl leading-relaxed font-medium">
             প্রতিটি মুসলমানের জন্য অত্যাবশ্যকীয় দ্বীনি জ্ঞানসমূহ সহজ ও সাবলীল বাংলায় শেখার ডিজিটাল মাধ্যম।
@@ -142,7 +142,7 @@ const Deen101: React.FC = () => {
               onClick={() => { setActiveModule(i); setShowQuiz(false); setSelectedOption(null); setIsCorrect(null); }}
               className={`w-full p-10 text-left transition-all flex items-start gap-6 ${activeModule === i ? 'bg-black text-white' : 'hover:bg-gray-50'}`}
             >
-              <div className={`mt-1 ${activeModule === i ? 'text-bd-green' : 'text-gray-300'}`}>{m.icon}</div>
+              <div className={`mt-1 ${activeModule === i ? 'text-black' : 'text-gray-300'}`}>{m.icon}</div>
               <div>
                 <h3 className="text-xl font-bold mb-1">{m.title}</h3>
                 <p className={`text-[10px] font-bold uppercase tracking-widest ${activeModule === i ? 'text-gray-400' : 'text-gray-400'}`}>{m.duration}</p>
@@ -208,7 +208,7 @@ const Deen101: React.FC = () => {
                       onClick={() => handleQuizSubmit(idx)}
                       className={`p-6 text-left font-bold transition-all border-2 ${
                         selectedOption === idx
-                          ? (idx === modules[activeModule].quiz.correct ? 'bg-bd-green/10 border-bd-green text-bd-green' : 'bg-danger-50 border-danger-500 text-danger-500')
+                          ? (idx === modules[activeModule].quiz.correct ? 'bg-black/10 border-black text-black' : 'bg-gray-100 border-gray-400 text-gray-500')
                           : 'bg-white border-gray-100 hover:border-black'
                       }`}
                     >
@@ -219,10 +219,10 @@ const Deen101: React.FC = () => {
               </div>
 
               {isCorrect !== null && (
-                <div className={`p-10 text-center space-y-8 animate-slideDown ${isCorrect ? 'bg-gray-50' : 'bg-danger-50'}`}>
+                <div className={`p-10 text-center space-y-8 animate-slideDown ${isCorrect ? 'bg-gray-50' : 'bg-gray-100'}`}>
                   <div className="flex items-center justify-center gap-3">
                     {isCorrect ? <Trophy className="text-black" size={32} /> : <Sparkles className="text-gray-400" size={32} />}
-                    <p className={`text-2xl font-extrabold ${isCorrect ? 'text-black' : 'text-danger-500'}`}>
+                    <p className={`text-2xl font-extrabold ${isCorrect ? 'text-black' : 'text-gray-500'}`}>
                       {isCorrect ? 'চমৎকার! সঠিক উত্তর।' : 'দুঃখিত, উত্তরটি ভুল ছিল।'}
                     </p>
                   </div>
@@ -245,7 +245,7 @@ const Deen101: React.FC = () => {
           ----------------------------------------------------------------- */}
       <section className="space-y-8 border-t border-gray-100 pt-16">
         <div className="space-y-3">
-          <div className="caps-label text-bd-green">M14.5 · 30-day Starter Journey</div>
+          <div className="caps-label text-black">M14.5 · 30-day Starter Journey</div>
           <h2 className="text-3xl md:text-4xl font-extrabold">৩০ দিনের সম্পূর্ণ যাত্রা</h2>
           <p className="text-gray-500 max-w-2xl leading-relaxed">
             {DEEN101_LESSONS.length}টি সংক্ষিপ্ত পাঠ · মোট <strong>{DEEN101_TOTAL_XP} XP</strong> · প্রতিটি পাঠের সাথে কুরআন / হাদিসের রেফারেন্স।
@@ -254,7 +254,7 @@ const Deen101: React.FC = () => {
 
         <ol className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {DEEN101_LESSONS.map(l => (
-            <li key={l.slug} className="bg-white border border-gray-100 p-5 flex gap-4 group hover:border-bd-green transition-colors">
+            <li key={l.slug} className="bg-white border border-gray-100 p-5 flex gap-4 group hover:border-black transition-colors">
               <div className="w-12 h-12 shrink-0 bg-black text-white flex items-center justify-center font-extrabold">
                 {l.day}
               </div>
@@ -262,7 +262,7 @@ const Deen101: React.FC = () => {
                 <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                   <CategoryPill category={l.category} />
                   <span className="flex items-center gap-1"><Calendar size={10} /> {l.durationMin} min</span>
-                  <span className="text-bd-green">+{l.xpReward} XP</span>
+                  <span className="text-black">+{l.xpReward} XP</span>
                 </div>
                 <h3 className="text-base font-extrabold leading-snug">{l.titleBn}</h3>
                 <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed">{l.summaryBn}</p>
@@ -272,7 +272,7 @@ const Deen101: React.FC = () => {
                       href={l.sourceUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-bd-green hover:underline"
+                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-black hover:underline"
                     >
                       {l.sourceName} <ExternalLink size={10} />
                     </a>
@@ -299,7 +299,7 @@ function CategoryPill({ category }: { category: Deen101Category }) {
     'halal-living':    'হালাল',
   };
   return (
-    <span className="px-2 py-0.5 bg-brand-50 text-brand-700 border border-brand-200">
+    <span className="px-2 py-0.5 bg-gray-50 text-black border border-gray-300">
       {label[category]}
     </span>
   );

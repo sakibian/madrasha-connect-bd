@@ -74,7 +74,7 @@ const CompetitionManager: React.FC = () => {
         <h2 className="text-2xl font-black">প্রতিযোগিতা ব্যবস্থাপনা</h2>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="bg-bd-green text-white px-6 py-3 font-bold text-sm flex items-center gap-2 hover:brightness-110 transition-all"
+          className="bg-black text-white px-6 py-3 font-bold text-sm flex items-center gap-2 hover:bg-gray-800 transition-all"
         >
           <Plus size={18} /> নতুন প্রতিযোগিতা
         </button>
@@ -111,7 +111,7 @@ const CompetitionManager: React.FC = () => {
                     {new Date(comp.deadline).toLocaleDateString('bn-BD')}
                   </td>
                   <td className="px-6 py-4">
-                    <span className="flex items-center gap-2 text-sm font-bold text-bd-green">
+                    <span className="flex items-center gap-2 text-sm font-bold text-black">
                       <Users size={14} /> {comp.participantCount || 0}
                     </span>
                   </td>
@@ -120,7 +120,7 @@ const CompetitionManager: React.FC = () => {
                       <button className="p-2 border border-gray-200 text-gray-600 hover:bg-gray-50 transition-all">
                         <Edit2 size={14} />
                       </button>
-                      <button className="p-2 border border-gray-200 text-danger-600 hover:bg-danger-50 transition-all">
+                      <button className="p-2 border border-gray-200 text-gray-900 hover:bg-gray-100 transition-all">
                         <Trash2 size={14} />
                       </button>
                     </div>
@@ -151,7 +151,7 @@ const CompetitionManager: React.FC = () => {
                   value={formData.title}
                   onChange={(e) => setFormData({...formData, title: e.target.value})}
                   placeholder="উদা: জাতীয় আরবি ক্যালিগ্রাফি প্রতিযোগিতা"
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
                 />
               </div>
 
@@ -161,7 +161,7 @@ const CompetitionManager: React.FC = () => {
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({...formData, category: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
+                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
                   >
                     <option value="Quranic">কুরআন</option>
                     <option value="Calligraphy">ক্যালিগ্রাফি</option>
@@ -178,7 +178,7 @@ const CompetitionManager: React.FC = () => {
                     value={formData.maxParticipants}
                     onChange={(e) => setFormData({...formData, maxParticipants: e.target.value})}
                     placeholder="সীমাহীন"
-                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
+                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
                   />
                 </div>
               </div>
@@ -191,7 +191,7 @@ const CompetitionManager: React.FC = () => {
                     value={formData.prize}
                     onChange={(e) => setFormData({...formData, prize: e.target.value})}
                     placeholder="৳ ২০,০০০ + সনদ"
-                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
+                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
                   />
                 </div>
 
@@ -201,7 +201,7 @@ const CompetitionManager: React.FC = () => {
                     type="date"
                     value={formData.deadline}
                     onChange={(e) => setFormData({...formData, deadline: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium"
+                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
                   />
                 </div>
               </div>
@@ -212,7 +212,7 @@ const CompetitionManager: React.FC = () => {
                   value={formData.description}
                   onChange={(e) => setFormData({...formData, description: e.target.value})}
                   placeholder="প্রতিযোগিতা সম্পর্কে বিস্তারিত..."
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium min-h-[100px] resize-none"
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium min-h-[100px] resize-none"
                 />
               </div>
 
@@ -222,7 +222,7 @@ const CompetitionManager: React.FC = () => {
                   value={formData.requirements}
                   onChange={(e) => setFormData({...formData, requirements: e.target.value})}
                   placeholder="যোগ্যতা এবং শর্তাবলী..."
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-bd-green font-medium min-h-[100px] resize-none"
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium min-h-[100px] resize-none"
                 />
               </div>
             </div>
@@ -236,7 +236,7 @@ const CompetitionManager: React.FC = () => {
               </button>
               <button
                 onClick={handleCreate}
-                className="px-6 py-3 bg-bd-green text-white font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2"
+                className="px-6 py-3 bg-black text-white font-bold text-sm hover:bg-gray-800 transition-all flex items-center gap-2"
               >
                 <Trophy size={18} /> তৈরি করুন
               </button>
