@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
+import { Analytics } from '@vercel/analytics/react';
 import App from './App';
 import { initSentry } from './services/sentry';
 import { initPostHog } from './services/analytics';
@@ -29,6 +30,7 @@ root.render(
   <React.StrictMode>
     <HelmetProvider>
       <App />
+      <Analytics />
     </HelmetProvider>
   </React.StrictMode>
 );
