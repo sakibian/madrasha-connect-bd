@@ -56,6 +56,28 @@
 
 ## ✅ Completed (chronological)
 
+### 2026-08-02 (session 17 — Fix Scholar Application + Add Vercel Analytics)
+
+**Theme**: Fixed broken scholar application submission and added visitor tracking
+
+- **Scholar Application Fix** (`pages/ScholarApply.tsx` + `services/dataService.ts`)
+  - **Bug**: Missing `id` field in database insert causing silent failure
+  - **Fix**: Added `crypto.randomUUID()` for ID generation
+  - **Added**: Proper error handling with `retryWithBackoff`
+  - **Added**: Toast notifications (success: "আবেদন সফলভাবে জমা হয়েছে", error messages)
+  - **Added**: Validation feedback for required fields
+  - **Added**: Duplicate application detection (23505 error code)
+
+- **Vercel Analytics** (`index.tsx` + `package.json`)
+  - Installed `@vercel/analytics` package
+  - Added `<Analytics />` component to React tree
+  - Now tracking page views and visitor data in Vercel dashboard
+  - Works alongside existing PostHog analytics
+
+**Impact**: Scholar application now works end-to-end. Users can apply, see status, and get proper feedback. Analytics tracking live in production.
+
+**Build**: ✅ Success (4.71s)
+
 ### 2026-08-02 (session 16 — Complete ProfileBuilder with Backend Integration)
 
 **Theme**: Built production-ready ProfileBuilder with full 4-step flow, backend integration, and database migration

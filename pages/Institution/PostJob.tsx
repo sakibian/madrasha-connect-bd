@@ -20,6 +20,7 @@ import { getCurrentUser } from '../../services/authService';
 import { moderateContent } from '../../services/geminiService';
 import { addNotification } from '../../services/notificationService';
 import { Job } from '../../types';
+import { trackEvent } from '../../services/analytics';
 
 const PostJob: React.FC = () => {
   const navigate = useNavigate();
@@ -78,6 +79,7 @@ const PostJob: React.FC = () => {
       };
 
       await dataService.saveJob(newJob);
+      trackEvent('job_post_submitted', { job_type: formData.type });
 
       await addNotification({
         title: 'বিজ্ঞপ্তি জমা হয়েছে',

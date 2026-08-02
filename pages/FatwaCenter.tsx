@@ -12,6 +12,7 @@ import { Button, Modal, SearchInput, LoadingSkeleton } from '../components/ui';
 import { useAuthStore, useFatwaStore } from '../stores';
 import NotificationPermissionPrimer, { isPrimerSuppressed } from '../components/NotificationPermissionPrimer';
 import { toast } from '../services/toast';
+import { trackEvent } from '../services/analytics';
 
 const FatwaCenter: React.FC = () => {
   const currentUser = useAuthStore((s) => s.user);
@@ -73,6 +74,7 @@ const FatwaCenter: React.FC = () => {
       };
 
       await askFatwa(newFatwa);
+      trackEvent('fatwa_question_submitted', { category });
       if (currentUser) dataService.addXP(currentUser.id, XP_ACTIONS.ASK_FATWA.action, XP_ACTIONS.ASK_FATWA.xp);
       await addNotification({
         title: 'আপনার প্রশ্ন জমা হয়েছে',

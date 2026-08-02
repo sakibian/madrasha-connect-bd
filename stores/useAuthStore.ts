@@ -2,6 +2,7 @@
 import { create } from 'zustand';
 import { User } from '../types';
 import { getCurrentUser, logout as authLogout, login as authLogin, registerUser as authRegister } from '../services/authService';
+import { identifyUser, resetUser } from '../services/analytics';
 import { dataService } from '../services/dataService';
 
 interface AuthState {
@@ -16,6 +17,29 @@ interface AuthState {
   setUser: (user: User | null) => void;
   cleanup: () => void;
 }
+
+let identifiedUserId: string | null = null;
+
+const syncAnalyticsIdentity = (user: User | null) => {
+  if (!user) {
+    if (identifiedUserId) {
+      resetUser();
+      identifiedUserId = null;
+    }
+    return;
+  }
+
+  if (identifiedUserId === user.id) return;
+
+  if (identifiedUserId) resetUser();
+
+  identifyUser(user.id, {
+    email: user.email,
+    name: user.name,
+    role: user.role,
+  });
+  identifiedUserId = user.id;
+};
 
 const handleAuthChange = () => {
   useAuthStore.getState().refreshUser();
@@ -33,6 +57,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     const { initAuth } = await import('../services/authService');
     await initAuth();
     const user = getCurrentUser();
+    syncAnalyticsIdentity(user);
     set({ user, loading: false, initialized: true });
 
     if (!listenerAttached) {
@@ -43,27 +68,34 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   login: async (email: string, password: string) => {
     const result = await authLogin(email, password);
+    syncAnalyticsIdentity(result.user);
     set({ user: result.user });
     return result.user;
   },
 
   register: async (data) => {
     const result = await authRegister(data);
+    if (!result.needsVerification) syncAnalyticsIdentity(result.user);
     set({ user: result.user });
     return result;
   },
 
   logout: async () => {
     await authLogout();
+    syncAnalyticsIdentity(null);
     set({ user: null });
   },
 
   refreshUser: () => {
     const user = getCurrentUser();
+    syncAnalyticsIdentity(user);
     set({ user });
   },
 
-  setUser: (user) => set({ user }),
+  setUser: (user) => {
+    syncAnalyticsIdentity(user);
+    set({ user });
+  },
 
   cleanup: () => {
     window.removeEventListener('auth_change', handleAuthChange);

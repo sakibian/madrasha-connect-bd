@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MessageSquarePlus, X, Loader2, CheckCircle, Send } from 'lucide-react';
 import { submitFeedback, FeedbackCategory } from '../services/feedbackService';
+import { trackEvent } from '../services/analytics';
 
 /**
  * Floating feedback widget. Renders a small round button in the bottom-right
@@ -59,6 +60,7 @@ const FeedbackWidget: React.FC = () => {
     setError(null);
     const result = await submitFeedback({ category, message, contact });
     if (result.ok) {
+      trackEvent('feedback_submitted', { category });
       setSent(true);
     } else {
       setError(result.error);

@@ -7,6 +7,7 @@ import {
 import { dataService } from '../services/dataService';
 import { toast } from '../services/toast';
 import { ScholarApplication } from '../types';
+import { trackEvent } from '../services/analytics';
 
 const ScholarApply: React.FC = () => {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ const ScholarApply: React.FC = () => {
         credentials: credentials.filter(c => c.trim()),
         references: references.filter(r => r.trim()),
       });
+      trackEvent('scholar_application_submitted', { title });
       const app = await dataService.getMyScholarApplication();
       setExistingApp(app);
       toast.success('আপনার আবেদন সফলভাবে জমা হয়েছে! আমরা শীঘ্রই পর্যালোচনা করব।');

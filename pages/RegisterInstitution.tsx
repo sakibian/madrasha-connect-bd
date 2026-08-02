@@ -6,6 +6,7 @@ import { registerUser } from '../services/authService';
 import { addNotification } from '../services/notificationService';
 import { supabase } from '../services/supabase';
 import PasswordInput from '../components/ui/PasswordInput';
+import { trackEvent } from '../services/analytics';
 
 const RegisterInstitution: React.FC = () => {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ const RegisterInstitution: React.FC = () => {
       });
 
       if (needsVerification) {
+        trackEvent('institution_registration_completed', { institution_type: formData.instType, verification_required: true });
         navigate('/verify-email', { state: { email: formData.email } });
         return;
       }
@@ -55,6 +57,7 @@ const RegisterInstitution: React.FC = () => {
         link: '/professional'
       });
 
+      trackEvent('institution_registration_completed', { institution_type: formData.instType, verification_required: false });
       navigate('/dashboard');
     } catch (err: any) {
       setError(err.message || 'নিবন্ধন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।');

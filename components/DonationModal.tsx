@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Heart, Loader2, X, ArrowRight, ShieldCheck } from 'lucide-react';
 import { createBkashDonation } from '../services/donationService';
+import { trackEvent } from '../services/analytics';
 
 /**
  * Donation modal — bKash flow.
@@ -71,6 +72,7 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
       return;
     }
     if (result.mode === 'personal') {
+      trackEvent('donation_checkout_started', { amount_bdt: effectiveAmount, payment_mode: 'personal' });
       setPersonal({
         invoice: result.invoice,
         personal_number: result.personal_number,
@@ -82,10 +84,12 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
       return;
     }
     if (result.dry_run) {
+      trackEvent('donation_checkout_started', { amount_bdt: effectiveAmount, payment_mode: 'dry_run' });
       setDryRun(true);
       return;
     }
     if (result.bkashURL) {
+      trackEvent('donation_checkout_started', { amount_bdt: effectiveAmount, payment_mode: 'bkash' });
       // Redirect to bKash's hosted checkout page. When done, bKash sends
       // the user back to /sadaqah?bkash=1&paymentID=... where we can call
       // executeBkashDonation to finalize.

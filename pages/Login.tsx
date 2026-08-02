@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { ShieldCheck, School, User as UserIcon, Loader2, ArrowRight, ArrowLeft, Lock, Mail, Phone, KeyRound } from 'lucide-react';
 import { login, resendVerificationEmail, sendPhoneOtp, verifyPhoneOtp } from '../services/authService';
 import PasswordInput from '../components/ui/PasswordInput';
+import { trackEvent } from '../services/analytics';
 
 const DEMO_PASSWORD = import.meta.env.VITE_ENABLE_DEMO === 'true' ? 'madrasa123' : '';
 
@@ -44,6 +45,7 @@ const Login: React.FC = () => {
     setError('');
     const result = await verifyPhoneOtp(phone, otp);
     if (result.user) {
+      trackEvent('login_completed', { method: 'phone_otp' });
       navigate('/dashboard');
     } else {
       setError(result.error || 'ওটিপি মিলছে না।');
@@ -70,7 +72,10 @@ const Login: React.FC = () => {
     setError('');
     setUnconfirmedEmail('');
     const result = await login(demoEmail, DEMO_PASSWORD);
-    if (result.user) navigate('/dashboard');
+    if (result.user) {
+      trackEvent('login_completed', { method: 'demo' });
+      navigate('/dashboard');
+    }
     else if (result.needsConfirmation) setUnconfirmedEmail(demoEmail);
     else setError(result.error || 'ডেমো অ্যাকাউন্ট পাওয়া যায়নি। অনুগ্রহ করে রেজিস্ট্রেশন করুন।');
     setLoading(false);
@@ -83,7 +88,10 @@ const Login: React.FC = () => {
     setError('');
     setUnconfirmedEmail('');
     const result = await login(email, password);
-    if (result.user) navigate('/dashboard');
+    if (result.user) {
+      trackEvent('login_completed', { method: 'email_password' });
+      navigate('/dashboard');
+    }
     else if (result.needsConfirmation) {
       setUnconfirmedEmail(email);
       setError('');

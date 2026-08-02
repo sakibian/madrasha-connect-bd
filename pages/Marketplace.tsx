@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Button, Badge, ImageWithFallback, Modal, LoadingSkeleton } from '../components/ui';
 import { useAuthStore, useProductStore } from '../stores';
 import { toast } from '../services/toast';
+import { trackEvent } from '../services/analytics';
 
 const Marketplace: React.FC = () => {
   const currentUser = useAuthStore((s) => s.user);
@@ -148,6 +149,7 @@ const Marketplace: React.FC = () => {
                   rel="noopener noreferrer"
                   className="w-full py-4 bg-black text-white font-bold text-sm hover:brightness-110 transition-all flex items-center justify-center gap-3"
                   onClick={() => {
+                    trackEvent('marketplace_download_started', { product_id: selectedProduct.id, product_category: selectedProduct.category });
                     toast.success('ডাউনলোড শুরু হয়েছে!');
                     setShowDownloadModal(false);
                   }}
@@ -204,6 +206,7 @@ const Marketplace: React.FC = () => {
                   href="mailto:marketplace@mcbd.org?subject=Product Purchase: {selectedProduct.name}"
                   className="w-full py-4 bg-black text-white font-bold text-sm hover:bg-gray-800 transition-all flex items-center justify-center gap-3"
                   onClick={() => {
+                    trackEvent('marketplace_purchase_inquiry_started', { product_id: selectedProduct.id, contact_method: 'email' });
                     toast.success('ইমেইল ক্লায়েন্ট খোলা হচ্ছে...');
                     setShowPurchaseModal(false);
                   }}
@@ -213,6 +216,7 @@ const Marketplace: React.FC = () => {
                 <a
                   href="tel:+8801XXXXXXXXX"
                   className="w-full py-4 bg-black text-white font-bold text-sm hover:brightness-110 transition-all flex items-center justify-center gap-3"
+                  onClick={() => trackEvent('marketplace_purchase_inquiry_started', { product_id: selectedProduct.id, contact_method: 'phone' })}
                 >
                   <ShoppingBag size={20} /> ফোনে অর্ডার করুন
                 </a>

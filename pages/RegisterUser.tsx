@@ -5,6 +5,7 @@ import { User as UserIcon, Mail, Lock, ArrowRight, ArrowLeft, Loader2, Menu, X }
 import { registerUser } from '../services/authService';
 import { addNotification } from '../services/notificationService';
 import PasswordInput from '../components/ui/PasswordInput';
+import { trackEvent } from '../services/analytics';
 
 const RegisterUser: React.FC = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const RegisterUser: React.FC = () => {
       });
 
       if (needsVerification) {
+        trackEvent('registration_completed', { account_type: 'user', verification_required: true });
         navigate('/verify-email', { state: { email: formData.email } });
         return;
       }
@@ -41,6 +43,7 @@ const RegisterUser: React.FC = () => {
         link: '/dashboard'
       });
 
+      trackEvent('registration_completed', { account_type: 'user', verification_required: false });
       navigate('/dashboard');
     } catch (err: any) {
       setError(err.message || 'রেজিস্ট্রেশন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।');

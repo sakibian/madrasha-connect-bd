@@ -5,6 +5,7 @@ import ImageWithFallback from '../components/ui/ImageWithFallback';
 import { dataService } from '../services/dataService';
 import { useAuthStore } from '../stores';
 import { toast } from '../services/toast';
+import { trackEvent } from '../services/analytics';
 
 const Competitions: React.FC = () => {
   const currentUser = useAuthStore((s) => s.user);
@@ -36,6 +37,7 @@ const Competitions: React.FC = () => {
 
     try {
       await dataService.registerForCompetition(selectedComp.id, submissionUrl, notes);
+      trackEvent('competition_registration_completed', { competition_id: selectedComp.id, submission_provided: Boolean(submissionUrl) });
       toast.success('নিবন্ধন সফল হয়েছে!', 'আপনার অংশগ্রহণ নিশ্চিত করা হয়েছে।');
       setRegisteredIds([...registeredIds, selectedComp.id]);
       setShowRegModal(false);
