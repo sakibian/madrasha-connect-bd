@@ -753,5 +753,45 @@ When you start work:
 1. Move item from `Backlog` → `In Progress`.
 2. Add yourself as owner if multiple people.
 
+### 2026-08-03 (session 19 — USER-role Update/Delete CRUD + form submission tests)
+
+**Theme**: Completed remaining USER-role CRUD operations and added test coverage for all new dataService methods
+
+- **dataService.ts** — Added 6 new methods
+  - `updateComment` — edits own comment via `forum_comments` table with `author_id` ownership check
+  - `deleteComment` — deletes own comment with auth RLS enforcement
+  - `updateFatwa` — edits own fatwa question/category with `asked_by` ownership check
+  - `deleteFatwa` — deletes own fatwa with auth RLS enforcement
+  - `withdrawJobApplication` — withdraws from a job application with auth check
+  - `updateDonorProfile` — updates blood donor profile (blood_group, location, district, phone, public_profile) with camelCase → snake_case mapping
+
+- **database/migrations/2026_08_03_user_crud_policies.sql** — New migration
+  - UPDATE/DELETE RLS policies for `forum_posts`, `forum_comments`, `fatwas`, `job_applications`, `blood_donors`, `user_skills`
+  - `updated_at` triggers added to all tables for audit trail
+  - `forum_comments.id` default fixed: was text PK with no default → `uuid_generate_v4()::text` so INSERTs succeed
+  - `forum_comments.author_id` column added (was missing entirely, causing FK failures)
+
+- **pages/Community.tsx** — Wired up UI
+  - Edit/delete buttons on own comments in PostCard (inline edit form)
+  - Edit/delete handlers wired to `dataService.updateComment` / `dataService.deleteComment`
+
+- **pages/FatwaCenter.tsx** — Wired up UI
+  - Delete button on own fatwa cards (only when status is PENDING)
+  - Delete handler wired to `dataService.deleteFatwa`
+  - JSX syntax error fixed (extra `</div>` at line 197 removed)
+
+- **pages/ProfessionalHub.tsx** — Wired up UI
+  - "Withdraw Application" button shows when user has applied for a job
+  - Applied-state tracking via `dataService.withdrawJobApplication`
+
+- **src/test/__tests__/dataServiceCrud.test.ts** — New test file (12 tests)
+  - All 6 methods tested: happy path (correct Supabase params + auth check)
+  - All 6 methods tested: unauthenticated user gets 'Must be logged in' error
+  - Total: 248 tests passing (236 original + 12 new)
+
+- **types.ts** — Added `authorId?: string` to `ForumComment` interface; updated `getComments` mapping to extract `author_id`
+
+- **Impact**: USERS can now update and delete their own content (comments, fatwas, job applications, donor profile) with proper RLS enforcement on the database side
+
 When you get blocked:
 1. Move to `Blocked` with the reason and who owns unblocking.
