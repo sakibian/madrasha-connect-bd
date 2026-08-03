@@ -537,14 +537,30 @@ export const dataService = {
   },
 
   updatePost: async (postId: string, updates: { title?: string; content?: string; category?: string }): Promise<void> => {
-    const { error } = await supabase.from('forum_posts').update(updates).eq('id', postId);
-    if (error) throw error;
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in to edit');
+    await retryWithBackoff(async () => {
+      const { error } = await supabase
+        .from('forum_posts')
+        .update(updates)
+        .eq('id', postId)
+        .eq('author_id', user.id);
+      if (error) throw error;
+    });
     cacheInvalidate(CACHE_KEYS.POSTS);
   },
 
   deletePost: async (postId: string): Promise<void> => {
-    const { error } = await supabase.from('forum_posts').delete().eq('id', postId);
-    if (error) throw error;
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+    await retryWithBackoff(async () => {
+      const { error } = await supabase
+        .from('forum_posts')
+        .delete()
+        .eq('id', postId)
+        .eq('author_id', user.id);
+      if (error) throw error;
+    });
     cacheInvalidate(CACHE_KEYS.POSTS);
   },
 
@@ -883,6 +899,36 @@ export const dataService = {
         .eq('user_id', user.id);
       if (error) throw error;
     });
+  },
+
+  // --- User Profile ---
+  getMyProfile: async (): Promise<any> => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) return null;
+
+    const { data, error } = await supabase
+      .from('user_profiles')
+      .select('*')
+      .eq('id', user.id)
+      .maybeSingle();
+
+    if (error || !data) return null;
+    return data;
+  },
+
+  saveMyProfile: async (updates: Record<string, unknown>): Promise<void> => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+
+    const { error } = await supabase
+      .from('user_profiles')
+      .update({
+        ...updates,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', user.id);
+
+    if (error) throw error;
   },
 
   // --- Competitions ---

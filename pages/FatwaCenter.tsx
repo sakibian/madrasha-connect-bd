@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Loader2, Clock, Trash2 } from 'lucide-react';
+import { Sparkles, Loader2, Clock, Trash2, Edit3 } from 'lucide-react';
 import { Fatwa, Source, XP_ACTIONS } from '../types';
 import { dataService } from '../services/dataService';
 import { askScholar } from '../services/geminiService';
@@ -28,7 +28,11 @@ const FatwaCenter: React.FC = () => {
   const [moderationFeedback, setModerationFeedback] = useState<string | null>(null);
   const [answerSources, setAnswerSources] = useState<Record<string, Source[]>>({});
   const [showPushPrimer, setShowPushPrimer] = useState(false);
-  const [deletingFatwaId, setDeletingFatwaId] = useState<string | null>(null);
+   const [deletingFatwaId, setDeletingFatwaId] = useState<string | null>(null);
+   const [editingFatwaId, setEditingFatwaId] = useState<string | null>(null);
+   const [editQuestion, setEditQuestion] = useState('');
+   const [editCategory, setEditCategory] = useState<Fatwa['category']>('Ibadah');
+   const [savingFatwa, setSavingFatwa] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -116,6 +120,27 @@ const FatwaCenter: React.FC = () => {
     }
   };
 
+  const handleEditFatwa = (fatwa: Fatwa) => {
+    setEditingFatwaId(fatwa.id);
+    setEditQuestion(fatwa.question);
+    setEditCategory(fatwa.category);
+  };
+
+  const handleSaveFatwaEdit = async (fatwaId: string) => {
+    if (!editQuestion.trim()) return;
+    setSavingFatwa(true);
+    try {
+      await dataService.updateFatwa(fatwaId, { question: editQuestion, category: editCategory });
+      setEditingFatwaId(null);
+      fetchFatwas();
+      toast.success('প্রশ্নটি আপডেট করা হয়েছে।');
+    } catch (error: any) {
+      toast.error(error?.message || 'আপডেট করতে সমস্যা হয়েছে।');
+    } finally {
+      setSavingFatwa(false);
+    }
+  };
+
   const categories = ['All', 'Ibadah', 'Muamalah', 'Family', 'Social'];
   const filteredFatwas = fatwas.filter(f => {
     const matchesSearch = f.question.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -178,23 +203,69 @@ const FatwaCenter: React.FC = () => {
                         <div className="flex items-center gap-2">
                            <span className="text-[10px] font-bold text-gray-400 flex items-center gap-1"><Clock size={12} /> {fatwa.askedAt}</span>
                            <FlagButton contentType="fatwa" contentId={fatwa.id} />
-                           {currentUser?.id === fatwa.askedBy && !fatwa.answer && (
-                             <button
-                               onClick={() => handleDeleteFatwa(fatwa.id)}
-                               disabled={deletingFatwaId === fatwa.id}
-                               className="text-gray-300 hover:text-gray-500 p-1 transition-all"
-                               title="আপনার প্রশ্ন মুছুন"
-                             >
-                               {deletingFatwaId === fatwa.id ? (
-                                 <Loader2 size={14} className="animate-spin" />
-                               ) : (
-                                 <Trash2 size={14} />
-                               )}
-                             </button>
-                           )}
+                            {currentUser?.id === fatwa.askedBy && !fatwa.answer && (
+                              <>
+                                <button
+                                  onClick={() => handleEditFatwa(fatwa)}
+                                  className="text-gray-300 hover:text-black p-1 transition-all"
+                                  title="এডিট করুন"
+                                >
+                                  <Edit3 size={14} />
+                                </button>
+                                <button
+                                  onClick={() => handleDeleteFatwa(fatwa.id)}
+                                  disabled={deletingFatwaId === fatwa.id}
+                                  className="text-gray-300 hover:text-gray-500 p-1 transition-all"
+                                  title="আপনার প্রশ্ন মুছুন"
+                                >
+                                  {deletingFatwaId === fatwa.id ? (
+                                    <Loader2 size={14} className="animate-spin" />
+                                  ) : (
+                                    <Trash2 size={14} />
+                                  )}
+                                </button>
+                              </>
+                            )}
                          </div>
                      </div>
-                    <h3 className="text-2xl font-extrabold leading-tight">প্রশ্ন: {fatwa.question}</h3>
+                    {editingFatwaId === fatwa.id ? (
+                      <div className="space-y-4">
+                        <textarea
+                          className="w-full p-4 border border-gray-200 bg-gray-50 outline-none focus:border-black font-medium min-h-[100px] resize-y"
+                          value={editQuestion}
+                          onChange={(e) => setEditQuestion(e.target.value)}
+                          placeholder="আপনার প্রশ্নটি সম্পাদন করুন..."
+                        />
+                        <select
+                          className="w-full p-3 border border-gray-200 bg-gray-50 outline-none font-bold text-sm"
+                          value={editCategory}
+                          onChange={(e) => setEditCategory(e.target.value as any)}
+                        >
+                          <option value="Ibadah">ইবাদাত</option>
+                          <option value="Muamalah">মুয়ামালাত</option>
+                          <option value="Family">পারিবারিক</option>
+                          <option value="Social">সামাজিক</option>
+                        </select>
+                        <div className="flex gap-3 justify-end">
+                          <button
+                            onClick={() => setEditingFatwaId(null)}
+                            className="px-4 py-2 text-sm font-bold text-gray-500 hover:text-black transition-all"
+                          >
+                            বাতিল
+                          </button>
+                          <button
+                            onClick={() => handleSaveFatwaEdit(fatwa.id)}
+                            disabled={savingFatwa || !editQuestion.trim()}
+                            className="px-4 py-2 bg-black text-white text-sm font-bold hover:bg-gray-800 transition-all disabled:opacity-50 flex items-center gap-2"
+                          >
+                            {savingFatwa ? <Loader2 size={14} className="animate-spin" /> : null}
+                            সেভ করুন
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <h3 className="text-2xl font-extrabold leading-tight">প্রশ্ন: {fatwa.question}</h3>
+                    )}
                    
                     {fatwa.answer ? (
                       <div className="pt-8 border-t border-gray-100 space-y-6">

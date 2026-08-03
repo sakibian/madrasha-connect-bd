@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { User, GraduationCap, Briefcase, Eye, ArrowRight, ArrowLeft, CheckCircle, Plus, Trash2 } from 'lucide-react';
 import { getCurrentUser } from '../services/authService';
-import { supabase } from '../services/supabase';
+import { dataService } from '../services/dataService';
 import { toast } from '../services/toast';
 
 interface EducationEntry {
@@ -51,15 +51,9 @@ const ProfileBuilder: React.FC = () => {
       if (!user?.id) return;
       
       try {
-        const { data, error } = await supabase
-          .from('user_profiles')
-          .select('*')
-          .eq('id', user.id)
-          .single();
+         const data = await dataService.getMyProfile();
 
-        if (error) throw error;
-
-        if (data) {
+         if (data) {
           setFormData({
             name: data.name || '',
             phone: data.phone || '',
@@ -158,21 +152,15 @@ const ProfileBuilder: React.FC = () => {
 
     setSaving(true);
     try {
-      const { error } = await supabase
-        .from('user_profiles')
-        .update({
-          name: formData.name,
-          phone: formData.phone,
-          district: formData.district,
-          maslak: formData.maslak,
-          bio: formData.bio,
-          education: formData.education,
-          experience: formData.experience,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', user.id);
-
-      if (error) throw error;
+      await dataService.saveMyProfile({
+        name: formData.name,
+        phone: formData.phone,
+        district: formData.district,
+        maslak: formData.maslak,
+        bio: formData.bio,
+        education: formData.education,
+        experience: formData.experience,
+      });
 
       toast.success('প্রোফাইল সফলভাবে সেভ হয়েছে!');
     } catch (err: any) {

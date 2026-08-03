@@ -207,4 +207,93 @@ describe('dataService User CRUD operations', () => {
       );
     });
   });
+
+  describe('updatePost', () => {
+    it('updates post with ownership check', async () => {
+      const chain = createMockChain();
+      mockSupabase.from.mockReturnValue(chain);
+
+      await dataService.updatePost('post-1', { title: 'Updated', content: 'New content' });
+
+      expect(mockSupabase.from).toHaveBeenCalledWith('forum_posts');
+      expect(chain.update).toHaveBeenCalledWith({ title: 'Updated', content: 'New content' });
+      expect(chain.eq).toHaveBeenCalledWith('id', 'post-1');
+      expect(chain.eq).toHaveBeenCalledWith('author_id', 'user-123');
+    });
+
+    it('throws if not logged in', async () => {
+      mockSupabase.auth.getSession.mockReturnValue(
+        Promise.resolve({ data: { session: null }, error: null })
+      );
+      mockSupabase.from.mockReturnValue(createMockChain());
+
+      await expect(dataService.updatePost('post-1', { title: 'X' })).rejects.toThrow(
+        'Must be logged in to edit'
+      );
+    });
+  });
+
+  describe('deletePost', () => {
+    it('deletes post with ownership check', async () => {
+      const chain = createMockChain();
+      mockSupabase.from.mockReturnValue(chain);
+
+      await dataService.deletePost('post-1');
+
+      expect(mockSupabase.from).toHaveBeenCalledWith('forum_posts');
+      expect(chain.delete).toHaveBeenCalled();
+      expect(chain.eq).toHaveBeenCalledWith('id', 'post-1');
+      expect(chain.eq).toHaveBeenCalledWith('author_id', 'user-123');
+    });
+
+    it('throws if not logged in', async () => {
+      mockSupabase.auth.getSession.mockReturnValue(
+        Promise.resolve({ data: { session: null }, error: null })
+      );
+      mockSupabase.from.mockReturnValue(createMockChain());
+
+      await expect(dataService.deletePost('post-1')).rejects.toThrow(
+        'Must be logged in'
+      );
+    });
+  });
+
+  describe('getMyProfile', () => {
+    it('returns null when not logged in', async () => {
+      mockSupabase.auth.getSession.mockReturnValue(
+        Promise.resolve({ data: { session: null }, error: null })
+      );
+      mockSupabase.from.mockReturnValue(createMockChain());
+
+      const result = await dataService.getMyProfile();
+      expect(result).toBeNull();
+    });
+  });
+
+  describe('saveMyProfile', () => {
+    it('updates profile with updated_at timestamp', async () => {
+      const chain = createMockChain();
+      mockSupabase.from.mockReturnValue(chain);
+
+      await dataService.saveMyProfile({ name: 'Updated Name', bio: 'New bio' });
+
+      expect(mockSupabase.from).toHaveBeenCalledWith('user_profiles');
+      const updateCall = chain.update.mock.calls[0][0];
+      expect(updateCall.name).toBe('Updated Name');
+      expect(updateCall.bio).toBe('New bio');
+      expect(updateCall).toHaveProperty('updated_at');
+      expect(chain.eq).toHaveBeenCalledWith('id', 'user-123');
+    });
+
+    it('throws if not logged in', async () => {
+      mockSupabase.auth.getSession.mockReturnValue(
+        Promise.resolve({ data: { session: null }, error: null })
+      );
+      mockSupabase.from.mockReturnValue(createMockChain());
+
+      await expect(dataService.saveMyProfile({ name: 'X' })).rejects.toThrow(
+        'Must be logged in'
+      );
+    });
+  });
 });

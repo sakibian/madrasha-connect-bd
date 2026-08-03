@@ -793,5 +793,41 @@ When you start work:
 
 - **Impact**: USERS can now update and delete their own content (comments, fatwas, job applications, donor profile) with proper RLS enforcement on the database side
 
+### 2026-08-03 (session 20 — Complete partial CRUD UI + ProfileBuilder refactor)
+
+**Theme**: Completed the 4 partial CRUD issues + ProfileBuilder dataService refactor; 255 tests passing
+
+- **dataService.ts** — Hardened existing methods
+  - `updatePost`: Added auth check (`Must be logged in to edit`) + `author_id` ownership filter via `.eq('author_id', user.id)`
+  - `deletePost`: Added auth check (`Must be logged in`) + `author_id` ownership filter
+  - Added `getMyProfile()`: Fetches `user_profiles` row for current user, returns null if not logged in
+  - Added `saveMyProfile()`: Updates `user_profiles` with `updated_at` timestamp + auth check
+
+- **pages/Community.tsx** — Completed donor profile edit
+  - Added `showDonorEdit`, `donorProfile` state
+  - `checkIfDonor` now stores the full donor profile for pre-populating edit form
+  - Button changes from "আপনি দাতা" (info only) to "প্রোফাইল এডিট" (opens edit modal)
+  - New donor edit modal with blood group, location, district, phone fields
+  - `handleDonorEdit` calls `dataService.updateDonorProfile` with snake_case mapping
+  - Edit form pre-populates with existing values
+
+- **pages/FatwaCenter.tsx** — Completed fatwa edit UI
+  - Added `editingFatwaId`, `editQuestion`, `editCategory`, `savingFatwa` state
+  - Added edit button (Edit3 icon) next to delete button on own pending fatwas
+  - Inline edit form: textarea for question + select for category + save/cancel buttons
+  - `handleSaveFatwaEdit` calls `dataService.updateFatwa` with auth + ownership check
+
+- **pages/ProfileBuilder.tsx** — Removed direct Supabase calls
+  - Replaced `import { supabase }` with `import { dataService }`
+  - `loadProfile`: Now uses `dataService.getMyProfile()` instead of direct `supabase.from('user_profiles').select().single()`
+  - `handleSave`: Now uses `dataService.saveMyProfile()` instead of `supabase.from('user_profiles').update().eq()`
+
+- **src/test/__tests__/dataServiceCrud.test.ts** — Added 7 more tests
+  - `updatePost`: ownership check + auth gate
+  - `deletePost`: ownership check + auth gate
+  - `getMyProfile`: returns null when unauthenticated
+  - `saveMyProfile`: updated_at timestamp + auth gate
+  - Total: 255 tests passing (248 + 7 new)
+
 When you get blocked:
 1. Move to `Blocked` with the reason and who owns unblocking.
