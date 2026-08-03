@@ -537,6 +537,9 @@ const PostCard: React.FC<{
   const [saving, setSaving] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [editCommentId, setEditCommentId] = useState<string | null>(null);
+  const [editCommentContent, setEditCommentContent] = useState('');
+  const [deletingComment, setDeletingComment] = useState<string | null>(null);
   const isOwner = currentUser?.id === post.authorId;
 
   const loadComments = async () => {
@@ -564,6 +567,41 @@ const PostCard: React.FC<{
       console.error('Comment failed', e);
     } finally {
       setCommenting(false);
+    }
+  };
+
+  const handleEditComment = (commentId: string, currentContent: string) => {
+    setEditCommentId(commentId);
+    setEditCommentContent(currentContent);
+  };
+
+  const handleSaveCommentEdit = async (commentId: string) => {
+    if (!editCommentContent.trim()) return;
+    setSaving(true);
+    try {
+      await dataService.updateComment(commentId, editCommentContent);
+      setEditCommentId(null);
+      await loadComments();
+    } catch (e) {
+      console.error('Comment edit failed', e);
+      toast.error('মন্তব্য আপডেট করতে সমস্যা হয়েছে।');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDeleteComment = async (commentId: string) => {
+    if (!confirm('এই মন্তব্যটি মুছে ফেলতে চান?')) return;
+    setDeletingComment(commentId);
+    try {
+      await dataService.deleteComment(commentId);
+      await loadComments();
+      post.comments = Math.max(0, post.comments - 1);
+    } catch (e) {
+      console.error('Comment delete failed', e);
+      toast.error('মন্তব্য মুছে ফেলতে সমস্যা হয়েছে।');
+    } finally {
+      setDeletingComment(null);
     }
   };
 
@@ -754,9 +792,62 @@ const PostCard: React.FC<{
                   <div className="w-8 h-8 bg-gray-200 rounded-full shrink-0 flex items-center justify-center">
                     <span className="text-[10px] font-black text-gray-500">{c.author.charAt(0)}</span>
                   </div>
-                  <div>
-                    <p className="text-xs font-bold text-gray-500">{c.author}</p>
-                    <p className="text-sm text-gray-700 mt-0.5">{c.content}</p>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-bold text-gray-500">{c.author}</p>
+                      {currentUser?.id === c.authorId && (
+                        <div className="flex gap-1">
+                          {deletingComment === c.id ? (
+                            <Loader2 size={14} className="animate-spin text-gray-400" />
+                          ) : (
+                            <>
+                              <button
+                                onClick={() => handleEditComment(c.id, c.content)}
+                                className="text-gray-400 hover:text-black p-1 transition-all"
+                                title="এডিট করুন"
+                              >
+                                <Edit3 size={12} />
+                              </button>
+                              <button
+                                onClick={() => handleDeleteComment(c.id)}
+                                className="text-gray-400 hover:text-gray-500 p-1 transition-all"
+                                title="ডিলিট করুন"
+                              >
+                                <Trash2 size={12} />
+                              </button>
+                            </>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    {editCommentId === c.id ? (
+                      <div className="mt-0.5 space-y-2">
+                        <textarea
+                          className="w-full px-3 py-2 bg-white border border-gray-200 outline-none focus:border-black text-sm font-medium resize-none"
+                          value={editCommentContent}
+                          onChange={e => setEditCommentContent(e.target.value)}
+                          rows={3}
+                        />
+                        <div className="flex gap-2 justify-end">
+                          <button
+                            onClick={() => setEditCommentId(null)}
+                            className="px-3 py-1 text-xs font-bold text-gray-500 hover:text-black transition-all"
+                          >
+                            বাতিল
+                          </button>
+                          <button
+                            onClick={() => handleSaveCommentEdit(c.id)}
+                            disabled={saving || !editCommentContent.trim()}
+                            className="px-3 py-1 bg-black text-white text-xs font-bold hover:bg-gray-800 transition-all disabled:opacity-50 flex items-center gap-1"
+                          >
+                            {saving ? <Loader2 size={12} className="animate-spin" /> : null}
+                            সেভ
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-sm text-gray-700 mt-0.5">{c.content}</p>
+                    )}
                   </div>
                 </div>
               ))}

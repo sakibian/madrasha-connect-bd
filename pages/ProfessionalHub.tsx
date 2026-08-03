@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Briefcase, Plus, CheckCircle, Building, MapPin, DollarSign, Clock, ArrowRight } from 'lucide-react';
+import { Briefcase, Plus, CheckCircle, Building, MapPin, DollarSign, Clock, ArrowRight, Trash2, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { addNotification } from '../services/notificationService';
 import { Button, Badge, EmptyState, Modal, LoadingSkeleton } from '../components/ui';
@@ -15,13 +15,22 @@ const ProfessionalHub: React.FC = () => {
   const [filter, setFilter] = useState('All');
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [showPushPrimer, setShowPushPrimer] = useState(false);
+  const [appliedJobs, setAppliedJobs] = useState<Set<string>>(new Set());
+  const [applications, setApplications] = useState<Array<{ id: string; jobId: string; status: string }>>([]);
+  const [withdrawingJobId, setWithdrawingJobId] = useState<string | null>(null);
   
   const isAdmin = currentUser?.role === 'ADMIN';
   const canPost = currentUser?.role === 'INSTITUTION' || isAdmin;
 
   useEffect(() => {
     fetchJobs();
-  }, []);
+    if (currentUser) {
+      dataService.getJobApplications(currentUser.id).then(apps => {
+        setApplications(apps.map(a => ({ id: a.id, jobId: a.jobId, status: a.status })));
+        setAppliedJobs(new Set(apps.map(a => a.jobId)));
+      });
+    }
+  }, [currentUser?.id]);
 
   const handleVerify = async (id: string) => {
     await verifyJob(id);
@@ -39,6 +48,25 @@ const ProfessionalHub: React.FC = () => {
       await deleteJob(deleteId);
       setDeleteId(null);
       fetchJobs();
+    }
+  };
+
+  const handleWithdraw = async (jobId: string) => {
+    const app = applications.find(a => a.jobId === jobId);
+    if (!app) return;
+    setWithdrawingJobId(jobId);
+    try {
+      await dataService.withdrawJobApplication(app.id);
+      setAppliedJobs(prev => {
+        const next = new Set(prev);
+        next.delete(jobId);
+        return next;
+      });
+      toast.success('আবেদন প্রত্যাহার করা হয়েছে।');
+    } catch (error: any) {
+      toast.error(error?.message || 'আবেদন প্রত্যাহার করতে সমস্যা হয়েছে।');
+    } finally {
+      setWithdrawingJobId(null);
     }
   };
 
@@ -98,38 +126,55 @@ const ProfessionalHub: React.FC = () => {
                <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                   <Clock size={12} /> পোস্ট করা হয়েছে: {job.postedAt}
                </div>
-               {isAdmin ? (
-                <div className="flex gap-2 pt-4">
-                  {!job.verified && <Button variant="primary" size="sm" onClick={() => handleVerify(job.id)}>অনুমোদন</Button>}
-                   <Button variant="danger" size="sm" onClick={() => setDeleteId(job.id)}>মুছুন</Button>
-                </div>
-              ) : (
-                <Button 
-                  variant="primary" 
-                  size="lg" 
-                  className="w-full"
-                  onClick={async () => {
-                    if (!currentUser) {
-                      toast.warning('আবেদনের জন্য প্রথমে লগইন করুন।');
-                      return;
-                    }
-                    
-                    try {
-                      await dataService.applyForJob(job.id);
-                      toast.success('আবেদন জমা হয়েছে!', 'প্রতিষ্ঠান শীঘ্রই আপনার সাথে যোগাযোগ করবে।');
-                      
-                      // Show push primer after successful job application
-                      if (currentUser && !isPrimerSuppressed()) {
-                        setShowPushPrimer(true);
-                      }
-                    } catch (error: any) {
-                      toast.error(error?.message || 'আবেদন জমা দিতে সমস্যা হয়েছে।');
-                    }
-                  }}
-                >
-                  আবেদন করুন <ArrowRight size={18} />
-                </Button>
-              )}
+                {isAdmin ? (
+                 <div className="flex gap-2 pt-4">
+                   {!job.verified && <Button variant="primary" size="sm" onClick={() => handleVerify(job.id)}>অনুমোদন</Button>}
+                    <Button variant="danger" size="sm" onClick={() => setDeleteId(job.id)}>মুছুন</Button>
+                 </div>
+               ) : currentUser && appliedJobs.has(job.id) ? (
+                 <div className="flex gap-2 pt-4">
+                   <Button variant="outline" size="sm" className="flex-1" disabled>
+                     <CheckCircle size={16} className="text-black" /> আবেদন জমা হয়েছে
+                   </Button>
+                   <Button
+                     variant="outline"
+                     size="sm"
+                     onClick={() => handleWithdraw(job.id)}
+                     disabled={withdrawingJobId === job.id}
+                     className="px-3"
+                     title="আবেদন প্রত্যাহার করুন"
+                   >
+                     {withdrawingJobId === job.id ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
+                   </Button>
+                 </div>
+               ) : (
+                 <Button 
+                   variant="primary" 
+                   size="lg" 
+                   className="w-full"
+                   onClick={async () => {
+                     if (!currentUser) {
+                       toast.warning('আবেদনের জন্য প্রথমে লগইন করুন।');
+                       return;
+                     }
+                     
+                     try {
+                       await dataService.applyForJob(job.id);
+                       toast.success('আবেদন জমা হয়েছে!', 'প্রতিষ্ঠান শীঘ্রই আপনার সাথে যোগাযোগ করবে।');
+                       setAppliedJobs(prev => new Set([...prev, job.id]));
+                       
+                       // Show push primer after successful job application
+                       if (!isPrimerSuppressed()) {
+                         setShowPushPrimer(true);
+                       }
+                     } catch (error: any) {
+                       toast.error(error?.message || 'আবেদন জমা দিতে সমস্যা হয়েছে।');
+                     }
+                   }}
+                 >
+                   আবেদন করুন <ArrowRight size={18} />
+                 </Button>
+               )}
             </div>
           </div>
         ))}

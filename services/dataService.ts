@@ -275,6 +275,19 @@ export const dataService = {
     });
   },
 
+  withdrawJobApplication: async (applicationId: string) => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+    await retryWithBackoff(async () => {
+      const { error } = await supabase
+        .from('job_applications')
+        .delete()
+        .eq('id', applicationId)
+        .eq('applicant_id', user.id);
+      if (error) throw error;
+    });
+  },
+
   // --- Fatwas ---
   getFatwas: async (): Promise<Fatwa[]> => {
     const user = (await supabase.auth.getSession()).data.session?.user;
@@ -402,6 +415,34 @@ export const dataService = {
       cacheInvalidate(CACHE_KEYS.FATWAS);
     });
     await dataService.logAdminAction('reject_fatwa', 'fatwa', fatwaId);
+  },
+
+  updateFatwa: async (fatwaId: string, updates: { question?: string; category?: string }) => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+    await retryWithBackoff(async () => {
+      const { error } = await supabase
+        .from('fatwas')
+        .update(updates)
+        .eq('id', fatwaId)
+        .eq('asked_by', user.id);
+      if (error) throw error;
+      cacheInvalidate(CACHE_KEYS.FATWAS);
+    });
+  },
+
+  deleteFatwa: async (fatwaId: string) => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+    await retryWithBackoff(async () => {
+      const { error } = await supabase
+        .from('fatwas')
+        .delete()
+        .eq('id', fatwaId)
+        .eq('asked_by', user.id);
+      if (error) throw error;
+      cacheInvalidate(CACHE_KEYS.FATWAS);
+    });
   },
 
   // --- Products ---
@@ -542,8 +583,9 @@ export const dataService = {
     return (data as ForumCommentRow[]).map(c => ({
       id: c.id,
       postId: c.post_id,
-      author: c.user_profiles?.name || c.author_id,
-      content: c.content,
+       author: c.user_profiles?.name || c.author_id,
+       authorId: c.author_id,
+       content: c.content,
       createdAt: c.created_at,
     }));
   },
@@ -561,6 +603,33 @@ export const dataService = {
 
       const { data: post } = await supabase.from('forum_posts').select('comments_count').eq('id', postId).single();
       await supabase.from('forum_posts').update({ comments_count: (post?.comments_count || 0) + 1 }).eq('id', postId);
+      cacheInvalidate(CACHE_KEYS.POSTS);
+    });
+  },
+
+  updateComment: async (commentId: string, content: string): Promise<void> => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+    await retryWithBackoff(async () => {
+      const { error } = await supabase
+        .from('forum_comments')
+        .update({ content })
+        .eq('id', commentId)
+        .eq('author_id', user.id);
+      if (error) throw error;
+    });
+  },
+
+  deleteComment: async (commentId: string): Promise<void> => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+    await retryWithBackoff(async () => {
+      const { error } = await supabase
+        .from('forum_comments')
+        .delete()
+        .eq('id', commentId)
+        .eq('author_id', user.id);
+      if (error) throw error;
       cacheInvalidate(CACHE_KEYS.POSTS);
     });
   },
@@ -785,6 +854,32 @@ export const dataService = {
       const { error } = await supabase
         .from('blood_donors')
         .update({ available })
+        .eq('user_id', user.id);
+      if (error) throw error;
+    });
+  },
+
+  updateDonorProfile: async (donorData: {
+    bloodGroup?: string;
+    location?: string;
+    district?: string;
+    phone?: string;
+    publicProfile?: boolean;
+  }) => {
+    const user = (await supabase.auth.getSession()).data.session?.user;
+    if (!user) throw new Error('Must be logged in');
+
+    await retryWithBackoff(async () => {
+      const updates: Record<string, unknown> = {};
+      if (donorData.bloodGroup) updates.blood_group = donorData.bloodGroup;
+      if (donorData.location) updates.location = donorData.location;
+      if (donorData.district) updates.district = donorData.district;
+      if (donorData.phone) updates.phone = donorData.phone;
+      if (donorData.publicProfile !== undefined) updates.public_profile = donorData.publicProfile;
+
+      const { error } = await supabase
+        .from('blood_donors')
+        .update(updates)
         .eq('user_id', user.id);
       if (error) throw error;
     });

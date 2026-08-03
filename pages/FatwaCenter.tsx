@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Loader2, Clock } from 'lucide-react';
+import { Sparkles, Loader2, Clock, Trash2 } from 'lucide-react';
 import { Fatwa, Source, XP_ACTIONS } from '../types';
 import { dataService } from '../services/dataService';
 import { askScholar } from '../services/geminiService';
@@ -28,6 +28,7 @@ const FatwaCenter: React.FC = () => {
   const [moderationFeedback, setModerationFeedback] = useState<string | null>(null);
   const [answerSources, setAnswerSources] = useState<Record<string, Source[]>>({});
   const [showPushPrimer, setShowPushPrimer] = useState(false);
+  const [deletingFatwaId, setDeletingFatwaId] = useState<string | null>(null);
 
   useEffect(() => {
     const init = async () => {
@@ -101,6 +102,20 @@ const FatwaCenter: React.FC = () => {
     }
   };
 
+  const handleDeleteFatwa = async (fatwaId: string) => {
+    if (!confirm('আপনি কি নিশ্চিত এই মাসআলাটি মুছে ফেলতে চান?')) return;
+    setDeletingFatwaId(fatwaId);
+    try {
+      await dataService.deleteFatwa(fatwaId);
+      fetchFatwas();
+      toast.success('মাসআলাটি মুছে ফেলা হয়েছে।');
+    } catch (error: any) {
+      toast.error(error?.message || 'মুছে ফেলতে সমস্যা হয়েছে।');
+    } finally {
+      setDeletingFatwaId(null);
+    }
+  };
+
   const categories = ['All', 'Ibadah', 'Muamalah', 'Family', 'Social'];
   const filteredFatwas = fatwas.filter(f => {
     const matchesSearch = f.question.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -158,14 +173,28 @@ const FatwaCenter: React.FC = () => {
                 <LoadingSkeleton variant="card" count={3} />
               ) : filteredFatwas.map(fatwa => (
                 <div key={fatwa.id} className="minimal-border p-10 bg-white space-y-8 group">
-                    <div className="flex justify-between items-start">
-                       <div className="caps-label text-black">{fatwa.category}</div>
-                       <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-bold text-gray-400 flex items-center gap-1"><Clock size={12} /> {fatwa.askedAt}</span>
-                          <FlagButton contentType="fatwa" contentId={fatwa.id} />
-                       </div>
-                    </div>
-                   <h3 className="text-2xl font-extrabold leading-tight">প্রশ্ন: {fatwa.question}</h3>
+                     <div className="flex justify-between items-start">
+                        <div className="caps-label text-black">{fatwa.category}</div>
+                        <div className="flex items-center gap-2">
+                           <span className="text-[10px] font-bold text-gray-400 flex items-center gap-1"><Clock size={12} /> {fatwa.askedAt}</span>
+                           <FlagButton contentType="fatwa" contentId={fatwa.id} />
+                           {currentUser?.id === fatwa.askedBy && !fatwa.answer && (
+                             <button
+                               onClick={() => handleDeleteFatwa(fatwa.id)}
+                               disabled={deletingFatwaId === fatwa.id}
+                               className="text-gray-300 hover:text-gray-500 p-1 transition-all"
+                               title="আপনার প্রশ্ন মুছুন"
+                             >
+                               {deletingFatwaId === fatwa.id ? (
+                                 <Loader2 size={14} className="animate-spin" />
+                               ) : (
+                                 <Trash2 size={14} />
+                               )}
+                             </button>
+                           )}
+                         </div>
+                     </div>
+                    <h3 className="text-2xl font-extrabold leading-tight">প্রশ্ন: {fatwa.question}</h3>
                    
                     {fatwa.answer ? (
                       <div className="pt-8 border-t border-gray-100 space-y-6">

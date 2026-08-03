@@ -13,7 +13,30 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-08-02 09:47 UTC · **Latest deploy:** pending push (session 14 — Complete color audit to black/white/gray only + mobile PWA enhancements)
+**Last updated:** 2026-08-02 15:00 UTC · **Latest commit pushed to origin/main** (commit 0a6db83 — fix broken form submissions)
+
+### 2026-08-02 (session 18 — Fix broken public-facing form submissions)
+
+**Theme**: Fixed two critical form submission bugs affecting regular users
+
+- **Community.tsx — Blood donor registration form completely broken**
+  - **Bug 1**: `toast` was called 5 times but never imported → `ReferenceError: toast is not defined`
+    on every form interaction (validation, success, error paths)
+  - **Bug 2**: The donor registration modal JSX was placed inside `PostCard`
+    component but referenced `showDonorRegistration`, `donorForm`, and
+    `handleDonorRegistration` state/handlers from the `Community` parent.
+    These are in different component scopes so the modal couldn't access them.
+  - **Fix**: Added `import { toast } from '../services/toast'`; moved the donor
+    modal back into `Community` where its state lives.
+  - **Impact**: Blood donor registration now works. Users can register, search
+    donors, and get proper success/error feedback.
+
+- **FatwaCenter.tsx — Fatwa submission silently failing**
+  - **Bug**: Fatwa ID generated as `f-${Date.now()}` but `fatwas.id` column
+    is `uuid` type — PostgreSQL rejects non-UUID strings.
+  - **Fix**: Replaced with `crypto.randomUUID()` (same pattern used in the
+    ScholarApply fix from session 17).
+  - **Impact**: Fatwa questions now submit successfully and appear in the list.
 
 ---
 
