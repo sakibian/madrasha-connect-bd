@@ -64,7 +64,7 @@ const FatwaCenter: React.FC = () => {
     try {
       const suggestion = await askScholar(question);
       const newFatwa: Fatwa = {
-        id: `f-${Date.now()}`,
+        id: crypto.randomUUID(),
         question,
         category,
         askedBy: currentUser?.name || 'Anonymous',

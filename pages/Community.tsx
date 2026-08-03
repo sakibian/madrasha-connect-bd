@@ -25,6 +25,7 @@ import { askScholar } from '../services/geminiService';
 import { getCurrentUser } from '../services/authService';
 import { dataService } from '../services/dataService';
 import { addNotification } from '../services/notificationService';
+import { toast } from '../services/toast';
 import { ForumPost, ForumComment, XP_ACTIONS } from '../types';
 
 const CATEGORIES = ['General', 'Jobs Discussion', 'Education', 'Events', 'Fatwa', 'Other'] as const;
@@ -312,6 +313,89 @@ const Community: React.FC = () => {
           </div>
         )}
       </section>
+
+      {/* Donor Registration Modal */}
+      {showDonorRegistration && (
+        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowDonorRegistration(false)}>
+          <div className="bg-white p-8 max-w-md w-full border border-gray-200 animate-fadeIn" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-black">রক্তদাতা হিসেবে নিবন্ধন</h3>
+              <button onClick={() => setShowDonorRegistration(false)} className="text-gray-400 hover:text-black p-1">
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">রক্তের গ্রুপ</label>
+                <select
+                  value={donorForm.bloodGroup}
+                  onChange={(e) => setDonorForm({...donorForm, bloodGroup: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
+                >
+                  {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(bg => (
+                    <option key={bg} value={bg}>{bg}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">এলাকা</label>
+                <input
+                  type="text"
+                  value={donorForm.location}
+                  onChange={(e) => setDonorForm({...donorForm, location: e.target.value})}
+                  placeholder="উদা: মিরপুর-১০"
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">জেলা</label>
+                <input
+                  type="text"
+                  value={donorForm.district}
+                  onChange={(e) => setDonorForm({...donorForm, district: e.target.value})}
+                  placeholder="উদা: ঢাকা"
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">ফোন নম্বর</label>
+                <input
+                  type="tel"
+                  value={donorForm.phone}
+                  onChange={(e) => setDonorForm({...donorForm, phone: e.target.value})}
+                  placeholder="01XXXXXXXXX"
+                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
+                />
+              </div>
+
+              <div className="bg-gray-50 border border-gray-200 p-4">
+                <p className="text-xs text-gray-900 font-medium">
+                  আপনার নাম, রক্তের গ্রুপ, এলাকা এবং ফোন নম্বর অন্যান্য ব্যবহারকারীদের কাছে প্রকাশ করা হবে।
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-3 justify-end mt-6 pt-6 border-t border-gray-100">
+              <button
+                onClick={() => setShowDonorRegistration(false)}
+                className="px-6 py-3 border border-gray-200 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all"
+              >
+                বাতিল
+              </button>
+              <button
+                onClick={handleDonorRegistration}
+                className="px-6 py-3 bg-black text-white font-bold text-sm hover:brightness-110 transition-all"
+              >
+                নিবন্ধন করুন
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Community Feed */}
       <div className="space-y-6">
@@ -757,89 +841,6 @@ const PostCard: React.FC<{
               >
                 {deleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
                 ডিলিট করুন
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Donor Registration Modal */}
-      {showDonorRegistration && (
-        <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowDonorRegistration(false)}>
-          <div className="bg-white p-8 max-w-md w-full border border-gray-200 animate-fadeIn" onClick={e => e.stopPropagation()}>
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-black">রক্তদাতা হিসেবে নিবন্ধন</h3>
-              <button onClick={() => setShowDonorRegistration(false)} className="text-gray-400 hover:text-black p-1">
-                <X size={20} />
-              </button>
-            </div>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">রক্তের গ্রুপ</label>
-                <select
-                  value={donorForm.bloodGroup}
-                  onChange={(e) => setDonorForm({...donorForm, bloodGroup: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
-                >
-                  {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map(bg => (
-                    <option key={bg} value={bg}>{bg}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">এলাকা</label>
-                <input
-                  type="text"
-                  value={donorForm.location}
-                  onChange={(e) => setDonorForm({...donorForm, location: e.target.value})}
-                  placeholder="উদা: মিরপুর-১০"
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">জেলা</label>
-                <input
-                  type="text"
-                  value={donorForm.district}
-                  onChange={(e) => setDonorForm({...donorForm, district: e.target.value})}
-                  placeholder="উদা: ঢাকা"
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">ফোন নম্বর</label>
-                <input
-                  type="tel"
-                  value={donorForm.phone}
-                  onChange={(e) => setDonorForm({...donorForm, phone: e.target.value})}
-                  placeholder="01XXXXXXXXX"
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
-                />
-              </div>
-
-              <div className="bg-gray-50 border border-gray-200 p-4">
-                <p className="text-xs text-gray-900 font-medium">
-                  আপনার নাম, রক্তের গ্রুপ, এলাকা এবং ফোন নম্বর অন্যান্য ব্যবহারকারীদের কাছে প্রকাশ করা হবে।
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-3 justify-end mt-6 pt-6 border-t border-gray-100">
-              <button
-                onClick={() => setShowDonorRegistration(false)}
-                className="px-6 py-3 border border-gray-200 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all"
-              >
-                বাতিল
-              </button>
-              <button
-                onClick={handleDonorRegistration}
-                className="px-6 py-3 bg-black text-white font-bold text-sm hover:brightness-110 transition-all"
-              >
-                নিবন্ধন করুন
               </button>
             </div>
           </div>
