@@ -133,16 +133,25 @@ export const registerUser = async (userData: {
   const { data, error } = await supabase.auth.signUp({
     email: userData.email,
     password: userData.password,
+    options: {
+      data: {
+        name: userData.name,
+        role: userData.role,
+        institution_name: userData.institutionName || null,
+      } as Record<string, unknown>,
+    }
   });
   if (error) throw error;
   if (!data.user) throw new Error('Registration failed');
 
-  const { error: profileError } = await supabase.from('user_profiles').insert({
-    id: data.user.id,
+  // The handle_new_auth_user trigger creates the user_profiles row automatically.
+  // Use UPDATE (not INSERT) because there's no INSERT policy on user_profiles.
+  const { error: profileError } = await supabase.from('user_profiles').update({
     name: userData.name,
     role: userData.role,
     institution_name: userData.institutionName || null,
-  });
+    updated_at: new Date().toISOString(),
+  }).eq('id', data.user.id);
   if (profileError) throw profileError;
 
   const user: User = {
