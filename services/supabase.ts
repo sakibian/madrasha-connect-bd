@@ -5,9 +5,17 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
 if (!supabaseUrl || !supabaseAnonKey) {
   console.error(
-    '[supabase] FATAL: VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are not set. ' +
-    'Login will not work. Set these in your .env file or Vercel dashboard → Settings → Environment Variables.'
+    '[supabase] WARNING: VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are not set. ' +
+    'Login and data features will not work. Set these in your Vercel dashboard → Settings → Environment Variables.'
   );
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Use placeholder values so the app doesn't crash on import when env vars
+// are missing (e.g., during Vercel build before env vars are configured).
+// All Supabase calls will fail gracefully with auth errors.
+const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseAnonKey || 'placeholder-key'
+);
+
+export { supabase };
