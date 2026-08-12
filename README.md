@@ -207,3 +207,4 @@ Full KPI table in [`PROGRESS.md`](./PROGRESS.md#-kpis-to-track-after-launch).
   <p>কওমি — Qowmi — Authentic Islamic Education, Modern Technology</p>
   <p><sub>আল্লাহ আপনাকে তওফিক দিন — build slowly, ship honestly, listen relentlessly.</sub></p>
 </div>
+
