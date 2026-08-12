@@ -22,6 +22,20 @@ const RegisterUser: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
+
+    if (!formData.email.trim()) {
+      setError('ইমেইল ঠিকানা প্রয়োজন।');
+      setLoading(false);
+      return;
+    }
+
+    // .test is a reserved TLD (RFC 2606) and Supabase rejects it
+    if (formData.email.toLowerCase().endsWith('.test') || formData.email.toLowerCase().endsWith('.example') || formData.email.toLowerCase().endsWith('.invalid')) {
+      setError('এই ইমেইল ঠিকানাটি ব্যবহার করা যায় না। একটি বাস্তব ইমেইল (যেমন Gmail) ব্যবহার করুন।');
+      setLoading(false);
+      return;
+    }
+
     try {
       const { user, needsVerification } = await registerUser({
         name: formData.name,
