@@ -834,8 +834,18 @@ When you start work:
 **Theme**: Prevent total app crash when Supabase env vars are not configured
 
 - **services/supabase.ts** — Replaced `createClient(supabaseUrl, supabaseAnonKey)` (which throws `supabaseKey is required` and crashes the app at module load) with placeholder fallback values so the React UI renders and calls fail gracefully with auth errors instead of a blank white screen
-- Pushed commits `fd79a37` (empty deploy trigger) and `473ee45` (fix) to `origin/main`
-- Total: 255 tests passing, build succeeds
+  - Pushed commits `fd79a37` (empty deploy trigger) and `473ee45` (fix) to `origin/main`
+  - Total: 255 tests passing, build succeeds
+
+### 2026-08-03 (session 22 — Fix blank site + email validation)
+
+**Theme**: Diagnose live site blank page and registration failure
+
+- **Root cause found**: Env vars in Vercel were working (POST requests reached Supabase at `nkdtlussmrovzjxmquup.supabase.co`), but `.test` TLD emails are rejected by Supabase with `400 Email address is invalid`
+- **services/supabase.ts** — Placeholder fallback values prevent blank screen on missing env vars (app renders, calls fail gracefully)
+- **pages/RegisterUser.tsx** — Added client-side validation to reject reserved TLDs (`.test`, `.example`, `.invalid`) with helpful Bengali message "একটি বাস্তব ইমেইল (যেমন Gmail) ব্যবহার করুন।" before sending to Supabase
+- Pushed commit `5412867` to `origin/main`
+- Total: 255 tests passing
 
 When you get blocked:
 1. Move to `Blocked` with the reason and who owns unblocking.
