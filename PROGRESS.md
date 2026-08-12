@@ -829,5 +829,13 @@ When you start work:
   - `saveMyProfile`: updated_at timestamp + auth gate
   - Total: 255 tests passing (248 + 7 new)
 
+### 2026-08-03 (session 21 — Fix blank page on missing env vars)
+
+**Theme**: Prevent total app crash when Supabase env vars are not configured
+
+- **services/supabase.ts** — Replaced `createClient(supabaseUrl, supabaseAnonKey)` (which throws `supabaseKey is required` and crashes the app at module load) with placeholder fallback values so the React UI renders and calls fail gracefully with auth errors instead of a blank white screen
+- Pushed commits `fd79a37` (empty deploy trigger) and `473ee45` (fix) to `origin/main`
+- Total: 255 tests passing, build succeeds
+
 When you get blocked:
 1. Move to `Blocked` with the reason and who owns unblocking.
