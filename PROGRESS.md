@@ -845,6 +845,20 @@ When you start work:
 - **services/supabase.ts** — Placeholder fallback values prevent blank screen on missing env vars (app renders, calls fail gracefully)
 - **pages/RegisterUser.tsx** — Added client-side validation to reject reserved TLDs (`.test`, `.example`, `.invalid`) with helpful Bengali message "একটি বাস্তব ইমেইল (যেমন Gmail) ব্যবহার করুন।" before sending to Supabase
 - Pushed commit `5412867` to `origin/main`
+  - Total: 255 tests passing
+
+### 2026-08-03 (session 23 — Fix registration RLS error)
+
+**Theme**: Diagnose and fix `401` on `user_profiles INSERT` during registration
+
+- **Root cause found**: The `handle_new_auth_user` trigger (migration `2026_08_01_feedback_and_phone.sql`) already creates the `user_profiles` row after `auth.users` insert. Then `registerUser()` tried to INSERT another row, but `user_profiles` has **no INSERT policy** (only SELECT/UPDATE in schema.sql) → 401 RLS violation
+- **services/authService.ts** — Two fixes:
+  1. Pass `name`/`role`/`institution_name` via `signUp({ options: { data: ... } })` so the trigger pre-populates user metadata
+  2. Changed `user_profiles.insert()` → `user_profiles.update()` — the trigger already created the row, UPDATE works with existing `auth.uid() = id` policy
+- **database/migrations/2026_08_03_fix_user_profile_registration.sql** — New migration
+  - Adds INSERT policy as safety net (drop-if-exists → create)
+  - Updates trigger function to also read `role` and `institution_name` from `raw_user_meta_data`
+- Pushed commit `82d09d9` to `origin/main`; new Vercel deploy triggered
 - Total: 255 tests passing
 
 When you get blocked:
