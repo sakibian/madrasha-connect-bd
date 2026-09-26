@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
         manifest: {
           name: 'Qowmi',
           short_name: 'Qowmi',
-          description: 'আধুনিক মাদ্রাসা ইকোসিস্টেম — চাকরি, শিক্ষা, ফতোয়া ও কমিউনিটি',
+          description: 'বাংলাদেশের মুসলিম কমিউনিটি — মাদ্রাসা, শিক্ষা, ফতোয়া ও চাকরি',
           theme_color: '#059669',
           background_color: '#ffffff',
           display: 'standalone',

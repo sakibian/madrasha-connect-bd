@@ -35,8 +35,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       `}>
         <div className="h-full flex flex-col p-8">
           <Link to="/" onClick={onClose} className="flex items-center gap-3 mb-12">
-            <div className="w-8 h-8 bg-primary rounded-md text-primary-foreground flex items-center justify-center font-bold text-sm">M</div>
-            <span className="text-xl font-bold tracking-tight">MCBD</span>
+            <div className="w-8 h-8 bg-primary rounded-md text-primary-foreground flex items-center justify-center font-bold text-sm">Q</div>
+            <div>
+              <span className="text-xl font-bold tracking-tight">কওমি</span>
+              <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">মুসলিম কমিউনিটি</div>
+            </div>
           </Link>
 
           <nav className="flex-1 space-y-1 overflow-y-auto no-scrollbar pr-2">

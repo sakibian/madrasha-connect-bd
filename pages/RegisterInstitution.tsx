@@ -72,7 +72,7 @@ const RegisterInstitution: React.FC = () => {
       <div className="lg:w-1/3 bg-primary text-primary-foreground p-12 md:p-16 flex flex-col justify-between border-r border-border relative overflow-hidden">
         <div className="z-10">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-card text-foreground flex items-center justify-center font-bold">M</div>
+            <div className="w-8 h-8 bg-card text-foreground flex items-center justify-center font-bold">Q</div>
             <span className="text-xl font-bold tracking-tight">কওমি</span>
           </Link>
         </div>

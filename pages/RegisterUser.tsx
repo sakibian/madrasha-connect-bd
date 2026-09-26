@@ -71,7 +71,7 @@ const RegisterUser: React.FC = () => {
       {/* Left Branding Side */}
       <div className="lg:w-1/3 bg-primary text-primary-foreground p-12 md:p-16 flex flex-col justify-between border-r border-border">
         <Link to="/" className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-card text-foreground flex items-center justify-center font-bold">M</div>
+          <div className="w-8 h-8 bg-card text-foreground flex items-center justify-center font-bold">Q</div>
           <span className="text-xl font-bold tracking-tight">কওমি</span>
         </Link>
 

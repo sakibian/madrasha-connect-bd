@@ -961,3 +961,10 @@ guest navbar inconsistency, harden prerender for CI
   (devDeps) — self-contained Linux Chromium for Vercel build images where
   system libs are missing; used when `VERCEL` env is set. Local builds keep
   using regular chrome-headless-shell.
+- **Brand refresh**: logo mark `M`→`Q` on bg-primary in all navs, footer,
+  sidebar, auth panels, loaders, favicon + PWA icons (all SVGs). Stale
+  "MCBD" wordmark in Sidebar → কওমি + "মুসলিম কমিউনিটি" sublabel.
+  Community-first repositioning per founder: brand.tagline + seo.home
+  rewritten in bn/en/ar to "Muslim community platform" framing;
+  index.html title, manifest name/description, LandingPage hero/philosophy/
+  footer copy updated (madrasa-specific → community-inclusive).

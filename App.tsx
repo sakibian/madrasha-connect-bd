@@ -82,7 +82,7 @@ const AppRouter: React.FC = () => {
   if (!initialized) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background gap-6">
-        <div className="w-12 h-12 bg-primary flex items-center justify-center text-primary-foreground font-bold text-xl animate-pulse">M</div>
+        <div className="w-12 h-12 bg-primary flex items-center justify-center text-primary-foreground font-bold text-xl animate-pulse">Q</div>
         <div className="caps-label text-muted-foreground animate-pulse">Initializing...</div>
       </div>
     );
@@ -163,7 +163,7 @@ const Shell: React.FC = () => {
           <nav className="bg-background border-b border-border py-6 sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
               <Link to="/" className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center text-primary-foreground font-bold">M</div>
+                <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center text-primary-foreground font-bold">Q</div>
                 <span className="text-xl font-bold tracking-tight">কওমি</span>
               </Link>
               <div className="hidden lg:flex items-center gap-8">

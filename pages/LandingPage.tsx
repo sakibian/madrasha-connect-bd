@@ -19,10 +19,10 @@ const LandingPage: React.FC = () => {
           <div className="max-w-4xl space-y-12">
             <div className="caps-label text-muted-foreground">Bangladesh Digital Initiative</div>
             <h1 className="text-6xl md:text-8xl font-extrabold text-foreground leading-[1.05] tracking-tight text-balanced">
-              মাদ্রাসা শিক্ষার <br /> আধুনিক রূপান্তর।
+              মুসলিম কমিউনিটির <br /> আধুনিক রূপান্তর।
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl leading-relaxed font-medium">
-              বাংলাদেশের মাদ্রাসা ও দ্বীনি প্রতিষ্ঠানের জন্য একটি সমন্বিত এবং মার্জিত ডিজিটাল ইকোসিস্টেম।
+              বাংলাদেশের মুসলিম কমিউনিটির জন্য একটি সমন্বিত এবং মার্জিত ডিজিটাল ইকোসিস্টেম — পড়ুন, জিজ্ঞেস করুন, যুক্ত হোন।
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Link to="/register-user" className="bg-primary text-primary-foreground px-10 py-5 rounded-md font-bold text-lg flex items-center justify-center gap-3 hover:opacity-90 transition-all group">
@@ -87,7 +87,7 @@ const LandingPage: React.FC = () => {
             <div className="caps-label text-muted-foreground">Our Philosophy</div>
             <h2 className="text-5xl md:text-6xl font-extrabold leading-tight">ঐতিহ্যের মর্যাদা <br /> ডিজিটাল দক্ষতায়।</h2>
             <p className="text-xl text-muted-foreground leading-relaxed font-medium">
-              আমরা শুধু একটি ওয়েবসাইট নই, আমরা মাদ্রাসা কমিউনিটির ডিজিটাল সক্ষমতা বৃদ্ধির একটি দীর্ঘমেয়াদী প্রকল্প। আমাদের প্রতিটি সমাধান ডিজাইন করা হয়েছে আলেমগণের সরাসরি তত্ত্বাবধানে।
+              আমরা শুধু একটি ওয়েবসাইট নই, আমরা মুসলিম কমিউনিটির ডিজিটাল সক্ষমতা বৃদ্ধির একটি দীর্ঘমেয়াদী প্রকল্প। আমাদের প্রতিটি সমাধান ডিজাইন করা হয়েছে আলেমগণের সরাসরি তত্ত্বাবধানে।
             </p>
             <div className="space-y-4">
               <CheckItem label="১০০% ডাটা সিকিউরিটি ও গোপনীয়তা" />
@@ -113,11 +113,11 @@ const LandingPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-20 pb-32">
             <div className="space-y-8 md:col-span-2">
                <div className="flex items-center gap-3 group">
-                 <div className="w-6 h-6 bg-background text-foreground flex items-center justify-center font-bold text-xs group-hover:rotate-6 transition-transform">M</div>
+                 <div className="w-6 h-6 bg-primary text-primary-foreground flex items-center justify-center font-bold text-xs group-hover:rotate-6 transition-transform">Q</div>
                  <span className="text-xl font-bold tracking-tight">কওমি</span>
                </div>
                <p className="text-muted-foreground max-w-sm text-lg font-medium leading-relaxed">
-                 বাংলাদেশের মাদ্রাসা কমিউনিটির শিক্ষা ও পেশাগত উন্নয়নে নিবেদিত প্রথম স্মার্ট প্ল্যাটফর্ম।
+                 বাংলাদেশের মুসলিম কমিউনিটির শিক্ষা, কল্যাণ ও পেশাগত উন্নয়নে নিবেদিত প্রথম স্মার্ট প্ল্যাটফর্ম।
                </p>
             </div>
             <div className="space-y-6">

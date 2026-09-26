@@ -2,7 +2,7 @@
   "brand": {
     "name": "Qowmi",
     "short": "Qowmi",
-    "tagline": "Bangladesh Islamic Education Platform",
+    "tagline": "Bangladesh's Muslim community platform",
     "mission": "A digital platform for Islamic education and community in Bangladesh."
   },
   "language": {
@@ -110,8 +110,8 @@
   },
   "seo": {
     "home": {
-      "title": "Qowmi — Islamic Education Platform of Bangladesh",
-      "description": "A digital platform for Qowmi madrasa students, scholars, and institutions — directory, fatwa, careers, community, and sadaqah in one place."
+      "title": "Qowmi — Bangladesh's Muslim Community Platform",
+      "description": "A shared digital home for Bangladesh's Muslim community — Qowmi madrasa directory, fatwa, education, jobs and connection."
     },
     "about": {
       "title": "Our Mission — Qowmi",
