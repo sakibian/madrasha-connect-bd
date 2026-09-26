@@ -124,10 +124,21 @@ await new Promise((resolve) => server.listen(PORT, resolve));
 const t0 = Date.now();
 
 async function launchBrowser() {
+  if (process.env.VERCEL) {
+    // Vercel build images lack Chrome's system libraries — use the
+    // self-contained Chromium build packaged for serverless targets.
+    const { default: chromium } = await import('@sparticuz/chromium');
+    const { default: puppeteer } = await import('puppeteer-core');
+    chromium.setGraphicsMode = false;
+    return puppeteer.launch({
+      args: [...chromium.args, '--disable-dev-shm-usage'],
+      executablePath: await chromium.executablePath(),
+      headless: 'shell',
+    });
+  }
   const { default: puppeteer } = await import('puppeteer');
   // 'shell' = chrome-headless-shell — smaller and needs fewer system
-  // libraries than full Chrome, so it works in bare CI containers
-  // (Vercel build image) where the full browser may fail to launch.
+  // libraries than full Chrome, so it works in bare CI containers.
   return puppeteer.launch({
     headless: 'shell',
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
@@ -138,7 +149,7 @@ let browser;
 try {
   browser = await launchBrowser();
 } catch (err) {
-  console.warn(`[prerender] headless-shell launch failed: ${err.message}`);
+  console.warn(`[prerender] browser launch failed: ${err.message}`);
   console.warn('[prerender] attempting explicit browser install...');
   try {
     const { execSync } = await import('node:child_process');

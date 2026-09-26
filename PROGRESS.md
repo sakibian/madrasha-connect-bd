@@ -957,3 +957,7 @@ guest navbar inconsistency, harden prerender for CI
   retry on launch failure. Verified: 28/28 routes locally.
 - **tailwind.config.js** — added missing `slideDown` keyframe used by menus.
 - Total: 255 tests passing.
+- **prerender fix for Vercel**: added `@sparticuz/chromium` + `puppeteer-core`
+  (devDeps) — self-contained Linux Chromium for Vercel build images where
+  system libs are missing; used when `VERCEL` env is set. Local builds keep
+  using regular chrome-headless-shell.
