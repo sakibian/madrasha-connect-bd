@@ -28,3 +28,4 @@ dist-ssr
 *.sw?
 .playwright-mcp/
 design-audit-*.png
+audit-*.png
