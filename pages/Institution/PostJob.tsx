@@ -43,7 +43,7 @@ const PostJob: React.FC = () => {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center text-center space-y-6">
         <ShieldCheck size={64} className="text-muted-foreground" />
-        <h2 className="text-3xl font-extrabold">অনুমতি নেই</h2>
+        <h2 className="text-3xl font-bold">অনুমতি নেই</h2>
         <p className="text-muted-foreground max-w-sm">শুধুমাত্র নিবন্ধিত মাদ্রাসা বা প্রতিষ্ঠান প্রধানগণ নিয়োগ বিজ্ঞপ্তি পোস্ট করতে পারবেন।</p>
         <Link to="/dashboard" className="text-sm font-bold border-b-2 border-primary pb-1">ড্যাশবোর্ডে ফিরে যান</Link>
       </div>
@@ -106,7 +106,7 @@ const PostJob: React.FC = () => {
           <CheckCircle size={48} />
         </div>
         <div className="space-y-4">
-          <h2 className="text-4xl font-extrabold tracking-tight">সফলভাবে জমা হয়েছে।</h2>
+          <h2 className="text-4xl font-bold tracking-tight">সফলভাবে জমা হয়েছে।</h2>
           <p className="text-xl text-muted-foreground max-w-md mx-auto">
             আপনার সার্কুলারটি মডারেশন টিমের কাছে পাঠানো হয়েছে। যাচাইকরণের পর এটি পাবলিকলি প্রকাশিত হবে।
           </p>
@@ -121,7 +121,7 @@ const PostJob: React.FC = () => {
       <div className="space-y-6 border-b border-border pb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div className="space-y-4">
           <div className="caps-label text-muted-foreground">Recruitment Portal</div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">নিয়োগ বিজ্ঞপ্তি পোস্ট করুন।</h1>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">নিয়োগ বিজ্ঞপ্তি পোস্ট করুন।</h1>
           <p className="text-lg text-muted-foreground max-w-xl leading-relaxed font-medium">
             সঠিক ও নির্ভুল তথ্য প্রদানের মাধ্যমে আপনার প্রতিষ্ঠানের জন্য যোগ্য শিক্ষক বা স্টাফ খুঁজে নিন।
           </p>
@@ -146,7 +146,7 @@ const PostJob: React.FC = () => {
           <div className="space-y-10">
             {/* Essential Info */}
             <div className="space-y-8">
-               <h2 className="text-2xl font-extrabold tracking-tight flex items-center gap-3">
+               <h2 className="text-2xl font-bold tracking-tight flex items-center gap-3">
                  <FileText size={24} className="text-foreground" /> পদের বিবরণ
                </h2>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -175,7 +175,7 @@ const PostJob: React.FC = () => {
 
             {/* Location & Compensation */}
             <div className="space-y-8 pt-10 border-t border-border">
-               <h2 className="text-2xl font-extrabold tracking-tight flex items-center gap-3">
+               <h2 className="text-2xl font-bold tracking-tight flex items-center gap-3">
                  <MapPin size={24} className="text-foreground" /> এলাকা ও সম্মানী
                </h2>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -212,7 +212,7 @@ const PostJob: React.FC = () => {
 
             {/* Detailed Description */}
             <div className="space-y-8 pt-10 border-t border-border">
-               <h2 className="text-2xl font-extrabold tracking-tight flex items-center gap-3">
+               <h2 className="text-2xl font-bold tracking-tight flex items-center gap-3">
                  <Building2 size={24} className="text-foreground" /> বিস্তারিত বর্ণনা
                </h2>
                <div className="space-y-3">
@@ -232,7 +232,7 @@ const PostJob: React.FC = () => {
              <button 
                type="submit" 
                disabled={loading}
-               className="flex-1 py-6 bg-primary text-primary-foreground font-extrabold text-xl flex items-center justify-center gap-4 hover:bg-secondary transition-all disabled:opacity-50"
+               className="flex-1 py-6 bg-primary text-primary-foreground font-bold text-xl flex items-center justify-center gap-4 hover:bg-secondary transition-all disabled:opacity-50"
              >
                {loading ? <Loader2 className="animate-spin" size={24} /> : <>বিজ্ঞপ্তি পাবলিশ করুন <ArrowRight size={24} /></>}
              </button>

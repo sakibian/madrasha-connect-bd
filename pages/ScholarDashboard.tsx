@@ -81,7 +81,7 @@ const ScholarDashboard: React.FC = () => {
         <div className="caps-label text-muted-foreground">Scholar Portal</div>
         <div className="flex justify-between items-end">
           <div>
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">স্কলার ড্যাশবোর্ড।</h1>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">স্কলার ড্যাশবোর্ড।</h1>
             {myProfile && (
               <div className="flex items-center gap-3 mt-4">
                 <BadgeCheck size={18} className="text-foreground" />
@@ -128,8 +128,8 @@ const ScholarDashboard: React.FC = () => {
 
               <div className="space-y-6">
                 <div className="flex items-center gap-3">
-                  <h2 className="text-2xl font-extrabold">পেন্ডিং ফতোয়া</h2>
-                  <span className="text-[9px] font-black px-2 py-1 bg-muted text-muted-foreground">{pendingFatwas.length}</span>
+                  <h2 className="text-2xl font-bold">পেন্ডিং ফতোয়া</h2>
+                  <span className="text-[9px] font-bold px-2 py-1 bg-muted text-muted-foreground">{pendingFatwas.length}</span>
                 </div>
 
                 {pendingFatwas.length === 0 ? (
@@ -141,7 +141,7 @@ const ScholarDashboard: React.FC = () => {
                         <div className="flex justify-between items-start">
                           <div className="space-y-2">
                             <div className="caps-label text-foreground">{fatwa.category}</div>
-                            <h3 className="text-2xl font-extrabold leading-tight">{fatwa.question}</h3>
+                            <h3 className="text-2xl font-bold leading-tight">{fatwa.question}</h3>
                             <div className="text-xs font-bold text-muted-foreground flex items-center gap-2">
                               <Clock size={12} /> {fatwa.askedAt}
                             </div>
@@ -170,7 +170,7 @@ const ScholarDashboard: React.FC = () => {
           {activeTab === 'portfolio' && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-extrabold">পোর্টফোলিও</h2>
+                <h2 className="text-2xl font-bold">পোর্টফোলিও</h2>
                 <Button onClick={() => setShowAddPortfolio(!showAddPortfolio)} icon={<Plus size={16} />}>
                   নতুন আইটেম
                 </Button>

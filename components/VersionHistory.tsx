@@ -39,7 +39,7 @@ const VersionHistory: React.FC<Props> = ({ contentType, contentId }) => {
             <div className="flex justify-between items-center border-b border-border pb-4">
               <div className="flex items-center gap-2">
                 <History size={18} />
-                <h2 className="font-extrabold text-lg">সংস্করণ ইতিহাস</h2>
+                <h2 className="font-bold text-lg">সংস্করণ ইতিহাস</h2>
               </div>
               <button onClick={() => setIsOpen(false)} className="text-muted-foreground hover:text-foreground"><X size={20} /></button>
             </div>
@@ -57,7 +57,7 @@ const VersionHistory: React.FC<Props> = ({ contentType, contentId }) => {
                         <Clock size={12} />
                         {new Date(v.createdAt).toLocaleDateString('bn-BD', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                       </div>
-                      {i === 0 && <span className="text-[9px] font-black px-2 py-0.5 bg-primary text-primary-foreground">সর্বশেষ</span>}
+                      {i === 0 && <span className="text-[9px] font-bold px-2 py-0.5 bg-primary text-primary-foreground">সর্বশেষ</span>}
                     </div>
                     {v.title && <p className="font-bold text-sm mb-1">{v.title}</p>}
                     <p className="text-xs text-muted-foreground line-clamp-3">{v.body}</p>

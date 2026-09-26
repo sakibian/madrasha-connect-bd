@@ -127,7 +127,7 @@ const Deen101: React.FC = () => {
         </Link>
         <div className="space-y-4">
           <div className="caps-label text-foreground">Learning Pathway</div>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">Deen-101 (মৌলিক দ্বীন শিক্ষা)।</h1>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight">Deen-101 (মৌলিক দ্বীন শিক্ষা)।</h1>
           <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium">
             প্রতিটি মুসলমানের জন্য অত্যাবশ্যকীয় দ্বীনি জ্ঞানসমূহ সহজ ও সাবলীল বাংলায় শেখার ডিজিটাল মাধ্যম।
           </p>
@@ -156,13 +156,13 @@ const Deen101: React.FC = () => {
             <div className="space-y-12 animate-fadeIn flex-1">
               <div className="space-y-4">
                 <div className="caps-label text-muted-foreground">Step by Step Guide</div>
-                <h2 className="text-4xl font-extrabold">{modules[activeModule].title}</h2>
+                <h2 className="text-4xl font-bold">{modules[activeModule].title}</h2>
               </div>
 
               <div className="space-y-0">
                 {modules[activeModule].steps.map((step, idx) => (
                   <div key={idx} className="flex gap-8 py-8 border-b border-border last:border-none group">
-                    <div className="text-4xl font-black text-gray-100 group-hover:text-foreground transition-all">0{idx + 1}</div>
+                    <div className="text-4xl font-bold text-gray-100 group-hover:text-foreground transition-all">0{idx + 1}</div>
                     <div className="space-y-2 pt-2">
                       <p className="text-2xl font-bold">{step}</p>
                       <p className="text-muted-foreground font-medium text-sm max-w-lg">এই ধাপটি সঠিকভাবে পালন করার জন্য স্থিরচিত্র এবং বর্ণিত আদবসমূহ লক্ষ্য করুন।</p>
@@ -192,14 +192,14 @@ const Deen101: React.FC = () => {
           ) : (
             <div className="space-y-12 animate-fadeIn flex flex-col flex-1">
               <div className="flex justify-between items-center border-b border-border pb-8">
-                <h2 className="text-3xl font-extrabold flex items-center gap-4">
+                <h2 className="text-3xl font-bold flex items-center gap-4">
                   <HelpCircle size={28} /> কুইজ টেস্ট
                 </h2>
                 <button onClick={() => setShowQuiz(false)} className="caps-label text-muted-foreground hover:text-foreground">Cancel</button>
               </div>
 
               <div className="flex-1 space-y-8">
-                <p className="text-3xl font-extrabold leading-tight">{modules[activeModule].quiz.question}</p>
+                <p className="text-3xl font-bold leading-tight">{modules[activeModule].quiz.question}</p>
                 <div className="grid grid-cols-1 gap-2">
                   {modules[activeModule].quiz.options.map((option, idx) => (
                     <button
@@ -222,7 +222,7 @@ const Deen101: React.FC = () => {
                 <div className={`p-10 text-center space-y-8 animate-slideDown ${isCorrect ? 'bg-muted' : 'bg-muted'}`}>
                   <div className="flex items-center justify-center gap-3">
                     {isCorrect ? <Trophy className="text-foreground" size={32} /> : <Sparkles className="text-muted-foreground" size={32} />}
-                    <p className={`text-2xl font-extrabold ${isCorrect ? 'text-foreground' : 'text-muted-foreground'}`}>
+                    <p className={`text-2xl font-bold ${isCorrect ? 'text-foreground' : 'text-muted-foreground'}`}>
                       {isCorrect ? 'চমৎকার! সঠিক উত্তর।' : 'দুঃখিত, উত্তরটি ভুল ছিল।'}
                     </p>
                   </div>
@@ -246,7 +246,7 @@ const Deen101: React.FC = () => {
       <section className="space-y-8 border-t border-border pt-16">
         <div className="space-y-3">
           <div className="caps-label text-foreground">M14.5 · 30-day Starter Journey</div>
-          <h2 className="text-3xl md:text-4xl font-extrabold">৩০ দিনের সম্পূর্ণ যাত্রা</h2>
+          <h2 className="text-3xl md:text-4xl font-bold">৩০ দিনের সম্পূর্ণ যাত্রা</h2>
           <p className="text-muted-foreground max-w-2xl leading-relaxed">
             {DEEN101_LESSONS.length}টি সংক্ষিপ্ত পাঠ · মোট <strong>{DEEN101_TOTAL_XP} XP</strong> · প্রতিটি পাঠের সাথে কুরআন / হাদিসের রেফারেন্স।
           </p>
@@ -255,7 +255,7 @@ const Deen101: React.FC = () => {
         <ol className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {DEEN101_LESSONS.map(l => (
             <li key={l.slug} className="bg-card border border-border p-5 flex gap-4 group hover:border-primary transition-colors">
-              <div className="w-12 h-12 shrink-0 bg-primary text-primary-foreground flex items-center justify-center font-extrabold">
+              <div className="w-12 h-12 shrink-0 bg-primary text-primary-foreground flex items-center justify-center font-bold">
                 {l.day}
               </div>
               <div className="flex-1 min-w-0 space-y-2">
@@ -264,7 +264,7 @@ const Deen101: React.FC = () => {
                   <span className="flex items-center gap-1"><Calendar size={10} /> {l.durationMin} min</span>
                   <span className="text-foreground">+{l.xpReward} XP</span>
                 </div>
-                <h3 className="text-base font-extrabold leading-snug">{l.titleBn}</h3>
+                <h3 className="text-base font-bold leading-snug">{l.titleBn}</h3>
                 <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">{l.summaryBn}</p>
                 <div className="pt-1">
                   {l.sourceUrl ? (

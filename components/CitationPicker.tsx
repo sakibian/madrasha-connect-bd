@@ -64,7 +64,7 @@ const CitationPicker: React.FC<CitationPickerProps> = ({ selected, onChange, onC
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between p-6 border-b border-border">
-          <h2 className="text-xl font-extrabold">সোর্স নির্বাচন করুন</h2>
+          <h2 className="text-xl font-bold">সোর্স নির্বাচন করুন</h2>
           <button onClick={onClose} className="p-2 hover:bg-muted transition-all">
             <X size={20} />
           </button>

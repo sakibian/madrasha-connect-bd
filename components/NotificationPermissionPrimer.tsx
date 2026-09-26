@@ -122,7 +122,7 @@ const NotificationPermissionPrimer: React.FC<Props> = ({
           <BellRing size={20} />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-base font-extrabold leading-snug">
+          <h3 className="text-base font-bold leading-snug">
             {title ?? 'বিজ্ঞপ্তি চালু করুন'}
           </h3>
           <p className="text-xs text-muted-foreground mt-1 leading-relaxed">

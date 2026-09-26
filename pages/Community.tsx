@@ -213,7 +213,7 @@ const Community: React.FC = () => {
           </div>
           <div className="space-y-1">
             <div className="caps-label text-primary-foreground">AI Alim · Alpha</div>
-            <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">এআই আলেম</h2>
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight">এআই আলেম</h2>
             <p className="text-sm text-primary-foreground font-medium">মুহূর্তেই আপনার মাসআলার প্রাথমিক সমাধান পান।</p>
           </div>
         </div>
@@ -239,7 +239,7 @@ const Community: React.FC = () => {
           <div className="border-t border-border pt-6 animate-slideDown space-y-3">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-black text-xs">AI</span>
+                <span className="text-primary-foreground font-bold text-xs">AI</span>
               </div>
               <div className="caps-label text-primary-foreground">AI Response · প্রাথমিক পরামর্শ</div>
             </div>
@@ -266,7 +266,7 @@ const Community: React.FC = () => {
             </div>
             <div>
               <div className="caps-label text-muted-foreground">Community · Blood Donor</div>
-              <h2 className="text-xl font-extrabold tracking-tight">মাদ্রাসা ব্লাড ব্যাংক</h2>
+              <h2 className="text-xl font-bold tracking-tight">মাদ্রাসা ব্লাড ব্যাংক</h2>
             </div>
           </div>
           <button 
@@ -322,7 +322,7 @@ const Community: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {bloodDonors.map(donor => (
                   <div key={donor.id} className="bg-card border border-border p-4 flex items-center gap-4">
-                    <div className="w-12 h-12 bg-primary text-primary-foreground flex items-center justify-center font-black text-xl">
+                    <div className="w-12 h-12 bg-primary text-primary-foreground flex items-center justify-center font-bold text-xl">
                       {donor.bloodGroup}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -351,7 +351,7 @@ const Community: React.FC = () => {
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowDonorRegistration(false)}>
           <div className="bg-card p-8 max-w-md w-full border border-border animate-fadeIn" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-black">রক্তদাতা হিসেবে নিবন্ধন</h3>
+              <h3 className="text-xl font-bold">রক্তদাতা হিসেবে নিবন্ধন</h3>
               <button onClick={() => setShowDonorRegistration(false)} className="text-muted-foreground hover:text-foreground p-1">
                 <X size={20} />
               </button>
@@ -434,7 +434,7 @@ const Community: React.FC = () => {
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowDonorEdit(false)}>
           <div className="bg-card p-8 max-w-md w-full border border-border animate-fadeIn" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-black">রক্তদাতা প্রোফাইল এডিট</h3>
+              <h3 className="text-xl font-bold">রক্তদাতা প্রোফাইল এডিট</h3>
               <button onClick={() => setShowDonorEdit(false)} className="text-muted-foreground hover:text-foreground p-1">
                 <X size={20} />
               </button>
@@ -527,7 +527,7 @@ const Community: React.FC = () => {
         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
           <button
             onClick={() => setActiveCategory(null)}
-            className={`px-4 py-2 text-xs font-black rounded-xl whitespace-nowrap transition-all ${
+            className={`px-4 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all ${
               activeCategory === null ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-muted'
             }`}
           >
@@ -537,7 +537,7 @@ const Community: React.FC = () => {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 text-xs font-black rounded-xl whitespace-nowrap transition-all ${
+              className={`px-4 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all ${
                 activeCategory === cat ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-muted'
               }`}
             >
@@ -549,7 +549,7 @@ const Community: React.FC = () => {
         {showCreatePost && (
           <div className="bg-card p-8 border border-border space-y-4 animate-fadeIn">
             <input
-              className="w-full px-0 py-2 text-xl font-black border-b border-border outline-none focus:border-primary transition-all"
+              className="w-full px-0 py-2 text-xl font-bold border-b border-border outline-none focus:border-primary transition-all"
               placeholder="শিরোনাম"
               value={newPostTitle}
               onChange={(e) => setNewPostTitle(e.target.value)}
@@ -819,7 +819,7 @@ const PostCard: React.FC<{
       {editing ? (
         <div className="space-y-4">
           <input
-            className="w-full px-0 py-2 text-xl font-black border-b border-border outline-none focus:border-primary transition-all"
+            className="w-full px-0 py-2 text-xl font-bold border-b border-border outline-none focus:border-primary transition-all"
             value={editTitle}
             onChange={e => setEditTitle(e.target.value)}
             placeholder="শিরোনাম"
@@ -862,14 +862,14 @@ const PostCard: React.FC<{
         </div>
       ) : (
         <div>
-          <h3 className="font-black text-foreground text-xl mb-3 leading-snug">{post.title}</h3>
+          <h3 className="font-bold text-foreground text-xl mb-3 leading-snug">{post.title}</h3>
           <div className="text-muted-foreground text-sm leading-relaxed prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }} />
         </div>
       )}
       <div className="flex items-center gap-8 pt-6 border-t border-border">
         <button
           onClick={() => onLike(post.id)}
-          className={`flex items-center gap-2 text-xs font-black transition-all ${
+          className={`flex items-center gap-2 text-xs font-bold transition-all ${
             isLiked ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
           }`}
           disabled={!currentUser}
@@ -878,7 +878,7 @@ const PostCard: React.FC<{
         </button>
         <button
           onClick={toggleComments}
-          className={`flex items-center gap-2 text-xs font-black transition-all ${
+          className={`flex items-center gap-2 text-xs font-bold transition-all ${
             showComments ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
           }`}
         >
@@ -899,7 +899,7 @@ const PostCard: React.FC<{
               {comments.map(c => (
                 <div key={c.id} className="flex gap-3 bg-muted p-4 border border-border">
                   <div className="w-8 h-8 bg-muted rounded-full shrink-0 flex items-center justify-center">
-                    <span className="text-[10px] font-black text-muted-foreground">{c.author.charAt(0)}</span>
+                    <span className="text-[10px] font-bold text-muted-foreground">{c.author.charAt(0)}</span>
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
@@ -990,7 +990,7 @@ const PostCard: React.FC<{
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowFlagModal(false)}>
           <div className="bg-card p-8 max-w-md w-full border border-border animate-fadeIn" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-lg font-black">পোস্ট রিপোর্ট করুন</h3>
+              <h3 className="text-lg font-bold">পোস্ট রিপোর্ট করুন</h3>
               <button onClick={() => setShowFlagModal(false)} className="text-muted-foreground hover:text-foreground p-1"><X size={20} /></button>
             </div>
             <textarea
@@ -1023,7 +1023,7 @@ const PostCard: React.FC<{
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowDeleteConfirm(false)}>
           <div className="bg-card p-8 max-w-md w-full border border-border animate-fadeIn" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-lg font-black">পোস্ট ডিলিট করুন</h3>
+              <h3 className="text-lg font-bold">পোস্ট ডিলিট করুন</h3>
               <button onClick={() => setShowDeleteConfirm(false)} className="text-muted-foreground hover:text-foreground p-1"><X size={20} /></button>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">আপনি কি নিশ্চিত এই পোস্টটি ডিলিট করতে চান? এই কাজ পূর্বাবস্থায় ফেরানো যাবে না।</p>

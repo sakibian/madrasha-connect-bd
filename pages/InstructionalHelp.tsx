@@ -15,7 +15,7 @@ const InstructionalHelp: React.FC = () => {
     <div className="space-y-24 animate-fadeIn pb-24">
       <div className="space-y-6 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">User Support</div>
-        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight">সহায়তা ও টিউটোরিয়াল।</h1>
+        <h1 className="text-5xl md:text-6xl font-bold tracking-tight">সহায়তা ও টিউটোরিয়াল।</h1>
         <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium">
           প্ল্যাটফর্মটি ব্যবহারে আপনার যদি কোনো সমস্যা হয়, আমাদের ছোট ভিডিও গাইডগুলো দেখুন। আমরা আপনাকে ডিজিটাল দুনিয়ায় দক্ষ করে তুলতে চাই।
         </p>
@@ -37,13 +37,13 @@ const InstructionalHelp: React.FC = () => {
                         <PlayCircle size={32} className="text-white" fill="currentColor" />
                      </div>
                   </div>
-                  <div className="absolute bottom-4 right-4 bg-primary text-primary-foreground px-3 py-1 text-[9px] font-black tracking-widest uppercase">
+                  <div className="absolute bottom-4 right-4 bg-primary text-primary-foreground px-3 py-1 text-[9px] font-bold tracking-widest uppercase">
                      {video.duration}
                   </div>
                </div>
                
                <div className="space-y-4">
-                  <h3 className="text-2xl font-extrabold tracking-tight leading-tight">{video.title}</h3>
+                  <h3 className="text-2xl font-bold tracking-tight leading-tight">{video.title}</h3>
                   <button className="text-xs font-bold flex items-center gap-2 group-hover:text-foreground transition-all">
                      এখনই দেখুন <ArrowRight size={18} />
                   </button>
@@ -54,7 +54,7 @@ const InstructionalHelp: React.FC = () => {
       </div>
 
       <div className="bg-foreground text-background p-12 space-y-12">
-        <h2 className="text-3xl font-extrabold tracking-tight flex items-center gap-4">
+        <h2 className="text-3xl font-bold tracking-tight flex items-center gap-4">
           <ShieldCheck className="text-background" size={32} /> প্রায়শই জিজ্ঞাসিত সহায়তা
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-4">

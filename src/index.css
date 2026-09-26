@@ -85,7 +85,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Noto Sans Bengali', 'Inter', sans-serif;
+    font-family: 'Inter', 'Hind Siliguri', 'Noto Naskh Arabic', sans-serif;
     letter-spacing: var(--tracking-normal);
     -webkit-font-smoothing: antialiased;
     /* 16 px base prevents iOS Safari zoom-on-focus for form inputs and

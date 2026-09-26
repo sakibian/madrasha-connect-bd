@@ -12,14 +12,14 @@ const AccessibilityStatement: React.FC = () => {
 
       <div className="space-y-6">
         <div className="caps-label text-foreground">Accessibility</div>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">প্রবেশযোগ্যতা বিবৃতি</h1>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">প্রবেশযোগ্যতা বিবৃতি</h1>
         <p className="text-lg text-muted-foreground font-medium leading-relaxed">
           মাদ্রাসা কানেক্ট সবার জন্য উন্মুক্ত। আমরা সকল ব্যবহারকারীদের — বিশেষত প্রতিবন্ধী ব্যবহারকারীদের — জন্য সমতামূলক অভিজ্ঞতা নিশ্চিত করতে প্রতিশ্রুতিবদ্ধ।
         </p>
       </div>
 
       <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
-        <h2 className="text-xl font-extrabold flex items-center gap-3">
+        <h2 className="text-xl font-bold flex items-center gap-3">
           <ShieldCheck size={20} className="text-foreground" /> আমাদের প্রতিশ্রুতি
         </h2>
         <p className="text-muted-foreground leading-relaxed">
@@ -28,7 +28,7 @@ const AccessibilityStatement: React.FC = () => {
       </div>
 
       <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
-        <h2 className="text-xl font-extrabold flex items-center gap-3">
+        <h2 className="text-xl font-bold flex items-center gap-3">
           <Eye size={20} className="text-foreground" /> দৃশ্যমানতা
         </h2>
         <ul className="space-y-3 text-muted-foreground leading-relaxed">
@@ -52,7 +52,7 @@ const AccessibilityStatement: React.FC = () => {
       </div>
 
       <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
-        <h2 className="text-xl font-extrabold flex items-center gap-3">
+        <h2 className="text-xl font-bold flex items-center gap-3">
           <Keyboard size={20} className="text-foreground" /> কীবোর্ড নেভিগেশন
         </h2>
         <ul className="space-y-3 text-muted-foreground leading-relaxed">
@@ -76,7 +76,7 @@ const AccessibilityStatement: React.FC = () => {
       </div>
 
       <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
-        <h2 className="text-xl font-extrabold flex items-center gap-3">
+        <h2 className="text-xl font-bold flex items-center gap-3">
           <Monitor size={20} className="text-foreground" /> স্ক্রিন রিডার সাপোর্ট
         </h2>
         <ul className="space-y-3 text-muted-foreground leading-relaxed">
@@ -96,7 +96,7 @@ const AccessibilityStatement: React.FC = () => {
       </div>
 
       <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
-        <h2 className="text-xl font-extrabold flex items-center gap-3">
+        <h2 className="text-xl font-bold flex items-center gap-3">
           <Smartphone size={20} className="text-foreground" /> মোবাইল ও রেসপন্সিভ
         </h2>
         <ul className="space-y-3 text-muted-foreground leading-relaxed">
@@ -116,7 +116,7 @@ const AccessibilityStatement: React.FC = () => {
       </div>
 
       <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
-        <h2 className="text-xl font-extrabold">যোগাযোগ</h2>
+        <h2 className="text-xl font-bold">যোগাযোগ</h2>
         <p className="text-muted-foreground leading-relaxed">
           আপনি যদি কোনো প্রবেশযোগ্যতা সমস্যার সম্মুখীন হন, অনুগ্রহ করে আমাদের সাথে যোগাযোগ করুন:
         </p>

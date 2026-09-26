@@ -52,7 +52,7 @@ const NotificationBell: React.FC = () => {
           <Bell size={20} />
           {unreadCount > 0 && (
             <span
-              className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 bg-primary text-primary-foreground text-[10px] font-black rounded-full flex items-center justify-center"
+              className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 bg-primary text-primary-foreground text-[10px] font-bold rounded-full flex items-center justify-center"
               aria-label={`${unreadCount} unread`}
             >
               {unreadCount > 99 ? '99+' : unreadCount}
@@ -72,7 +72,7 @@ const NotificationBell: React.FC = () => {
           <div className="flex items-center justify-between px-4 py-3 border-b border-border">
             <div className="flex items-center gap-2">
               <Bell size={14} className="text-foreground" />
-              <h3 className="text-sm font-extrabold uppercase tracking-widest">
+              <h3 className="text-sm font-bold uppercase tracking-widest">
                 {t('notifications.title', 'বিজ্ঞপ্তি')}
               </h3>
             </div>
@@ -107,7 +107,7 @@ const NotificationBell: React.FC = () => {
                       }`}
                     >
                       <span
-                        className={`shrink-0 mt-0.5 text-[9px] font-black uppercase tracking-widest px-2 py-1 ${typePalette[n.type]}`}
+                        className={`shrink-0 mt-0.5 text-[9px] font-bold uppercase tracking-widest px-2 py-1 ${typePalette[n.type]}`}
                       >
                         {n.type}
                       </span>

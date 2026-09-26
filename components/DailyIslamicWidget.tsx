@@ -70,7 +70,7 @@ const DailyIslamicWidget: React.FC<Props> = ({ city = 'Dhaka', ayahRef = '2:255'
       {hijri && (
         <div className="space-y-1">
           <div className="caps-label text-muted-foreground">আজকের হিজরি তারিখ</div>
-          <p className="text-2xl font-extrabold tracking-tight">
+          <p className="text-2xl font-bold tracking-tight">
             {hijri.day} {hijri.month.en} {hijri.year} হি.
           </p>
           <p className="text-sm text-muted-foreground font-medium" dir="rtl">
@@ -86,7 +86,7 @@ const DailyIslamicWidget: React.FC<Props> = ({ city = 'Dhaka', ayahRef = '2:255'
           <div className="caps-label text-muted-foreground flex items-center gap-1">
             <Sunrise size={12} /> পরবর্তী নামাজ ({city})
           </div>
-          <p className="text-2xl font-extrabold text-foreground tracking-tight">
+          <p className="text-2xl font-bold text-foreground tracking-tight">
             {next.name} · {next.time}
           </p>
           <ul className="grid grid-cols-3 gap-1 text-xs font-bold text-muted-foreground pt-2">

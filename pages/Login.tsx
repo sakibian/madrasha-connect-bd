@@ -114,7 +114,7 @@ const Login: React.FC = () => {
         
         <div className="z-10 space-y-8 max-w-lg">
            <div className="caps-label text-background">Security First</div>
-           <h1 className="text-6xl md:text-8xl font-extrabold leading-[1.05] tracking-tight">
+           <h1 className="text-6xl md:text-8xl font-bold leading-[1.05] tracking-tight">
              নিরাপদ <br />পোর্টালে <br />স্বাগতম।
            </h1>
            <p className="text-xl text-background leading-relaxed font-medium">
@@ -141,7 +141,7 @@ const Login: React.FC = () => {
         <div className="w-full max-w-md space-y-12">
           <div className="space-y-4">
             <div className="caps-label text-muted-foreground">Authentication</div>
-            <h2 className="text-4xl font-extrabold tracking-tight">লগইন করুন।</h2>
+            <h2 className="text-4xl font-bold tracking-tight">লগইন করুন।</h2>
             <p className="text-muted-foreground font-medium">ফোন ওটিপি অথবা ইমেইল/পাসওয়ার্ড দিয়ে প্রবেশ করুন।</p>
           </div>
 
@@ -150,7 +150,7 @@ const Login: React.FC = () => {
             <button
               type="button"
               onClick={() => { setTab('phone'); setError(''); }}
-              className={`py-4 font-extrabold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${
+              className={`py-4 font-bold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${
                 tab === 'phone' ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-muted'
               }`}
             >
@@ -159,7 +159,7 @@ const Login: React.FC = () => {
             <button
               type="button"
               onClick={() => { setTab('email'); setError(''); }}
-              className={`py-4 font-extrabold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${
+              className={`py-4 font-bold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${
                 tab === 'email' ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-muted'
               }`}
             >
@@ -213,7 +213,7 @@ const Login: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading || (!otpSent ? !phone : otp.length < 4)}
-                className="w-full py-6 bg-primary text-primary-foreground font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-secondary transition-all disabled:opacity-50"
+                className="w-full py-6 bg-primary text-primary-foreground font-bold text-xl flex items-center justify-center gap-3 hover:bg-secondary transition-all disabled:opacity-50"
               >
                 {loading ? (
                   <Loader2 className="animate-spin" size={24} />
@@ -283,7 +283,7 @@ const Login: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-6 bg-primary text-primary-foreground font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-secondary transition-all disabled:opacity-50"
+              className="w-full py-6 bg-primary text-primary-foreground font-bold text-xl flex items-center justify-center gap-3 hover:bg-secondary transition-all disabled:opacity-50"
             >
               {loading ? <Loader2 className="animate-spin" size={24} /> : <>সাইন ইন করুন <ArrowRight size={24} /></>}
             </button>
@@ -379,7 +379,7 @@ const LoginRoleButton = ({ icon, label, sub, onClick, disabled }: any) => (
     <div className="flex items-center gap-6">
       <div className="text-foreground group-hover:text-primary-foreground transition-colors">{icon}</div>
       <div>
-        <span className="block font-extrabold text-xl">{label}</span>
+        <span className="block font-bold text-xl">{label}</span>
         <span className="block text-[10px] font-bold uppercase tracking-widest text-muted-foreground group-hover:text-muted-foreground">{sub}</span>
       </div>
     </div>

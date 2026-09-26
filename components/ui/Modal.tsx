@@ -59,7 +59,7 @@ const Modal: React.FC<ModalProps> = ({ open, onClose, title, children, size = 'm
       >
         {title && (
           <div className="flex justify-between items-center border-b border-border pb-4 sm:pb-6 sticky top-0 bg-card -mx-6 sm:mx-0 px-6 sm:px-0 pt-1">
-            <h2 className="text-xl sm:text-2xl font-extrabold">{title}</h2>
+            <h2 className="text-xl sm:text-2xl font-bold">{title}</h2>
             <button
               onClick={onClose}
               aria-label="বন্ধ করুন"

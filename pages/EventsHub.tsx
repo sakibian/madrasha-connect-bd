@@ -48,14 +48,14 @@ const EventsHub: React.FC = () => {
              <Moon size={64} className="text-background" fill="currentColor" />
           </div>
           <div className="space-y-4 text-center md:text-left">
-            <h1 className="text-3xl font-black tracking-tight">ইসলামী ক্যালেন্ডার ও ইভেন্ট</h1>
+            <h1 className="text-3xl font-bold tracking-tight">ইসলামী ক্যালেন্ডার ও ইভেন্ট</h1>
             <div className="flex flex-wrap gap-4 justify-center md:justify-start">
                <div className="bg-white/5 px-4 py-2 border border-white/10">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-background">আজকের হিজরি তারিখ</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-background">আজকের হিজরি তারিখ</p>
                   <p className="text-xl font-bold">{hijriDate}</p>
                </div>
                <div className="bg-white/5 px-4 py-2 border border-white/10">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-background">ইংরেজি তারিখ</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-background">ইংরেজি তারিখ</p>
                   <p className="text-xl font-bold">{today.toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                </div>
             </div>
@@ -68,7 +68,7 @@ const EventsHub: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-6">
-          <h2 className="text-2xl font-black text-foreground flex items-center gap-2">
+          <h2 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <Bell size={24} className="text-foreground" /> আসন্ন ইভেন্টসমূহ
           </h2>
           <div className="space-y-4">
@@ -84,7 +84,7 @@ const EventsHub: React.FC = () => {
               events.map((e: any) => (
                 <div key={e.id} className="bg-card p-6 border border-border flex justify-between items-center group cursor-pointer hover:border-primary transition-all">
                   <div className="space-y-1">
-                     <p className="text-[10px] font-black text-foreground uppercase">{eventTypeLabels[e.type] || e.type}</p>
+                     <p className="text-[10px] font-bold text-foreground uppercase">{eventTypeLabels[e.type] || e.type}</p>
                      <h3 className="font-bold text-foreground group-hover:text-foreground">{e.title}</h3>
                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
                         <span className="flex items-center gap-1 font-bold"><Calendar size={12} /> {formatDate(e.event_date)}</span>
@@ -92,7 +92,7 @@ const EventsHub: React.FC = () => {
                      </div>
                   </div>
                   <div className="flex flex-col items-end gap-2">
-                     <span className="bg-primary text-primary-foreground px-3 py-1 text-[10px] font-black uppercase tracking-widest">আসছে</span>
+                     <span className="bg-primary text-primary-foreground px-3 py-1 text-[10px] font-bold uppercase tracking-widest">আসছে</span>
                      <ChevronRight size={18} className="text-muted-foreground group-hover:text-foreground" />
                   </div>
                 </div>
@@ -102,7 +102,7 @@ const EventsHub: React.FC = () => {
         </div>
 
         <div className="bg-card p-8 border border-border space-y-8">
-           <h2 className="text-2xl font-black text-foreground">ইবাদত রিমাইন্ডার</h2>
+           <h2 className="text-2xl font-bold text-foreground">ইবাদত রিমাইন্ডার</h2>
            <div className="space-y-6">
               <ReminderItem icon={<Clock />} title="তাহাজ্জুদ সময়" time="০৩:৩০ AM" />
               <ReminderItem icon={<Sparkles />} title="ইশরাক সময়" time="০৬:৪৫ AM" />
@@ -123,7 +123,7 @@ const ReminderItem = ({ icon, title, time }: { icon: React.ReactNode, title: str
       <div className="p-3 bg-black/10 text-foreground">{icon}</div>
       <p className="font-bold text-foreground">{title}</p>
     </div>
-    <p className="text-lg font-black text-foreground">{time}</p>
+    <p className="text-lg font-bold text-foreground">{time}</p>
   </div>
 );
 

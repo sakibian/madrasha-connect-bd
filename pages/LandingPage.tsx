@@ -27,7 +27,7 @@ const LandingPage: React.FC = () => {
         <div className="relative max-w-7xl mx-auto">
           <div className="max-w-4xl space-y-12">
             <div className="caps-label text-muted-foreground flex items-center gap-2"><StarOrnament size={12} className="text-primary" />Bangladesh Digital Initiative</div>
-            <h1 className="text-6xl md:text-8xl font-extrabold text-foreground leading-[1.05] tracking-tight text-balanced">
+            <h1 className="text-6xl md:text-8xl font-bold text-foreground leading-[1.05] tracking-tight text-balanced">
               মুসলিম কমিউনিটির <br /> আধুনিক রূপান্তর।
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl leading-relaxed font-medium">
@@ -71,7 +71,7 @@ const LandingPage: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-4">
               <div className="caps-label text-foreground">Services</div>
-              <h2 className="text-4xl md:text-5xl font-extrabold">একক প্ল্যাটফর্ম, বহু সমাধান।</h2>
+              <h2 className="text-4xl md:text-5xl font-bold">একক প্ল্যাটফর্ম, বহু সমাধান।</h2>
             </div>
             <Link to="/knowledge" className="text-sm font-bold flex items-center gap-2 group">
               সবগুলো দেখুন <ArrowUpRight size={18} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -106,7 +106,7 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-24 items-center">
           <div className="lg:w-1/2 space-y-12">
             <div className="caps-label text-muted-foreground">Our Philosophy</div>
-            <h2 className="text-5xl md:text-6xl font-extrabold leading-tight">ঐতিহ্যের মর্যাদা <br /> ডিজিটাল দক্ষতায়।</h2>
+            <h2 className="text-5xl md:text-6xl font-bold leading-tight">ঐতিহ্যের মর্যাদা <br /> ডিজিটাল দক্ষতায়।</h2>
             <p className="text-xl text-muted-foreground leading-relaxed font-medium">
               আমরা শুধু একটি ওয়েবসাইট নই, আমরা মুসলিম কমিউনিটির ডিজিটাল সক্ষমতা বৃদ্ধির একটি দীর্ঘমেয়াদী প্রকল্প। আমাদের প্রতিটি সমাধান ডিজাইন করা হয়েছে আলেমগণের সরাসরি তত্ত্বাবধানে।
             </p>
@@ -164,7 +164,7 @@ const LandingPage: React.FC = () => {
              <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">© 2025 Qowmi. All rights reserved.</div>
              <div className="flex gap-10">
                 {['Facebook', 'Twitter', 'YouTube'].map(s => (
-                  <a key={s} href="#" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-background transition-colors">{s}</a>
+                  <a key={s} href="#" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground hover:text-background transition-colors">{s}</a>
                 ))}
              </div>
           </div>
@@ -176,7 +176,7 @@ const LandingPage: React.FC = () => {
 
 const StatItem = ({ label, value }: { label: string, value: string }) => (
   <div className="p-10 border-r border-border last:border-none flex flex-col gap-2">
-    <div className="text-4xl font-extrabold">{value}</div>
+    <div className="text-4xl font-bold">{value}</div>
     <div className="caps-label text-muted-foreground">{label}</div>
   </div>
 );

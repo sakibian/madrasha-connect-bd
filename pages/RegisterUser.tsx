@@ -77,7 +77,7 @@ const RegisterUser: React.FC = () => {
 
         <div className="space-y-8">
            <div className="caps-label text-background">Join Community</div>
-           <h1 className="text-5xl font-extrabold leading-tight tracking-tight">শুরু হোক নতুন ডিজিটাল পথচলা।</h1>
+           <h1 className="text-5xl font-bold leading-tight tracking-tight">শুরু হোক নতুন ডিজিটাল পথচলা।</h1>
            <p className="text-background text-lg font-medium leading-relaxed">
              বাংলাদেশের মাদ্রাসা নেটওয়ার্কের অংশ হোন। রিসোর্স ডাউনলোড, ক্যারিয়ার আপডেট এবং কমিউনিটি আলোচনার সুবিধা পান।
            </p>
@@ -98,7 +98,7 @@ const RegisterUser: React.FC = () => {
             <Link to="/login" className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-widest hover:text-foreground mb-8">
                <ArrowLeft size={14} /> Back to Login
             </Link>
-            <h2 className="text-4xl font-extrabold tracking-tight">ইউজার রেজিস্ট্রেশন।</h2>
+            <h2 className="text-4xl font-bold tracking-tight">ইউজার রেজিস্ট্রেশন।</h2>
             <p className="text-muted-foreground font-medium">ব্যক্তিগত অ্যাকাউন্ট খোলার জন্য সঠিক তথ্য প্রদান করুন।</p>
           </div>
 
@@ -108,7 +108,7 @@ const RegisterUser: React.FC = () => {
                 <button 
                   type="button"
                   onClick={() => setFormData({...formData, roleChoice: 'Student'})}
-                  className={`py-5 font-extrabold text-sm transition-all ${
+                  className={`py-5 font-bold text-sm transition-all ${
                     formData.roleChoice === 'Student' ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-muted'
                   }`}
                 >
@@ -117,7 +117,7 @@ const RegisterUser: React.FC = () => {
                 <button 
                   type="button"
                   onClick={() => setFormData({...formData, roleChoice: 'Teacher'})}
-                  className={`py-5 font-extrabold text-sm transition-all ${
+                  className={`py-5 font-bold text-sm transition-all ${
                     formData.roleChoice === 'Teacher' ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-muted'
                   }`}
                 >
@@ -156,7 +156,7 @@ const RegisterUser: React.FC = () => {
             <div className="space-y-6">
                <button 
                  disabled={loading}
-                 className="w-full py-6 bg-primary text-primary-foreground font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-secondary transition-all disabled:opacity-50"
+                 className="w-full py-6 bg-primary text-primary-foreground font-bold text-xl flex items-center justify-center gap-3 hover:bg-secondary transition-all disabled:opacity-50"
                >
                  {loading ? <Loader2 className="animate-spin" size={24} /> : <>রেজিস্ট্রেশন করুন <ArrowRight size={24} /></>}
                </button>

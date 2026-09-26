@@ -1021,3 +1021,9 @@ stopped looking generic shadcn
   image now mihrab-arch masked; ornament divider above footer legal row;
   check-item squares rounded.
 - **EmptyState** — star pattern + star icon default.
+- **Typography overhaul** — Noto Sans Bengali (800/900 faux-bold blocks)
+  replaced by Hind Siliguri (ITF, the standard modern Bangla webfont —
+  native max 700, rounded/screen-optimized). Stack: Inter (Latin) →
+  Hind Siliguri (Bengali) → Noto Naskh Arabic (Arabic). Serif accents:
+  Tiro Bangla + Amiri. All `font-extrabold`/`font-black` → `font-bold`
+  across 62 files so Bangla never hits synthesized heavy weights.

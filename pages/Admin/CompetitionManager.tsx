@@ -71,7 +71,7 @@ const CompetitionManager: React.FC = () => {
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-black">প্রতিযোগিতা ব্যবস্থাপনা</h2>
+        <h2 className="text-2xl font-bold">প্রতিযোগিতা ব্যবস্থাপনা</h2>
         <button
           onClick={() => setShowCreateModal(true)}
           className="bg-primary text-primary-foreground px-6 py-3 font-bold text-sm flex items-center gap-2 hover:bg-secondary transition-all"
@@ -137,7 +137,7 @@ const CompetitionManager: React.FC = () => {
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowCreateModal(false)}>
           <div className="bg-card p-8 max-w-2xl w-full border border-border animate-fadeIn max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-black">নতুন প্রতিযোগিতা তৈরি করুন</h3>
+              <h3 className="text-xl font-bold">নতুন প্রতিযোগিতা তৈরি করুন</h3>
               <button onClick={() => setShowCreateModal(false)} className="text-muted-foreground hover:text-foreground p-1">
                 <X size={20} />
               </button>

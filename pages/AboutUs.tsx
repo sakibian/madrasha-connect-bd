@@ -24,7 +24,7 @@ const AboutUs: React.FC = () => {
         {/* Story Section */}
         <section className="max-w-4xl space-y-12">
            <div className="caps-label text-foreground">Establishment</div>
-           <h1 className="text-6xl md:text-8xl font-extrabold leading-[1.05] tracking-tight">
+           <h1 className="text-6xl md:text-8xl font-bold leading-[1.05] tracking-tight">
              ঐতিহ্যের শেকড়, <br /> প্রযুক্তির ডালপালা।
            </h1>
            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium">
@@ -36,14 +36,14 @@ const AboutUs: React.FC = () => {
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-1 border-y border-border">
            <div className="py-24 pr-12 space-y-8 border-r border-border">
               <div className="w-12 h-12 bg-primary text-primary-foreground flex items-center justify-center font-bold">M</div>
-              <h2 className="text-4xl font-extrabold">আমাদের মিশন</h2>
+              <h2 className="text-4xl font-bold">আমাদের মিশন</h2>
               <p className="text-lg text-muted-foreground leading-relaxed font-medium">
                 মাদ্রাসার প্রতিটি স্তরে ডিজিটাল সক্ষমতা বৃদ্ধি করা এবং আলেম-উলামাদের জন্য একটি স্বচ্ছ ও আধুনিক পেশাদার প্ল্যাটফর্ম প্রদান করা।
               </p>
            </div>
            <div className="py-24 pl-12 space-y-8">
               <div className="w-12 h-12 bg-primary text-primary-foreground flex items-center justify-center font-bold">V</div>
-              <h2 className="text-4xl font-extrabold">আমাদের ভিশন</h2>
+              <h2 className="text-4xl font-bold">আমাদের ভিশন</h2>
               <p className="text-lg text-muted-foreground leading-relaxed font-medium">
                 বাংলাদেশের মাদ্রাসা ইকোসিস্টেমকে বিশ্বের অন্যতম আধুনিক এবং টেকসই শিক্ষা ও পেশাদার নেটওয়ার্ক হিসেবে প্রতিষ্ঠিত করা।
               </p>
@@ -62,7 +62,7 @@ const AboutUs: React.FC = () => {
 
         {/* Minimalist CTA */}
         <section className="py-24 bg-primary text-primary-foreground px-12 text-center space-y-10">
-           <h2 className="text-4xl md:text-6xl font-extrabold leading-tight">
+           <h2 className="text-4xl md:text-6xl font-bold leading-tight">
              আপনি কি এই যাত্রায় <br /> আমাদের সাথে আছেন?
            </h2>
            <div className="flex flex-col sm:flex-row gap-6 justify-center">

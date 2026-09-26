@@ -28,7 +28,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onClick }) 
         onClick={onClick}
         className="w-full py-10 px-8 flex items-center justify-between text-left group focus:outline-none"
       >
-        <span className={`text-xl md:text-2xl font-extrabold tracking-tight transition-colors ${isOpen ? 'text-foreground' : 'text-foreground group-hover:text-foreground'}`}>
+        <span className={`text-xl md:text-2xl font-bold tracking-tight transition-colors ${isOpen ? 'text-foreground' : 'text-foreground group-hover:text-foreground'}`}>
           {question}
         </span>
         <div className={`p-2 transition-all ${isOpen ? 'bg-primary text-primary-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}>
@@ -109,7 +109,7 @@ const FAQ: React.FC = () => {
       {/* Header */}
       <div className="space-y-6 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">Support Center</div>
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05]">সাধারণ জিজ্ঞাসা <br /> (FAQ)।</h1>
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05]">সাধারণ জিজ্ঞাসা <br /> (FAQ)।</h1>
         <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium">
           মাদ্রাসা কানেক্ট বিডি প্ল্যাটফর্ম ব্যবহারের নিয়মাবলী এবং সচরাচর জিজ্ঞাসিত প্রশ্নগুলোর উত্তর এখানে পাবেন।
         </p>
@@ -147,7 +147,7 @@ const FAQ: React.FC = () => {
       <section className="bg-primary text-primary-foreground p-12 md:p-12 flex flex-col md:flex-row items-center justify-between gap-12 group">
         <div className="space-y-6">
           <div className="caps-label text-primary-foreground">Help & Contact</div>
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight">আরও কিছু জানতে চান?</h2>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">আরও কিছু জানতে চান?</h2>
           <p className="text-xl text-primary-foreground max-w-md font-medium">
             আমাদের সাপোর্ট টিম আপনাকে সাহায্য করতে প্রস্তুত। যেকোনো প্রয়োজনে সরাসরি যোগাযোগ করুন।
           </p>
@@ -164,12 +164,12 @@ const FAQ: React.FC = () => {
 
       {/* Minimal Footer Info */}
       <div className="flex flex-col md:flex-row justify-between items-center py-12 border-t border-border gap-6">
-         <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+         <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
             <ShieldCheck size={14} className="text-foreground" /> Last Updated: February 2025
          </div>
          <div className="flex gap-8">
-            <Link to="/tools" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-foreground">Terms of Service</Link>
-            <Link to="/tools" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-foreground">Privacy Policy</Link>
+            <Link to="/tools" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground">Terms of Service</Link>
+            <Link to="/tools" className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground">Privacy Policy</Link>
          </div>
       </div>
     </div>

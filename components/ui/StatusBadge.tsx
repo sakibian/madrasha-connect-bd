@@ -40,7 +40,7 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, label, className = ''
   const text = label ?? cfg.bn;
   return (
     <span
-      className={`inline-flex items-center px-2 py-1 text-[10px] font-black uppercase tracking-widest ${cfg.cls} ${className}`}
+      className={`inline-flex items-center px-2 py-1 text-[10px] font-bold uppercase tracking-widest ${cfg.cls} ${className}`}
       data-status={status}
       aria-label={`${cfg.en} status`}
     >

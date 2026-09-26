@@ -201,7 +201,7 @@ const SeerahTimeline: React.FC = () => {
     <div className="space-y-24 animate-fadeIn pb-24">
       <div className="space-y-6 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">History & Heritage</div>
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05]">সীরাত ও ইসলামি <br /> ইতিহাসের কালরেখা।</h1>
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05]">সীরাত ও ইসলামি <br /> ইতিহাসের কালরেখা।</h1>
         <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium">
           রাসূলুল্লাহ (সা.)-এর পবিত্র জীবন এবং খুলাফায়ে রাশেদীনের সোনালী অধ্যায়সমূহ নির্ভরযোগ্য সূত্রের আলোকে।
         </p>
@@ -223,7 +223,7 @@ const SeerahTimeline: React.FC = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2.5 text-[10px] font-black uppercase tracking-widest transition-all border ${
+              className={`px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest transition-all border ${
                 activeTab === tab
                 ? 'bg-primary text-primary-foreground border-primary'
                 : 'bg-card text-muted-foreground border-border hover:border-primary'
@@ -258,7 +258,7 @@ const SeerahTimeline: React.FC = () => {
                       </div>
                     </div>
 
-                    <h3 className="text-3xl font-extrabold mb-4 leading-tight">
+                    <h3 className="text-3xl font-bold mb-4 leading-tight">
                       {event.title}
                     </h3>
 
@@ -288,7 +288,7 @@ const SeerahTimeline: React.FC = () => {
                       {React.cloneElement(event.icon as React.ReactElement, { size: 24 })}
                     </div>
                   </div>
-                  <div className="mt-4 bg-primary text-primary-foreground px-4 py-1 text-[10px] font-black uppercase tracking-widest whitespace-nowrap">
+                  <div className="mt-4 bg-primary text-primary-foreground px-4 py-1 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap">
                     {event.year}
                     {event.hijriYear && <span className="block text-[8px] text-muted-foreground">({event.hijriYear})</span>}
                   </div>
@@ -315,7 +315,7 @@ const SeerahTimeline: React.FC = () => {
       <section className="space-y-8" id="complete-timeline">
         <div className="border-t border-border pt-16 space-y-3">
           <div className="caps-label text-foreground">M14.3 · Sourced Dataset</div>
-          <h2 className="text-3xl md:text-4xl font-extrabold">সম্পূর্ণ সীরাত কালরেখা</h2>
+          <h2 className="text-3xl md:text-4xl font-bold">সম্পূর্ণ সীরাত কালরেখা</h2>
           <p className="text-muted-foreground max-w-2xl leading-relaxed">
             জন্ম থেকে ওফাত পর্যন্ত {SEERAH_EVENTS.length}টি প্রধান ঘটনা — প্রতিটির সাথে কুরআন / সহীহ হাদিসের সরাসরি রেফারেন্স।
           </p>
@@ -324,7 +324,7 @@ const SeerahTimeline: React.FC = () => {
           {SEERAH_EVENTS.map((e: SeerahEvent) => (
             <li key={e.id} className="bg-card border border-border p-6 md:p-8 grid grid-cols-1 md:grid-cols-[120px_1fr] gap-6">
               <div className="space-y-1">
-                <div className="text-xl font-extrabold">{e.gregorianYear}</div>
+                <div className="text-xl font-bold">{e.gregorianYear}</div>
                 {e.hijriYear && <div className="text-xs font-bold text-foreground">{e.hijriYear}</div>}
                 {e.approxAge !== undefined && (
                   <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
@@ -334,7 +334,7 @@ const SeerahTimeline: React.FC = () => {
               </div>
               <div className="space-y-3">
                 <div>
-                  <h3 className="text-lg font-extrabold leading-snug">{e.titleBn}</h3>
+                  <h3 className="text-lg font-bold leading-snug">{e.titleBn}</h3>
                   <p className="text-xs text-muted-foreground font-medium">
                     {e.titleEn}
                     {e.titleAr && <> · <span dir="rtl" lang="ar">{e.titleAr}</span></>}

@@ -112,7 +112,7 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
         <div className="flex items-center justify-between p-6 border-b border-border">
           <div className="space-y-1">
             <div className="caps-label text-muted-foreground">Sadaqah • bKash</div>
-            <h2 id="donation-title" className="text-2xl font-extrabold tracking-tight">
+            <h2 id="donation-title" className="text-2xl font-bold tracking-tight">
               সাদাকাহ দিন
             </h2>
             {projectTitle && (
@@ -133,7 +133,7 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
                   key={preset}
                   type="button"
                   onClick={() => { setAmount(preset); setCustomAmount(''); }}
-                  className={`py-3 text-sm font-black transition-all ${
+                  className={`py-3 text-sm font-bold transition-all ${
                     !customAmount && amount === preset ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-muted'
                   }`}
                 >
@@ -197,7 +197,7 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
           )}
           {personal && (
             <div className="p-4 bg-black/10 border border-black/30 text-foreground text-sm space-y-3">
-              <p className="font-extrabold text-foreground uppercase tracking-widest text-xs">
+              <p className="font-bold text-foreground uppercase tracking-widest text-xs">
                 bKash Send Money — ম্যানুয়াল কনফার্মেশন
               </p>
               <p className="text-xs text-muted-foreground">
@@ -207,7 +207,7 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
               </p>
               <dl className="grid grid-cols-3 gap-2 text-sm">
                 <dt className="col-span-1 font-bold text-muted-foreground">নম্বর</dt>
-                <dd className="col-span-2 font-black text-lg tracking-wider">
+                <dd className="col-span-2 font-bold text-lg tracking-wider">
                   {personal.personal_number}
                 </dd>
                 {personal.account_name && (
@@ -217,9 +217,9 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
                   </>
                 )}
                 <dt className="col-span-1 font-bold text-muted-foreground">পরিমাণ</dt>
-                <dd className="col-span-2 font-black">৳{personal.amount_bdt}</dd>
+                <dd className="col-span-2 font-bold">৳{personal.amount_bdt}</dd>
                 <dt className="col-span-1 font-bold text-muted-foreground">Reference</dt>
-                <dd className="col-span-2 font-mono font-black bg-card px-2 py-1 border border-border inline-block">
+                <dd className="col-span-2 font-mono font-bold bg-card px-2 py-1 border border-border inline-block">
                   {personal.invoice}
                 </dd>
               </dl>
@@ -248,7 +248,7 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
           <button
             type="submit"
             disabled={submitting || !(effectiveAmount > 0)}
-            className="w-full py-5 bg-primary text-primary-foreground font-extrabold text-lg uppercase tracking-widest flex items-center justify-center gap-3 hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-5 bg-primary text-primary-foreground font-bold text-lg uppercase tracking-widest flex items-center justify-center gap-3 hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? (
               <Loader2 size={20} className="animate-spin" />

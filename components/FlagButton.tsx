@@ -48,7 +48,7 @@ const FlagButton: React.FC<FlagButtonProps> = ({ contentType, contentId }) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={() => setOpen(false)}>
           <div className="bg-card w-full max-w-md p-8 space-y-6" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center">
-              <h3 className="font-extrabold text-lg">কন্টেন্ট রিপোর্ট করুন</h3>
+              <h3 className="font-bold text-lg">কন্টেন্ট রিপোর্ট করুন</h3>
               <button onClick={() => setOpen(false)} className="text-muted-foreground hover:text-foreground"><X size={20} /></button>
             </div>
 

@@ -61,7 +61,7 @@ const KnowledgeHub: React.FC = () => {
       <div className="space-y-24 animate-fadeIn">
         <div className="space-y-4 border-b border-border pb-12">
           <div className="caps-label text-muted-foreground">Resources</div>
-          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight">জ্ঞান ও শিক্ষা কেন্দ্র।</h1>
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight">জ্ঞান ও শিক্ষা কেন্দ্র।</h1>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[1, 2, 3].map(i => (
@@ -83,12 +83,12 @@ const KnowledgeHub: React.FC = () => {
     <div className="space-y-24 animate-fadeIn">
       <div className="space-y-4 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">Resources</div>
-        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight">জ্ঞান ও শিক্ষা কেন্দ্র।</h1>
+        <h1 className="text-5xl md:text-6xl font-bold tracking-tight">জ্ঞান ও শিক্ষা কেন্দ্র।</h1>
       </div>
 
       <section className="space-y-12">
         <div className="flex justify-between items-end">
-          <h2 className="text-3xl font-extrabold">Deen-101 মডিউল</h2>
+          <h2 className="text-3xl font-bold">Deen-101 মডিউল</h2>
           <Link to="/deen101" className="text-sm font-bold border-b-2 border-primary">সবগুলো দেখুন</Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -107,7 +107,7 @@ const KnowledgeHub: React.FC = () => {
                 </div>
                 <div className="flex-1 space-y-4">
                   <div className="caps-label text-foreground">{course.category}</div>
-                  <h3 className="text-2xl font-extrabold leading-tight">{course.title}</h3>
+                  <h3 className="text-2xl font-bold leading-tight">{course.title}</h3>
                   <div className="flex items-center gap-4 text-xs font-bold text-muted-foreground">
                     <span className="flex items-center gap-1"><Clock size={14} /> {course.duration}</span>
                     <span>•</span>
@@ -137,7 +137,7 @@ const KnowledgeHub: React.FC = () => {
 
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-card p-12 space-y-10" rounded-lg border border-border>
-          <h2 className="text-3xl font-extrabold border-l-4 border-primary pl-6">কওমি সিলেবাস</h2>
+          <h2 className="text-3xl font-bold border-l-4 border-primary pl-6">কওমি সিলেবাস</h2>
           <div className="space-y-4">
             <ListResource title="মেশকাত (দাওয়াতে হাদিস)" sub="বেফাকুল মাদারিস" />
             <ListResource title="জালালাইন (ফজিলাত)" sub="বেফাকুল মাদারিস" />
@@ -145,7 +145,7 @@ const KnowledgeHub: React.FC = () => {
           </div>
         </div>
         <div className="bg-card p-12 space-y-10" rounded-lg border border-border>
-          <h2 className="text-3xl font-extrabold border-l-4 border-primary pl-6">আলিয়া সিলেবাস</h2>
+          <h2 className="text-3xl font-bold border-l-4 border-primary pl-6">আলিয়া সিলেবাস</h2>
           <div className="space-y-4">
             <ListResource title="কামিল (হাদিস বিভাগ)" sub="আরবি বিশ্ববিদ্যালয়" />
             <ListResource title="আলিম (বিজ্ঞান বিভাগ)" sub="মাদ্রাসা শিক্ষা বোর্ড" />

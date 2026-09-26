@@ -25,9 +25,9 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({ institution, onClick 
             <Badge variant={institution.verified ? 'success' : 'default'}>
               {institution.verified ? 'ভেরিফাইড' : 'পেন্ডিং'}
             </Badge>
-            <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">{institution.type}</span>
+            <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">{institution.type}</span>
           </div>
-          <h3 className="text-xl font-extrabold leading-tight group-hover:underline">{institution.name}</h3>
+          <h3 className="text-xl font-bold leading-tight group-hover:underline">{institution.name}</h3>
         </div>
         <div className="flex flex-wrap items-center gap-4 text-xs font-bold text-muted-foreground">
           <span className="flex items-center gap-1.5"><MapPin size={14} /> {institution.location}, {institution.district}</span>

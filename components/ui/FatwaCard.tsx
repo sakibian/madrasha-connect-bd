@@ -18,9 +18,9 @@ const FatwaCard: React.FC<FatwaCardProps> = ({ fatwa, onAnswer, onView }) => (
           <Badge variant={fatwa.status === 'ANSWERED' ? 'success' : fatwa.status === 'REJECTED' ? 'error' : 'warning'}>
             {fatwa.status === 'ANSWERED' ? 'উত্তরিত' : fatwa.status === 'REJECTED' ? 'প্রত্যাখ্যাত' : 'অপেক্ষমান'}
           </Badge>
-          <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">{fatwa.category}</span>
+          <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">{fatwa.category}</span>
         </div>
-        <h3 className="text-xl font-extrabold leading-tight">{fatwa.question}</h3>
+        <h3 className="text-xl font-bold leading-tight">{fatwa.question}</h3>
         <div className="text-xs font-bold text-muted-foreground flex items-center gap-2">
           <Clock size={12} /> {fatwa.askedAt}
         </div>

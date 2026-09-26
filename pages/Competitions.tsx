@@ -66,7 +66,7 @@ const Competitions: React.FC = () => {
     <div className="space-y-24 animate-fadeIn pb-24">
       <div className="space-y-6 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">Events & Talent</div>
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">মেধা অন্বেষণ ও <br />সম্মাননা।</h1>
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight">মেধা অন্বেষণ ও <br />সম্মাননা।</h1>
         <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium">
           মাদ্রাসার শিক্ষার্থীদের প্রতিভা বিকাশের জন্য আমরা আয়োজন করছি বিশেষ সব ইভেন্ট এবং জাতীয় স্তরের প্রতিযোগিতা।
         </p>
@@ -97,22 +97,22 @@ const Competitions: React.FC = () => {
               <div className="space-y-8 flex-1 flex flex-col">
                  <div className="flex justify-between items-start">
                     <div className="caps-label text-foreground">{isRegistered ? 'REGISTERED' : 'OPEN REGISTRATION'}</div>
-                    <div className="text-[10px] font-black bg-primary text-primary-foreground px-3 py-1 uppercase tracking-widest">
+                    <div className="text-[10px] font-bold bg-primary text-primary-foreground px-3 py-1 uppercase tracking-widest">
                       {new Date(comp.deadline).toLocaleDateString('bn-BD', {day: 'numeric', month: 'long'})}
                     </div>
                  </div>
                  
-                 <h3 className="text-3xl font-extrabold tracking-tight leading-tight flex-1">{comp.title}</h3>
+                 <h3 className="text-3xl font-bold tracking-tight leading-tight flex-1">{comp.title}</h3>
                  
                  <div className="pt-10 mt-auto border-t border-border space-y-8">
                     <div className="flex justify-between items-center">
                        <div className="space-y-1">
                           <div className="caps-label text-muted-foreground">Prize Pool</div>
-                          <div className="text-xl font-black">{comp.prize}</div>
+                          <div className="text-xl font-bold">{comp.prize}</div>
                        </div>
                        <div className="text-right space-y-1">
                           <div className="caps-label text-muted-foreground">Participants</div>
-                          <div className="text-xl font-black">{comp.participantCount}+</div>
+                          <div className="text-xl font-bold">{comp.participantCount}+</div>
                        </div>
                     </div>
                     <button 
@@ -136,7 +136,7 @@ const Competitions: React.FC = () => {
       <div className="bg-foreground text-background p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
          <div className="space-y-8">
             <div className="w-16 h-16 bg-card text-foreground flex items-center justify-center font-bold text-2xl">H</div>
-            <h2 className="text-5xl font-extrabold tracking-tight leading-tight">হল অফ ফেম (Hall of Fame)।</h2>
+            <h2 className="text-5xl font-bold tracking-tight leading-tight">হল অফ ফেম (Hall of Fame)।</h2>
             <p className="text-xl text-background font-medium leading-relaxed">
               বিগত বছরের সেরা ফলাফলকারী শিক্ষার্থী ও সফল শিক্ষকদের সম্মাননা তালিকা এবং তাদের সাফল্যের গল্পসমূহ।
             </p>
@@ -147,7 +147,7 @@ const Competitions: React.FC = () => {
               <div key={i} className="bg-foreground text-background p-10 flex flex-col items-center text-center space-y-4">
                  <div className="w-16 h-16 bg-secondary rounded-full"></div>
                  <div className="space-y-1">
-                    <p className="text-sm font-black uppercase tracking-widest">RANK #{i}</p>
+                    <p className="text-sm font-bold uppercase tracking-widest">RANK #{i}</p>
                     <p className="text-xs font-bold text-muted-foreground">মাওলানা সাঈদ বিন নূর</p>
                  </div>
               </div>
@@ -160,7 +160,7 @@ const Competitions: React.FC = () => {
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowRegModal(false)}>
           <div className="bg-card p-8 max-w-md w-full border border-border animate-fadeIn" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-black">প্রতিযোগিতায় নিবন্ধন</h3>
+              <h3 className="text-xl font-bold">প্রতিযোগিতায় নিবন্ধন</h3>
               <button onClick={() => setShowRegModal(false)} className="text-muted-foreground hover:text-foreground p-1">
                 <X size={20} />
               </button>

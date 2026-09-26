@@ -131,7 +131,7 @@ const PublicProfile: React.FC = () => {
           </div>
           <div className="flex-1 space-y-3">
             <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-extrabold">{profile.name}</h1>
+              <h1 className="text-3xl font-bold">{profile.name}</h1>
               {scholar?.verified && <BadgeCheck size={24} className="text-foreground" />}
             </div>
             <div className="flex flex-wrap gap-4 text-sm font-bold text-muted-foreground">
@@ -155,7 +155,7 @@ const PublicProfile: React.FC = () => {
               <div className="flex items-center gap-3">
                 <Trophy size={24} className="text-foreground" />
                 <div>
-                  <span className="text-3xl font-extrabold">লেভেল {xp.level}</span>
+                  <span className="text-3xl font-bold">লেভেল {xp.level}</span>
                   <span className="text-muted-foreground mx-2">•</span>
                   <span className="text-lg font-bold text-muted-foreground">{xp.xp.toLocaleString()} CP</span>
                 </div>
@@ -175,7 +175,7 @@ const PublicProfile: React.FC = () => {
 
         {badges.length > 0 && (
           <div className="space-y-4">
-            <h2 className="text-lg font-extrabold flex items-center gap-2"><Star size={18} /> ব্যাজ</h2>
+            <h2 className="text-lg font-bold flex items-center gap-2"><Star size={18} /> ব্যাজ</h2>
             <div className="flex flex-wrap gap-3">
               {badges.map(ub => (
                 <div key={ub.id} className="flex items-center gap-2 px-4 py-2 bg-muted border border-border">
@@ -192,7 +192,7 @@ const PublicProfile: React.FC = () => {
 
         {stats && (
           <div className="space-y-4">
-            <h2 className="text-lg font-extrabold flex items-center gap-2"><Trophy size={18} /> মাইলস্টোন</h2>
+            <h2 className="text-lg font-bold flex items-center gap-2"><Trophy size={18} /> মাইলস্টোন</h2>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
               {[
                 { label: 'পোস্ট', value: stats.postsCount, icon: '📝' },
@@ -203,7 +203,7 @@ const PublicProfile: React.FC = () => {
               ].map(m => (
                 <div key={m.label} className="bg-muted p-4 text-center border border-border">
                   <div className="text-2xl mb-1">{m.icon}</div>
-                  <div className="text-2xl font-extrabold">{m.value}</div>
+                  <div className="text-2xl font-bold">{m.value}</div>
                   <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{m.label}</div>
                 </div>
               ))}
@@ -215,7 +215,7 @@ const PublicProfile: React.FC = () => {
       {/* Skills & Endorsements */}
       <div className="bg-card p-12 minimal-border space-y-6" rounded-lg border border-border>
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-extrabold flex items-center gap-2"><Star size={18} /> দক্ষতা</h2>
+          <h2 className="text-lg font-bold flex items-center gap-2"><Star size={18} /> দক্ষতা</h2>
           {isOwnProfile && (
             <div className="flex gap-2">
               <input
@@ -276,12 +276,12 @@ const PublicProfile: React.FC = () => {
 
       {activity.length > 0 && (
       <div className="bg-card p-12 minimal-border space-y-6" rounded-lg border border-border>
-          <h2 className="text-lg font-extrabold flex items-center gap-2"><Clock size={18} /> সাম্প্রতিক কার্যকলাপ</h2>
+          <h2 className="text-lg font-bold flex items-center gap-2"><Clock size={18} /> সাম্প্রতিক কার্যকলাপ</h2>
           <div className="space-y-1">
             {activity.map(e => (
               <div key={e.id} className="flex items-center justify-between py-3 px-4 hover:bg-muted transition-colors">
                 <div className="flex items-center gap-3">
-                  <span className="text-[10px] font-black px-2 py-1 bg-muted uppercase tracking-widest">{e.action}</span>
+                  <span className="text-[10px] font-bold px-2 py-1 bg-muted uppercase tracking-widest">{e.action}</span>
                   <span className="text-[11px] text-muted-foreground font-medium">
                     {new Date(e.createdAt).toLocaleDateString('bn-BD', { day: 'numeric', month: 'short' })}
                   </span>
@@ -295,7 +295,7 @@ const PublicProfile: React.FC = () => {
 
       {scholar && (
         <div className="bg-card p-12 minimal-border space-y-4" rounded-lg border border-border>
-          <h2 className="text-lg font-extrabold">স্কলার তথ্য</h2>
+          <h2 className="text-lg font-bold">স্কলার তথ্য</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <span className="caps-label text-muted-foreground">পদবি</span>
@@ -323,7 +323,7 @@ const PublicProfile: React.FC = () => {
 
       {scholar && portfolio.length > 0 && (
         <div className="bg-card p-12 minimal-border space-y-6" rounded-lg border border-border>
-          <h2 className="text-lg font-extrabold flex items-center gap-2"><FolderOpen size={18} /> পোর্টফোলিও</h2>
+          <h2 className="text-lg font-bold flex items-center gap-2"><FolderOpen size={18} /> পোর্টফোলিও</h2>
           <div className="grid gap-4">
             {portfolio.map(item => (
               <div key={item.id} className="flex items-start justify-between gap-4 p-4 bg-muted border border-border group hover:border-border transition-all">
@@ -352,27 +352,27 @@ const PublicProfile: React.FC = () => {
           <div className="bg-card max-w-md w-full border border-border animate-fadeIn" onClick={e => e.stopPropagation()}>
             <div className="p-8 space-y-6">
               <div className="flex justify-between items-center">
-                <h3 className="text-lg font-black">অ্যাচিভমেন্ট কার্ড</h3>
+                <h3 className="text-lg font-bold">অ্যাচিভমেন্ট কার্ড</h3>
                 <button onClick={() => setShowShareCard(false)} className="text-primary-foreground hover:text-primary-foreground p-1"><X size={20} /></button>
               </div>
               <div className="bg-foreground p-8 text-background space-y-4 text-center">
-                <div className="w-16 h-16 bg-white/10 mx-auto rounded-full flex items-center justify-center text-2xl font-black border-2 border-white/20">
+                <div className="w-16 h-16 bg-white/10 mx-auto rounded-full flex items-center justify-center text-2xl font-bold border-2 border-white/20">
                   {profile.name.charAt(0)}
                 </div>
                 <div>
-                  <p className="text-xl font-black">{profile.name}</p>
+                  <p className="text-xl font-bold">{profile.name}</p>
                   <p className="text-background text-sm font-bold">{scholar?.title || profile.role}</p>
                 </div>
                 {xp && (
                   <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm space-y-2">
                     <div className="flex justify-center items-center gap-4">
                       <div>
-                        <div className="text-3xl font-black">{xp.level}</div>
+                        <div className="text-3xl font-bold">{xp.level}</div>
                         <div className="text-[10px] font-bold text-background uppercase tracking-widest">Level</div>
                       </div>
                       <div className="w-px h-10 bg-white/20" />
                       <div>
-                        <div className="text-3xl font-black">{xp.xp.toLocaleString()}</div>
+                        <div className="text-3xl font-bold">{xp.xp.toLocaleString()}</div>
                         <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">CP</div>
                       </div>
                     </div>

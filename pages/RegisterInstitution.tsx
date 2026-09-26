@@ -79,7 +79,7 @@ const RegisterInstitution: React.FC = () => {
 
         <div className="z-10 space-y-8">
            <div className="caps-label text-background">Institutional Registration</div>
-           <h1 className="text-5xl font-extrabold leading-tight tracking-tight">মাদ্রাসা ও মসজিদ <br />ব্যবস্থাপনার নতুন যুগ।</h1>
+           <h1 className="text-5xl font-bold leading-tight tracking-tight">মাদ্রাসা ও মসজিদ <br />ব্যবস্থাপনার নতুন যুগ।</h1>
            <p className="text-background text-lg font-medium leading-relaxed">
              আপনার প্রতিষ্ঠানের জন্য একটি ডিজিটাল প্রোফাইল তৈরি করুন এবং নিয়োগ বিজ্ঞপ্তি থেকে শুরু করে ফান্ড ম্যানেজমেন্ট পর্যন্ত সব ফিচার ব্যবহার করুন।
            </p>
@@ -105,7 +105,7 @@ const RegisterInstitution: React.FC = () => {
              <Link to="/login" className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-widest hover:text-foreground mb-8">
                <ArrowLeft size={14} /> Back to Login
             </Link>
-            <h2 className="text-4xl font-extrabold tracking-tight">প্রতিষ্ঠান নিবন্ধন।</h2>
+            <h2 className="text-4xl font-bold tracking-tight">প্রতিষ্ঠান নিবন্ধন।</h2>
             <p className="text-muted-foreground font-medium">প্রাতিষ্ঠানিক অ্যাকাউন্ট খোলার জন্য নিচের ফর্মটি পূরণ করুন।</p>
           </div>
 
@@ -119,7 +119,7 @@ const RegisterInstitution: React.FC = () => {
                       key={type}
                       type="button"
                       onClick={() => setFormData({...formData, instType: type})}
-                      className={`py-5 font-extrabold text-sm transition-all ${
+                      className={`py-5 font-bold text-sm transition-all ${
                         formData.instType === type ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-muted'
                       }`}
                     >
@@ -172,7 +172,7 @@ const RegisterInstitution: React.FC = () => {
             <div className="space-y-6">
               <button 
                 disabled={loading}
-                className="w-full py-6 bg-primary text-primary-foreground font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-secondary transition-all disabled:opacity-50"
+                className="w-full py-6 bg-primary text-primary-foreground font-bold text-xl flex items-center justify-center gap-3 hover:bg-secondary transition-all disabled:opacity-50"
               >
                 {loading ? <Loader2 className="animate-spin" size={24} /> : <>প্রতিষ্ঠান হিসেবে যোগ দিন <ArrowRight size={24} /></>}
               </button>

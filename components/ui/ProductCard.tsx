@@ -18,9 +18,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => (
       <ImageWithFallback src={product.image} name={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={product.name} />
     </div>
     <div className="p-6 space-y-3">
-      <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">{product.category}</span>
-      <h3 className="font-extrabold text-foreground">{product.name}</h3>
-      <p className="font-black text-xl">৳{product.price}</p>
+      <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">{product.category}</span>
+      <h3 className="font-bold text-foreground">{product.name}</h3>
+      <p className="font-bold text-xl">৳{product.price}</p>
     </div>
   </div>
 );

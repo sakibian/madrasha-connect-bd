@@ -9,12 +9,12 @@ const CalligraphyGallery: React.FC = () => {
     <div className="space-y-12 animate-fadeIn">
       <div className="space-y-4 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">Premium Gallery</div>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">ভেক্টর ক্যালিগ্রাফি আর্ট।</h1>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">ভেক্টর ক্যালিগ্রাফি আর্ট।</h1>
       </div>
 
       <div className="bg-foreground text-background p-12 space-y-8">
          <div className="caps-label text-background">High Resolution</div>
-         <h2 className="text-5xl font-extrabold leading-tight">ডিজিটাল ক্যালিগ্রাফি <br /> সংগ্রহশালা।</h2>
+         <h2 className="text-5xl font-bold leading-tight">ডিজিটাল ক্যালিগ্রাফি <br /> সংগ্রহশালা।</h2>
          <p className="text-background text-xl max-w-2xl font-medium">৫০০+ হাই-রেজোলিউশন আরবি ক্যালিগ্রাফি। গ্রাফিক ডিজাইনার এবং শিক্ষার্থীদের জন্য একদম ফ্রিতে ডাউনলোডযোগ্য।</p>
       </div>
 
@@ -27,11 +27,11 @@ const CalligraphyGallery: React.FC = () => {
             <div className="space-y-6 flex-1 flex flex-col">
               <div className="flex justify-between items-start">
                  <div className="caps-label text-muted-foreground">Vector Collection</div>
-                 {item.isFree && <span className="text-[10px] font-extrabold bg-primary text-primary-foreground px-3 py-1 uppercase tracking-widest">Free</span>}
+                 {item.isFree && <span className="text-[10px] font-bold bg-primary text-primary-foreground px-3 py-1 uppercase tracking-widest">Free</span>}
               </div>
-              <h3 className="text-2xl font-extrabold flex-1 leading-tight">{item.name}</h3>
+              <h3 className="text-2xl font-bold flex-1 leading-tight">{item.name}</h3>
               <div className="pt-8 border-t border-border flex items-center justify-between">
-                <span className="text-2xl font-extrabold">{item.isFree ? 'ফ্রি' : `৳ ${item.price}`}</span>
+                <span className="text-2xl font-bold">{item.isFree ? 'ফ্রি' : `৳ ${item.price}`}</span>
                 <button className={`w-12 h-12 flex items-center justify-center transition-all ${item.isFree ? 'bg-primary text-primary-foreground hover:bg-primary' : 'border border-border text-foreground hover:border-primary'}`}>
                    {item.isFree ? <Download size={20} /> : <ShoppingBag size={20} />}
                 </button>

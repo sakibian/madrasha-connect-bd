@@ -19,7 +19,7 @@ const InstitutionDetail: React.FC = () => {
   if (!institution) {
     return (
       <div className="text-center py-24 space-y-8">
-        <h2 className="text-3xl font-extrabold tracking-tight">প্রতিষ্ঠানটি খুঁজে পাওয়া যায়নি।</h2>
+        <h2 className="text-3xl font-bold tracking-tight">প্রতিষ্ঠানটি খুঁজে পাওয়া যায়নি।</h2>
         <Link to="/institutions" className="text-sm font-bold border-b-2 border-primary pb-1">ডিরেক্টরি দেখুন</Link>
       </div>
     );
@@ -34,7 +34,7 @@ const InstitutionDetail: React.FC = () => {
         </Link>
         <div className="flex gap-4">
            {institution.verified && (
-             <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-foreground">
+             <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-foreground">
                 <CheckCircle size={14} /> Verified Institution
              </div>
            )}
@@ -46,7 +46,7 @@ const InstitutionDetail: React.FC = () => {
          <div className="lg:col-span-7 bg-card p-12 md:p-12 space-y-12 flex flex-col justify-center" rounded-lg border border-border>
             <div className="space-y-6">
                <div className="caps-label text-foreground">{institution.type} • Established {institution.established}</div>
-               <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05]">{institution.name}।</h1>
+               <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05]">{institution.name}।</h1>
                <div className="flex items-center gap-2 text-xl text-muted-foreground font-medium">
                   <MapPin size={22} className="text-muted-foreground" /> {institution.location}
                </div>
@@ -55,15 +55,15 @@ const InstitutionDetail: React.FC = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8 pt-12 border-t border-border">
                <div className="space-y-1">
                   <div className="caps-label text-muted-foreground">Total Students</div>
-                  <div className="text-3xl font-extrabold">{institution.studentCount || '৫০০+'}</div>
+                  <div className="text-3xl font-bold">{institution.studentCount || '৫০০+'}</div>
                </div>
                <div className="space-y-1">
                   <div className="caps-label text-muted-foreground">District</div>
-                  <div className="text-3xl font-extrabold">{institution.district}</div>
+                  <div className="text-3xl font-bold">{institution.district}</div>
                </div>
                <div className="hidden md:block space-y-1">
                   <div className="caps-label text-muted-foreground">Status</div>
-                  <div className="text-3xl font-extrabold text-foreground">সক্রিয়</div>
+                  <div className="text-3xl font-bold text-foreground">সক্রিয়</div>
                </div>
             </div>
          </div>
@@ -78,7 +78,7 @@ const InstitutionDetail: React.FC = () => {
           {/* About Section */}
           <section className="space-y-8">
             <div className="flex items-center gap-4">
-               <h2 className="text-3xl font-extrabold tracking-tight">প্রতিষ্ঠানের বিবরণ</h2>
+               <h2 className="text-3xl font-bold tracking-tight">প্রতিষ্ঠানের বিবরণ</h2>
                <div className="h-px bg-muted flex-1"></div>
             </div>
             <div className="bg-card minimal-border p-10 md:p-12 space-y-8" rounded-lg border border-border>
@@ -97,7 +97,7 @@ const InstitutionDetail: React.FC = () => {
           {/* Jobs/Opportunities from this institution */}
           <section className="space-y-8">
             <div className="flex items-center gap-4">
-               <h2 className="text-3xl font-extrabold tracking-tight">নিয়োগ বিজ্ঞপ্তি</h2>
+               <h2 className="text-3xl font-bold tracking-tight">নিয়োগ বিজ্ঞপ্তি</h2>
                <div className="h-px bg-muted flex-1"></div>
             </div>
             <div className="bg-muted minimal-border space-y-1">
@@ -161,8 +161,8 @@ const OpportunityRow = ({ title, type, date }: any) => (
      <div>
         <h4 className="text-xl font-bold group-hover:text-foreground transition-colors">{title}</h4>
         <div className="flex items-center gap-4 mt-1">
-           <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{type}</span>
-           <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">প্রকাশিত: {date}</span>
+           <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{type}</span>
+           <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">প্রকাশিত: {date}</span>
         </div>
      </div>
      <ArrowRight size={20} className="text-muted-foreground group-hover:text-foreground transition-all" />
@@ -171,7 +171,7 @@ const OpportunityRow = ({ title, type, date }: any) => (
 
 const ContactBlock = ({ icon, label, value }: any) => (
   <div className="space-y-2">
-     <div className="flex items-center gap-3 text-muted-foreground uppercase tracking-widest text-[9px] font-black">
+     <div className="flex items-center gap-3 text-muted-foreground uppercase tracking-widest text-[9px] font-bold">
         {icon} {label}
      </div>
      <div className="text-lg font-bold">{value}</div>

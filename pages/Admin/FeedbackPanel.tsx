@@ -84,7 +84,7 @@ const FeedbackPanel: React.FC = () => {
       <div className="flex flex-wrap items-end justify-between gap-6 border-b border-border pb-6">
         <div className="space-y-1">
           <div className="caps-label text-muted-foreground">Community Voice</div>
-          <h2 className="text-2xl font-extrabold tracking-tight flex items-center gap-3">
+          <h2 className="text-2xl font-bold tracking-tight flex items-center gap-3">
             <Inbox size={22} /> কমিউনিটি ফিডব্যাক
           </h2>
         </div>
@@ -132,19 +132,19 @@ const FeedbackPanel: React.FC = () => {
             >
               <div className="flex-1 space-y-2 min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className={`text-[9px] font-black px-2 py-1 uppercase tracking-widest ${STATUS_STYLES[r.status]}`}>
+                  <span className={`text-[9px] font-bold px-2 py-1 uppercase tracking-widest ${STATUS_STYLES[r.status]}`}>
                     {STATUS_LABELS[r.status]}
                   </span>
-                  <span className="text-[9px] font-black px-2 py-1 uppercase tracking-widest bg-muted text-muted-foreground">
+                  <span className="text-[9px] font-bold px-2 py-1 uppercase tracking-widest bg-muted text-muted-foreground">
                     {CATEGORY_LABELS[r.category]}
                   </span>
                   {!r.user_id && (
-                    <span className="text-[9px] font-black px-2 py-1 uppercase tracking-widest bg-muted text-muted-foreground">
+                    <span className="text-[9px] font-bold px-2 py-1 uppercase tracking-widest bg-muted text-muted-foreground">
                       অনামা
                     </span>
                   )}
                   {r.rating && (
-                    <span className="text-[9px] font-black px-2 py-1 uppercase tracking-widest bg-muted text-foreground">
+                    <span className="text-[9px] font-bold px-2 py-1 uppercase tracking-widest bg-muted text-foreground">
                       ★ {r.rating}
                     </span>
                   )}
@@ -179,7 +179,7 @@ const FeedbackPanel: React.FC = () => {
 // --- helpers ---------------------------------------------------------------
 const Stat: React.FC<{ label: string; value: number; accent?: string }> = ({ label, value, accent }) => (
   <div className="flex items-center gap-2">
-    <span className={`px-3 py-1 text-[10px] font-black uppercase tracking-widest ${accent ?? 'bg-muted text-muted-foreground'}`}>
+    <span className={`px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${accent ?? 'bg-muted text-muted-foreground'}`}>
       {value.toLocaleString('bn-BD')}
     </span>
     <span className="text-muted-foreground">{label}</span>
@@ -190,7 +190,7 @@ const FilterChip: React.FC<{ label: string; active: boolean; onClick: () => void
   <button
     type="button"
     onClick={onClick}
-    className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all border ${
+    className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-all border ${
       active
         ? 'bg-primary text-primary-foreground border-primary'
         : 'bg-card text-muted-foreground border-border hover:border-primary'
@@ -224,7 +224,7 @@ const FeedbackDetail: React.FC<DetailProps> = ({ item, saving, notes, onNotesCha
       <div className="flex items-start justify-between p-6 border-b border-border">
         <div className="space-y-1">
           <div className="caps-label text-muted-foreground">ID • {item.id.slice(0, 8)}</div>
-          <h3 id="feedback-detail-title" className="text-xl font-extrabold tracking-tight">
+          <h3 id="feedback-detail-title" className="text-xl font-bold tracking-tight">
             {CATEGORY_LABELS[item.category]} · {STATUS_LABELS[item.status]}
           </h3>
         </div>
@@ -271,7 +271,7 @@ const FeedbackDetail: React.FC<DetailProps> = ({ item, saving, notes, onNotesCha
               type="button"
               onClick={() => onChangeStatus('in_progress')}
               disabled={saving}
-              className="px-5 py-3 bg-secondary text-secondary-foreground font-black text-xs uppercase tracking-widest hover:bg-secondary transition-all flex items-center gap-2 disabled:opacity-50"
+              className="px-5 py-3 bg-secondary text-secondary-foreground font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-all flex items-center gap-2 disabled:opacity-50"
             >
               <Play size={14} /> কাজ শুরু
             </button>
@@ -281,7 +281,7 @@ const FeedbackDetail: React.FC<DetailProps> = ({ item, saving, notes, onNotesCha
               type="button"
               onClick={() => onChangeStatus('resolved')}
               disabled={saving}
-              className="px-5 py-3 bg-primary text-primary-foreground font-black text-xs uppercase tracking-widest hover:bg-secondary transition-all flex items-center gap-2 disabled:opacity-50"
+              className="px-5 py-3 bg-primary text-primary-foreground font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-all flex items-center gap-2 disabled:opacity-50"
             >
               <CheckCircle size={14} /> সমাধান
             </button>
@@ -291,7 +291,7 @@ const FeedbackDetail: React.FC<DetailProps> = ({ item, saving, notes, onNotesCha
               type="button"
               onClick={() => onChangeStatus('archived')}
               disabled={saving}
-              className="px-5 py-3 border border-border text-muted-foreground font-black text-xs uppercase tracking-widest hover:bg-muted transition-all flex items-center gap-2 disabled:opacity-50"
+              className="px-5 py-3 border border-border text-muted-foreground font-bold text-xs uppercase tracking-widest hover:bg-muted transition-all flex items-center gap-2 disabled:opacity-50"
             >
               <Archive size={14} /> আর্কাইভ
             </button>

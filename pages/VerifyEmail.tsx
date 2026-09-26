@@ -37,7 +37,7 @@ const VerifyEmail: React.FC = () => {
           <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto">
             <Mail size={36} className="text-foreground" />
           </div>
-          <h1 className="text-3xl font-extrabold tracking-tight">ইমেইল ভেরিফিকেশন</h1>
+          <h1 className="text-3xl font-bold tracking-tight">ইমেইল ভেরিফিকেশন</h1>
           <p className="text-muted-foreground font-medium leading-relaxed">
             আমরা <strong className="text-foreground">{email}</strong> এই ঠিকানায় একটি ভেরিফিকেশন ইমেইল পাঠিয়েছি।
             আপনার ইনবক্স চেক করুন এবং অ্যাকাউন্ট অ্যাক্টিভেট করতে লিংকে ক্লিক করুন।
@@ -61,7 +61,7 @@ const VerifyEmail: React.FC = () => {
           <button
             onClick={handleResend}
             disabled={sending}
-            className="w-full py-5 bg-primary text-primary-foreground font-extrabold text-lg flex items-center justify-center gap-3 hover:bg-secondary transition-all disabled:opacity-50"
+            className="w-full py-5 bg-primary text-primary-foreground font-bold text-lg flex items-center justify-center gap-3 hover:bg-secondary transition-all disabled:opacity-50"
           >
             {sending ? <Loader2 size={22} className="animate-spin" /> : <RefreshCw size={22} />}
             {sending ? 'পাঠানো হচ্ছে...' : 'পুনরায় ইমেইল পাঠান'}
@@ -69,7 +69,7 @@ const VerifyEmail: React.FC = () => {
 
           <button
             onClick={() => navigate('/login')}
-            className="w-full py-5 border border-border text-muted-foreground font-extrabold text-lg flex items-center justify-center gap-3 hover:bg-muted transition-all"
+            className="w-full py-5 border border-border text-muted-foreground font-bold text-lg flex items-center justify-center gap-3 hover:bg-muted transition-all"
           >
             লগইন পৃষ্ঠায় যান <ArrowRight size={22} />
           </button>

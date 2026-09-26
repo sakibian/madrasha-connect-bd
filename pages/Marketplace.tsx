@@ -49,13 +49,13 @@ const Marketplace: React.FC = () => {
     <div className="space-y-24 animate-fadeIn">
       <div className="space-y-4 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">Marketplace</div>
-        <h1 className="text-5xl font-extrabold tracking-tight">সুন্নাহ ও ক্যালিগ্রাফি।</h1>
+        <h1 className="text-5xl font-bold tracking-tight">সুন্নাহ ও ক্যালিগ্রাফি।</h1>
       </div>
 
       <section className="bg-primary text-primary-foreground p-12 flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
         <div className="md:w-1/2 z-10 space-y-8">
           <div className="caps-label text-primary-foreground">Featured</div>
-          <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">ভেক্টর ক্যালিগ্রাফি সংগ্রহ।</h2>
+          <h2 className="text-4xl md:text-5xl font-bold leading-tight">ভেক্টর ক্যালিগ্রাফি সংগ্রহ।</h2>
           <p className="text-primary-foreground text-xl leading-relaxed">৫০০+ হাই-রেজোলিউশন আরবি ক্যালিগ্রাফি গ্রাফিক ডিজাইনার এবং শিক্ষার্থীদের জন্য একদম ফ্রিতে ডাউনলোডযোগ্য।</p>
           <Link to="/calligraphy" className="bg-card text-foreground px-10 py-5 font-bold rounded-md text-lg inline-flex items-center gap-3 hover:bg-muted transition-all">
             গ্যালারি দেখুন <ArrowRight size={20} />
@@ -83,7 +83,7 @@ const Marketplace: React.FC = () => {
               <div className="caps-label text-muted-foreground">{product.category}</div>
               <h3 className="text-xl font-bold leading-tight flex-1">{product.name}</h3>
               <div className="pt-6 border-t border-border flex items-center justify-between">
-                 <span className="text-2xl font-extrabold text-foreground">{product.isFree ? 'ফ্রি' : `৳ ${product.price}`}</span>
+                 <span className="text-2xl font-bold text-foreground">{product.isFree ? 'ফ্রি' : `৳ ${product.price}`}</span>
                  <div className="flex gap-2">
                      {isAdmin && (
                        <Button variant="danger" size="sm" onClick={() => setDeleteId(product.id)} icon={<Trash2 size={18} />} />
@@ -114,7 +114,7 @@ const Marketplace: React.FC = () => {
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowDownloadModal(false)}>
           <div className="bg-card p-8 max-w-md w-full border border-border animate-fadeIn" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-black">ফ্রি ডাউনলোড</h3>
+              <h3 className="text-xl font-bold">ফ্রি ডাউনলোড</h3>
               <button onClick={() => setShowDownloadModal(false)} className="text-muted-foreground hover:text-foreground p-1">
                 <X size={20} />
               </button>
@@ -173,7 +173,7 @@ const Marketplace: React.FC = () => {
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowPurchaseModal(false)}>
           <div className="bg-card p-8 max-w-md w-full border border-border animate-fadeIn" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-black">পণ্য ক্রয়</h3>
+              <h3 className="text-xl font-bold">পণ্য ক্রয়</h3>
               <button onClick={() => setShowPurchaseModal(false)} className="text-muted-foreground hover:text-foreground p-1">
                 <X size={20} />
               </button>
@@ -192,7 +192,7 @@ const Marketplace: React.FC = () => {
               <div className="space-y-2">
                 <h4 className="text-lg font-bold">{selectedProduct.name}</h4>
                 <p className="text-sm text-muted-foreground">{selectedProduct.category}</p>
-                <p className="text-3xl font-extrabold">৳ {selectedProduct.price}</p>
+                <p className="text-3xl font-bold">৳ {selectedProduct.price}</p>
               </div>
 
               <div className="bg-muted border border-border p-4">

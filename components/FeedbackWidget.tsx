@@ -96,7 +96,7 @@ const FeedbackWidget: React.FC = () => {
             <div className="flex items-center justify-between p-6 border-b border-border">
               <div className="space-y-1">
                 <div className="caps-label text-muted-foreground">Community Voice</div>
-                <h2 id="feedback-title" className="text-2xl font-extrabold tracking-tight">{t('feedback.title')}</h2>
+                <h2 id="feedback-title" className="text-2xl font-bold tracking-tight">{t('feedback.title')}</h2>
               </div>
               <button
                 type="button"
@@ -114,7 +114,7 @@ const FeedbackWidget: React.FC = () => {
                   <CheckCircle size={32} className="text-foreground" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-xl font-extrabold">{t('feedback.successTitle')}</h3>
+                  <h3 className="text-xl font-bold">{t('feedback.successTitle')}</h3>
                   <p className="text-muted-foreground font-medium">{t('feedback.successBody')}</p>
                 </div>
                 <button
@@ -187,7 +187,7 @@ const FeedbackWidget: React.FC = () => {
                 <button
                   type="submit"
                   disabled={sending || message.trim().length < 3}
-                  className="w-full py-4 bg-primary text-primary-foreground font-extrabold text-sm uppercase tracking-widest flex items-center justify-center gap-3 hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-4 bg-primary text-primary-foreground font-bold text-sm uppercase tracking-widest flex items-center justify-center gap-3 hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {sending ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
                   {sending ? t('feedback.sending') : t('feedback.send')}

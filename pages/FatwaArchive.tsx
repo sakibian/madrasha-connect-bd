@@ -57,7 +57,7 @@ const FatwaArchive: React.FC = () => {
       <div className="space-y-12 animate-fadeIn">
         <div className="space-y-4 border-b border-border pb-12">
           <div className="caps-label text-muted-foreground">Fatwa Archive</div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">ফতোয়া সংরক্ষণাগার।</h1>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">ফতোয়া সংরক্ষণাগার।</h1>
         </div>
         <div className="space-y-1 bg-muted minimal-border">
           {[1, 2, 3].map(i => (
@@ -77,7 +77,7 @@ const FatwaArchive: React.FC = () => {
       <div className="space-y-4 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">Fatwa Archive</div>
         <div className="flex justify-between items-end">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">ফতোয়া সংরক্ষণাগার।</h1>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">ফতোয়া সংরক্ষণাগার।</h1>
           <Link to="/fatwa" className="text-sm font-bold border-b-2 border-primary flex items-center gap-2">
             নতুন প্রশ্ন <ArrowRight size={16} />
           </Link>
@@ -135,11 +135,11 @@ const FatwaArchive: React.FC = () => {
                 </div>
               </div>
 
-              <h3 className="text-2xl font-extrabold leading-tight">{fatwa.question}</h3>
+              <h3 className="text-2xl font-bold leading-tight">{fatwa.question}</h3>
 
               {fatwa.answer && (
                 <div className="pl-6 border-l-4 border-primary space-y-3">
-                  <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-muted-foreground">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
                     <User size={14} /> উত্তর
                   </div>
                   <p className="text-muted-foreground leading-relaxed font-medium">{fatwa.answer}</p>

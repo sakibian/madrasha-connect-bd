@@ -71,7 +71,7 @@ const SadaqahApprovals: React.FC = () => {
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-black">সাদাকাহ তহবিল আবেদন</h2>
+        <h2 className="text-2xl font-bold">সাদাকাহ তহবিল আবেদন</h2>
         <div className="flex items-center gap-4 text-sm">
           <span className="font-bold text-muted-foreground">পেন্ডিং: {pendingApps.length}</span>
           <span className="font-bold text-muted-foreground">পর্যালোচিত: {reviewedApps.length}</span>
@@ -145,7 +145,7 @@ const ApplicationCard: React.FC<{
                 <span>•</span>
                 <span>{new Date(app.created_at).toLocaleDateString('bn-BD')}</span>
                 <span>•</span>
-                <span className="px-2 py-1 bg-muted text-muted-foreground font-black uppercase tracking-widest">
+                <span className="px-2 py-1 bg-muted text-muted-foreground font-bold uppercase tracking-widest">
                   {app.category}
                 </span>
               </div>
@@ -155,11 +155,11 @@ const ApplicationCard: React.FC<{
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">অনুরোধকৃত পরিমাণ</p>
-              <p className="text-2xl font-black text-foreground">৳ {app.amount_requested?.toLocaleString('bn-BD')}</p>
+              <p className="text-2xl font-bold text-foreground">৳ {app.amount_requested?.toLocaleString('bn-BD')}</p>
             </div>
             <div>
               <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">অবস্থা</p>
-              <span className={`inline-flex items-center gap-2 px-3 py-1 text-xs font-black uppercase tracking-widest ${
+              <span className={`inline-flex items-center gap-2 px-3 py-1 text-xs font-bold uppercase tracking-widest ${
                 app.status === 'pending' ? 'bg-muted text-foreground' :
                 app.status === 'approved' ? 'bg-muted text-foreground' :
                 'bg-muted text-foreground'

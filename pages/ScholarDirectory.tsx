@@ -32,7 +32,7 @@ const ScholarDirectory: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-between items-start gap-6 border-b border-border pb-12">
         <div className="space-y-2">
           <div className="caps-label text-muted-foreground">Scholars</div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">আলেম ডিরেক্টরি।</h1>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">আলেম ডিরেক্টরি।</h1>
         </div>
       </div>
 
@@ -90,7 +90,7 @@ const ScholarDirectory: React.FC = () => {
 
               <div className="space-y-4 flex-1">
                 <div className="caps-label text-foreground">{scholar.title}</div>
-                <h3 className="text-2xl font-extrabold">{scholar.name}</h3>
+                <h3 className="text-2xl font-bold">{scholar.name}</h3>
 
                 <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-muted-foreground">
                   <GraduationCap size={14} />
@@ -117,7 +117,7 @@ const ScholarDirectory: React.FC = () => {
 
               <div className="mt-8 w-full space-y-2">
                 {scholar.verified && (
-                  <div className="text-[9px] font-black text-foreground uppercase tracking-widest flex items-center justify-center gap-1">
+                  <div className="text-[9px] font-bold text-foreground uppercase tracking-widest flex items-center justify-center gap-1">
                     <ShieldCheck size={12} /> ভেরিফায়েড
                   </div>
                 )}

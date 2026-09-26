@@ -8,7 +8,7 @@ const Forbidden: React.FC = () => {
     <div className="min-h-[60vh] flex flex-col items-center justify-center text-center gap-8">
       <ShieldX size={80} className="text-muted-foreground" />
       <div className="space-y-2">
-        <h1 className="text-5xl font-extrabold">403</h1>
+        <h1 className="text-5xl font-bold">403</h1>
         <p className="text-xl font-bold text-muted-foreground">প্রবেশাধিকার অস্বীকৃত</p>
         <p className="text-muted-foreground font-medium max-w-md">এই পৃষ্ঠায় প্রবেশের জন্য আপনার যথাযথ অনুমতি নেই।</p>
       </div>

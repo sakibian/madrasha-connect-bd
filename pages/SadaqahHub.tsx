@@ -111,14 +111,14 @@ const SadaqahHub: React.FC = () => {
     <div className="space-y-12 animate-fadeIn">
       <div className="space-y-4 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">Donations</div>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">সাদাকাহ ও জারিয়া।</h1>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">সাদাকাহ ও জারিয়া।</h1>
       </div>
 
       {receipt && (
         <div className={`p-6 border ${receipt.ok ? 'bg-black/5 border-black/30' : 'bg-muted border-border'} flex items-start gap-4`} role="status">
           <CheckCircle size={24} className={receipt.ok ? 'text-foreground shrink-0 mt-1' : 'text-foreground shrink-0 mt-1'} />
           <div className="space-y-1">
-            <p className={`font-extrabold ${receipt.ok ? 'text-foreground' : 'text-foreground'}`}>
+            <p className={`font-bold ${receipt.ok ? 'text-foreground' : 'text-foreground'}`}>
               {receipt.ok ? 'সাদাকাহ গৃহীত' : 'লেনদেন অসম্পূর্ণ'}
             </p>
             <p className="text-sm text-muted-foreground font-medium">{receipt.message}</p>
@@ -128,7 +128,7 @@ const SadaqahHub: React.FC = () => {
 
       <div className="bg-primary text-primary-foreground p-12 space-y-8">
          <div className="caps-label text-primary-foreground">Digital Sadaqah</div>
-         <h2 className="text-5xl font-extrabold leading-tight">আপনার দান, <br /> মাদ্রাসার সমৃদ্ধি।</h2>
+         <h2 className="text-5xl font-bold leading-tight">আপনার দান, <br /> মাদ্রাসার সমৃদ্ধি।</h2>
          <p className="text-primary-foreground text-xl max-w-2xl font-medium">আমরা সরাসরি দাতাদের সাথে প্রতিষ্ঠানের যোগাযোগ করিয়ে দিই। কোনো অতিরিক্ত ফি ছাড়াই আপনার পূর্ণ দান পৌঁছাবে কাঙ্ক্ষিত লক্ষ্যে।</p>
          <div className="flex gap-4 pt-6">
             <button onClick={() => openDonate()} className="bg-card text-foreground px-10 py-5 font-bold rounded-md text-lg hover:bg-muted transition-all flex items-center gap-3">
@@ -175,7 +175,7 @@ const SadaqahHub: React.FC = () => {
                         <div className="caps-label text-muted-foreground">{proj.category}</div>
                         <CheckCircle size={16} className="text-foreground" />
                      </div>
-                     <h3 className="text-2xl font-extrabold leading-tight">{proj.title}</h3>
+                     <h3 className="text-2xl font-bold leading-tight">{proj.title}</h3>
                      <p className="text-sm text-muted-foreground">{proj.institution}</p>
                      <div className="space-y-4 pt-4 mt-auto">
                         <div className="w-full h-1 bg-muted">
@@ -184,7 +184,7 @@ const SadaqahHub: React.FC = () => {
                         <div className="flex justify-between items-end">
                            <div className="space-y-1">
                               <div className="caps-label text-muted-foreground">সংগৃহীত</div>
-                              <div className="text-2xl font-extrabold">৳{proj.raised.toLocaleString()}</div>
+                              <div className="text-2xl font-bold">৳{proj.raised.toLocaleString()}</div>
                            </div>
                            <div className="text-xs font-bold text-muted-foreground">লক্ষ্য: ৳{proj.goal.toLocaleString()}</div>
                         </div>
@@ -214,7 +214,7 @@ const SadaqahHub: React.FC = () => {
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowFundingModal(false)}>
           <div className="bg-card p-8 max-w-2xl w-full border border-border animate-fadeIn max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-black">সাদাকাহ তহবিল আবেদন</h3>
+              <h3 className="text-xl font-bold">সাদাকাহ তহবিল আবেদন</h3>
               <button onClick={() => setShowFundingModal(false)} className="text-muted-foreground hover:text-foreground p-1">
                 <X size={20} />
               </button>

@@ -79,7 +79,7 @@ const ProfessionalHub: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-between items-start gap-6 border-b border-border pb-12">
         <div className="space-y-2">
           <div className="caps-label text-muted-foreground">Careers</div>
-          <h1 className="text-5xl font-extrabold tracking-tight">প্রফেশনাল নিয়োগ পোর্টাল।</h1>
+          <h1 className="text-5xl font-bold tracking-tight">প্রফেশনাল নিয়োগ পোর্টাল।</h1>
         </div>
         {canPost && (
           <Link to="/post-job" className="bg-primary text-primary-foreground px-8 py-4 font-bold text-sm flex items-center gap-2 hover:bg-secondary transition-all">
@@ -114,7 +114,7 @@ const ProfessionalHub: React.FC = () => {
                  <Badge variant="info">{job.type}</Badge>
                  {job.verified && <CheckCircle size={18} className="text-foreground" />}
               </div>
-              <h3 className="text-3xl font-extrabold leading-tight">{job.title}</h3>
+              <h3 className="text-3xl font-bold leading-tight">{job.title}</h3>
               <div className="space-y-3 font-medium text-muted-foreground">
                  <div className="flex items-center gap-2"><Building size={16} /> {job.institution}</div>
                  <div className="flex items-center gap-2"><MapPin size={16} /> {job.location}</div>

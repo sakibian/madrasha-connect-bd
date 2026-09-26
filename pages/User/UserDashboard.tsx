@@ -66,7 +66,7 @@ const UserDashboard: React.FC = () => {
             <div className="absolute -bottom-2 -right-2 bg-primary text-primary-foreground p-1.5"><CheckCircle size={16} /></div>
           </div>
           <div className="space-y-1">
-            <h1 className="text-4xl font-extrabold tracking-tight">{user?.name}</h1>
+            <h1 className="text-4xl font-bold tracking-tight">{user?.name}</h1>
             <p className="caps-label text-muted-foreground">Community Member • {user?.role}</p>
           </div>
         </div>
@@ -84,13 +84,13 @@ const UserDashboard: React.FC = () => {
                 <Users size={24} className="text-primary-foreground" />
               </div>
               <div>
-                <h2 className="text-xl font-black">বন্ধুদের আমন্ত্রণ জানান</h2>
+                <h2 className="text-xl font-bold">বন্ধুদের আমন্ত্রণ জানান</h2>
                 <p className="text-primary-foreground text-sm font-medium">প্রতিটি সফল আমন্ত্রণে ৩০ CP পান</p>
               </div>
             </div>
             {referralStats.total > 0 && (
               <div className="text-right space-y-1">
-                <div className="text-3xl font-black">{referralStats.completed}</div>
+                <div className="text-3xl font-bold">{referralStats.completed}</div>
                 <div className="text-[10px] font-bold text-primary-foreground uppercase tracking-widest">সফল আমন্ত্রণ</div>
               </div>
             )}
@@ -124,7 +124,7 @@ const UserDashboard: React.FC = () => {
           {/* Recent Applications */}
           <div className="space-y-8">
              <div className="flex justify-between items-end border-b border-border pb-8">
-                <h2 className="text-2xl font-extrabold tracking-tight">আমার আবেদনসমূহ</h2>
+                <h2 className="text-2xl font-bold tracking-tight">আমার আবেদনসমূহ</h2>
                 <Link to="/professional" className="text-xs font-bold border-b-2 border-primary">নতুন খুঁজুন</Link>
              </div>
              <div className="bg-muted minimal-border space-y-1">
@@ -154,7 +154,7 @@ const UserDashboard: React.FC = () => {
         {/* Saved Items Sidebar */}
         <div className="space-y-8">
            <div className="flex justify-between items-end border-b border-border pb-8">
-              <h2 className="text-2xl font-extrabold tracking-tight">সংরক্ষিত লাইব্রেরি</h2>
+              <h2 className="text-2xl font-bold tracking-tight">সংরক্ষিত লাইব্রেরি</h2>
               <Link to="/knowledge" className="text-xs font-bold border-b-2 border-primary">লাইব্রেরি দেখুন</Link>
            </div>
            <div className="space-y-4">
@@ -172,7 +172,7 @@ const StatCard = ({ icon, label, value }: any) => (
   <div className="bg-card p-12 flex flex-col gap-6 group hover:bg-primary hover:text-primary-foreground transition-all" rounded-lg border border-border>
     <div className="text-foreground group-hover:text-primary-foreground transition-colors">{icon}</div>
     <div className="space-y-1">
-      <div className="text-4xl font-extrabold tracking-tight">{value}</div>
+      <div className="text-4xl font-bold tracking-tight">{value}</div>
       <div className="caps-label text-muted-foreground group-hover:text-muted-foreground">{label}</div>
     </div>
   </div>
@@ -188,11 +188,11 @@ const ApplicationItem = ({ title, inst, status, date }: any) => {
   return (
     <div className="bg-card p-8 flex justify-between items-center group transition-all" rounded-lg border border-border>
        <div className="space-y-1">
-          <h3 className="font-extrabold text-lg group-hover:text-primary-foreground transition-colors">{title}</h3>
+          <h3 className="font-bold text-lg group-hover:text-primary-foreground transition-colors">{title}</h3>
           <p className="text-sm font-bold text-primary-foreground">{inst}</p>
           <p className="text-[10px] font-bold text-primary-foreground uppercase mt-2 flex items-center gap-2"><Clock size={12} /> {date}</p>
        </div>
-       <span className={`text-[9px] font-black px-4 py-1.5 uppercase tracking-widest ${s.color}`}>{s.label}</span>
+       <span className={`text-[9px] font-bold px-4 py-1.5 uppercase tracking-widest ${s.color}`}>{s.label}</span>
     </div>
   );
 };
@@ -203,7 +203,7 @@ const SavedItem = ({ to, title, category, type }: any) => (
         <div className="caps-label text-foreground group-hover:text-muted-foreground">{type}</div>
         <button className="text-muted-foreground group-hover:text-primary-foreground"><Heart size={20} fill="currentColor" /></button>
      </div>
-     <h4 className="text-xl font-extrabold mb-1">{title}</h4>
+     <h4 className="text-xl font-bold mb-1">{title}</h4>
      <p className="text-sm font-bold text-muted-foreground group-hover:text-muted-foreground">{category}</p>
      <div className="mt-8 pt-8 border-t border-border group-hover:border-border flex items-center justify-between">
         <span className="text-xs font-bold border-b-2 border-primary group-hover:border-white pb-0.5 transition-all">এখনই পড়ুন</span>

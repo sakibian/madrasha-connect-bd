@@ -34,7 +34,7 @@ const Leaderboard: React.FC = () => {
     <div className="space-y-12 animate-fadeIn">
       <div className="space-y-4 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">Community</div>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">লিডারবোর্ড।</h1>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">লিডারবোর্ড।</h1>
         <p className="text-muted-foreground font-medium max-w-xl">সবচেয়ে সক্রিয় সদস্যরা — ফতোয়া উত্তর, চাকরি পোস্ট, কোর্স সম্পূর্ণ এবং আরও অনেক কিছুতে CP (কন্ট্রিবিউট পয়েন্ট) অর্জন করুন!</p>
       </div>
 
@@ -82,7 +82,7 @@ const Leaderboard: React.FC = () => {
                     </td>
                     <td className="px-8 py-6">
                       <div className="flex items-center gap-3">
-                        <span className="font-black text-lg">{u.level}</span>
+                        <span className="font-bold text-lg">{u.level}</span>
                         <div className="w-24 h-2 bg-muted rounded-full overflow-hidden">
                           <div
                             className="h-full bg-primary rounded-full transition-all"
@@ -91,7 +91,7 @@ const Leaderboard: React.FC = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-8 py-6 text-right font-black text-lg">{u.xp.toLocaleString()}</td>
+                    <td className="px-8 py-6 text-right font-bold text-lg">{u.xp.toLocaleString()}</td>
                   </tr>
                 );
               })}

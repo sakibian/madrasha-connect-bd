@@ -50,7 +50,7 @@ const SearchResults: React.FC = () => {
     <div className="space-y-12 animate-fadeIn">
       <div className="space-y-4 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">Search Results</div>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
           "<span className="text-foreground">{query}</span>" এর জন্য ফলাফল।
         </h1>
         <p className="text-sm font-bold text-muted-foreground">{totalResults}টি মিল পাওয়া গেছে।</p>
@@ -97,7 +97,7 @@ const SearchResults: React.FC = () => {
                       </div>
                       <div className="space-y-1">
                         <h3 className="text-sm font-bold truncate">{prod.name}</h3>
-                        <p className="text-xs font-extrabold text-foreground">{prod.isFree ? 'ফ্রি' : `৳ ${prod.price}`}</p>
+                        <p className="text-xs font-bold text-foreground">{prod.isFree ? 'ফ্রি' : `৳ ${prod.price}`}</p>
                       </div>
                     </Link>
                   ))}

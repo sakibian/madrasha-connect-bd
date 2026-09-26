@@ -21,7 +21,7 @@ const InstitutionDirectory: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-between items-start gap-6 border-b border-border pb-12">
         <div className="space-y-2">
           <div className="caps-label text-muted-foreground">Directory</div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">প্রতিষ্ঠান ডিরেক্টরি</h1>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">প্রতিষ্ঠান ডিরেক্টরি</h1>
         </div>
         <div className="flex flex-wrap gap-2">
           {(['All', 'Qawmi', 'Alia', 'Mosque'] as const).map(f => (
@@ -55,7 +55,7 @@ const InstitutionDirectory: React.FC = () => {
                    <div className="caps-label text-primary">{inst.type}</div>
                    {inst.verified && <CheckCircle size={18} className="text-primary" />}
                 </div>
-                <h3 className="text-2xl font-extrabold">{inst.name}</h3>
+                <h3 className="text-2xl font-bold">{inst.name}</h3>
                 <div className="flex items-center gap-2 text-muted-foreground text-sm font-medium">
                    <MapPin size={16} /> {inst.location}
                 </div>

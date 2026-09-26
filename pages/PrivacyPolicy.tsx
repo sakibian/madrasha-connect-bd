@@ -17,7 +17,7 @@ const PrivacyPolicy: React.FC = () => (
         <ArrowLeft size={14} /> হোমপেজে ফিরুন
       </Link>
       <div className="caps-label text-muted-foreground">Legal • Last Updated: 01 Aug 2026</div>
-      <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">গোপনীয়তা নীতি।</h1>
+      <h1 className="text-4xl md:text-5xl font-bold tracking-tight">গোপনীয়তা নীতি।</h1>
       <p className="text-muted-foreground font-medium leading-relaxed">
         মাদ্রাসা কানেক্ট বাংলাদেশ আপনার ব্যক্তিগত তথ্যের গোপনীয়তার প্রতি সর্বোচ্চ গুরুত্ব দেয়। এই নীতিতে বর্ণিত আছে যে আমরা
         কোন তথ্য সংগ্রহ করি, কীভাবে ব্যবহার করি, এবং আপনার নিয়ন্ত্রণাধীন অধিকারসমূহ।
@@ -90,7 +90,7 @@ const PrivacyPolicy: React.FC = () => (
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
   <section className="space-y-4">
-    <h2 className="text-2xl font-extrabold tracking-tight">{title}</h2>
+    <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
     <div className="text-muted-foreground leading-relaxed font-medium">{children}</div>
   </section>
 );

@@ -40,7 +40,7 @@ const QawmiSystem: React.FC = () => {
       {/* Hero */}
       <header className="space-y-4">
         <div className="caps-label text-muted-foreground">Bangladesh · Islamic Education</div>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
           কওমি মাদ্রাসা শিক্ষা ব্যবস্থা
         </h1>
         <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">
@@ -53,11 +53,11 @@ const QawmiSystem: React.FC = () => {
 
       {/* Government recognition callout */}
       <section className="bg-black/5 border border-black/20 p-6 md:p-8 space-y-3">
-        <div className="flex items-center gap-2 text-foreground font-black uppercase tracking-widest text-xs">
+        <div className="flex items-center gap-2 text-foreground font-bold uppercase tracking-widest text-xs">
           <ShieldCheck size={14} />
           সরকারি স্বীকৃতি · ২০১৮
         </div>
-        <h2 className="text-2xl font-extrabold">
+        <h2 className="text-2xl font-bold">
           দাওরায়ে হাদিস = মাস্টার্স ডিগ্রি সমমান
         </h2>
         <p className="text-foreground leading-relaxed">
@@ -82,7 +82,7 @@ const QawmiSystem: React.FC = () => {
           <div className="caps-label text-muted-foreground flex items-center gap-1">
             <GraduationCap size={12} /> Marhala Ladder (৬ স্তর)
           </div>
-          <h2 className="text-3xl font-extrabold">মারহালা সিঁড়ি</h2>
+          <h2 className="text-3xl font-bold">মারহালা সিঁড়ি</h2>
           <p className="text-muted-foreground">
             দরসে নিজামী সিলেবাসে ৬ ধাপে গঠিত সম্পূর্ণ পাঠ্যক্রম। প্রাথমিক থেকে
             দাওরায়ে হাদিস পর্যন্ত মোট সময় সাধারণত ১৫ বছর।
@@ -96,7 +96,7 @@ const QawmiSystem: React.FC = () => {
               className="bg-card border border-border p-6 grid grid-cols-1 md:grid-cols-[80px_1fr] gap-6"
             >
               <div className="flex md:flex-col items-center md:items-start gap-3 md:gap-1">
-                <div className="w-14 h-14 flex items-center justify-center bg-primary text-primary-foreground text-xl font-extrabold">
+                <div className="w-14 h-14 flex items-center justify-center bg-primary text-primary-foreground text-xl font-bold">
                   {stage.order}
                 </div>
                 <div className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
@@ -105,7 +105,7 @@ const QawmiSystem: React.FC = () => {
               </div>
               <div className="space-y-3">
                 <div className="space-y-1">
-                  <h3 className="text-xl font-extrabold">{stage.nameBn}</h3>
+                  <h3 className="text-xl font-bold">{stage.nameBn}</h3>
                   <p className="text-sm text-muted-foreground font-medium">
                     {stage.nameEn} · <span dir="rtl" lang="ar">{stage.nameAr}</span>
                   </p>
@@ -134,7 +134,7 @@ const QawmiSystem: React.FC = () => {
       <section className="space-y-6">
         <div className="space-y-2">
           <div className="caps-label text-muted-foreground">৬টি প্রধান কওমি বোর্ড</div>
-          <h2 className="text-3xl font-extrabold">কওমি পরীক্ষা বোর্ডসমূহ</h2>
+          <h2 className="text-3xl font-bold">কওমি পরীক্ষা বোর্ডসমূহ</h2>
           <p className="text-muted-foreground">
             নিচের ৬টি বোর্ড ২০১৭ সালে গঠিত ফেডারেশন{' '}
             <em>{AL_HAIATUL_ULYA.nameEn}</em> এর অধীনে ঐক্যবদ্ধ পরীক্ষা পরিচালনা করে।
@@ -145,7 +145,7 @@ const QawmiSystem: React.FC = () => {
           {QAWMI_BOARDS.map(board => (
             <article key={board.slug} className="bg-card border border-border p-6 space-y-3">
               <header className="space-y-1">
-                <h3 className="text-lg font-extrabold leading-tight">{board.nameBn}</h3>
+                <h3 className="text-lg font-bold leading-tight">{board.nameBn}</h3>
                 <p className="text-sm text-muted-foreground font-medium">{board.nameEn}</p>
                 {board.nameAr && (
                   <p className="text-sm text-muted-foreground font-medium" dir="rtl" lang="ar">

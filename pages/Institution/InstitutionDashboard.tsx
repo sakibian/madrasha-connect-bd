@@ -99,7 +99,7 @@ const InstitutionDashboard: React.FC = () => {
             {user?.institutionName?.substring(0, 1) || 'M'}
           </div>
           <div className="space-y-1">
-            <h1 className="text-3xl font-extrabold tracking-tight">{user?.institutionName}</h1>
+            <h1 className="text-3xl font-bold tracking-tight">{user?.institutionName}</h1>
             <p className="caps-label text-muted-foreground">Institutional Portal • Verified Member</p>
           </div>
         </div>
@@ -128,7 +128,7 @@ const InstitutionDashboard: React.FC = () => {
         <div className="lg:col-span-2 space-y-12">
           <div className="bg-card minimal-border overflow-hidden">
             <div className="p-10 border-b border-border flex justify-between items-center">
-               <h2 className="text-2xl font-extrabold tracking-tight">সার্কুলার ব্যবস্থাপনা</h2>
+               <h2 className="text-2xl font-bold tracking-tight">সার্কুলার ব্যবস্থাপনা</h2>
                <Link to="/professional" className="text-xs font-bold border-b-2 border-primary pb-0.5">সবগুলো দেখুন</Link>
             </div>
             <div className="overflow-x-auto -mx-4 md:mx-0">
@@ -148,7 +148,7 @@ const InstitutionDashboard: React.FC = () => {
                         <p className="text-[10px] font-bold text-muted-foreground flex items-center gap-2 uppercase tracking-widest"><Clock size={12} /> {job.postedAt}</p>
                       </td>
                       <td className="px-4 md:px-10 py-6 md:py-8">
-                        <span className={`text-[9px] font-black px-4 py-1.5 uppercase tracking-widest ${job.verified ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>
+                        <span className={`text-[9px] font-bold px-4 py-1.5 uppercase tracking-widest ${job.verified ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>
                           {job.verified ? 'অনুমোদিত' : 'পর্যালোচনায়'}
                         </span>
                       </td>
@@ -213,7 +213,7 @@ const InstitutionDashboard: React.FC = () => {
           <div className="bg-card max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-border animate-fadeIn" onClick={e => e.stopPropagation()}>
             <div className="p-4 md:p-8 border-b border-border flex justify-between items-center sticky top-0 bg-card">
               <div>
-                <h3 className="text-2xl font-black">{selectedJobForApps.title}</h3>
+                <h3 className="text-2xl font-bold">{selectedJobForApps.title}</h3>
                 <p className="text-sm text-muted-foreground mt-1">প্রাপ্ত আবেদন: {applications.length}টি</p>
               </div>
               <button onClick={() => setSelectedJobForApps(null)} className="text-muted-foreground hover:text-foreground p-2">
@@ -246,7 +246,7 @@ const InstitutionDashboard: React.FC = () => {
                                   <Calendar size={12} />
                                   {new Date(app.appliedAt).toLocaleDateString('bn-BD')}
                                 </span>
-                                <span className={`px-2 py-1 text-[10px] font-black uppercase tracking-widest ${
+                                <span className={`px-2 py-1 text-[10px] font-bold uppercase tracking-widest ${
                                   app.status === 'pending' ? 'bg-muted text-muted-foreground' :
                                   app.status === 'shortlisted' ? 'bg-muted text-foreground' :
                                   app.status === 'accepted' ? 'bg-primary text-primary-foreground' :
@@ -300,7 +300,7 @@ const DashCard = ({ icon, label, value }: any) => (
   <div className="bg-card p-8 md:p-12 flex flex-col gap-4 md:gap-6 group hover:bg-primary hover:text-primary-foreground transition-all" rounded-lg border border-border>
     <div className="text-foreground group-hover:text-primary-foreground transition-colors">{icon}</div>
     <div className="space-y-1">
-      <div className="text-3xl md:text-4xl font-extrabold tracking-tight">{value}</div>
+      <div className="text-3xl md:text-4xl font-bold tracking-tight">{value}</div>
       <div className="caps-label text-muted-foreground group-hover:text-muted-foreground">{label}</div>
     </div>
   </div>

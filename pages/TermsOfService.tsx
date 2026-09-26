@@ -20,7 +20,7 @@ const TermsOfService: React.FC = () => (
         <ArrowLeft size={14} /> হোমপেজে ফিরুন
       </Link>
       <div className="caps-label text-muted-foreground">Legal • Last Updated: 01 Aug 2026</div>
-      <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">সেবার শর্তাবলী।</h1>
+      <h1 className="text-4xl md:text-5xl font-bold tracking-tight">সেবার শর্তাবলী।</h1>
       <p className="text-muted-foreground font-medium leading-relaxed">
         মাদ্রাসা কানেক্ট বাংলাদেশ (“প্ল্যাটফর্ম”) ব্যবহারের পূর্বে অনুগ্রহ করে এই শর্তাবলী মনোযোগ সহকারে পড়ুন। প্ল্যাটফর্মে অ্যাকাউন্ট
         তৈরি বা ব্যবহারের মাধ্যমে আপনি এই শর্তাবলী মেনে চলতে সম্মত হচ্ছেন।
@@ -81,7 +81,7 @@ const TermsOfService: React.FC = () => (
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
   <section className="space-y-4">
-    <h2 className="text-2xl font-extrabold tracking-tight">{title}</h2>
+    <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
     <div className="text-muted-foreground leading-relaxed font-medium">{children}</div>
   </section>
 );

@@ -183,7 +183,7 @@ const ProfileBuilder: React.FC = () => {
     <div className="max-w-4xl mx-auto space-y-16 animate-fadeIn pb-24">
       <div className="space-y-6 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">Professional Identity</div>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">প্রফেশনাল আইডি বিল্ডার।</h1>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">প্রফেশনাল আইডি বিল্ডার।</h1>
         <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed font-medium">
           আপনার ডিজিটাল বায়োডাটা বা সিভি তৈরি করুন। এই তথ্যগুলো নিয়োগকর্তাদের কাছে দৃশ্যমান হবে।
         </p>
@@ -200,7 +200,7 @@ const ProfileBuilder: React.FC = () => {
         {/* Step 1: Basic Info */}
         {step === 1 && (
           <div className="space-y-12 animate-fadeIn">
-            <h2 className="text-3xl font-extrabold tracking-tight flex items-center gap-4">
+            <h2 className="text-3xl font-bold tracking-tight flex items-center gap-4">
               <User size={28} /> ব্যক্তিগত তথ্য
             </h2>
             <div className="space-y-8">
@@ -245,7 +245,7 @@ const ProfileBuilder: React.FC = () => {
         {step === 2 && (
           <div className="space-y-12 animate-fadeIn">
             <div className="flex items-center justify-between">
-              <h2 className="text-3xl font-extrabold tracking-tight flex items-center gap-4">
+              <h2 className="text-3xl font-bold tracking-tight flex items-center gap-4">
                 <GraduationCap size={28} /> শিক্ষাগত যোগ্যতা
               </h2>
               <button
@@ -302,7 +302,7 @@ const ProfileBuilder: React.FC = () => {
         {step === 3 && (
           <div className="space-y-12 animate-fadeIn">
             <div className="flex items-center justify-between">
-              <h2 className="text-3xl font-extrabold tracking-tight flex items-center gap-4">
+              <h2 className="text-3xl font-bold tracking-tight flex items-center gap-4">
                 <Briefcase size={28} /> কর্ম অভিজ্ঞতা
               </h2>
               <button
@@ -361,7 +361,7 @@ const ProfileBuilder: React.FC = () => {
         {/* Step 4: Preview */}
         {step === 4 && (
           <div className="space-y-12 animate-fadeIn">
-            <h2 className="text-3xl font-extrabold tracking-tight flex items-center gap-4">
+            <h2 className="text-3xl font-bold tracking-tight flex items-center gap-4">
               <Eye size={28} /> প্রোফাইল প্রিভিউ
             </h2>
             
@@ -424,7 +424,7 @@ const ProfileBuilder: React.FC = () => {
            <button 
              onClick={() => setStep(s => Math.max(1, s-1))} 
              disabled={step === 1}
-             className={`text-sm font-black uppercase tracking-widest flex items-center gap-2 ${step === 1 ? 'text-muted-foreground cursor-not-allowed' : 'text-muted-foreground hover:text-foreground'}`}
+             className={`text-sm font-bold uppercase tracking-widest flex items-center gap-2 ${step === 1 ? 'text-muted-foreground cursor-not-allowed' : 'text-muted-foreground hover:text-foreground'}`}
            >
              <ArrowLeft size={18} /> পূর্ববর্তী
            </button>
@@ -452,7 +452,7 @@ const ProfileBuilder: React.FC = () => {
 
 const StepIndicator = ({ num, label, active }: any) => (
   <div className={`flex items-center gap-4 px-4 md:px-8 py-4 transition-all ${active ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-card'} flex-1 justify-center`}>
-    <span className="text-[10px] font-black uppercase tracking-widest">{num}. {label}</span>
+    <span className="text-[10px] font-bold uppercase tracking-widest">{num}. {label}</span>
   </div>
 );
 

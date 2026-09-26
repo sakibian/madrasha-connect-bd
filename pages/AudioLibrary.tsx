@@ -46,7 +46,7 @@ const AudioLibrary: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-between items-start gap-8 border-b border-border pb-12">
         <div className="space-y-4">
           <div className="caps-label text-muted-foreground">Auditory Resources</div>
-          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight">অডিও লাইব্রেরি।</h1>
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight">অডিও লাইব্রেরি।</h1>
           <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium">সেরা ক্বারীগণের তিলাওয়াত এবং আলেমগণের প্রাজ্ঞ বয়ান।</p>
         </div>
         <div className="relative w-full md:w-96">
@@ -62,7 +62,7 @@ const AudioLibrary: React.FC = () => {
               <div className="space-y-6">
                 <Disc size={48} className={`text-background ${playing ? 'animate-spin-slow' : ''}`} />
                 <div className="caps-label text-background">Currently Streaming</div>
-                <h3 className="text-2xl font-extrabold leading-tight">
+                <h3 className="text-2xl font-bold leading-tight">
                   {playing ? tracks.find(t => t.id === playing)?.title : 'কোনো অডিও সেশন চলছে না।'}
                 </h3>
               </div>
@@ -107,13 +107,13 @@ const AudioLibrary: React.FC = () => {
                    </div>
                    <div>
                       <div className="caps-label text-foreground group-hover:text-muted-foreground mb-2">{track.type}</div>
-                      <h4 className="text-2xl font-extrabold tracking-tight group-hover:text-primary-foreground">{track.title}</h4>
+                      <h4 className="text-2xl font-bold tracking-tight group-hover:text-primary-foreground">{track.title}</h4>
                       <p className="text-sm font-bold text-muted-foreground group-hover:text-muted-foreground">{track.artist}</p>
                    </div>
                 </div>
                 <div className="flex items-center gap-10">
                    <div className="hidden md:flex flex-col items-end">
-                      <span className="text-xs font-black uppercase tracking-widest text-muted-foreground group-hover:text-muted-foreground flex items-center gap-2"><Clock size={12} /> {track.duration}</span>
+                      <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground group-hover:text-muted-foreground flex items-center gap-2"><Clock size={12} /> {track.duration}</span>
                    </div>
                    <div className="flex gap-4">
                       <button onClick={(e) => e.stopPropagation()} className="p-3 border border-border group-hover:border-border text-muted-foreground group-hover:text-primary-foreground transition-all hover:text-foreground"><Heart size={18} /></button>
@@ -160,7 +160,7 @@ const AudioLibrary: React.FC = () => {
 };
 
 const CategoryButton = ({ label, active }: { label: string, active?: boolean }) => (
-  <button className={`w-full text-left px-6 py-4 text-xs font-black uppercase tracking-widest transition-all ${active ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted'}`}>
+  <button className={`w-full text-left px-6 py-4 text-xs font-bold uppercase tracking-widest transition-all ${active ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted'}`}>
      {label}
   </button>
 );

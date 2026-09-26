@@ -9,7 +9,7 @@ const Tools: React.FC = () => {
     <div className="space-y-16 animate-fadeIn pb-24">
       <div className="space-y-6 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">Management & Utilities</div>
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">ইউটিলিটি টুলস।</h1>
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight">ইউটিলিটি টুলস।</h1>
         <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium">
           আপনার দৈনন্দিন দ্বীনি ও দাপ্তরিক কাজগুলো সহজ করতে আমাদের বিশেষ ডিজিটাল সরঞ্জামসমূহ।
         </p>
@@ -65,7 +65,7 @@ const ResultChecker = () => {
        <div className="bg-card p-12 md:p-12 space-y-12" rounded-lg border border-border>
           <div className="space-y-4">
             <div className="caps-label text-foreground">Portal Entrance</div>
-            <h2 className="text-3xl font-extrabold tracking-tight">বোর্ড রেজাল্ট পোর্টাল।</h2>
+            <h2 className="text-3xl font-bold tracking-tight">বোর্ড রেজাল্ট পোর্টাল।</h2>
             <p className="text-muted-foreground font-medium">বেফাক ও মাদ্রাসা শিক্ষা বোর্ডের ফলাফল দেখুন এখানে।</p>
           </div>
 
@@ -95,18 +95,18 @@ const ResultChecker = () => {
             <div className="space-y-10 animate-fadeIn w-full max-w-sm">
                <div className="space-y-4">
                   <div className="caps-label text-foreground">Student Profile</div>
-                  <h3 className="text-4xl font-extrabold tracking-tight">{result.name}</h3>
+                  <h3 className="text-4xl font-bold tracking-tight">{result.name}</h3>
                   <p className="text-muted-foreground font-bold uppercase text-xs tracking-widest">{result.board} • {result.year}</p>
                </div>
                
                <div className="p-10 minimal-border bg-muted space-y-2">
                   <div className="caps-label text-muted-foreground mb-2">Final Result</div>
-                  <p className="text-4xl font-black text-foreground">{result.status}</p>
+                  <p className="text-4xl font-bold text-foreground">{result.status}</p>
                   <p className="text-sm font-bold text-muted-foreground mt-4">শ্রেণী: {result.class}</p>
                   <p className="text-xs font-bold text-foreground mt-1">মোট নম্বর: {result.marks}</p>
                </div>
                
-               <button className="text-xs font-black uppercase tracking-widest border-b-2 border-primary pb-1 hover:text-muted-foreground hover:border-border transition-all">
+               <button className="text-xs font-bold uppercase tracking-widest border-b-2 border-primary pb-1 hover:text-muted-foreground hover:border-border transition-all">
                  ডাউনলোড মার্কশিট (PDF)
                </button>
             </div>
@@ -142,7 +142,7 @@ const ZakatCalculator = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div className="bg-card p-12 md:p-12 space-y-12" rounded-lg border border-border>
-        <h2 className="text-3xl font-extrabold tracking-tight flex items-center gap-4">
+        <h2 className="text-3xl font-bold tracking-tight flex items-center gap-4">
            <Wallet size={32} /> সম্পদ বিবরণী
         </h2>
         <div className="space-y-10">
@@ -156,7 +156,7 @@ const ZakatCalculator = () => {
         <div className="space-y-4">
            <div className="caps-label text-primary-foreground">Estimator</div>
            <p className="text-lg font-bold text-primary-foreground">আপনার প্রদেয় জাকাত (আনুমানিক)</p>
-           <h3 className="text-6xl md:text-7xl font-black tracking-tight">৳ {zakat.toLocaleString()}</h3>
+           <h3 className="text-6xl md:text-7xl font-bold tracking-tight">৳ {zakat.toLocaleString()}</h3>
         </div>
         <p className="text-sm text-primary-foreground max-w-xs font-medium leading-relaxed">
            এটি একটি সাধারণ হিসাব। সঠিক নিসাব এবং জাকাত পরিশোধের জন্য ফকিহ বা আলেমদের সরাসরি পরামর্শ নিন।
@@ -177,7 +177,7 @@ const InputField = ({ label, value, onChange, negative, placeholder }: any) => (
       <input 
         type="number" 
         placeholder={placeholder}
-        className={`w-full pl-10 pr-4 py-4 bg-transparent border-b-2 border-border focus:border-primary outline-none transition-all font-black text-3xl`}
+        className={`w-full pl-10 pr-4 py-4 bg-transparent border-b-2 border-border focus:border-primary outline-none transition-all font-bold text-3xl`}
         value={value || ''}
         onChange={(e) => onChange ? onChange(Number(e.target.value)) : null}
       />
@@ -189,10 +189,10 @@ const KhutbahPlanner = () => (
   <div className="space-y-12">
     <div className="p-12 minimal-border bg-card flex justify-between items-center" rounded-lg border border-border>
       <div className="space-y-2">
-         <h2 className="text-3xl font-extrabold tracking-tight">আসন্ন জুমুআহ এর বিষয়বস্তু।</h2>
+         <h2 className="text-3xl font-bold tracking-tight">আসন্ন জুমুআহ এর বিষয়বস্তু।</h2>
          <p className="text-muted-foreground font-bold uppercase text-[10px] tracking-widest">১৫ ফেব্রুয়ারি ২০২৫ • শুক্রবার</p>
       </div>
-      <button className="text-xs font-black uppercase tracking-widest border border-border px-6 py-3 hover:bg-primary hover:text-primary-foreground transition-all">গাইডলাইন ডাউনলোড</button>
+      <button className="text-xs font-bold uppercase tracking-widest border border-border px-6 py-3 hover:bg-primary hover:text-primary-foreground transition-all">গাইডলাইন ডাউনলোড</button>
     </div>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <KhutbahCard title="পবিত্রতা ও ঈমানের মজবুতি" board="বেফাক অনুমোদিত" active />
@@ -208,11 +208,11 @@ const KhutbahCard = ({ title, board, active }: any) => (
        <Star size={32} className={active ? 'text-primary-foreground' : 'text-gray-100 group-hover:text-primary-foreground'} fill="currentColor" />
        <div className="space-y-2">
           <div className="caps-label text-primary-foreground">{board}</div>
-          <h4 className="text-2xl font-extrabold tracking-tight leading-tight">{title}</h4>
+          <h4 className="text-2xl font-bold tracking-tight leading-tight">{title}</h4>
        </div>
     </div>
     <div className="pt-8 border-t border-border group-hover:border-border flex items-center justify-between">
-       <span className="text-[10px] font-black uppercase tracking-widest">Select Theme</span>
+       <span className="text-[10px] font-bold uppercase tracking-widest">Select Theme</span>
        <ArrowUpRight size={20} className="text-primary-foreground group-hover:text-primary-foreground" />
     </div>
   </div>

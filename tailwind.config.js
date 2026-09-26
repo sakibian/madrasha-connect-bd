@@ -127,8 +127,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"Noto Sans Bengali"', 'Inter', 'sans-serif'],
-        serif: ['Georgia', 'serif'],
+        sans: ['Inter', '"Hind Siliguri"', '"Noto Naskh Arabic"', 'sans-serif'],
+        serif: ['"Tiro Bangla"', 'Amiri', 'Georgia', 'serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       borderRadius: {

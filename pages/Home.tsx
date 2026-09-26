@@ -50,7 +50,7 @@ const Home: React.FC = () => {
       {/* Welcome Header */}
       <div className="space-y-4">
         <div className="caps-label text-muted-foreground">Internal Portal</div>
-        <h1 className="text-5xl font-extrabold tracking-tight">আসসালামু আলাইকুম।</h1>
+        <h1 className="text-5xl font-bold tracking-tight">আসসালামু আলাইকুম।</h1>
       </div>
 
       {/* Daily Deen: Minimalist Banner */}
@@ -60,7 +60,7 @@ const Home: React.FC = () => {
           <div className="caps-label text-background">Daily Wisdom</div>
         </div>
         <div className="max-w-3xl space-y-4">
-           <p className="text-3xl font-extrabold leading-tight">
+           <p className="text-3xl font-bold leading-tight">
               {dailyDeen ? dailyDeen.text : "লোড হচ্ছে..."}
            </p>
            <div className="pt-1">
@@ -99,7 +99,7 @@ const Home: React.FC = () => {
       {/* Recent Jobs: Strict List */}
       <section className="space-y-8">
          <div className="flex justify-between items-end border-b border-border pb-8">
-            <h2 className="text-3xl font-extrabold">সাম্প্রতিক নিয়োগ</h2>
+            <h2 className="text-3xl font-bold">সাম্প্রতিক নিয়োগ</h2>
             <Link to="/professional" className="text-sm font-bold border-b-2 border-primary">সবগুলো দেখুন</Link>
          </div>
          <div className="space-y-1 bg-muted minimal-border">
@@ -116,7 +116,7 @@ const PrayerCard = ({ label, time, icon }: any) => (
   <div className="space-y-4 text-center p-6 minimal-border hover:bg-primary hover:text-primary-foreground transition-all group">
     <div className="flex justify-center text-foreground group-hover:text-primary-foreground">{icon}</div>
     <div className="space-y-1">
-      <div className="text-xl font-extrabold">{time}</div>
+      <div className="text-xl font-bold">{time}</div>
       <div className="caps-label text-muted-foreground group-hover:text-muted-foreground">{label}</div>
     </div>
   </div>
@@ -124,7 +124,7 @@ const PrayerCard = ({ label, time, icon }: any) => (
 
 const SmallStat = ({ label, value }: any) => (
   <div className="space-y-1">
-    <div className="text-3xl font-extrabold">{value}</div>
+    <div className="text-3xl font-bold">{value}</div>
     <div className="caps-label text-muted-foreground">{label}</div>
   </div>
 );

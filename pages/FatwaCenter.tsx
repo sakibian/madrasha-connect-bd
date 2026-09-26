@@ -154,7 +154,7 @@ const FatwaCenter: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-between items-start gap-6 border-b border-border pb-12">
         <div className="space-y-2">
           <div className="caps-label text-muted-foreground">Fatwa Center</div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">ফতোয়া ও জিজ্ঞাসা।</h1>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">ফতোয়া ও জিজ্ঞাসা।</h1>
         </div>
         <Button onClick={() => setIsAsking(true)}>
           প্রশ্ন করুন
@@ -264,14 +264,14 @@ const FatwaCenter: React.FC = () => {
                         </div>
                       </div>
                     ) : (
-                      <h3 className="text-2xl font-extrabold leading-tight">প্রশ্ন: {fatwa.question}</h3>
+                      <h3 className="text-2xl font-bold leading-tight">প্রশ্ন: {fatwa.question}</h3>
                     )}
                    
                     {fatwa.answer ? (
                       <div className="pt-8 border-t border-border space-y-6">
                          <div className="flex items-center gap-3">
                             <div className="w-8 h-8 bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-bold">A</div>
-                            <span className="text-xs font-extrabold uppercase tracking-widest">মুফতির উত্তর</span>
+                            <span className="text-xs font-bold uppercase tracking-widest">মুফতির উত্তর</span>
                          </div>
                          <p className="text-muted-foreground leading-relaxed font-medium">{fatwa.answer}</p>
                          {answerSources[fatwa.id] && answerSources[fatwa.id].length > 0 && (

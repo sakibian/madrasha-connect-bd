@@ -59,7 +59,7 @@ const AdminDashboard: React.FC = () => {
     <div className="space-y-12 animate-fadeIn">
       <div className="space-y-4 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">System Control</div>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">অ্যাডমিন প্যানেল।</h1>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">অ্যাডমিন প্যানেল।</h1>
       </div>
 
       <div className="flex gap-6 p-1 minimal-border w-fit">
@@ -122,7 +122,7 @@ const ManageJobs: React.FC = () => {
               </td>
               <td className="px-8 py-6 text-sm font-bold text-muted-foreground">{job.institution}</td>
               <td className="px-8 py-6">
-                <span className={`text-[9px] font-black px-3 py-1 uppercase tracking-widest ${job.verified ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>
+                <span className={`text-[9px] font-bold px-3 py-1 uppercase tracking-widest ${job.verified ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>
                   {job.verified ? 'VERIFIED' : 'PENDING'}
                 </span>
               </td>
@@ -216,7 +216,7 @@ const ManageProducts: React.FC = () => {
                   <span className="font-bold text-foreground text-lg">{p.name}</span>
                 </td>
                 <td className="px-8 py-6 text-sm font-bold text-muted-foreground">{p.category}</td>
-                <td className="px-8 py-6 font-black text-xl text-foreground">৳{p.price}</td>
+                <td className="px-8 py-6 font-bold text-xl text-foreground">৳{p.price}</td>
                 <td className="px-8 py-6 text-right">
                   <button onClick={async () => { await dataService.deleteProduct(p.id); loadProducts(); }} className="p-3 border border-border text-foreground hover:bg-muted transition-all">
                     <Trash2 size={16} />
@@ -278,12 +278,12 @@ const ManageUsers: React.FC = () => {
                   </td>
                   <td className="px-8 py-6">
                     {u.role === 'ADMIN' ? (
-                      <span className="text-[9px] font-black px-3 py-1 bg-primary text-primary-foreground uppercase tracking-widest">ADMIN</span>
+                      <span className="text-[9px] font-bold px-3 py-1 bg-primary text-primary-foreground uppercase tracking-widest">ADMIN</span>
                     ) : (
                       <select
                         value={u.role}
                         onChange={e => handleRoleChange(u.id, e.target.value)}
-                        className="text-[9px] font-black px-3 py-1 bg-muted text-muted-foreground uppercase tracking-widest border-none outline-none cursor-pointer"
+                        className="text-[9px] font-bold px-3 py-1 bg-muted text-muted-foreground uppercase tracking-widest border-none outline-none cursor-pointer"
                       >
                         <option value="USER">USER</option>
                         <option value="INSTITUTION">INSTITUTION</option>
@@ -293,16 +293,16 @@ const ManageUsers: React.FC = () => {
                   </td>
                   <td className="px-8 py-6">
                     {u.banned ? (
-                      <span className="text-[9px] font-black px-3 py-1 bg-muted text-foreground uppercase tracking-widest">ব্যানড</span>
+                      <span className="text-[9px] font-bold px-3 py-1 bg-muted text-foreground uppercase tracking-widest">ব্যানড</span>
                     ) : (
-                      <span className="text-[9px] font-black px-3 py-1 bg-muted text-foreground uppercase tracking-widest">সক্রিয়</span>
+                      <span className="text-[9px] font-bold px-3 py-1 bg-muted text-foreground uppercase tracking-widest">সক্রিয়</span>
                     )}
                   </td>
                   <td className="px-8 py-6 text-right">
                     {u.role !== 'ADMIN' && (
                       <button
                         onClick={() => handleBanToggle(u.id, !!u.banned)}
-                        className={`text-[10px] font-black uppercase tracking-widest border px-4 py-2 transition-all ${
+                        className={`text-[10px] font-bold uppercase tracking-widest border px-4 py-2 transition-all ${
                           u.banned ? 'border-primary text-foreground hover:bg-secondary hover:text-primary-foreground' : 'border-border text-muted-foreground hover:bg-primary hover:border-primary hover:text-primary-foreground'
                         }`}
                       >
@@ -350,7 +350,7 @@ const ManageInstitutions: React.FC = () => {
       <div className="flex items-center gap-3">
         <Shield size={20} />
         <span className="font-bold text-lg">প্রতিষ্ঠান অনুমোদন</span>
-        <span className="text-[9px] font-black px-2 py-1 bg-muted text-muted-foreground">{institutions.length} পেন্ডিং</span>
+        <span className="text-[9px] font-bold px-2 py-1 bg-muted text-muted-foreground">{institutions.length} পেন্ডিং</span>
       </div>
 
       {loading ? (
@@ -448,7 +448,7 @@ const ManageModeration: React.FC = () => {
       <div className="flex items-center gap-3">
         <Shield size={20} />
         <span className="font-bold text-lg">ফতোয়া মডারেশন কিউ</span>
-        <span className="text-[9px] font-black px-2 py-1 bg-muted text-muted-foreground">{fatwas.length} পেন্ডিং</span>
+        <span className="text-[9px] font-bold px-2 py-1 bg-muted text-muted-foreground">{fatwas.length} পেন্ডিং</span>
       </div>
 
       {loading ? (
@@ -462,7 +462,7 @@ const ManageModeration: React.FC = () => {
               <div className="flex justify-between items-start">
                 <div className="space-y-2">
                   <div className="caps-label text-foreground">{fatwa.category}</div>
-                  <h3 className="text-2xl font-extrabold leading-tight">{fatwa.question}</h3>
+                  <h3 className="text-2xl font-bold leading-tight">{fatwa.question}</h3>
                   <div className="text-xs font-bold text-muted-foreground">{fatwa.askedAt}</div>
                 </div>
               </div>
@@ -498,7 +498,7 @@ const ManageModeration: React.FC = () => {
           <div className="bg-card w-full max-w-2xl p-12 space-y-8 animate-slideUp max-h-[90vh] overflow-y-auto" rounded-lg border border-border onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center border-b border-border pb-6">
               <div className="space-y-1">
-                <h2 className="text-2xl font-extrabold">ফতোয়ার উত্তর</h2>
+                <h2 className="text-2xl font-bold">ফতোয়ার উত্তর</h2>
                 <p className="text-sm text-muted-foreground font-medium">{answering.question}</p>
               </div>
               <button onClick={() => setAnswering(null)} className="text-muted-foreground hover:text-foreground"><X size={24} /></button>
@@ -602,7 +602,7 @@ const ManageFlags: React.FC = () => {
       <div className="flex items-center gap-3">
         <Shield size={20} />
         <span className="font-bold text-lg">রিপোর্ট করা কন্টেন্ট</span>
-        <span className="text-[9px] font-black px-2 py-1 bg-muted text-muted-foreground">{flags.length} টি</span>
+        <span className="text-[9px] font-bold px-2 py-1 bg-muted text-muted-foreground">{flags.length} টি</span>
       </div>
 
       {loading ? (
@@ -625,7 +625,7 @@ const ManageFlags: React.FC = () => {
               {flags.map(flag => (
                 <tr key={flag.id} className="hover:bg-muted transition-colors">
                   <td className="px-8 py-6">
-                    <span className="text-[9px] font-black px-2 py-1 bg-muted uppercase tracking-widest">{flag.content_type}</span>
+                    <span className="text-[9px] font-bold px-2 py-1 bg-muted uppercase tracking-widest">{flag.content_type}</span>
                   </td>
                   <td className="px-8 py-6 text-sm font-mono text-muted-foreground">{flag.content_id.slice(0, 12)}...</td>
                   <td className="px-8 py-6 font-bold text-sm text-foreground">{flag.reason}</td>
@@ -692,7 +692,7 @@ const ManageScholarApplications: React.FC = () => {
       <div className="flex items-center gap-3">
         <GraduationCap size={20} />
         <span className="font-bold text-lg">স্কলার আবেদন</span>
-        <span className="text-[9px] font-black px-2 py-1 bg-muted text-muted-foreground">{apps.length} পেন্ডিং</span>
+        <span className="text-[9px] font-bold px-2 py-1 bg-muted text-muted-foreground">{apps.length} পেন্ডিং</span>
       </div>
 
       {loading ? (
@@ -706,10 +706,10 @@ const ManageScholarApplications: React.FC = () => {
               <div className="flex justify-between items-start">
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
-                    <span className="text-[9px] font-black px-2 py-1 bg-primary text-primary-foreground uppercase tracking-widest">{app.title}</span>
+                    <span className="text-[9px] font-bold px-2 py-1 bg-primary text-primary-foreground uppercase tracking-widest">{app.title}</span>
                     <span className="caps-label text-foreground">{app.specialization}</span>
                   </div>
-                  <h3 className="text-2xl font-extrabold">{app.userId.slice(0, 8)}...</h3>
+                  <h3 className="text-2xl font-bold">{app.userId.slice(0, 8)}...</h3>
                   <div className="flex flex-wrap gap-4 text-sm font-bold text-muted-foreground">
                     {app.institution && <span>{app.institution}</span>}
                     {app.location && <span>{app.location}</span>}
@@ -751,10 +751,10 @@ const ManageScholarApplications: React.FC = () => {
             <div className="flex justify-between items-center border-b border-border pb-6">
               <div className="space-y-1">
                 <div className="flex items-center gap-3">
-                  <span className="text-[9px] font-black px-2 py-1 bg-primary text-primary-foreground uppercase tracking-widest">{reviewing.title}</span>
+                  <span className="text-[9px] font-bold px-2 py-1 bg-primary text-primary-foreground uppercase tracking-widest">{reviewing.title}</span>
                   <span className="caps-label text-foreground">{reviewing.specialization}</span>
                 </div>
-                <h2 className="text-xl font-extrabold">স্কলার আবেদন পর্যালোচনা</h2>
+                <h2 className="text-xl font-bold">স্কলার আবেদন পর্যালোচনা</h2>
               </div>
               <button onClick={() => setReviewing(null)} className="text-muted-foreground hover:text-foreground"><X size={24} /></button>
             </div>
@@ -871,7 +871,7 @@ const AuditLogViewer: React.FC = () => {
       <div className="flex items-center gap-3">
         <History size={20} />
         <span className="font-bold text-lg">অ্যাডমিন অডিট লগ</span>
-        <span className="text-[9px] font-black px-2 py-1 bg-muted text-muted-foreground">{logs.length} টি</span>
+        <span className="text-[9px] font-bold px-2 py-1 bg-muted text-muted-foreground">{logs.length} টি</span>
       </div>
 
       {loading ? (
@@ -900,7 +900,7 @@ const AuditLogViewer: React.FC = () => {
                     <span className="font-bold text-foreground">{log.adminName || log.adminId.slice(0, 8)}</span>
                   </td>
                   <td className="px-8 py-6">
-                    <span className="text-[9px] font-black px-3 py-1 bg-muted uppercase tracking-widest">
+                    <span className="text-[9px] font-bold px-3 py-1 bg-muted uppercase tracking-widest">
                       {actionLabels[log.action] || log.action}
                     </span>
                   </td>

@@ -18,7 +18,7 @@ const StatCard: React.FC<StatCardProps> = ({ icon, label, value, className = '',
     >
       <div className="text-foreground group-hover:text-primary-foreground transition-colors">{icon}</div>
       <div className="space-y-1">
-        <div className="text-3xl font-extrabold tracking-tight">{value}</div>
+        <div className="text-3xl font-bold tracking-tight">{value}</div>
         <div className="caps-label text-muted-foreground group-hover:text-primary-foreground">{label}</div>
       </div>
     </Comp>

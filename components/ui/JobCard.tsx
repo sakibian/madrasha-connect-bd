@@ -17,9 +17,9 @@ const JobCard: React.FC<JobCardProps> = ({ job, onApply }) => (
           <Badge variant={job.verified ? 'success' : 'default'}>
             {job.verified ? 'VERIFIED' : 'PENDING'}
           </Badge>
-          <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">{job.type}</span>
+          <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">{job.type}</span>
         </div>
-        <h3 className="text-xl font-extrabold leading-tight">{job.title}</h3>
+        <h3 className="text-xl font-bold leading-tight">{job.title}</h3>
         <p className="text-sm font-bold text-muted-foreground">{job.institution}</p>
       </div>
     </div>

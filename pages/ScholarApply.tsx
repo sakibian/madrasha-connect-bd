@@ -73,7 +73,7 @@ const ScholarApply: React.FC = () => {
       <div className="space-y-12 animate-fadeIn">
         <div className="space-y-4 border-b border-border pb-12">
           <div className="caps-label text-muted-foreground">Scholar Portal</div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">আবেদনের অবস্থা।</h1>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">আবেদনের অবস্থা।</h1>
         </div>
 
         <div className="max-w-2xl">
@@ -81,7 +81,7 @@ const ScholarApply: React.FC = () => {
             <div className="p-12 bg-muted border border-border space-y-6">
               <Clock size={48} className="text-muted-foreground" />
               <div className="space-y-2">
-                <h2 className="text-2xl font-extrabold">আবেদন পর্যালোচনাধীন</h2>
+                <h2 className="text-2xl font-bold">আবেদন পর্যালোচনাধীন</h2>
                 <p className="text-muted-foreground font-medium">আপনার আবেদনটি অ্যাডমিন পর্যালোচনার জন্য অপেক্ষা করছে। আমাদের টিম শীঘ্রই এটি পর্যালোচনা করবে।</p>
               </div>
               <div className="p-4 bg-card space-y-2" rounded-lg border border-border>
@@ -105,7 +105,7 @@ const ScholarApply: React.FC = () => {
             <div className="p-12 bg-black/5 border border-black/20 space-y-6">
               <BadgeCheck size={48} className="text-foreground" />
               <div className="space-y-2">
-                <h2 className="text-2xl font-extrabold text-foreground">অভিনন্দন! আপনি ভেরিফায়েড!</h2>
+                <h2 className="text-2xl font-bold text-foreground">অভিনন্দন! আপনি ভেরিফায়েড!</h2>
                 <p className="text-muted-foreground font-medium">আপনার স্কলার আবেদন অনুমোদিত হয়েছে। আপনি এখন স্কলার ড্যাশবোর্ড ব্যবহার করতে পারবেন।</p>
               </div>
               <button
@@ -121,7 +121,7 @@ const ScholarApply: React.FC = () => {
             <div className="p-12 bg-muted border border-border space-y-6">
               <XCircle size={48} className="text-muted-foreground" />
               <div className="space-y-2">
-                <h2 className="text-2xl font-extrabold text-foreground">আবেদন প্রত্যাখ্যাত</h2>
+                <h2 className="text-2xl font-bold text-foreground">আবেদন প্রত্যাখ্যাত</h2>
                 <p className="text-muted-foreground font-medium">আপনার আবেদনটি প্রত্যাখ্যান করা হয়েছে।</p>
               </div>
               {existingApp.adminNotes && (
@@ -147,14 +147,14 @@ const ScholarApply: React.FC = () => {
     <div className="space-y-12 animate-fadeIn">
       <div className="space-y-4 border-b border-border pb-12">
         <div className="caps-label text-muted-foreground">Scholar Portal</div>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">স্কলার আবেদন।</h1>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">স্কলার আবেদন।</h1>
         <p className="text-muted-foreground font-medium max-w-xl">আপনার জ্ঞান ও অভিজ্ঞতা শেয়ার করতে আমাদের স্কলার টিমে যোগ দিন। ভেরিফায়েড স্কলাররা ফতোয়ার উত্তর দিতে এবং কন্টেন্ট যাচাই করতে পারেন।</p>
       </div>
 
       <form onSubmit={handleSubmit} className="max-w-3xl space-y-8">
         <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
           <div className="space-y-2">
-            <h2 className="text-xl font-extrabold">পদবি ও বিশেষজ্ঞতা</h2>
+            <h2 className="text-xl font-bold">পদবি ও বিশেষজ্ঞতা</h2>
             <p className="text-sm text-muted-foreground font-medium">আপনার একাডেমিক বা পেশাগত পরিচয়</p>
           </div>
 
@@ -224,7 +224,7 @@ const ScholarApply: React.FC = () => {
 
         <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
           <div className="space-y-2">
-            <h2 className="text-xl font-extrabold">যোগ্যতা ও সনদ</h2>
+            <h2 className="text-xl font-bold">যোগ্যতা ও সনদ</h2>
             <p className="text-sm text-muted-foreground font-medium">আপনার একাডেমিক সনদ ও প্রশিক্ষণ</p>
           </div>
 
@@ -262,7 +262,7 @@ const ScholarApply: React.FC = () => {
 
         <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
           <div className="space-y-2">
-            <h2 className="text-xl font-extrabold">রেফারেন্স</h2>
+            <h2 className="text-xl font-bold">রেফারেন্স</h2>
             <p className="text-sm text-muted-foreground font-medium">আপনার সুপারিশকারীদের নাম ও পরিচিতি</p>
           </div>
 
