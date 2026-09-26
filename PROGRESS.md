@@ -1027,3 +1027,8 @@ stopped looking generic shadcn
   Hind Siliguri (Bengali) → Noto Naskh Arabic (Arabic). Serif accents:
   Tiro Bangla + Amiri. All `font-extrabold`/`font-black` → `font-bold`
   across 62 files so Bangla never hits synthesized heavy weights.
+- **Guest nav restructure** — h-16 sticky bar w/ backdrop-blur; brand
+  lockup adds মুসলিম কমিউনিটি sublabel; pill-hover links w/ primary
+  underline for the active route (aria-current set); login is a plain
+  ghost link (was confusing underlined style); mobile menu gains
+  active-state highlight + px-3 hit targets.

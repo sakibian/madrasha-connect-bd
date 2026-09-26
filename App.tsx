@@ -160,37 +160,72 @@ const Shell: React.FC = () => {
           <Header onMenuToggle={() => setSidebarOpen(s => !s)} isSidebarOpen={isSidebarOpen} />
         )}
         {!currentUser && (
-          <nav className="bg-background border-b border-border py-6 sticky top-0 z-50">
-            <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-              <Link to="/" className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center text-primary-foreground font-bold">Q</div>
-                <span className="text-xl font-bold tracking-tight">কওমি</span>
+          <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+            <div className="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
+              <Link to="/" className="flex items-center gap-2.5 group">
+                <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center text-primary-foreground font-bold group-hover:rotate-6 transition-transform">Q</div>
+                <div className="leading-tight">
+                  <span className="text-lg font-bold tracking-tight block">কওমি</span>
+                  <span className="hidden sm:block text-[9px] font-bold uppercase tracking-widest text-muted-foreground">মুসলিম কমিউনিটি</span>
+                </div>
               </Link>
-              <div className="hidden lg:flex items-center gap-8">
-                {guestLinks.map((l) => (
-                  <Link key={l.to} to={l.to} className="text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">{l.label}</Link>
-                ))}
+
+              {/* Center links — pill hover + primary underline for active route */}
+              <div className="hidden lg:flex items-center gap-1">
+                {guestLinks.map((l) => {
+                  const active = location.pathname === l.to || (l.to !== '/' && location.pathname.startsWith(l.to));
+                  return (
+                    <Link
+                      key={l.to}
+                      to={l.to}
+                      className={`relative px-4 py-2 text-sm font-bold rounded-md transition-colors ${
+                        active
+                          ? 'text-primary'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                      }`}
+                      aria-current={active ? 'page' : undefined}
+                    >
+                      {l.label}
+                      {active && <span className="absolute -bottom-[13px] left-3 right-3 h-0.5 bg-primary rounded-full" />}
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <div className="hidden lg:flex items-center gap-3">
                 <ThemeToggle />
                 <LanguageSwitcher />
-                <Link to="/login" className="text-sm font-bold border-b-2 border-primary pb-0.5">{t('nav.login')}</Link>
-                <Link to="/register-user" className="bg-primary text-primary-foreground rounded-md px-5 py-2.5 text-sm font-bold hover:opacity-90 transition-all">শুরু করুন</Link>
+                <Link to="/login" className="text-sm font-bold text-muted-foreground hover:text-foreground px-3 py-2 transition-colors">{t('nav.login')}</Link>
+                <Link to="/register-user" className="bg-primary text-primary-foreground rounded-md px-5 py-2.5 text-sm font-bold hover:opacity-90 transition-all shadow-sm">শুরু করুন</Link>
               </div>
-              <button className="lg:hidden" onClick={() => setSidebarOpen(s => !s)} aria-label={isSidebarOpen ? 'Close menu' : 'Open menu'}>
+
+              <button className="lg:hidden p-2" onClick={() => setSidebarOpen(s => !s)} aria-label={isSidebarOpen ? 'Close menu' : 'Open menu'}>
                 {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
+
             {/* Guest mobile menu */}
             {isSidebarOpen && (
-              <div className="lg:hidden border-t border-border mt-6 px-6 pt-4 pb-6 flex flex-col gap-5 bg-background animate-slideDown">
-                {guestLinks.map((l) => (
-                  <Link key={l.to} to={l.to} onClick={() => setSidebarOpen(false)} className="font-bold text-lg text-foreground">{l.label}</Link>
-                ))}
-                <div className="pt-4 border-t border-border flex flex-col gap-4">
-                  <div className="flex items-center gap-3">
+              <div className="lg:hidden border-t border-border px-6 pt-4 pb-6 flex flex-col gap-2 bg-background animate-slideDown">
+                {guestLinks.map((l) => {
+                  const active = location.pathname === l.to;
+                  return (
+                    <Link
+                      key={l.to}
+                      to={l.to}
+                      onClick={() => setSidebarOpen(false)}
+                      className={`font-bold text-lg py-2 rounded-md px-3 ${active ? 'text-primary bg-muted' : 'text-foreground'}`}
+                    >
+                      {l.label}
+                    </Link>
+                  );
+                })}
+                <div className="pt-4 mt-2 border-t border-border flex flex-col gap-4">
+                  <div className="flex items-center gap-3 px-3">
                     <ThemeToggle />
                     <LanguageSwitcher />
                   </div>
-                  <Link to="/login" onClick={() => setSidebarOpen(false)} className="font-bold text-lg">{t('nav.login')}</Link>
+                  <Link to="/login" onClick={() => setSidebarOpen(false)} className="font-bold text-lg px-3">{t('nav.login')}</Link>
                   <Link to="/register-user" onClick={() => setSidebarOpen(false)} className="bg-primary text-primary-foreground rounded-md px-6 py-4 text-center font-bold">শুরু করুন</Link>
                 </div>
               </div>
