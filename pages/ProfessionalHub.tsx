@@ -76,13 +76,13 @@ const ProfessionalHub: React.FC = () => {
 
   return (
     <div className="space-y-12 animate-fadeIn">
-      <div className="flex flex-col md:flex-row justify-between items-start gap-6 border-b border-gray-100 pb-12">
+      <div className="flex flex-col md:flex-row justify-between items-start gap-6 border-b border-border pb-12">
         <div className="space-y-2">
-          <div className="caps-label text-gray-400">Careers</div>
+          <div className="caps-label text-muted-foreground">Careers</div>
           <h1 className="text-5xl font-extrabold tracking-tight">প্রফেশনাল নিয়োগ পোর্টাল।</h1>
         </div>
         {canPost && (
-          <Link to="/post-job" className="bg-black text-white px-8 py-4 font-bold text-sm flex items-center gap-2 hover:bg-gray-800 transition-all">
+          <Link to="/post-job" className="bg-primary text-primary-foreground px-8 py-4 font-bold text-sm flex items-center gap-2 hover:bg-secondary transition-all">
             <Plus size={20} /> নতুন বিজ্ঞপ্তি পোস্ট করুন
           </Link>
         )}
@@ -102,28 +102,28 @@ const ProfessionalHub: React.FC = () => {
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 bg-gray-100 minimal-border">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 bg-muted minimal-border">
           <LoadingSkeleton variant="card" count={6} />
         </div>
       ) : (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 bg-gray-100 minimal-border">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 bg-muted minimal-border">
         {filteredJobs.map(job => (
-          <div key={job.id} className="bg-white p-10 flex flex-col justify-between group hover:bg-gray-50 transition-all h-[450px]">
+          <div key={job.id} className="bg-card p-10 flex flex-col justify-between group hover:bg-muted transition-all h-[450px]">
             <div className="space-y-6">
               <div className="flex justify-between items-start">
                  <Badge variant="info">{job.type}</Badge>
-                 {job.verified && <CheckCircle size={18} className="text-black" />}
+                 {job.verified && <CheckCircle size={18} className="text-foreground" />}
               </div>
               <h3 className="text-3xl font-extrabold leading-tight">{job.title}</h3>
-              <div className="space-y-3 font-medium text-gray-500">
+              <div className="space-y-3 font-medium text-muted-foreground">
                  <div className="flex items-center gap-2"><Building size={16} /> {job.institution}</div>
                  <div className="flex items-center gap-2"><MapPin size={16} /> {job.location}</div>
-                 <div className="flex items-center gap-2 font-bold text-black"><DollarSign size={16} /> {job.salary}</div>
+                 <div className="flex items-center gap-2 font-bold text-foreground"><DollarSign size={16} /> {job.salary}</div>
               </div>
             </div>
             
-            <div className="pt-8 border-t border-gray-100 space-y-4">
-               <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+            <div className="pt-8 border-t border-border space-y-4">
+               <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                   <Clock size={12} /> পোস্ট করা হয়েছে: {job.postedAt}
                </div>
                 {isAdmin ? (
@@ -134,7 +134,7 @@ const ProfessionalHub: React.FC = () => {
                ) : currentUser && appliedJobs.has(job.id) ? (
                  <div className="flex gap-2 pt-4">
                    <Button variant="outline" size="sm" className="flex-1" disabled>
-                     <CheckCircle size={16} className="text-black" /> আবেদন জমা হয়েছে
+                     <CheckCircle size={16} className="text-foreground" /> আবেদন জমা হয়েছে
                    </Button>
                    <Button
                      variant="outline"
@@ -186,7 +186,7 @@ const ProfessionalHub: React.FC = () => {
       </div>
       )}
       <Modal open={!!deleteId} onClose={() => setDeleteId(null)} title="চাকরি মুছে ফেলুন">
-        <p className="text-gray-600 mb-6">এই চাকরির পোস্টটি কি মুছে ফেলতে চান? এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।</p>
+        <p className="text-muted-foreground mb-6">এই চাকরির পোস্টটি কি মুছে ফেলতে চান? এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।</p>
         <div className="flex gap-3 justify-end">
           <Button variant="outline" onClick={() => setDeleteId(null)}>বাতিল</Button>
           <Button variant="danger" onClick={handleDelete}>মুছে ফেলুন</Button>

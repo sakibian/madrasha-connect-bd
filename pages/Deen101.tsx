@@ -122,57 +122,57 @@ const Deen101: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto space-y-24 animate-fadeIn">
       <div className="space-y-12">
-        <Link to="/knowledge" className="inline-flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-black uppercase tracking-widest transition-all">
+        <Link to="/knowledge" className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-foreground uppercase tracking-widest transition-all">
           <ArrowLeft size={14} /> Back to Library
         </Link>
         <div className="space-y-4">
-          <div className="caps-label text-black">Learning Pathway</div>
+          <div className="caps-label text-foreground">Learning Pathway</div>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">Deen-101 (মৌলিক দ্বীন শিক্ষা)।</h1>
-          <p className="text-xl text-gray-500 max-w-2xl leading-relaxed font-medium">
+          <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium">
             প্রতিটি মুসলমানের জন্য অত্যাবশ্যকীয় দ্বীনি জ্ঞানসমূহ সহজ ও সাবলীল বাংলায় শেখার ডিজিটাল মাধ্যম।
           </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-1 bg-gray-100 minimal-border">
-        <div className="lg:col-span-4 bg-white divide-y divide-gray-100">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-1 bg-muted minimal-border">
+        <div className="lg:col-span-4 bg-card divide-y divide-gray-100">
           {modules.map((m, i) => (
             <button
               key={i}
               onClick={() => { setActiveModule(i); setShowQuiz(false); setSelectedOption(null); setIsCorrect(null); }}
-              className={`w-full p-10 text-left transition-all flex items-start gap-6 ${activeModule === i ? 'bg-black text-white' : 'hover:bg-gray-50'}`}
+              className={`w-full p-10 text-left transition-all flex items-start gap-6 ${activeModule === i ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'}`}
             >
-              <div className={`mt-1 ${activeModule === i ? 'text-black' : 'text-gray-300'}`}>{m.icon}</div>
+              <div className={`mt-1 ${activeModule === i ? 'text-foreground' : 'text-muted-foreground'}`}>{m.icon}</div>
               <div>
                 <h3 className="text-xl font-bold mb-1">{m.title}</h3>
-                <p className={`text-[10px] font-bold uppercase tracking-widest ${activeModule === i ? 'text-gray-400' : 'text-gray-400'}`}>{m.duration}</p>
+                <p className={`text-[10px] font-bold uppercase tracking-widest ${activeModule === i ? 'text-muted-foreground' : 'text-muted-foreground'}`}>{m.duration}</p>
               </div>
             </button>
           ))}
         </div>
 
-        <div className="lg:col-span-8 bg-white p-12 md:p-20 flex flex-col min-h-[600px]">
+        <div className="lg:col-span-8 bg-card p-12 md:p-20 flex flex-col min-h-[600px]">
           {!showQuiz ? (
             <div className="space-y-12 animate-fadeIn flex-1">
               <div className="space-y-4">
-                <div className="caps-label text-gray-400">Step by Step Guide</div>
+                <div className="caps-label text-muted-foreground">Step by Step Guide</div>
                 <h2 className="text-4xl font-extrabold">{modules[activeModule].title}</h2>
               </div>
 
               <div className="space-y-0">
                 {modules[activeModule].steps.map((step, idx) => (
-                  <div key={idx} className="flex gap-8 py-8 border-b border-gray-100 last:border-none group">
-                    <div className="text-4xl font-black text-gray-100 group-hover:text-black transition-all">0{idx + 1}</div>
+                  <div key={idx} className="flex gap-8 py-8 border-b border-border last:border-none group">
+                    <div className="text-4xl font-black text-gray-100 group-hover:text-foreground transition-all">0{idx + 1}</div>
                     <div className="space-y-2 pt-2">
                       <p className="text-2xl font-bold">{step}</p>
-                      <p className="text-gray-500 font-medium text-sm max-w-lg">এই ধাপটি সঠিকভাবে পালন করার জন্য স্থিরচিত্র এবং বর্ণিত আদবসমূহ লক্ষ্য করুন।</p>
+                      <p className="text-muted-foreground font-medium text-sm max-w-lg">এই ধাপটি সঠিকভাবে পালন করার জন্য স্থিরচিত্র এবং বর্ণিত আদবসমূহ লক্ষ্য করুন।</p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="pt-6 border-t border-gray-100 space-y-3">
-                <div className="caps-label text-gray-400">সোর্স</div>
+              <div className="pt-6 border-t border-border space-y-3">
+                <div className="caps-label text-muted-foreground">সোর্স</div>
                 <div className="flex flex-wrap gap-2">
                   {modules[activeModule].sources.map(s => (
                     <CitationBadge key={s.id} source={s} size="md" />
@@ -183,7 +183,7 @@ const Deen101: React.FC = () => {
               <div className="pt-4">
                 <button
                   onClick={() => setShowQuiz(true)}
-                  className="w-full py-6 bg-black text-white font-bold text-lg flex items-center justify-center gap-4 hover:bg-gray-800 transition-all"
+                  className="w-full py-6 bg-primary text-primary-foreground font-bold text-lg flex items-center justify-center gap-4 hover:bg-secondary transition-all"
                 >
                   নিজেকে যাচাই করুন <ArrowRight size={24} />
                 </button>
@@ -191,11 +191,11 @@ const Deen101: React.FC = () => {
             </div>
           ) : (
             <div className="space-y-12 animate-fadeIn flex flex-col flex-1">
-              <div className="flex justify-between items-center border-b border-gray-100 pb-8">
+              <div className="flex justify-between items-center border-b border-border pb-8">
                 <h2 className="text-3xl font-extrabold flex items-center gap-4">
                   <HelpCircle size={28} /> কুইজ টেস্ট
                 </h2>
-                <button onClick={() => setShowQuiz(false)} className="caps-label text-gray-400 hover:text-black">Cancel</button>
+                <button onClick={() => setShowQuiz(false)} className="caps-label text-muted-foreground hover:text-foreground">Cancel</button>
               </div>
 
               <div className="flex-1 space-y-8">
@@ -208,8 +208,8 @@ const Deen101: React.FC = () => {
                       onClick={() => handleQuizSubmit(idx)}
                       className={`p-6 text-left font-bold transition-all border-2 ${
                         selectedOption === idx
-                          ? (idx === modules[activeModule].quiz.correct ? 'bg-black/10 border-black text-black' : 'bg-gray-100 border-gray-400 text-gray-500')
-                          : 'bg-white border-gray-100 hover:border-black'
+                          ? (idx === modules[activeModule].quiz.correct ? 'bg-black/10 border-primary text-foreground' : 'bg-muted border-border text-muted-foreground')
+                          : 'bg-card border-border hover:border-primary'
                       }`}
                     >
                       {option}
@@ -219,16 +219,16 @@ const Deen101: React.FC = () => {
               </div>
 
               {isCorrect !== null && (
-                <div className={`p-10 text-center space-y-8 animate-slideDown ${isCorrect ? 'bg-gray-50' : 'bg-gray-100'}`}>
+                <div className={`p-10 text-center space-y-8 animate-slideDown ${isCorrect ? 'bg-muted' : 'bg-muted'}`}>
                   <div className="flex items-center justify-center gap-3">
-                    {isCorrect ? <Trophy className="text-black" size={32} /> : <Sparkles className="text-gray-400" size={32} />}
-                    <p className={`text-2xl font-extrabold ${isCorrect ? 'text-black' : 'text-gray-500'}`}>
+                    {isCorrect ? <Trophy className="text-foreground" size={32} /> : <Sparkles className="text-muted-foreground" size={32} />}
+                    <p className={`text-2xl font-extrabold ${isCorrect ? 'text-foreground' : 'text-muted-foreground'}`}>
                       {isCorrect ? 'চমৎকার! সঠিক উত্তর।' : 'দুঃখিত, উত্তরটি ভুল ছিল।'}
                     </p>
                   </div>
                   <button
                     onClick={nextModule}
-                    className="w-full py-6 bg-black text-white font-bold text-lg hover:bg-gray-800 transition-all"
+                    className="w-full py-6 bg-primary text-primary-foreground font-bold text-lg hover:bg-secondary transition-all"
                   >
                     পরবর্তী মডিউলে যান
                   </button>
@@ -243,36 +243,36 @@ const Deen101: React.FC = () => {
           30-day starter journey (M14.5 curriculum).
           Rendered from data/curriculum/deen101.ts — every lesson sourced.
           ----------------------------------------------------------------- */}
-      <section className="space-y-8 border-t border-gray-100 pt-16">
+      <section className="space-y-8 border-t border-border pt-16">
         <div className="space-y-3">
-          <div className="caps-label text-black">M14.5 · 30-day Starter Journey</div>
+          <div className="caps-label text-foreground">M14.5 · 30-day Starter Journey</div>
           <h2 className="text-3xl md:text-4xl font-extrabold">৩০ দিনের সম্পূর্ণ যাত্রা</h2>
-          <p className="text-gray-500 max-w-2xl leading-relaxed">
+          <p className="text-muted-foreground max-w-2xl leading-relaxed">
             {DEEN101_LESSONS.length}টি সংক্ষিপ্ত পাঠ · মোট <strong>{DEEN101_TOTAL_XP} XP</strong> · প্রতিটি পাঠের সাথে কুরআন / হাদিসের রেফারেন্স।
           </p>
         </div>
 
         <ol className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {DEEN101_LESSONS.map(l => (
-            <li key={l.slug} className="bg-white border border-gray-100 p-5 flex gap-4 group hover:border-black transition-colors">
-              <div className="w-12 h-12 shrink-0 bg-black text-white flex items-center justify-center font-extrabold">
+            <li key={l.slug} className="bg-card border border-border p-5 flex gap-4 group hover:border-primary transition-colors">
+              <div className="w-12 h-12 shrink-0 bg-primary text-primary-foreground flex items-center justify-center font-extrabold">
                 {l.day}
               </div>
               <div className="flex-1 min-w-0 space-y-2">
-                <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                   <CategoryPill category={l.category} />
                   <span className="flex items-center gap-1"><Calendar size={10} /> {l.durationMin} min</span>
-                  <span className="text-black">+{l.xpReward} XP</span>
+                  <span className="text-foreground">+{l.xpReward} XP</span>
                 </div>
                 <h3 className="text-base font-extrabold leading-snug">{l.titleBn}</h3>
-                <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed">{l.summaryBn}</p>
+                <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">{l.summaryBn}</p>
                 <div className="pt-1">
                   {l.sourceUrl ? (
                     <a
                       href={l.sourceUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-black hover:underline"
+                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-foreground hover:underline"
                     >
                       {l.sourceName} <ExternalLink size={10} />
                     </a>
@@ -299,7 +299,7 @@ function CategoryPill({ category }: { category: Deen101Category }) {
     'halal-living':    'হালাল',
   };
   return (
-    <span className="px-2 py-0.5 bg-gray-50 text-black border border-gray-300">
+    <span className="px-2 py-0.5 bg-muted text-foreground border border-border">
       {label[category]}
     </span>
   );

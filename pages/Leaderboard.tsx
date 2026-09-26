@@ -24,41 +24,41 @@ const Leaderboard: React.FC = () => {
 
   const rankIcon = (i: number) => {
     // Gold / silver / bronze on the podium — kept as amber shades (never off-brand blue/purple)
-    if (i === 0) return <Trophy size={20} className="text-gray-500" />;
-    if (i === 1) return <Medal size={20} className="text-gray-400" />;
-    if (i === 2) return <Medal size={20} className="text-gray-900" />;
-    return <span className="text-sm font-bold text-gray-500 w-5 text-center">{i + 1}</span>;
+    if (i === 0) return <Trophy size={20} className="text-muted-foreground" />;
+    if (i === 1) return <Medal size={20} className="text-muted-foreground" />;
+    if (i === 2) return <Medal size={20} className="text-foreground" />;
+    return <span className="text-sm font-bold text-muted-foreground w-5 text-center">{i + 1}</span>;
   };
 
   return (
     <div className="space-y-12 animate-fadeIn">
-      <div className="space-y-4 border-b border-gray-100 pb-12">
-        <div className="caps-label text-gray-400">Community</div>
+      <div className="space-y-4 border-b border-border pb-12">
+        <div className="caps-label text-muted-foreground">Community</div>
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">লিডারবোর্ড।</h1>
-        <p className="text-gray-500 font-medium max-w-xl">সবচেয়ে সক্রিয় সদস্যরা — ফতোয়া উত্তর, চাকরি পোস্ট, কোর্স সম্পূর্ণ এবং আরও অনেক কিছুতে CP (কন্ট্রিবিউট পয়েন্ট) অর্জন করুন!</p>
+        <p className="text-muted-foreground font-medium max-w-xl">সবচেয়ে সক্রিয় সদস্যরা — ফতোয়া উত্তর, চাকরি পোস্ট, কোর্স সম্পূর্ণ এবং আরও অনেক কিছুতে CP (কন্ট্রিবিউট পয়েন্ট) অর্জন করুন!</p>
       </div>
 
-      <div className="flex gap-1 bg-gray-100 p-1 minimal-border w-fit">
+      <div className="flex gap-1 bg-muted p-1 minimal-border w-fit">
         <button
           onClick={() => setTab('xp')}
-          className={`px-6 py-3 text-xs font-bold uppercase tracking-widest transition-all ${tab === 'xp' ? 'bg-black text-white' : 'text-gray-400 hover:text-black'}`}
+          className={`px-6 py-3 text-xs font-bold uppercase tracking-widest transition-all ${tab === 'xp' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}
         >
           <TrendingUp size={14} className="inline mr-2" />সর্বোচ্চ CP
         </button>
         <button
           onClick={() => setTab('level')}
-          className={`px-6 py-3 text-xs font-bold uppercase tracking-widest transition-all ${tab === 'level' ? 'bg-black text-white' : 'text-gray-400 hover:text-black'}`}
+          className={`px-6 py-3 text-xs font-bold uppercase tracking-widest transition-all ${tab === 'level' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}
         >
           <Star size={14} className="inline mr-2" />সর্বোচ্চ লেভেল
         </button>
       </div>
 
       {loading ? (
-        <div className="bg-white p-20 text-center text-gray-400 font-bold"><Loader2 size={24} className="animate-spin mx-auto mb-4" />লোড হচ্ছে...</div>
+        <div className="bg-card p-20 text-center text-muted-foreground font-bold"><Loader2 size={24} className="animate-spin mx-auto mb-4" />লোড হচ্ছে...</div>
       ) : (
-        <div className="bg-white minimal-border overflow-hidden">
+        <div className="bg-card minimal-border overflow-hidden">
           <table className="w-full text-left">
-            <thead className="bg-gray-50 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100">
+            <thead className="bg-muted text-[10px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border">
               <tr>
                 <th className="px-8 py-5">#</th>
                 <th className="px-8 py-5">সদস্য</th>
@@ -70,22 +70,22 @@ const Leaderboard: React.FC = () => {
               {sorted.map((u, i) => {
                 const progress = getLevelProgress(u.xp);
                 return (
-                  <tr key={u.id} className="hover:bg-gray-50 transition-colors">
+                  <tr key={u.id} className="hover:bg-muted transition-colors">
                     <td className="px-8 py-6">{rankIcon(i)}</td>
                     <td className="px-8 py-6">
                       <Link to={`/profile/${u.userId}`} className="flex items-center gap-4 group">
-                        <div className="w-10 h-10 bg-gray-50 overflow-hidden border border-gray-200">
+                        <div className="w-10 h-10 bg-muted overflow-hidden border border-border">
                           <ImageWithFallback src={u.avatar || `https://picsum.photos/seed/${u.userId}/100/100`} name={u.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform" alt="" />
                         </div>
-                        <span className="font-bold text-gray-800 group-hover:text-black transition-colors">{u.name}</span>
+                        <span className="font-bold text-foreground group-hover:text-foreground transition-colors">{u.name}</span>
                       </Link>
                     </td>
                     <td className="px-8 py-6">
                       <div className="flex items-center gap-3">
                         <span className="font-black text-lg">{u.level}</span>
-                        <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="w-24 h-2 bg-muted rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-black rounded-full transition-all"
+                            className="h-full bg-primary rounded-full transition-all"
                             style={{ width: `${Math.min(progress.progress, 100)}%` }}
                           />
                         </div>

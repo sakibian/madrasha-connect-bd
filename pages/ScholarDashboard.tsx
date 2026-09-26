@@ -77,29 +77,29 @@ const ScholarDashboard: React.FC = () => {
 
   return (
     <div className="space-y-12 animate-fadeIn">
-      <div className="space-y-4 border-b border-gray-100 pb-12">
-        <div className="caps-label text-gray-400">Scholar Portal</div>
+      <div className="space-y-4 border-b border-border pb-12">
+        <div className="caps-label text-muted-foreground">Scholar Portal</div>
         <div className="flex justify-between items-end">
           <div>
             <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">স্কলার ড্যাশবোর্ড।</h1>
             {myProfile && (
               <div className="flex items-center gap-3 mt-4">
-                <BadgeCheck size={18} className="text-black" />
-                <span className="font-bold text-gray-600">{myProfile.name}</span>
-                <span className="text-xs text-gray-400">•</span>
-                <span className="text-sm text-gray-500">{myProfile.specialization}</span>
+                <BadgeCheck size={18} className="text-foreground" />
+                <span className="font-bold text-muted-foreground">{myProfile.name}</span>
+                <span className="text-xs text-muted-foreground">•</span>
+                <span className="text-sm text-muted-foreground">{myProfile.specialization}</span>
               </div>
             )}
           </div>
-          <Link to="/fatwa" className="text-sm font-bold border-b-2 border-black">ফতোয়া পোর্টাল</Link>
+          <Link to="/fatwa" className="text-sm font-bold border-b-2 border-primary">ফতোয়া পোর্টাল</Link>
         </div>
       </div>
 
       {loading ? (
-        <div className="bg-white p-20 text-center text-gray-400 font-bold">লোড হচ্ছে...</div>
+        <div className="bg-card p-20 text-center text-muted-foreground font-bold">লোড হচ্ছে...</div>
       ) : (
         <>
-          <div className="flex gap-1 bg-gray-100 p-1 minimal-border w-fit">
+          <div className="flex gap-1 bg-muted p-1 minimal-border w-fit">
             <Button
               variant={activeTab === 'fatwas' ? 'primary' : 'ghost'}
               size="sm"
@@ -120,7 +120,7 @@ const ScholarDashboard: React.FC = () => {
 
           {activeTab === 'fatwas' && (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-gray-100 minimal-border">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-muted minimal-border">
                 <StatCard icon={<MessageCircle size={24} />} label="পেন্ডিং ফতোয়া" value={pendingFatwas.length} />
                 <StatCard icon={<CheckCircle size={24} />} label="উত্তর দেওয়া হয়েছে" value={answersGiven} />
                 <StatCard icon={<GraduationCap size={24} />} label="ভেরিফিকেশন" value={myProfile?.verified ? 1 : 0} />
@@ -129,29 +129,29 @@ const ScholarDashboard: React.FC = () => {
               <div className="space-y-6">
                 <div className="flex items-center gap-3">
                   <h2 className="text-2xl font-extrabold">পেন্ডিং ফতোয়া</h2>
-                  <span className="text-[9px] font-black px-2 py-1 bg-gray-100 text-gray-500">{pendingFatwas.length}</span>
+                  <span className="text-[9px] font-black px-2 py-1 bg-muted text-muted-foreground">{pendingFatwas.length}</span>
                 </div>
 
                 {pendingFatwas.length === 0 ? (
                   <EmptyState icon={<Shield size={48} />} title="কোনো পেন্ডিং ফতোয়া নেই" description="সব ফতোয়ার উত্তর দেওয়া হয়েছে।" />
                 ) : (
-                  <div className="space-y-1 bg-gray-100 minimal-border">
+                  <div className="space-y-1 bg-muted minimal-border">
                     {pendingFatwas.map(fatwa => (
-                      <div key={fatwa.id} className="bg-white p-10 space-y-6">
+                      <div key={fatwa.id} className="bg-card p-10 space-y-6">
                         <div className="flex justify-between items-start">
                           <div className="space-y-2">
-                            <div className="caps-label text-black">{fatwa.category}</div>
+                            <div className="caps-label text-foreground">{fatwa.category}</div>
                             <h3 className="text-2xl font-extrabold leading-tight">{fatwa.question}</h3>
-                            <div className="text-xs font-bold text-gray-400 flex items-center gap-2">
+                            <div className="text-xs font-bold text-muted-foreground flex items-center gap-2">
                               <Clock size={12} /> {fatwa.askedAt}
                             </div>
                           </div>
                         </div>
 
                         {fatwa.aiSuggestion && (
-                          <div className="p-6 bg-gray-50 border-l-4 border-gray-300 space-y-2">
-                            <div className="caps-label text-gray-400">এআই প্রস্তাবনা</div>
-                            <p className="text-sm text-gray-600 italic">{fatwa.aiSuggestion}</p>
+                          <div className="p-6 bg-muted border-l-4 border-border space-y-2">
+                            <div className="caps-label text-muted-foreground">এআই প্রস্তাবনা</div>
+                            <p className="text-sm text-muted-foreground italic">{fatwa.aiSuggestion}</p>
                           </div>
                         )}
 
@@ -177,21 +177,21 @@ const ScholarDashboard: React.FC = () => {
               </div>
 
               {showAddPortfolio && (
-                <div className="bg-white p-8 minimal-border space-y-6 animate-slideDown">
+                <div className="bg-card p-8 minimal-border space-y-6 animate-slideDown">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2 md:col-span-2">
-                      <label className="caps-label text-gray-400">শিরোনাম</label>
+                      <label className="caps-label text-muted-foreground">শিরোনাম</label>
                       <input
                         placeholder="টাইটেল"
-                        className="w-full p-3 bg-gray-50 border border-gray-100 outline-none font-bold"
+                        className="w-full p-3 bg-muted border border-border outline-none font-bold"
                         value={newPortItem.title}
                         onChange={e => setNewPortItem({...newPortItem, title: e.target.value})}
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="caps-label text-gray-400">ধরন</label>
+                      <label className="caps-label text-muted-foreground">ধরন</label>
                       <select
-                        className="w-full p-3 bg-gray-50 border border-gray-100 outline-none font-bold"
+                        className="w-full p-3 bg-muted border border-border outline-none font-bold"
                         value={newPortItem.type}
                         onChange={e => setNewPortItem({...newPortItem, type: e.target.value})}
                       >
@@ -199,20 +199,20 @@ const ScholarDashboard: React.FC = () => {
                       </select>
                     </div>
                     <div className="space-y-2">
-                      <label className="caps-label text-gray-400">লিংক (URL)</label>
+                      <label className="caps-label text-muted-foreground">লিংক (URL)</label>
                       <input
                         placeholder="https://..."
-                        className="w-full p-3 bg-gray-50 border border-gray-100 outline-none font-bold"
+                        className="w-full p-3 bg-muted border border-border outline-none font-bold"
                         value={newPortItem.url}
                         onChange={e => setNewPortItem({...newPortItem, url: e.target.value})}
                       />
                     </div>
                     <div className="space-y-2 md:col-span-2">
-                      <label className="caps-label text-gray-400">বিবরণ</label>
+                      <label className="caps-label text-muted-foreground">বিবরণ</label>
                       <textarea
                         placeholder="বিবরণ লিখুন..."
                         rows={3}
-                        className="w-full p-3 bg-gray-50 border border-gray-100 outline-none font-medium"
+                        className="w-full p-3 bg-muted border border-border outline-none font-medium"
                         value={newPortItem.description}
                         onChange={e => setNewPortItem({...newPortItem, description: e.target.value})}
                       />
@@ -243,15 +243,15 @@ const ScholarDashboard: React.FC = () => {
               ) : (
                 <div className="grid gap-4">
                   {portfolio.map(item => (
-                    <div key={item.id} className="bg-white p-8 minimal-border flex items-start justify-between gap-6 group hover:border-gray-200 transition-all">
+                    <div key={item.id} className="bg-card p-8 minimal-border flex items-start justify-between gap-6 group hover:border-border transition-all">
                       <div className="space-y-2 flex-1">
                         <div className="flex items-center gap-3">
                           <Badge variant="default">{TYPE_LABELS[item.type] || item.type}</Badge>
-                          <h3 className="font-bold text-gray-800 text-lg">{item.title}</h3>
+                          <h3 className="font-bold text-foreground text-lg">{item.title}</h3>
                         </div>
-                        {item.description && <p className="text-sm text-gray-500">{item.description}</p>}
+                        {item.description && <p className="text-sm text-muted-foreground">{item.description}</p>}
                         {item.url && (
-                          <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-black hover:underline">
+                          <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-foreground hover:underline">
                             <ExternalLink size={12} /> {item.url.slice(0, 40)}...
                           </a>
                         )}
@@ -278,12 +278,12 @@ const ScholarDashboard: React.FC = () => {
         {answering && (
           <div className="space-y-8">
             <div className="space-y-1">
-              <p className="text-sm text-gray-500 font-medium">{answering.question}</p>
+              <p className="text-sm text-muted-foreground font-medium">{answering.question}</p>
             </div>
 
             {answering.aiSuggestion && (
-              <div className="p-4 bg-gray-50 text-sm text-gray-500 italic border-l-4 border-gray-300">
-                <div className="caps-label text-gray-400 mb-2">এআই প্রস্তাবনা</div>
+              <div className="p-4 bg-muted text-sm text-muted-foreground italic border-l-4 border-border">
+                <div className="caps-label text-muted-foreground mb-2">এআই প্রস্তাবনা</div>
                 {answering.aiSuggestion}
               </div>
             )}
@@ -292,12 +292,12 @@ const ScholarDashboard: React.FC = () => {
               value={answerText}
               onChange={e => setAnswerText(e.target.value)}
               placeholder="আপনার উত্তর লিখুন..."
-              className="w-full p-6 border border-gray-100 bg-gray-50 outline-none focus:ring-2 focus:ring-black font-medium min-h-[200px]"
+              className="w-full p-6 border border-border bg-muted outline-none focus:ring-2 focus:ring-ring font-medium min-h-[200px]"
             />
 
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="caps-label text-gray-400">সোর্স সাইটেশন</span>
+                <span className="caps-label text-muted-foreground">সোর্স সাইটেশন</span>
                 <Button variant="outline" size="sm" onClick={() => setShowPicker(true)}>
                   + সোর্স যোগ করুন
                 </Button>
@@ -311,7 +311,7 @@ const ScholarDashboard: React.FC = () => {
               )}
             </div>
 
-            <div className="flex gap-4 pt-4 border-t border-gray-100">
+            <div className="flex gap-4 pt-4 border-t border-border">
               <Button
                 onClick={handleApprove}
                 disabled={submitting || !answerText.trim()}

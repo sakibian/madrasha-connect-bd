@@ -74,53 +74,53 @@ const CompetitionManager: React.FC = () => {
         <h2 className="text-2xl font-black">প্রতিযোগিতা ব্যবস্থাপনা</h2>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="bg-black text-white px-6 py-3 font-bold text-sm flex items-center gap-2 hover:bg-gray-800 transition-all"
+          className="bg-primary text-primary-foreground px-6 py-3 font-bold text-sm flex items-center gap-2 hover:bg-secondary transition-all"
         >
           <Plus size={18} /> নতুন প্রতিযোগিতা
         </button>
       </div>
 
       {loading ? (
-        <div className="text-center py-20 text-gray-400 font-medium">লোড হচ্ছে...</div>
+        <div className="text-center py-20 text-muted-foreground font-medium">লোড হচ্ছে...</div>
       ) : competitions.length === 0 ? (
         <div className="text-center py-20 space-y-4">
-          <Trophy size={48} className="mx-auto text-gray-200" />
-          <p className="text-xl font-bold text-gray-400">কোনো প্রতিযোগিতা তৈরি করা হয়নি।</p>
+          <Trophy size={48} className="mx-auto text-muted-foreground" />
+          <p className="text-xl font-bold text-muted-foreground">কোনো প্রতিযোগিতা তৈরি করা হয়নি।</p>
         </div>
       ) : (
-        <div className="bg-white border border-gray-100">
+        <div className="bg-card border border-border">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-muted border-b border-border">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-widest">শিরোনাম</th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-widest">পুরস্কার</th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-widest">শেষ তারিখ</th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-widest">অংশগ্রহণকারী</th>
-                <th className="px-6 py-4 text-right text-xs font-bold text-gray-500 uppercase tracking-widest">অ্যাকশন</th>
+                <th className="px-6 py-4 text-left text-xs font-bold text-muted-foreground uppercase tracking-widest">শিরোনাম</th>
+                <th className="px-6 py-4 text-left text-xs font-bold text-muted-foreground uppercase tracking-widest">পুরস্কার</th>
+                <th className="px-6 py-4 text-left text-xs font-bold text-muted-foreground uppercase tracking-widest">শেষ তারিখ</th>
+                <th className="px-6 py-4 text-left text-xs font-bold text-muted-foreground uppercase tracking-widest">অংশগ্রহণকারী</th>
+                <th className="px-6 py-4 text-right text-xs font-bold text-muted-foreground uppercase tracking-widest">অ্যাকশন</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {competitions.map((comp) => (
-                <tr key={comp.id} className="hover:bg-gray-50 transition-colors">
+                <tr key={comp.id} className="hover:bg-muted transition-colors">
                   <td className="px-6 py-4">
-                    <p className="font-bold text-gray-800">{comp.title}</p>
-                    <p className="text-xs text-gray-400 uppercase tracking-widest">{comp.category}</p>
+                    <p className="font-bold text-foreground">{comp.title}</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-widest">{comp.category}</p>
                   </td>
-                  <td className="px-6 py-4 text-sm font-medium text-gray-700">{comp.prize}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">
+                  <td className="px-6 py-4 text-sm font-medium text-foreground">{comp.prize}</td>
+                  <td className="px-6 py-4 text-sm text-muted-foreground">
                     {new Date(comp.deadline).toLocaleDateString('bn-BD')}
                   </td>
                   <td className="px-6 py-4">
-                    <span className="flex items-center gap-2 text-sm font-bold text-black">
+                    <span className="flex items-center gap-2 text-sm font-bold text-foreground">
                       <Users size={14} /> {comp.participantCount || 0}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end gap-2">
-                      <button className="p-2 border border-gray-200 text-gray-600 hover:bg-gray-50 transition-all">
+                      <button className="p-2 border border-border text-muted-foreground hover:bg-muted transition-all">
                         <Edit2 size={14} />
                       </button>
-                      <button className="p-2 border border-gray-200 text-gray-900 hover:bg-gray-100 transition-all">
+                      <button className="p-2 border border-border text-foreground hover:bg-muted transition-all">
                         <Trash2 size={14} />
                       </button>
                     </div>
@@ -135,33 +135,33 @@ const CompetitionManager: React.FC = () => {
       {/* Create Competition Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowCreateModal(false)}>
-          <div className="bg-white p-8 max-w-2xl w-full border border-gray-200 animate-fadeIn max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+          <div className="bg-card p-8 max-w-2xl w-full border border-border animate-fadeIn max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xl font-black">নতুন প্রতিযোগিতা তৈরি করুন</h3>
-              <button onClick={() => setShowCreateModal(false)} className="text-gray-400 hover:text-black p-1">
+              <button onClick={() => setShowCreateModal(false)} className="text-muted-foreground hover:text-foreground p-1">
                 <X size={20} />
               </button>
             </div>
 
             <div className="space-y-6">
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">শিরোনাম *</label>
+                <label className="block text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2">শিরোনাম *</label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({...formData, title: e.target.value})}
                   placeholder="উদা: জাতীয় আরবি ক্যালিগ্রাফি প্রতিযোগিতা"
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
+                  className="w-full px-4 py-3 border border-border outline-none focus:ring-2 focus:ring-ring font-medium"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">বিভাগ *</label>
+                  <label className="block text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2">বিভাগ *</label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({...formData, category: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
+                    className="w-full px-4 py-3 border border-border outline-none focus:ring-2 focus:ring-ring font-medium"
                   >
                     <option value="Quranic">কুরআন</option>
                     <option value="Calligraphy">ক্যালিগ্রাফি</option>
@@ -172,71 +172,71 @@ const CompetitionManager: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">সর্বোচ্চ অংশগ্রহণকারী</label>
+                  <label className="block text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2">সর্বোচ্চ অংশগ্রহণকারী</label>
                   <input
                     type="number"
                     value={formData.maxParticipants}
                     onChange={(e) => setFormData({...formData, maxParticipants: e.target.value})}
                     placeholder="সীমাহীন"
-                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
+                    className="w-full px-4 py-3 border border-border outline-none focus:ring-2 focus:ring-ring font-medium"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">পুরস্কার *</label>
+                  <label className="block text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2">পুরস্কার *</label>
                   <input
                     type="text"
                     value={formData.prize}
                     onChange={(e) => setFormData({...formData, prize: e.target.value})}
                     placeholder="৳ ২০,০০০ + সনদ"
-                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
+                    className="w-full px-4 py-3 border border-border outline-none focus:ring-2 focus:ring-ring font-medium"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">শেষ তারিখ *</label>
+                  <label className="block text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2">শেষ তারিখ *</label>
                   <input
                     type="date"
                     value={formData.deadline}
                     onChange={(e) => setFormData({...formData, deadline: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
+                    className="w-full px-4 py-3 border border-border outline-none focus:ring-2 focus:ring-ring font-medium"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">বিবরণ</label>
+                <label className="block text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2">বিবরণ</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({...formData, description: e.target.value})}
                   placeholder="প্রতিযোগিতা সম্পর্কে বিস্তারিত..."
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium min-h-[100px] resize-none"
+                  className="w-full px-4 py-3 border border-border outline-none focus:ring-2 focus:ring-ring font-medium min-h-[100px] resize-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">প্রয়োজনীয়তা</label>
+                <label className="block text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2">প্রয়োজনীয়তা</label>
                 <textarea
                   value={formData.requirements}
                   onChange={(e) => setFormData({...formData, requirements: e.target.value})}
                   placeholder="যোগ্যতা এবং শর্তাবলী..."
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium min-h-[100px] resize-none"
+                  className="w-full px-4 py-3 border border-border outline-none focus:ring-2 focus:ring-ring font-medium min-h-[100px] resize-none"
                 />
               </div>
             </div>
 
-            <div className="flex gap-3 justify-end mt-6 pt-6 border-t border-gray-100">
+            <div className="flex gap-3 justify-end mt-6 pt-6 border-t border-border">
               <button
                 onClick={() => setShowCreateModal(false)}
-                className="px-6 py-3 border border-gray-200 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all"
+                className="px-6 py-3 border border-border text-muted-foreground font-bold text-sm hover:bg-muted transition-all"
               >
                 বাতিল
               </button>
               <button
                 onClick={handleCreate}
-                className="px-6 py-3 bg-black text-white font-bold text-sm hover:bg-gray-800 transition-all flex items-center gap-2"
+                className="px-6 py-3 bg-primary text-primary-foreground font-bold text-sm hover:bg-secondary transition-all flex items-center gap-2"
               >
                 <Trophy size={18} /> তৈরি করুন
               </button>

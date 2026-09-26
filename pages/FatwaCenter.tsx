@@ -151,9 +151,9 @@ const FatwaCenter: React.FC = () => {
 
   return (
     <div className="space-y-12 animate-fadeIn">
-      <div className="flex flex-col md:flex-row justify-between items-start gap-6 border-b border-gray-100 pb-12">
+      <div className="flex flex-col md:flex-row justify-between items-start gap-6 border-b border-border pb-12">
         <div className="space-y-2">
-          <div className="caps-label text-gray-400">Fatwa Center</div>
+          <div className="caps-label text-muted-foreground">Fatwa Center</div>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">ফতোয়া ও জিজ্ঞাসা।</h1>
         </div>
         <Button onClick={() => setIsAsking(true)}>
@@ -164,7 +164,7 @@ const FatwaCenter: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="md:col-span-1 space-y-8">
            <div className="space-y-4">
-              <div className="caps-label text-gray-400">Categories</div>
+              <div className="caps-label text-muted-foreground">Categories</div>
                <div className="flex flex-col gap-2">
                   {categories.map(cat => (
                     <Button
@@ -179,10 +179,10 @@ const FatwaCenter: React.FC = () => {
                   ))}
                </div>
            </div>
-           <div className="p-8 bg-gray-50 space-y-4">
-              <Sparkles size={24} className="text-black" />
+           <div className="p-8 bg-muted space-y-4">
+              <Sparkles size={24} className="text-foreground" />
               <h4 className="font-bold text-lg">এআই আলেম (Alpha)</h4>
-              <p className="text-xs text-gray-500 leading-relaxed">আমাদের এআই আপনার প্রশ্নের একটি প্রাথমিক এবং নির্ভরযোগ্য প্রস্তাবনা তৈরি করবে।</p>
+              <p className="text-xs text-muted-foreground leading-relaxed">আমাদের এআই আপনার প্রশ্নের একটি প্রাথমিক এবং নির্ভরযোগ্য প্রস্তাবনা তৈরি করবে।</p>
            </div>
         </div>
 
@@ -197,17 +197,17 @@ const FatwaCenter: React.FC = () => {
               {loading ? (
                 <LoadingSkeleton variant="card" count={3} />
               ) : filteredFatwas.map(fatwa => (
-                <div key={fatwa.id} className="minimal-border p-10 bg-white space-y-8 group">
+                <div key={fatwa.id} className="minimal-border p-10 bg-card space-y-8 group">
                      <div className="flex justify-between items-start">
-                        <div className="caps-label text-black">{fatwa.category}</div>
+                        <div className="caps-label text-foreground">{fatwa.category}</div>
                         <div className="flex items-center gap-2">
-                           <span className="text-[10px] font-bold text-gray-400 flex items-center gap-1"><Clock size={12} /> {fatwa.askedAt}</span>
+                           <span className="text-[10px] font-bold text-muted-foreground flex items-center gap-1"><Clock size={12} /> {fatwa.askedAt}</span>
                            <FlagButton contentType="fatwa" contentId={fatwa.id} />
                             {currentUser?.id === fatwa.askedBy && !fatwa.answer && (
                               <>
                                 <button
                                   onClick={() => handleEditFatwa(fatwa)}
-                                  className="text-gray-300 hover:text-black p-1 transition-all"
+                                  className="text-muted-foreground hover:text-foreground p-1 transition-all"
                                   title="এডিট করুন"
                                 >
                                   <Edit3 size={14} />
@@ -215,7 +215,7 @@ const FatwaCenter: React.FC = () => {
                                 <button
                                   onClick={() => handleDeleteFatwa(fatwa.id)}
                                   disabled={deletingFatwaId === fatwa.id}
-                                  className="text-gray-300 hover:text-gray-500 p-1 transition-all"
+                                  className="text-muted-foreground hover:text-muted-foreground p-1 transition-all"
                                   title="আপনার প্রশ্ন মুছুন"
                                 >
                                   {deletingFatwaId === fatwa.id ? (
@@ -231,13 +231,13 @@ const FatwaCenter: React.FC = () => {
                     {editingFatwaId === fatwa.id ? (
                       <div className="space-y-4">
                         <textarea
-                          className="w-full p-4 border border-gray-200 bg-gray-50 outline-none focus:border-black font-medium min-h-[100px] resize-y"
+                          className="w-full p-4 border border-border bg-muted outline-none focus:border-primary font-medium min-h-[100px] resize-y"
                           value={editQuestion}
                           onChange={(e) => setEditQuestion(e.target.value)}
                           placeholder="আপনার প্রশ্নটি সম্পাদন করুন..."
                         />
                         <select
-                          className="w-full p-3 border border-gray-200 bg-gray-50 outline-none font-bold text-sm"
+                          className="w-full p-3 border border-border bg-muted outline-none font-bold text-sm"
                           value={editCategory}
                           onChange={(e) => setEditCategory(e.target.value as any)}
                         >
@@ -249,14 +249,14 @@ const FatwaCenter: React.FC = () => {
                         <div className="flex gap-3 justify-end">
                           <button
                             onClick={() => setEditingFatwaId(null)}
-                            className="px-4 py-2 text-sm font-bold text-gray-500 hover:text-black transition-all"
+                            className="px-4 py-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-all"
                           >
                             বাতিল
                           </button>
                           <button
                             onClick={() => handleSaveFatwaEdit(fatwa.id)}
                             disabled={savingFatwa || !editQuestion.trim()}
-                            className="px-4 py-2 bg-black text-white text-sm font-bold hover:bg-gray-800 transition-all disabled:opacity-50 flex items-center gap-2"
+                            className="px-4 py-2 bg-primary text-primary-foreground text-sm font-bold hover:bg-secondary transition-all disabled:opacity-50 flex items-center gap-2"
                           >
                             {savingFatwa ? <Loader2 size={14} className="animate-spin" /> : null}
                             সেভ করুন
@@ -268,14 +268,14 @@ const FatwaCenter: React.FC = () => {
                     )}
                    
                     {fatwa.answer ? (
-                      <div className="pt-8 border-t border-gray-100 space-y-6">
+                      <div className="pt-8 border-t border-border space-y-6">
                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 bg-black text-white flex items-center justify-center text-[10px] font-bold">A</div>
+                            <div className="w-8 h-8 bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-bold">A</div>
                             <span className="text-xs font-extrabold uppercase tracking-widest">মুফতির উত্তর</span>
                          </div>
-                         <p className="text-gray-600 leading-relaxed font-medium">{fatwa.answer}</p>
+                         <p className="text-muted-foreground leading-relaxed font-medium">{fatwa.answer}</p>
                          {answerSources[fatwa.id] && answerSources[fatwa.id].length > 0 && (
-                           <div className="flex flex-wrap gap-2 pt-2 border-t border-gray-100">
+                           <div className="flex flex-wrap gap-2 pt-2 border-t border-border">
                              {answerSources[fatwa.id].map(s => (
                                <CitationBadge key={s.id} source={s} />
                              ))}
@@ -283,10 +283,10 @@ const FatwaCenter: React.FC = () => {
                          )}
                       </div>
                    ) : (
-                     <div className="pt-8 border-t border-gray-100 bg-gray-50/50 p-6 space-y-4">
-                        <div className="caps-label text-gray-400">এআই প্রস্তাবনা</div>
-                        <p className="text-sm text-gray-500 italic leading-relaxed">{fatwa.aiSuggestion}</p>
-                        <div className="text-[9px] font-bold text-gray-400">পর্যালোচনার জন্য অপেক্ষমান।</div>
+                     <div className="pt-8 border-t border-border bg-muted/50 p-6 space-y-4">
+                        <div className="caps-label text-muted-foreground">এআই প্রস্তাবনা</div>
+                        <p className="text-sm text-muted-foreground italic leading-relaxed">{fatwa.aiSuggestion}</p>
+                        <div className="text-[9px] font-bold text-muted-foreground">পর্যালোচনার জন্য অপেক্ষমান।</div>
                      </div>
                    )}
                 </div>
@@ -298,12 +298,12 @@ const FatwaCenter: React.FC = () => {
       <Modal open={isAsking} onClose={() => setIsAsking(false)} title="আপনার মাসআলা লিখুন">
         <form onSubmit={handleAskQuestion} className="space-y-6">
            {moderationFeedback && (
-             <div className="p-4 bg-gray-100 border border-gray-300 text-black text-sm font-medium">
+             <div className="p-4 bg-muted border border-border text-foreground text-sm font-medium">
                {moderationFeedback}
              </div>
            )}
            <div className="space-y-4">
-              <select className="w-full p-4 border border-gray-100 bg-gray-50 outline-none font-bold text-sm" value={category} onChange={e => setCategory(e.target.value as any)}>
+              <select className="w-full p-4 border border-border bg-muted outline-none font-bold text-sm" value={category} onChange={e => setCategory(e.target.value as any)}>
                   <option value="Ibadah">ইবাদাত</option>
                   <option value="Muamalah">মুয়ামালাত</option>
                   <option value="Family">পারিবারিক</option>
@@ -312,7 +312,7 @@ const FatwaCenter: React.FC = () => {
               <textarea 
                 required 
                 placeholder="আপনার প্রশ্নটি বিস্তারিত লিখুন..." 
-                className="w-full p-6 border border-gray-100 bg-gray-50 outline-none focus:ring-2 focus:ring-black font-medium min-h-[200px]" 
+                className="w-full p-6 border border-border bg-muted outline-none focus:ring-2 focus:ring-ring font-medium min-h-[200px]" 
                 value={question} 
                 onChange={e => setQuestion(e.target.value)} 
               />

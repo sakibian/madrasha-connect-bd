@@ -13,7 +13,7 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-09-26 · **Latest work: shadcn theme tokens + dark mode (session 25, not yet committed)**
+**Last updated:** 2026-09-26 · **Latest work: theme sweep + unified guest nav (session 26)**
 
 ### 2026-08-02 (session 18 — Fix broken public-facing form submissions)
 
@@ -936,3 +936,24 @@ off-white, slate neutrals) as the design system — tokens + shared components
 Page-level `bg-white`/`text-gray-*` in pages/ are intentionally unmigrated
 (token + shared-components scope) — dark mode is partial on those pages
 until the page sweep.
+
+### 2026-09-26 (session 26 — theme sweep: pages + unified nav + prerender hardening)
+
+**Theme**: Finish the shadcn migration across pages, fix the long-standing
+guest navbar inconsistency, harden prerender for CI
+
+- **Guest navbar unified (App.tsx)** — removed `isLandingPage` early-return;
+  the shared guest nav now renders on `/` too. LandingPage's private nav
+  deleted (was stale "মাদ্রাসা কানেক্ট" brand + hardcoded Bangla vs the app
+  nav's translated links). Guest hamburger now opens a real mobile menu
+  (previously toggled a state that rendered nothing for logged-out users).
+- **pages/* full sweep** — all page files migrated to semantic tokens
+  (bg-white→bg-card, grays→muted/foreground, bg-black CTAs→bg-primary,
+  dark-inverse sections → bg-primary text-primary-foreground; footer +
+  auth panels → bg-foreground). Interior muted/foreground text inside
+  primary blocks fixed for contrast.
+- **scripts/prerender.mjs** — `headless: 'shell'` (chrome-headless-shell,
+  fewer system libs for CI) + explicit `puppeteer browsers install`
+  retry on launch failure. Verified: 28/28 routes locally.
+- **tailwind.config.js** — added missing `slideDown` keyframe used by menus.
+- Total: 255 tests passing.

@@ -26,33 +26,33 @@ const VerifyEmail: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-8">
+    <div className="min-h-screen bg-card flex items-center justify-center p-8">
       <div className="max-w-md w-full text-center space-y-10">
         <Link to="/" className="inline-flex items-center gap-3">
-          <div className="w-8 h-8 bg-black text-white flex items-center justify-center font-bold">M</div>
+          <div className="w-8 h-8 bg-primary text-primary-foreground flex items-center justify-center font-bold">M</div>
           <span className="text-xl font-bold tracking-tight">কওমি</span>
         </Link>
 
         <div className="space-y-6">
-          <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto">
-            <Mail size={36} className="text-gray-900" />
+          <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto">
+            <Mail size={36} className="text-foreground" />
           </div>
           <h1 className="text-3xl font-extrabold tracking-tight">ইমেইল ভেরিফিকেশন</h1>
-          <p className="text-gray-500 font-medium leading-relaxed">
-            আমরা <strong className="text-black">{email}</strong> এই ঠিকানায় একটি ভেরিফিকেশন ইমেইল পাঠিয়েছি।
+          <p className="text-muted-foreground font-medium leading-relaxed">
+            আমরা <strong className="text-foreground">{email}</strong> এই ঠিকানায় একটি ভেরিফিকেশন ইমেইল পাঠিয়েছি।
             আপনার ইনবক্স চেক করুন এবং অ্যাকাউন্ট অ্যাক্টিভেট করতে লিংকে ক্লিক করুন।
           </p>
         </div>
 
         {sent && (
-          <div className="p-5 bg-gray-50 border border-gray-200 flex items-center gap-3">
-            <CheckCircle size={20} className="text-gray-900 shrink-0" />
-            <p className="text-sm font-bold text-black">ভেরিফিকেশন ইমেইল পুনরায় পাঠানো হয়েছে!</p>
+          <div className="p-5 bg-muted border border-border flex items-center gap-3">
+            <CheckCircle size={20} className="text-foreground shrink-0" />
+            <p className="text-sm font-bold text-foreground">ভেরিফিকেশন ইমেইল পুনরায় পাঠানো হয়েছে!</p>
           </div>
         )}
 
         {error && (
-          <div className="p-5 bg-gray-100 border border-gray-200 text-gray-900 text-sm font-bold">
+          <div className="p-5 bg-muted border border-border text-foreground text-sm font-bold">
             {error}
           </div>
         )}
@@ -61,7 +61,7 @@ const VerifyEmail: React.FC = () => {
           <button
             onClick={handleResend}
             disabled={sending}
-            className="w-full py-5 bg-black text-white font-extrabold text-lg flex items-center justify-center gap-3 hover:bg-gray-800 transition-all disabled:opacity-50"
+            className="w-full py-5 bg-primary text-primary-foreground font-extrabold text-lg flex items-center justify-center gap-3 hover:bg-secondary transition-all disabled:opacity-50"
           >
             {sending ? <Loader2 size={22} className="animate-spin" /> : <RefreshCw size={22} />}
             {sending ? 'পাঠানো হচ্ছে...' : 'পুনরায় ইমেইল পাঠান'}
@@ -69,13 +69,13 @@ const VerifyEmail: React.FC = () => {
 
           <button
             onClick={() => navigate('/login')}
-            className="w-full py-5 border border-gray-200 text-gray-600 font-extrabold text-lg flex items-center justify-center gap-3 hover:bg-gray-50 transition-all"
+            className="w-full py-5 border border-border text-muted-foreground font-extrabold text-lg flex items-center justify-center gap-3 hover:bg-muted transition-all"
           >
             লগইন পৃষ্ঠায় যান <ArrowRight size={22} />
           </button>
         </div>
 
-        <p className="text-xs text-gray-400 font-medium">
+        <p className="text-xs text-muted-foreground font-medium">
           স্প্যাম ফোল্ডার চেক করতে ভুলবেন না। ৫ মিনিটের মধ্যে ইমেইল না পেলে পুনরায় পাঠান বাটনে ক্লিক করুন।
         </p>
       </div>

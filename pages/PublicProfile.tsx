@@ -64,7 +64,7 @@ const PublicProfile: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <Loader2 size={32} className="animate-spin text-gray-400" />
+        <Loader2 size={32} className="animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -101,9 +101,9 @@ const PublicProfile: React.FC = () => {
   if (!profile) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-6">
-        <User size={64} className="text-gray-200" />
-        <p className="text-xl font-bold text-gray-400">প্রোফাইল পাওয়া যায়নি</p>
-        <Link to="/leaderboard" className="text-sm font-bold border-b-2 border-black">লিডারবোর্ডে ফিরুন</Link>
+        <User size={64} className="text-muted-foreground" />
+        <p className="text-xl font-bold text-muted-foreground">প্রোফাইল পাওয়া যায়নি</p>
+        <Link to="/leaderboard" className="text-sm font-bold border-b-2 border-primary">লিডারবোর্ডে ফিরুন</Link>
       </div>
     );
   }
@@ -113,28 +113,28 @@ const PublicProfile: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-12 animate-fadeIn">
       <div className="flex items-center justify-between">
-        <Link to="/leaderboard" className="inline-flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-black transition-colors">
+        <Link to="/leaderboard" className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">
           <ArrowLeft size={16} /> লিডারবোর্ড
         </Link>
         <button
           onClick={() => setShowShareCard(true)}
-          className="flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-black transition-colors"
+          className="flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-colors"
         >
           <Share2 size={16} /> শেয়ার
         </button>
       </div>
 
-      <div className="bg-white p-12 minimal-border space-y-8">
+      <div className="bg-card p-12 minimal-border space-y-8">
         <div className="flex flex-col md:flex-row items-start gap-8">
-          <div className="w-24 h-24 bg-gray-50 overflow-hidden border-2 border-gray-200">
+          <div className="w-24 h-24 bg-muted overflow-hidden border-2 border-border">
             <ImageWithFallback src={profile.avatar || `https://picsum.photos/seed/${id}/200/200`} name={profile.name} className="w-full h-full object-cover" alt="" />
           </div>
           <div className="flex-1 space-y-3">
             <div className="flex items-center gap-3">
               <h1 className="text-3xl font-extrabold">{profile.name}</h1>
-              {scholar?.verified && <BadgeCheck size={24} className="text-black" />}
+              {scholar?.verified && <BadgeCheck size={24} className="text-foreground" />}
             </div>
-            <div className="flex flex-wrap gap-4 text-sm font-bold text-gray-400">
+            <div className="flex flex-wrap gap-4 text-sm font-bold text-muted-foreground">
               <span className="flex items-center gap-1.5"><User size={14} /> {profile.role}</span>
               {scholar?.specialization && (
                 <span className="flex items-center gap-1.5"><GraduationCap size={14} /> {scholar.specialization}</span>
@@ -150,22 +150,22 @@ const PublicProfile: React.FC = () => {
         </div>
 
         {xp && progress && (
-          <div className="p-8 bg-gray-50 space-y-4">
+          <div className="p-8 bg-muted space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <Trophy size={24} className="text-black" />
+                <Trophy size={24} className="text-foreground" />
                 <div>
                   <span className="text-3xl font-extrabold">লেভেল {xp.level}</span>
-                  <span className="text-gray-400 mx-2">•</span>
-                  <span className="text-lg font-bold text-gray-500">{xp.xp.toLocaleString()} CP</span>
+                  <span className="text-muted-foreground mx-2">•</span>
+                  <span className="text-lg font-bold text-muted-foreground">{xp.xp.toLocaleString()} CP</span>
                 </div>
               </div>
             </div>
             <div className="space-y-1">
-              <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
-                <div className="h-full bg-black rounded-full transition-all" style={{ width: `${Math.min(progress.progress, 100)}%` }} />
+              <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
+                <div className="h-full bg-primary rounded-full transition-all" style={{ width: `${Math.min(progress.progress, 100)}%` }} />
               </div>
-              <div className="flex justify-between text-[10px] font-bold text-gray-400">
+              <div className="flex justify-between text-[10px] font-bold text-muted-foreground">
                 <span>{progress.current.toLocaleString()} CP</span>
                 <span>{progress.next.toLocaleString()} CP</span>
               </div>
@@ -178,11 +178,11 @@ const PublicProfile: React.FC = () => {
             <h2 className="text-lg font-extrabold flex items-center gap-2"><Star size={18} /> ব্যাজ</h2>
             <div className="flex flex-wrap gap-3">
               {badges.map(ub => (
-                <div key={ub.id} className="flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-100">
+                <div key={ub.id} className="flex items-center gap-2 px-4 py-2 bg-muted border border-border">
                   <span className="text-lg">{ub.badge?.icon || '🏅'}</span>
                   <div>
                     <p className="text-sm font-bold">{ub.badge?.name}</p>
-                    <p className="text-[9px] text-gray-400 font-medium">{ub.badge?.description}</p>
+                    <p className="text-[9px] text-muted-foreground font-medium">{ub.badge?.description}</p>
                   </div>
                 </div>
               ))}
@@ -201,10 +201,10 @@ const PublicProfile: React.FC = () => {
                 { label: 'ফতোয়া', value: stats.fatwasAsked, icon: '📖' },
                 { label: 'কোর্স', value: stats.coursesEnrolled, icon: '🎓' },
               ].map(m => (
-                <div key={m.label} className="bg-gray-50 p-4 text-center border border-gray-100">
+                <div key={m.label} className="bg-muted p-4 text-center border border-border">
                   <div className="text-2xl mb-1">{m.icon}</div>
                   <div className="text-2xl font-extrabold">{m.value}</div>
-                  <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{m.label}</div>
+                  <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{m.label}</div>
                 </div>
               ))}
             </div>
@@ -213,7 +213,7 @@ const PublicProfile: React.FC = () => {
       </div>
 
       {/* Skills & Endorsements */}
-      <div className="bg-white p-12 minimal-border space-y-6">
+      <div className="bg-card p-12 minimal-border space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-extrabold flex items-center gap-2"><Star size={18} /> দক্ষতা</h2>
           {isOwnProfile && (
@@ -222,13 +222,13 @@ const PublicProfile: React.FC = () => {
                 value={newSkill}
                 onChange={e => setNewSkill(e.target.value)}
                 placeholder="দক্ষতার নাম"
-                className="px-3 py-1.5 text-xs border border-gray-200 outline-none focus:border-black w-32"
+                className="px-3 py-1.5 text-xs border border-border outline-none focus:border-primary w-32"
                 onKeyDown={e => e.key === 'Enter' && handleAddSkill()}
               />
               <button
                 onClick={handleAddSkill}
                 disabled={addingSkill || !newSkill.trim()}
-                className="px-3 py-1.5 bg-black text-white text-xs font-bold hover:bg-gray-800 transition-all disabled:opacity-50"
+                className="px-3 py-1.5 bg-primary text-primary-foreground text-xs font-bold hover:bg-secondary transition-all disabled:opacity-50"
               >
                 {addingSkill ? <Loader2 size={12} className="animate-spin" /> : <Plus size={14} />}
               </button>
@@ -237,19 +237,19 @@ const PublicProfile: React.FC = () => {
         </div>
 
         {skills.length === 0 ? (
-          <p className="text-sm text-gray-400 font-medium">এখনো কোনো দক্ষতা যোগ করা হয়নি</p>
+          <p className="text-sm text-muted-foreground font-medium">এখনো কোনো দক্ষতা যোগ করা হয়নি</p>
         ) : (
           <div className="flex flex-wrap gap-3">
             {skills.map(s => (
-              <div key={s.id} className="flex items-center gap-2 px-4 py-2.5 bg-gray-50 border border-gray-100 group hover:border-gray-200 transition-all">
+              <div key={s.id} className="flex items-center gap-2 px-4 py-2.5 bg-muted border border-border group hover:border-border transition-all">
                 <span className="text-sm font-bold">{s.skill}</span>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] text-gray-400 font-bold">{s.endorsementsCount || 0}</span>
+                  <span className="text-[10px] text-muted-foreground font-bold">{s.endorsementsCount || 0}</span>
                   {currentUser && !isOwnProfile && (
                     <button
                       onClick={() => handleEndorse(s.id, !!s.endorsedByMe)}
                       className={`p-1 rounded transition-all ${
-                        s.endorsedByMe ? 'text-gray-900 bg-gray-50' : 'text-gray-300 hover:text-gray-900 hover:bg-gray-50'
+                        s.endorsedByMe ? 'text-foreground bg-muted' : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                       }`}
                       title={s.endorsedByMe ? 'এনডোর্সমেন্ট সরান' : 'এনডোর্স করুন'}
                     >
@@ -262,7 +262,7 @@ const PublicProfile: React.FC = () => {
                         const userSkills = await dataService.getUserSkills(id!, currentUser?.id);
                         setSkills(userSkills);
                       })}
-                      className="p-1 text-gray-200 hover:text-gray-900 transition-all opacity-0 group-hover:opacity-100"
+                      className="p-1 text-muted-foreground hover:text-foreground transition-all opacity-0 group-hover:opacity-100"
                     >
                       <X size={12} />
                     </button>
@@ -275,18 +275,18 @@ const PublicProfile: React.FC = () => {
       </div>
 
       {activity.length > 0 && (
-      <div className="bg-white p-12 minimal-border space-y-6">
+      <div className="bg-card p-12 minimal-border space-y-6">
           <h2 className="text-lg font-extrabold flex items-center gap-2"><Clock size={18} /> সাম্প্রতিক কার্যকলাপ</h2>
           <div className="space-y-1">
             {activity.map(e => (
-              <div key={e.id} className="flex items-center justify-between py-3 px-4 hover:bg-gray-50 transition-colors">
+              <div key={e.id} className="flex items-center justify-between py-3 px-4 hover:bg-muted transition-colors">
                 <div className="flex items-center gap-3">
-                  <span className="text-[10px] font-black px-2 py-1 bg-gray-100 uppercase tracking-widest">{e.action}</span>
-                  <span className="text-[11px] text-gray-400 font-medium">
+                  <span className="text-[10px] font-black px-2 py-1 bg-muted uppercase tracking-widest">{e.action}</span>
+                  <span className="text-[11px] text-muted-foreground font-medium">
                     {new Date(e.createdAt).toLocaleDateString('bn-BD', { day: 'numeric', month: 'short' })}
                   </span>
                 </div>
-                <span className="font-bold text-black">+{e.xp} CP</span>
+                <span className="font-bold text-foreground">+{e.xp} CP</span>
               </div>
             ))}
           </div>
@@ -294,26 +294,26 @@ const PublicProfile: React.FC = () => {
       )}
 
       {scholar && (
-        <div className="bg-white p-12 minimal-border space-y-4">
+        <div className="bg-card p-12 minimal-border space-y-4">
           <h2 className="text-lg font-extrabold">স্কলার তথ্য</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <span className="caps-label text-gray-400">পদবি</span>
+              <span className="caps-label text-muted-foreground">পদবি</span>
               <p className="font-bold">{scholar.title}</p>
             </div>
             <div>
-              <span className="caps-label text-gray-400">বিশেষজ্ঞতা</span>
+              <span className="caps-label text-muted-foreground">বিশেষজ্ঞতা</span>
               <p className="font-bold">{scholar.specialization}</p>
             </div>
             {scholar.institution && (
               <div>
-                <span className="caps-label text-gray-400">প্রতিষ্ঠান</span>
+                <span className="caps-label text-muted-foreground">প্রতিষ্ঠান</span>
                 <p className="font-bold">{scholar.institution}</p>
               </div>
             )}
             {scholar.location && (
               <div>
-                <span className="caps-label text-gray-400">অবস্থান</span>
+                <span className="caps-label text-muted-foreground">অবস্থান</span>
                 <p className="font-bold">{scholar.location}</p>
               </div>
             )}
@@ -322,21 +322,21 @@ const PublicProfile: React.FC = () => {
       )}
 
       {scholar && portfolio.length > 0 && (
-        <div className="bg-white p-12 minimal-border space-y-6">
+        <div className="bg-card p-12 minimal-border space-y-6">
           <h2 className="text-lg font-extrabold flex items-center gap-2"><FolderOpen size={18} /> পোর্টফোলিও</h2>
           <div className="grid gap-4">
             {portfolio.map(item => (
-              <div key={item.id} className="flex items-start justify-between gap-4 p-4 bg-gray-50 border border-gray-100 group hover:border-gray-200 transition-all">
+              <div key={item.id} className="flex items-start justify-between gap-4 p-4 bg-muted border border-border group hover:border-border transition-all">
                 <div className="space-y-1 flex-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold px-2 py-0.5 bg-gray-200 text-gray-600 rounded">
+                    <span className="text-[10px] font-bold px-2 py-0.5 bg-muted text-muted-foreground rounded">
                       {PORTFOLIO_TYPE_LABELS[item.type] || item.type}
                     </span>
-                    <h3 className="font-bold text-gray-800">{item.title}</h3>
+                    <h3 className="font-bold text-foreground">{item.title}</h3>
                   </div>
-                  {item.description && <p className="text-sm text-gray-500">{item.description}</p>}
+                  {item.description && <p className="text-sm text-muted-foreground">{item.description}</p>}
                   {item.url && (
-                    <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-black hover:underline mt-1">
+                    <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-foreground hover:underline mt-1">
                       <ExternalLink size={12} /> {item.url.slice(0, 40)}...
                     </a>
                   )}
@@ -349,31 +349,31 @@ const PublicProfile: React.FC = () => {
 
       {showShareCard && (
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowShareCard(false)}>
-          <div className="bg-white max-w-md w-full border border-gray-200 animate-fadeIn" onClick={e => e.stopPropagation()}>
+          <div className="bg-card max-w-md w-full border border-border animate-fadeIn" onClick={e => e.stopPropagation()}>
             <div className="p-8 space-y-6">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-black">অ্যাচিভমেন্ট কার্ড</h3>
-                <button onClick={() => setShowShareCard(false)} className="text-gray-400 hover:text-black p-1"><X size={20} /></button>
+                <button onClick={() => setShowShareCard(false)} className="text-primary-foreground hover:text-primary-foreground p-1"><X size={20} /></button>
               </div>
-              <div className="bg-black p-8 text-white space-y-4 text-center">
+              <div className="bg-primary p-8 text-primary-foreground space-y-4 text-center">
                 <div className="w-16 h-16 bg-white/10 mx-auto rounded-full flex items-center justify-center text-2xl font-black border-2 border-white/20">
                   {profile.name.charAt(0)}
                 </div>
                 <div>
                   <p className="text-xl font-black">{profile.name}</p>
-                  <p className="text-gray-500 text-sm font-bold">{scholar?.title || profile.role}</p>
+                  <p className="text-primary-foreground text-sm font-bold">{scholar?.title || profile.role}</p>
                 </div>
                 {xp && (
                   <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm space-y-2">
                     <div className="flex justify-center items-center gap-4">
                       <div>
                         <div className="text-3xl font-black">{xp.level}</div>
-                        <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Level</div>
+                        <div className="text-[10px] font-bold text-primary-foreground uppercase tracking-widest">Level</div>
                       </div>
                       <div className="w-px h-10 bg-white/20" />
                       <div>
                         <div className="text-3xl font-black">{xp.xp.toLocaleString()}</div>
-                        <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">CP</div>
+                        <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">CP</div>
                       </div>
                     </div>
                   </div>
@@ -383,7 +383,7 @@ const PublicProfile: React.FC = () => {
                     {badges.slice(0, 3).map(ub => (
                       <span key={ub.id} className="text-2xl" title={ub.badge?.name}>{ub.badge?.icon || '🏅'}</span>
                     ))}
-                    {badges.length > 3 && <span className="text-sm text-gray-500 font-bold flex items-center">+{badges.length - 3}</span>}
+                    {badges.length > 3 && <span className="text-sm text-muted-foreground font-bold flex items-center">+{badges.length - 3}</span>}
                   </div>
                 )}
               </div>
@@ -394,7 +394,7 @@ const PublicProfile: React.FC = () => {
                     setCopied(true);
                     setTimeout(() => setCopied(false), 2000);
                   }}
-                  className="w-full py-3 bg-black text-white font-bold text-sm hover:bg-gray-800 transition-all flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-primary text-primary-foreground font-bold text-sm hover:bg-secondary transition-all flex items-center justify-center gap-2"
                 >
                   {copied ? <Check size={16} /> : <Share2 size={16} />}
                   {copied ? 'কপি করা হয়েছে!' : 'প্রোফাইল লিংক কপি করুন'}

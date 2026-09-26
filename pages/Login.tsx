@@ -102,56 +102,56 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col lg:flex-row animate-fadeIn">
+    <div className="min-h-screen bg-card flex flex-col lg:flex-row animate-fadeIn">
       {/* Visual Side */}
-      <div className="lg:w-1/2 bg-black text-white p-16 flex flex-col justify-between relative overflow-hidden">
+      <div className="lg:w-1/2 bg-primary text-primary-foreground p-16 flex flex-col justify-between relative overflow-hidden">
         <div className="z-10">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-white text-black flex items-center justify-center font-bold text-xl group-hover:rotate-6 transition-transform">M</div>
+            <div className="w-10 h-10 bg-card text-foreground flex items-center justify-center font-bold text-xl group-hover:rotate-6 transition-transform">M</div>
             <span className="text-2xl font-bold tracking-tight">কওমি</span>
           </Link>
         </div>
         
         <div className="z-10 space-y-8 max-w-lg">
-           <div className="caps-label text-black">Security First</div>
+           <div className="caps-label text-primary-foreground">Security First</div>
            <h1 className="text-6xl md:text-8xl font-extrabold leading-[1.05] tracking-tight">
              নিরাপদ <br />পোর্টালে <br />স্বাগতম।
            </h1>
-           <p className="text-xl text-gray-400 leading-relaxed font-medium">
+           <p className="text-xl text-primary-foreground leading-relaxed font-medium">
              আপনার ইমেইল ও পাসওয়ার্ড ব্যবহার করে লগইন করুন। প্ল্যাটফর্ম আপনার তথ্যের সর্বোচ্চ নিরাপত্তা নিশ্চিত করে।
            </p>
         </div>
 
         <div className="z-10 space-y-4">
-           <Link to="/about" className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-white transition-colors">
+           <Link to="/about" className="inline-flex items-center gap-2 text-sm font-bold text-primary-foreground hover:text-primary-foreground transition-colors">
               <ArrowLeft size={18} /> আমাদের সম্পর্কে জানুন
            </Link>
            <div className="pt-4">
               {import.meta.env.VITE_ENABLE_DEMO === 'true' && (
-                <p className="text-xs text-gray-600 font-mono">Demo password: <span className="text-black">{DEMO_PASSWORD}</span></p>
+                <p className="text-xs text-primary-foreground font-mono">Demo password: <span className="text-primary-foreground">{DEMO_PASSWORD}</span></p>
               )}
            </div>
         </div>
 
-        <div className="absolute -bottom-20 -right-20 w-96 h-96 border-[1px] border-gray-900 rounded-full"></div>
+        <div className="absolute -bottom-20 -right-20 w-96 h-96 border-[1px] border-border rounded-full"></div>
       </div>
 
       {/* Action Side */}
       <div className="lg:w-1/2 p-8 md:p-24 flex items-center justify-center bg-[#F9FAFB]">
         <div className="w-full max-w-md space-y-12">
           <div className="space-y-4">
-            <div className="caps-label text-gray-400">Authentication</div>
+            <div className="caps-label text-muted-foreground">Authentication</div>
             <h2 className="text-4xl font-extrabold tracking-tight">লগইন করুন।</h2>
-            <p className="text-gray-500 font-medium">ফোন ওটিপি অথবা ইমেইল/পাসওয়ার্ড দিয়ে প্রবেশ করুন।</p>
+            <p className="text-muted-foreground font-medium">ফোন ওটিপি অথবা ইমেইল/পাসওয়ার্ড দিয়ে প্রবেশ করুন।</p>
           </div>
 
           {/* Auth method tabs — Bangladesh-first: phone OTP is the default. */}
-          <div className="grid grid-cols-2 gap-1 bg-gray-100 minimal-border">
+          <div className="grid grid-cols-2 gap-1 bg-muted minimal-border">
             <button
               type="button"
               onClick={() => { setTab('phone'); setError(''); }}
               className={`py-4 font-extrabold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${
-                tab === 'phone' ? 'bg-black text-white' : 'bg-white text-gray-400 hover:bg-gray-50'
+                tab === 'phone' ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-muted'
               }`}
             >
               <Phone size={14} /> ফোন OTP
@@ -160,7 +160,7 @@ const Login: React.FC = () => {
               type="button"
               onClick={() => { setTab('email'); setError(''); }}
               className={`py-4 font-extrabold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${
-                tab === 'email' ? 'bg-black text-white' : 'bg-white text-gray-400 hover:bg-gray-50'
+                tab === 'email' ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-muted'
               }`}
             >
               <Mail size={14} /> ইমেইল
@@ -171,7 +171,7 @@ const Login: React.FC = () => {
             <form onSubmit={otpSent ? handleVerifyOtp : handleSendOtp} className="space-y-8">
               <div className="space-y-4">
                 <div className="relative">
-                  <Phone size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <Phone size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground" />
                   <input
                     type="tel"
                     inputMode="tel"
@@ -179,14 +179,14 @@ const Login: React.FC = () => {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     disabled={otpSent}
-                    className="w-full pl-14 pr-6 py-5 bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium text-lg disabled:bg-gray-50 disabled:text-gray-500"
+                    className="w-full pl-14 pr-6 py-5 bg-card border border-border outline-none focus:ring-2 focus:ring-ring font-medium text-lg disabled:bg-muted disabled:text-muted-foreground"
                     required
                     aria-label="বাংলাদেশী ফোন নম্বর"
                   />
                 </div>
                 {otpSent && (
                   <div className="relative animate-fadeIn">
-                    <KeyRound size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <KeyRound size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground" />
                     <input
                       type="text"
                       inputMode="numeric"
@@ -195,7 +195,7 @@ const Login: React.FC = () => {
                       placeholder="৬-সংখ্যার কোড"
                       value={otp}
                       onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, ''))}
-                      className="w-full pl-14 pr-6 py-5 bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium text-lg tracking-widest"
+                      className="w-full pl-14 pr-6 py-5 bg-card border border-border outline-none focus:ring-2 focus:ring-ring font-medium text-lg tracking-widest"
                       required
                       autoFocus
                       aria-label="OTP কোড"
@@ -205,7 +205,7 @@ const Login: React.FC = () => {
               </div>
 
               {error && (
-                <div className="p-5 bg-gray-100 border border-gray-200 text-gray-900 text-sm font-bold">
+                <div className="p-5 bg-muted border border-border text-foreground text-sm font-bold">
                   {error}
                 </div>
               )}
@@ -213,7 +213,7 @@ const Login: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading || (!otpSent ? !phone : otp.length < 4)}
-                className="w-full py-6 bg-black text-white font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-gray-800 transition-all disabled:opacity-50"
+                className="w-full py-6 bg-primary text-primary-foreground font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-secondary transition-all disabled:opacity-50"
               >
                 {loading ? (
                   <Loader2 className="animate-spin" size={24} />
@@ -228,13 +228,13 @@ const Login: React.FC = () => {
                 <button
                   type="button"
                   onClick={resetPhone}
-                  className="w-full text-sm font-bold text-gray-400 hover:text-black transition-colors"
+                  className="w-full text-sm font-bold text-muted-foreground hover:text-foreground transition-colors"
                 >
                   ফোন নম্বর পরিবর্তন করুন
                 </button>
               )}
 
-              <p className="text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+              <p className="text-center text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                 বিনামূল্যে SMS ওটিপি • প্ল্যাটফর্ম সম্পূর্ণ অলাভজনক
               </p>
             </form>
@@ -244,13 +244,13 @@ const Login: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-4">
               <div className="relative">
-                <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 <input
                   type="email"
                   placeholder="ইমেইল"
                   value={email}
                   onChange={e => handleEmailChange(e.target.value)}
-                  className="w-full pl-14 pr-6 py-5 bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium text-lg"
+                  className="w-full pl-14 pr-6 py-5 bg-card border border-border outline-none focus:ring-2 focus:ring-ring font-medium text-lg"
                   required
                 />
               </div>
@@ -265,7 +265,7 @@ const Login: React.FC = () => {
             </div>
 
             <div className="flex justify-end">
-              <Link to="/forgot-password" className="text-xs font-bold text-gray-400 hover:text-black transition-colors">
+              <Link to="/forgot-password" className="text-xs font-bold text-muted-foreground hover:text-foreground transition-colors">
                 পাসওয়ার্ড ভুলে গেছেন?
               </Link>
             </div>
@@ -275,7 +275,7 @@ const Login: React.FC = () => {
             )}
 
             {error && (
-              <div className="p-5 bg-gray-100 border border-gray-200 text-gray-900 text-sm font-bold">
+              <div className="p-5 bg-muted border border-border text-foreground text-sm font-bold">
                 {error}
               </div>
             )}
@@ -283,7 +283,7 @@ const Login: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-6 bg-black text-white font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-gray-800 transition-all disabled:opacity-50"
+              className="w-full py-6 bg-primary text-primary-foreground font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-secondary transition-all disabled:opacity-50"
             >
               {loading ? <Loader2 className="animate-spin" size={24} /> : <>সাইন ইন করুন <ArrowRight size={24} /></>}
             </button>
@@ -292,8 +292,8 @@ const Login: React.FC = () => {
 
           {import.meta.env.VITE_ENABLE_DEMO === 'true' && (
           <div className="space-y-4">
-            <div className="caps-label text-gray-400 text-center">অথবা দ্রুত লগইন</div>
-            <div className="space-y-0 bg-gray-100 minimal-border overflow-hidden">
+            <div className="caps-label text-muted-foreground text-center">অথবা দ্রুত লগইন</div>
+            <div className="space-y-0 bg-muted minimal-border overflow-hidden">
               <LoginRoleButton 
                 icon={<ShieldCheck size={20} />} 
                 label="সিস্টেম অ্যাডমিন" 
@@ -319,9 +319,9 @@ const Login: React.FC = () => {
           </div>
           )}
 
-          <div className="pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-             <span className="text-sm font-bold text-gray-400">আপনার কি কোনো অ্যাকাউন্ট নেই?</span>
-             <Link to="/register-user" className="text-sm font-bold border-b-2 border-black pb-0.5 hover:text-gray-600 transition-all">
+          <div className="pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+             <span className="text-sm font-bold text-muted-foreground">আপনার কি কোনো অ্যাকাউন্ট নেই?</span>
+             <Link to="/register-user" className="text-sm font-bold border-b-2 border-primary pb-0.5 hover:text-muted-foreground transition-all">
                 নতুন অ্যাকাউন্ট তৈরি
              </Link>
           </div>
@@ -345,23 +345,23 @@ const UnconfirmedEmailBanner: React.FC<{ email: string }> = ({ email }) => {
   };
 
   return (
-    <div className="p-5 bg-gray-50 border border-gray-200 space-y-3">
+    <div className="p-5 bg-muted border border-border space-y-3">
       <div className="flex items-start gap-3">
-        <Mail size={20} className="text-gray-800 shrink-0 mt-0.5" />
+        <Mail size={20} className="text-foreground shrink-0 mt-0.5" />
         <div>
-          <p className="font-bold text-gray-900 text-sm">ইমেইল ভেরিফাই করুন</p>
-          <p className="text-xs text-gray-800 mt-1">
+          <p className="font-bold text-foreground text-sm">ইমেইল ভেরিফাই করুন</p>
+          <p className="text-xs text-foreground mt-1">
             আপনার ইমেইল এখনো ভেরিফাই করা হয়নি। অনুগ্রহ করে <strong>{email}</strong>-এ পাঠানো লিংকে ক্লিক করুন।
           </p>
         </div>
       </div>
       {sent ? (
-        <p className="text-xs font-bold text-gray-900">✓ পুনরায় পাঠানো হয়েছে!</p>
+        <p className="text-xs font-bold text-foreground">✓ পুনরায় পাঠানো হয়েছে!</p>
       ) : (
         <button
           onClick={handleResend}
           disabled={sending}
-          className="text-xs font-bold text-gray-900 underline hover:no-underline disabled:opacity-50"
+          className="text-xs font-bold text-foreground underline hover:no-underline disabled:opacity-50"
         >
           {sending ? 'পাঠানো হচ্ছে...' : 'ভেরিফিকেশন ইমেইল পুনরায় পাঠান'}
         </button>
@@ -374,13 +374,13 @@ const LoginRoleButton = ({ icon, label, sub, onClick, disabled }: any) => (
   <button 
     onClick={onClick}
     disabled={disabled}
-    className="w-full flex items-center justify-between p-8 bg-white border-b border-gray-100 last:border-none hover:bg-black hover:text-white transition-all group text-left"
+    className="w-full flex items-center justify-between p-8 bg-card border-b border-border last:border-none hover:bg-primary hover:text-primary-foreground transition-all group text-left"
   >
     <div className="flex items-center gap-6">
-      <div className="text-black group-hover:text-white transition-colors">{icon}</div>
+      <div className="text-foreground group-hover:text-primary-foreground transition-colors">{icon}</div>
       <div>
         <span className="block font-extrabold text-xl">{label}</span>
-        <span className="block text-[10px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-gray-500">{sub}</span>
+        <span className="block text-[10px] font-bold uppercase tracking-widest text-muted-foreground group-hover:text-muted-foreground">{sub}</span>
       </div>
     </div>
     <ArrowRight size={20} className="opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0" />

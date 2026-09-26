@@ -48,18 +48,18 @@ const SearchResults: React.FC = () => {
 
   return (
     <div className="space-y-12 animate-fadeIn">
-      <div className="space-y-4 border-b border-gray-100 pb-12">
-        <div className="caps-label text-gray-400">Search Results</div>
+      <div className="space-y-4 border-b border-border pb-12">
+        <div className="caps-label text-muted-foreground">Search Results</div>
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-          "<span className="text-black">{query}</span>" এর জন্য ফলাফল।
+          "<span className="text-foreground">{query}</span>" এর জন্য ফলাফল।
         </h1>
-        <p className="text-sm font-bold text-gray-500">{totalResults}টি মিল পাওয়া গেছে।</p>
+        <p className="text-sm font-bold text-muted-foreground">{totalResults}টি মিল পাওয়া গেছে।</p>
       </div>
 
       {totalResults === 0 ? (
-        <div className="py-40 text-center space-y-6 bg-gray-50 border border-gray-100">
-           <p className="text-xl text-gray-500 font-medium">দুঃখিত, কোনো ফলাফল পাওয়া যায়নি।</p>
-           <Link to="/" className="text-sm font-bold border-b-2 border-black pb-1">অন্য কিছু লিখে চেষ্টা করুন</Link>
+        <div className="py-40 text-center space-y-6 bg-muted border border-border">
+           <p className="text-xl text-muted-foreground font-medium">দুঃখিত, কোনো ফলাফল পাওয়া যায়নি।</p>
+           <Link to="/" className="text-sm font-bold border-b-2 border-primary pb-1">অন্য কিছু লিখে চেষ্টা করুন</Link>
         </div>
       ) : (
         <div className="space-y-24">
@@ -69,14 +69,14 @@ const SearchResults: React.FC = () => {
                <h2 className="text-2xl font-bold flex items-center gap-3">
                   <Briefcase size={20} /> নিয়োগ বিজ্ঞপ্তি
                </h2>
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-1 bg-gray-100 minimal-border">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-1 bg-muted minimal-border">
                   {results.jobs.map((job: any) => (
-                    <Link to="/professional" key={job.id} className="bg-white p-8 flex justify-between items-center group hover:bg-black hover:text-white transition-all">
+                    <Link to="/professional" key={job.id} className="bg-card p-8 flex justify-between items-center group hover:bg-primary hover:text-primary-foreground transition-all">
                       <div className="space-y-1">
                         <h3 className="text-xl font-bold">{job.title}</h3>
-                        <p className="text-sm text-gray-500 group-hover:text-gray-400 font-medium">{job.institution}</p>
+                        <p className="text-sm text-muted-foreground group-hover:text-muted-foreground font-medium">{job.institution}</p>
                       </div>
-                      <ArrowUpRight size={20} className="text-gray-300 group-hover:text-white" />
+                      <ArrowUpRight size={20} className="text-muted-foreground group-hover:text-primary-foreground" />
                     </Link>
                   ))}
                </div>
@@ -89,15 +89,15 @@ const SearchResults: React.FC = () => {
                <h2 className="text-2xl font-bold flex items-center gap-3">
                   <ShoppingBag size={20} /> মার্কেটপ্লেস পণ্য
                </h2>
-               <div className="grid grid-cols-2 md:grid-cols-4 gap-1 bg-gray-100 minimal-border">
+               <div className="grid grid-cols-2 md:grid-cols-4 gap-1 bg-muted minimal-border">
                   {results.products.map((prod: any) => (
-                    <Link to="/marketplace" key={prod.id} className="bg-white p-6 space-y-4 group transition-all hover:bg-gray-50">
-                      <div className="aspect-square bg-gray-50 overflow-hidden grayscale group-hover:grayscale-0">
+                    <Link to="/marketplace" key={prod.id} className="bg-card p-6 space-y-4 group transition-all hover:bg-muted">
+                      <div className="aspect-square bg-muted overflow-hidden grayscale group-hover:grayscale-0">
                           <ImageWithFallback src={prod.image} name={prod.name} className="w-full h-full object-cover" alt={prod.name} />
                       </div>
                       <div className="space-y-1">
                         <h3 className="text-sm font-bold truncate">{prod.name}</h3>
-                        <p className="text-xs font-extrabold text-black">{prod.isFree ? 'ফ্রি' : `৳ ${prod.price}`}</p>
+                        <p className="text-xs font-extrabold text-foreground">{prod.isFree ? 'ফ্রি' : `৳ ${prod.price}`}</p>
                       </div>
                     </Link>
                   ))}

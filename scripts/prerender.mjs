@@ -122,17 +122,35 @@ const server = createServer((req, res) => {
 await new Promise((resolve) => server.listen(PORT, resolve));
 
 const t0 = Date.now();
-let browser;
-try {
+
+async function launchBrowser() {
   const { default: puppeteer } = await import('puppeteer');
-  browser = await puppeteer.launch({
-    headless: true,
+  // 'shell' = chrome-headless-shell — smaller and needs fewer system
+  // libraries than full Chrome, so it works in bare CI containers
+  // (Vercel build image) where the full browser may fail to launch.
+  return puppeteer.launch({
+    headless: 'shell',
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
   });
+}
+
+let browser;
+try {
+  browser = await launchBrowser();
 } catch (err) {
-  console.warn(`[prerender] Chrome unavailable (${err.message}) — skipping prerender.`);
-  server.close();
-  process.exit(0);
+  console.warn(`[prerender] headless-shell launch failed: ${err.message}`);
+  console.warn('[prerender] attempting explicit browser install...');
+  try {
+    const { execSync } = await import('node:child_process');
+    execSync('npx --yes puppeteer browsers install chrome-headless-shell', {
+      stdio: 'inherit',
+    });
+    browser = await launchBrowser();
+  } catch (err2) {
+    console.warn(`[prerender] still unavailable (${err2.message}) — skipping prerender.`);
+    server.close();
+    process.exit(0);
+  }
 }
 
 let done = 0;

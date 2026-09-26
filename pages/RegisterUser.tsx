@@ -67,49 +67,49 @@ const RegisterUser: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col lg:flex-row animate-fadeIn">
+    <div className="min-h-screen bg-card flex flex-col lg:flex-row animate-fadeIn">
       {/* Left Branding Side */}
-      <div className="lg:w-1/3 bg-black text-white p-12 md:p-16 flex flex-col justify-between border-r border-gray-900">
+      <div className="lg:w-1/3 bg-primary text-primary-foreground p-12 md:p-16 flex flex-col justify-between border-r border-border">
         <Link to="/" className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-white text-black flex items-center justify-center font-bold">M</div>
+          <div className="w-8 h-8 bg-card text-foreground flex items-center justify-center font-bold">M</div>
           <span className="text-xl font-bold tracking-tight">কওমি</span>
         </Link>
 
         <div className="space-y-8">
-           <div className="caps-label text-black">Join Community</div>
+           <div className="caps-label text-primary-foreground">Join Community</div>
            <h1 className="text-5xl font-extrabold leading-tight tracking-tight">শুরু হোক নতুন ডিজিটাল পথচলা।</h1>
-           <p className="text-gray-400 text-lg font-medium leading-relaxed">
+           <p className="text-primary-foreground text-lg font-medium leading-relaxed">
              বাংলাদেশের মাদ্রাসা নেটওয়ার্কের অংশ হোন। রিসোর্স ডাউনলোড, ক্যারিয়ার আপডেট এবং কমিউনিটি আলোচনার সুবিধা পান।
            </p>
         </div>
 
         <div className="space-y-4">
-           <div className="caps-label text-gray-600">Already a member?</div>
-           <Link to="/login" className="inline-flex items-center gap-2 font-bold text-sm hover:text-black transition-colors">
+           <div className="caps-label text-primary-foreground">Already a member?</div>
+           <Link to="/login" className="inline-flex items-center gap-2 font-bold text-sm hover:text-primary-foreground transition-colors">
              লগইন করুন <ArrowRight size={18} />
            </Link>
         </div>
       </div>
 
       {/* Right Form Side */}
-      <div className="lg:w-2/3 p-8 md:p-24 flex items-center justify-center bg-white">
+      <div className="lg:w-2/3 p-8 md:p-24 flex items-center justify-center bg-card">
         <div className="w-full max-w-xl space-y-12">
           <div className="space-y-4">
-            <Link to="/login" className="inline-flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest hover:text-black mb-8">
+            <Link to="/login" className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-widest hover:text-foreground mb-8">
                <ArrowLeft size={14} /> Back to Login
             </Link>
             <h2 className="text-4xl font-extrabold tracking-tight">ইউজার রেজিস্ট্রেশন।</h2>
-            <p className="text-gray-500 font-medium">ব্যক্তিগত অ্যাকাউন্ট খোলার জন্য সঠিক তথ্য প্রদান করুন।</p>
+            <p className="text-muted-foreground font-medium">ব্যক্তিগত অ্যাকাউন্ট খোলার জন্য সঠিক তথ্য প্রদান করুন।</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-10">
             <div className="space-y-8">
-              <div className="grid grid-cols-2 gap-1 bg-gray-100 minimal-border">
+              <div className="grid grid-cols-2 gap-1 bg-muted minimal-border">
                 <button 
                   type="button"
                   onClick={() => setFormData({...formData, roleChoice: 'Student'})}
                   className={`py-5 font-extrabold text-sm transition-all ${
-                    formData.roleChoice === 'Student' ? 'bg-black text-white' : 'bg-white text-gray-400 hover:bg-gray-50'
+                    formData.roleChoice === 'Student' ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-muted'
                   }`}
                 >
                   শিক্ষার্থী
@@ -118,7 +118,7 @@ const RegisterUser: React.FC = () => {
                   type="button"
                   onClick={() => setFormData({...formData, roleChoice: 'Teacher'})}
                   className={`py-5 font-extrabold text-sm transition-all ${
-                    formData.roleChoice === 'Teacher' ? 'bg-black text-white' : 'bg-white text-gray-400 hover:bg-gray-50'
+                    formData.roleChoice === 'Teacher' ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-muted'
                   }`}
                 >
                   শিক্ষক
@@ -127,15 +127,15 @@ const RegisterUser: React.FC = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="caps-label text-gray-400">Full Name</label>
-                  <input required placeholder="নাম" className="w-full p-4 bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-black outline-none font-medium text-lg" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+                  <label className="caps-label text-muted-foreground">Full Name</label>
+                  <input required placeholder="নাম" className="w-full p-4 bg-muted border border-border focus:ring-2 focus:ring-ring outline-none font-medium text-lg" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
                 </div>
                 <div className="space-y-2">
-                  <label className="caps-label text-gray-400">Email Address</label>
-                  <input required type="email" placeholder="ইমেইল" className="w-full p-4 bg-gray-50 border border-gray-100 focus:ring-2 focus:ring-black outline-none font-medium text-lg" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                  <label className="caps-label text-muted-foreground">Email Address</label>
+                  <input required type="email" placeholder="ইমেইল" className="w-full p-4 bg-muted border border-border focus:ring-2 focus:ring-ring outline-none font-medium text-lg" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
                 </div>
                 <div className="space-y-2 md:col-span-2">
-                  <label className="caps-label text-gray-400">Password</label>
+                  <label className="caps-label text-muted-foreground">Password</label>
                   <PasswordInput
                     required
                     placeholder="পাসওয়ার্ড"
@@ -148,7 +148,7 @@ const RegisterUser: React.FC = () => {
             </div>
 
             {error && (
-              <div className="p-5 bg-gray-100 border border-gray-200 text-gray-900 text-sm font-bold">
+              <div className="p-5 bg-muted border border-border text-foreground text-sm font-bold">
                 {error}
               </div>
             )}
@@ -156,11 +156,11 @@ const RegisterUser: React.FC = () => {
             <div className="space-y-6">
                <button 
                  disabled={loading}
-                 className="w-full py-6 bg-black text-white font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-gray-800 transition-all disabled:opacity-50"
+                 className="w-full py-6 bg-primary text-primary-foreground font-extrabold text-xl flex items-center justify-center gap-3 hover:bg-secondary transition-all disabled:opacity-50"
                >
                  {loading ? <Loader2 className="animate-spin" size={24} /> : <>রেজিস্ট্রেশন করুন <ArrowRight size={24} /></>}
                </button>
-               <p className="text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+               <p className="text-center text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                  By registering you agree to our Terms and Privacy Policy.
                </p>
             </div>

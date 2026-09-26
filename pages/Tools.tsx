@@ -7,15 +7,15 @@ const Tools: React.FC = () => {
 
   return (
     <div className="space-y-16 animate-fadeIn pb-24">
-      <div className="space-y-6 border-b border-gray-100 pb-12">
-        <div className="caps-label text-gray-400">Management & Utilities</div>
+      <div className="space-y-6 border-b border-border pb-12">
+        <div className="caps-label text-muted-foreground">Management & Utilities</div>
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">ইউটিলিটি টুলস।</h1>
-        <p className="text-xl text-gray-500 max-w-2xl leading-relaxed font-medium">
+        <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium">
           আপনার দৈনন্দিন দ্বীনি ও দাপ্তরিক কাজগুলো সহজ করতে আমাদের বিশেষ ডিজিটাল সরঞ্জামসমূহ।
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-1 bg-gray-100 p-1 minimal-border w-fit">
+      <div className="flex flex-wrap gap-1 bg-muted p-1 minimal-border w-fit">
         <ToolTab active={activeTool === 'zakat'} onClick={() => setActiveTool('zakat')} icon={<Calculator size={18} />} label="জাকাত ক্যালকুলেটর" />
         <ToolTab active={activeTool === 'khutbah'} onClick={() => setActiveTool('khutbah')} icon={<BookOpen size={18} />} label="খুতবাহ প্ল্যানার" />
         <ToolTab active={activeTool === 'results'} onClick={() => setActiveTool('results')} icon={<FileText size={18} />} label="বোর্ড রেজাল্ট" />
@@ -33,7 +33,7 @@ const Tools: React.FC = () => {
 const ToolTab = ({ active, onClick, icon, label }: any) => (
   <button 
     onClick={onClick}
-    className={`px-8 py-4 transition-all font-bold text-xs uppercase tracking-widest flex items-center gap-3 ${active ? 'bg-black text-white' : 'text-gray-400 hover:text-black hover:bg-white'}`}
+    className={`px-8 py-4 transition-all font-bold text-xs uppercase tracking-widest flex items-center gap-3 ${active ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-card'}`}
   >
     {icon} {label}
   </button>
@@ -61,12 +61,12 @@ const ResultChecker = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 bg-gray-100 minimal-border">
-       <div className="bg-white p-12 md:p-16 space-y-12">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 bg-muted minimal-border">
+       <div className="bg-card p-12 md:p-16 space-y-12">
           <div className="space-y-4">
-            <div className="caps-label text-black">Portal Entrance</div>
+            <div className="caps-label text-foreground">Portal Entrance</div>
             <h2 className="text-3xl font-extrabold tracking-tight">বোর্ড রেজাল্ট পোর্টাল।</h2>
-            <p className="text-gray-500 font-medium">বেফাক ও মাদ্রাসা শিক্ষা বোর্ডের ফলাফল দেখুন এখানে।</p>
+            <p className="text-muted-foreground font-medium">বেফাক ও মাদ্রাসা শিক্ষা বোর্ডের ফলাফল দেখুন এখানে।</p>
           </div>
 
           <form onSubmit={handleSearch} className="space-y-8">
@@ -84,29 +84,29 @@ const ResultChecker = () => {
               </div>
               <InputField label="রেজিস্ট্রেশন নম্বর" placeholder="৯৮৭৬৫৪" />
             </div>
-            <button className="w-full py-6 bg-black text-white font-bold text-lg flex items-center justify-center gap-4 hover:bg-gray-800 transition-all">
+            <button className="w-full py-6 bg-primary text-primary-foreground font-bold text-lg flex items-center justify-center gap-4 hover:bg-secondary transition-all">
                {loading ? <Loader2 className="animate-spin" /> : <><Search size={24} /> ফলাফল দেখুন</>}
             </button>
           </form>
        </div>
        
-       <div className="bg-white p-12 md:p-16 flex flex-col items-center justify-center text-center">
+       <div className="bg-card p-12 md:p-16 flex flex-col items-center justify-center text-center">
           {result ? (
             <div className="space-y-10 animate-fadeIn w-full max-w-sm">
                <div className="space-y-4">
-                  <div className="caps-label text-black">Student Profile</div>
+                  <div className="caps-label text-foreground">Student Profile</div>
                   <h3 className="text-4xl font-extrabold tracking-tight">{result.name}</h3>
-                  <p className="text-gray-400 font-bold uppercase text-xs tracking-widest">{result.board} • {result.year}</p>
+                  <p className="text-muted-foreground font-bold uppercase text-xs tracking-widest">{result.board} • {result.year}</p>
                </div>
                
-               <div className="p-10 minimal-border bg-gray-50 space-y-2">
-                  <div className="caps-label text-gray-400 mb-2">Final Result</div>
-                  <p className="text-4xl font-black text-black">{result.status}</p>
-                  <p className="text-sm font-bold text-gray-400 mt-4">শ্রেণী: {result.class}</p>
-                  <p className="text-xs font-bold text-black mt-1">মোট নম্বর: {result.marks}</p>
+               <div className="p-10 minimal-border bg-muted space-y-2">
+                  <div className="caps-label text-muted-foreground mb-2">Final Result</div>
+                  <p className="text-4xl font-black text-foreground">{result.status}</p>
+                  <p className="text-sm font-bold text-muted-foreground mt-4">শ্রেণী: {result.class}</p>
+                  <p className="text-xs font-bold text-foreground mt-1">মোট নম্বর: {result.marks}</p>
                </div>
                
-               <button className="text-xs font-black uppercase tracking-widest border-b-2 border-black pb-1 hover:text-gray-500 hover:border-gray-500 transition-all">
+               <button className="text-xs font-black uppercase tracking-widest border-b-2 border-primary pb-1 hover:text-muted-foreground hover:border-border transition-all">
                  ডাউনলোড মার্কশিট (PDF)
                </button>
             </div>
@@ -123,8 +123,8 @@ const ResultChecker = () => {
 
 const SelectInput = ({ label, children }: any) => (
   <div className="space-y-2">
-    <label className="caps-label text-gray-400">{label}</label>
-    <select className="w-full p-4 bg-gray-50 border border-gray-100 outline-none focus:ring-2 focus:ring-black font-bold text-sm">
+    <label className="caps-label text-muted-foreground">{label}</label>
+    <select className="w-full p-4 bg-muted border border-border outline-none focus:ring-2 focus:ring-ring font-bold text-sm">
       {children}
     </select>
   </div>
@@ -140,8 +140,8 @@ const ZakatCalculator = () => {
   const zakat = total > 0 ? (total * 0.025) : 0;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 bg-gray-100 minimal-border">
-      <div className="bg-white p-12 md:p-16 space-y-12">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 bg-muted minimal-border">
+      <div className="bg-card p-12 md:p-16 space-y-12">
         <h2 className="text-3xl font-extrabold tracking-tight flex items-center gap-4">
            <Wallet size={32} /> সম্পদ বিবরণী
         </h2>
@@ -152,16 +152,16 @@ const ZakatCalculator = () => {
           <InputField label="ঋণ ও বকেয়া (৳)" value={debts} onChange={setDebts} negative />
         </div>
       </div>
-      <div className="bg-black text-white p-12 md:p-20 flex flex-col items-center justify-center text-center space-y-10">
+      <div className="bg-primary text-primary-foreground p-12 md:p-20 flex flex-col items-center justify-center text-center space-y-10">
         <div className="space-y-4">
-           <div className="caps-label text-black">Estimator</div>
-           <p className="text-lg font-bold text-gray-500">আপনার প্রদেয় জাকাত (আনুমানিক)</p>
+           <div className="caps-label text-primary-foreground">Estimator</div>
+           <p className="text-lg font-bold text-primary-foreground">আপনার প্রদেয় জাকাত (আনুমানিক)</p>
            <h3 className="text-6xl md:text-7xl font-black tracking-tight">৳ {zakat.toLocaleString()}</h3>
         </div>
-        <p className="text-sm text-gray-600 max-w-xs font-medium leading-relaxed">
+        <p className="text-sm text-primary-foreground max-w-xs font-medium leading-relaxed">
            এটি একটি সাধারণ হিসাব। সঠিক নিসাব এবং জাকাত পরিশোধের জন্য ফকিহ বা আলেমদের সরাসরি পরামর্শ নিন।
         </p>
-        <button className="bg-white text-black px-12 py-5 font-bold text-sm hover:bg-gray-100 transition-all flex items-center gap-3">
+        <button className="bg-card text-foreground px-12 py-5 font-bold text-sm hover:bg-muted transition-all flex items-center gap-3">
            জাকাত প্রদান করুন (সাদাকাহ) <ArrowRight size={20} />
         </button>
       </div>
@@ -171,13 +171,13 @@ const ZakatCalculator = () => {
 
 const InputField = ({ label, value, onChange, negative, placeholder }: any) => (
   <div className="space-y-3">
-    <label className="caps-label text-gray-400">{label}</label>
+    <label className="caps-label text-muted-foreground">{label}</label>
     <div className="relative">
-      <span className="absolute left-0 top-1/2 -translate-y-1/2 font-bold text-gray-500 text-2xl">{negative ? '−' : '৳'}</span>
+      <span className="absolute left-0 top-1/2 -translate-y-1/2 font-bold text-muted-foreground text-2xl">{negative ? '−' : '৳'}</span>
       <input 
         type="number" 
         placeholder={placeholder}
-        className={`w-full pl-10 pr-4 py-4 bg-transparent border-b-2 border-gray-100 focus:border-black outline-none transition-all font-black text-3xl`}
+        className={`w-full pl-10 pr-4 py-4 bg-transparent border-b-2 border-border focus:border-primary outline-none transition-all font-black text-3xl`}
         value={value || ''}
         onChange={(e) => onChange ? onChange(Number(e.target.value)) : null}
       />
@@ -187,14 +187,14 @@ const InputField = ({ label, value, onChange, negative, placeholder }: any) => (
 
 const KhutbahPlanner = () => (
   <div className="space-y-12">
-    <div className="p-12 minimal-border bg-white flex justify-between items-center">
+    <div className="p-12 minimal-border bg-card flex justify-between items-center">
       <div className="space-y-2">
          <h2 className="text-3xl font-extrabold tracking-tight">আসন্ন জুমুআহ এর বিষয়বস্তু।</h2>
-         <p className="text-gray-500 font-bold uppercase text-[10px] tracking-widest">১৫ ফেব্রুয়ারি ২০২৫ • শুক্রবার</p>
+         <p className="text-muted-foreground font-bold uppercase text-[10px] tracking-widest">১৫ ফেব্রুয়ারি ২০২৫ • শুক্রবার</p>
       </div>
-      <button className="text-xs font-black uppercase tracking-widest border border-gray-200 px-6 py-3 hover:bg-black hover:text-white transition-all">গাইডলাইন ডাউনলোড</button>
+      <button className="text-xs font-black uppercase tracking-widest border border-border px-6 py-3 hover:bg-primary hover:text-primary-foreground transition-all">গাইডলাইন ডাউনলোড</button>
     </div>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-gray-100 minimal-border">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-muted minimal-border">
       <KhutbahCard title="পবিত্রতা ও ঈমানের মজবুতি" board="বেফাক অনুমোদিত" active />
       <KhutbahCard title="ব্যবসায় ইসলামি আদর্শ" board="ইসলামিক ফাউন্ডেশন" />
       <KhutbahCard title="সামাজিক সম্প্রীতি" board="সাধারণ বিষয়বস্তু" />
@@ -203,17 +203,17 @@ const KhutbahPlanner = () => (
 );
 
 const KhutbahCard = ({ title, board, active }: any) => (
-  <div className={`p-12 flex flex-col justify-between group transition-all h-[350px] cursor-pointer ${active ? 'bg-black text-white' : 'bg-white hover:bg-gray-50'}`}>
+  <div className={`p-12 flex flex-col justify-between group transition-all h-[350px] cursor-pointer ${active ? 'bg-primary text-primary-foreground' : 'bg-card hover:bg-muted'}`}>
     <div className="space-y-6">
-       <Star size={32} className={active ? 'text-black' : 'text-gray-100 group-hover:text-black'} fill="currentColor" />
+       <Star size={32} className={active ? 'text-primary-foreground' : 'text-gray-100 group-hover:text-primary-foreground'} fill="currentColor" />
        <div className="space-y-2">
-          <div className="caps-label text-gray-500">{board}</div>
+          <div className="caps-label text-primary-foreground">{board}</div>
           <h4 className="text-2xl font-extrabold tracking-tight leading-tight">{title}</h4>
        </div>
     </div>
-    <div className="pt-8 border-t border-gray-100 group-hover:border-gray-800 flex items-center justify-between">
+    <div className="pt-8 border-t border-border group-hover:border-border flex items-center justify-between">
        <span className="text-[10px] font-black uppercase tracking-widest">Select Theme</span>
-       <ArrowUpRight size={20} className="text-gray-300 group-hover:text-black" />
+       <ArrowUpRight size={20} className="text-primary-foreground group-hover:text-primary-foreground" />
     </div>
   </div>
 );

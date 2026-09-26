@@ -20,7 +20,7 @@ const InstitutionDetail: React.FC = () => {
     return (
       <div className="text-center py-40 space-y-8">
         <h2 className="text-3xl font-extrabold tracking-tight">প্রতিষ্ঠানটি খুঁজে পাওয়া যায়নি।</h2>
-        <Link to="/institutions" className="text-sm font-bold border-b-2 border-black pb-1">ডিরেক্টরি দেখুন</Link>
+        <Link to="/institutions" className="text-sm font-bold border-b-2 border-primary pb-1">ডিরেক্টরি দেখুন</Link>
       </div>
     );
   }
@@ -28,13 +28,13 @@ const InstitutionDetail: React.FC = () => {
   return (
     <div className="space-y-16 animate-fadeIn pb-32">
       {/* Navigation */}
-      <div className="flex justify-between items-center border-b border-gray-100 pb-8">
-        <Link to="/institutions" className="inline-flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest hover:text-black transition-all">
+      <div className="flex justify-between items-center border-b border-border pb-8">
+        <Link to="/institutions" className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-widest hover:text-foreground transition-all">
           <ArrowLeft size={16} /> Back to Directory
         </Link>
         <div className="flex gap-4">
            {institution.verified && (
-             <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black">
+             <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-foreground">
                 <CheckCircle size={14} /> Verified Institution
              </div>
            )}
@@ -42,32 +42,32 @@ const InstitutionDetail: React.FC = () => {
       </div>
 
       {/* Hero Header */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-1 bg-gray-100 minimal-border">
-         <div className="lg:col-span-7 bg-white p-12 md:p-16 space-y-12 flex flex-col justify-center">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-1 bg-muted minimal-border">
+         <div className="lg:col-span-7 bg-card p-12 md:p-16 space-y-12 flex flex-col justify-center">
             <div className="space-y-6">
-               <div className="caps-label text-black">{institution.type} • Established {institution.established}</div>
+               <div className="caps-label text-foreground">{institution.type} • Established {institution.established}</div>
                <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05]">{institution.name}।</h1>
-               <div className="flex items-center gap-2 text-xl text-gray-500 font-medium">
-                  <MapPin size={22} className="text-gray-300" /> {institution.location}
+               <div className="flex items-center gap-2 text-xl text-muted-foreground font-medium">
+                  <MapPin size={22} className="text-muted-foreground" /> {institution.location}
                </div>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 pt-12 border-t border-gray-100">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 pt-12 border-t border-border">
                <div className="space-y-1">
-                  <div className="caps-label text-gray-400">Total Students</div>
+                  <div className="caps-label text-muted-foreground">Total Students</div>
                   <div className="text-3xl font-extrabold">{institution.studentCount || '৫০০+'}</div>
                </div>
                <div className="space-y-1">
-                  <div className="caps-label text-gray-400">District</div>
+                  <div className="caps-label text-muted-foreground">District</div>
                   <div className="text-3xl font-extrabold">{institution.district}</div>
                </div>
                <div className="hidden md:block space-y-1">
-                  <div className="caps-label text-gray-400">Status</div>
-                  <div className="text-3xl font-extrabold text-black">সক্রিয়</div>
+                  <div className="caps-label text-muted-foreground">Status</div>
+                  <div className="text-3xl font-extrabold text-foreground">সক্রিয়</div>
                </div>
             </div>
          </div>
-         <div className="lg:col-span-5 aspect-square lg:aspect-auto bg-gray-50 overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000">
+         <div className="lg:col-span-5 aspect-square lg:aspect-auto bg-muted overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000">
             <ImageWithFallback src={institution.image} name={institution.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt={institution.name} />
          </div>
       </div>
@@ -79,10 +79,10 @@ const InstitutionDetail: React.FC = () => {
           <section className="space-y-8">
             <div className="flex items-center gap-4">
                <h2 className="text-3xl font-extrabold tracking-tight">প্রতিষ্ঠানের বিবরণ</h2>
-               <div className="h-px bg-gray-100 flex-1"></div>
+               <div className="h-px bg-muted flex-1"></div>
             </div>
-            <div className="bg-white minimal-border p-10 md:p-12 space-y-8">
-              <p className="text-xl text-gray-600 leading-relaxed font-medium">
+            <div className="bg-card minimal-border p-10 md:p-12 space-y-8">
+              <p className="text-xl text-muted-foreground leading-relaxed font-medium">
                 {institution.name} বাংলাদেশের একটি স্বনামধন্য {institution.type} দ্বীনি শিক্ষা প্রতিষ্ঠান। দীর্ঘ সময় ধরে এই প্রতিষ্ঠানটি ইসলামের মৌলিক শিক্ষা ও আদর্শ প্রচারের কেন্দ্রবিন্দু হিসেবে কাজ করছে। বর্তমানে আধুনিক কারিকুলাম ও ধর্মীয় জ্ঞানের সমন্বয়ে এখানে দক্ষ আলেম তৈরি করা হচ্ছে।
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -98,22 +98,22 @@ const InstitutionDetail: React.FC = () => {
           <section className="space-y-8">
             <div className="flex items-center gap-4">
                <h2 className="text-3xl font-extrabold tracking-tight">নিয়োগ বিজ্ঞপ্তি</h2>
-               <div className="h-px bg-gray-100 flex-1"></div>
+               <div className="h-px bg-muted flex-1"></div>
             </div>
-            <div className="bg-gray-100 minimal-border space-y-1">
+            <div className="bg-muted minimal-border space-y-1">
                <OpportunityRow title="সিনিয়র শিক্ষক প্রয়োজন" type="Teacher" date="২ দিন আগে" />
                <OpportunityRow title="অফিস সহকারী" type="Staff" date="৫ দিন আগে" />
             </div>
             <div className="text-right">
-               <Link to="/professional" className="text-sm font-bold border-b-2 border-black pb-0.5">সবগুলো নিয়োগ দেখুন</Link>
+               <Link to="/professional" className="text-sm font-bold border-b-2 border-primary pb-0.5">সবগুলো নিয়োগ দেখুন</Link>
             </div>
           </section>
         </div>
 
         {/* Sidebar Info */}
         <div className="space-y-8">
-           <div className="bg-black text-white p-12 space-y-10">
-              <div className="caps-label text-black">Contact Details</div>
+           <div className="bg-primary text-primary-foreground p-12 space-y-10">
+              <div className="caps-label text-primary-foreground">Contact Details</div>
               <div className="space-y-8">
                  <ContactBlock icon={<Phone size={20} />} label="ফোন নম্বর" value="+৮৮০ ১৭XXXXXXXX" />
                  <ContactBlock icon={<Mail size={20} />} label="ইমেইল অ্যাড্রেস" value="info@madrasa.bd" />
@@ -121,14 +121,14 @@ const InstitutionDetail: React.FC = () => {
               </div>
               <button 
                 onClick={() => setShowMessageModal(true)}
-                className="w-full py-5 bg-white text-black font-bold text-sm hover:bg-gray-100 transition-all flex items-center justify-center gap-3"
+                className="w-full py-5 bg-card text-foreground font-bold text-sm hover:bg-muted transition-all flex items-center justify-center gap-3"
               >
                  মেসেজ দিন <ArrowRight size={18} />
               </button>
            </div>
 
-           <div className="bg-white minimal-border p-10 space-y-8">
-              <div className="caps-label text-gray-400">Quick Actions</div>
+           <div className="bg-card minimal-border p-10 space-y-8">
+              <div className="caps-label text-muted-foreground">Quick Actions</div>
               <div className="space-y-4">
                  <SideAction icon={<FileText size={18} />} text="ভর্তি নির্দেশিকা" />
                  <SideAction icon={<MessageSquare size={18} />} text="ফলাফল চেক" />
@@ -136,10 +136,10 @@ const InstitutionDetail: React.FC = () => {
               </div>
            </div>
 
-           <div className="p-10 bg-gray-50 border border-gray-100 space-y-6">
-              <div className="caps-label text-gray-400">Institutional Aid</div>
+           <div className="p-10 bg-muted border border-border space-y-6">
+              <div className="caps-label text-muted-foreground">Institutional Aid</div>
               <h4 className="text-xl font-bold leading-tight">এই মাদ্রাসায় সাদাকাহ প্রদান করুন।</h4>
-              <Link to="/marketplace" className="w-full py-4 bg-black text-white font-bold text-xs flex items-center justify-center gap-2 hover:bg-black transition-all">
+              <Link to="/marketplace" className="w-full py-4 bg-primary text-primary-foreground font-bold text-xs flex items-center justify-center gap-2 hover:bg-primary transition-all">
                  অনদান দিন <ArrowRight size={16} />
               </Link>
            </div>
@@ -150,28 +150,28 @@ const InstitutionDetail: React.FC = () => {
 };
 
 const FeatureItem = ({ icon, text }: any) => (
-  <div className="flex items-center gap-4 p-5 border border-gray-100">
-    <div className="text-black">{icon}</div>
-    <span className="text-sm font-bold text-gray-700">{text}</span>
+  <div className="flex items-center gap-4 p-5 border border-border">
+    <div className="text-foreground">{icon}</div>
+    <span className="text-sm font-bold text-foreground">{text}</span>
   </div>
 );
 
 const OpportunityRow = ({ title, type, date }: any) => (
-  <div className="bg-white p-8 flex justify-between items-center group cursor-pointer hover:bg-gray-50 transition-all">
+  <div className="bg-card p-8 flex justify-between items-center group cursor-pointer hover:bg-muted transition-all">
      <div>
-        <h4 className="text-xl font-bold group-hover:text-black transition-colors">{title}</h4>
+        <h4 className="text-xl font-bold group-hover:text-foreground transition-colors">{title}</h4>
         <div className="flex items-center gap-4 mt-1">
-           <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">{type}</span>
-           <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">প্রকাশিত: {date}</span>
+           <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{type}</span>
+           <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">প্রকাশিত: {date}</span>
         </div>
      </div>
-     <ArrowRight size={20} className="text-gray-200 group-hover:text-black transition-all" />
+     <ArrowRight size={20} className="text-muted-foreground group-hover:text-foreground transition-all" />
   </div>
 );
 
 const ContactBlock = ({ icon, label, value }: any) => (
   <div className="space-y-2">
-     <div className="flex items-center gap-3 text-gray-500 uppercase tracking-widest text-[9px] font-black">
+     <div className="flex items-center gap-3 text-muted-foreground uppercase tracking-widest text-[9px] font-black">
         {icon} {label}
      </div>
      <div className="text-lg font-bold">{value}</div>
@@ -181,10 +181,10 @@ const ContactBlock = ({ icon, label, value }: any) => (
 const SideAction = ({ icon, text }: any) => (
   <button 
     onClick={() => toast.info('এই বৈশিষ্ট্যটি শীঘ্রই আসছে।')}
-    className="w-full flex items-center gap-4 p-4 hover:bg-gray-50 transition-all border-b border-gray-50 last:border-none group"
+    className="w-full flex items-center gap-4 p-4 hover:bg-muted transition-all border-b border-border last:border-none group"
   >
-     <div className="text-gray-300 group-hover:text-black">{icon}</div>
-     <span className="text-sm font-bold text-gray-600 group-hover:text-black">{text}</span>
+     <div className="text-muted-foreground group-hover:text-foreground">{icon}</div>
+     <span className="text-sm font-bold text-muted-foreground group-hover:text-foreground">{text}</span>
   </button>
 );
 

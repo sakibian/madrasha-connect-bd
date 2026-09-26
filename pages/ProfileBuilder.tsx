@@ -174,29 +174,29 @@ const ProfileBuilder: React.FC = () => {
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto py-20 text-center">
-        <div className="text-gray-400">লোড হচ্ছে...</div>
+        <div className="text-muted-foreground">লোড হচ্ছে...</div>
       </div>
     );
   }
 
   return (
     <div className="max-w-4xl mx-auto space-y-16 animate-fadeIn pb-24">
-      <div className="space-y-6 border-b border-gray-100 pb-12">
-        <div className="caps-label text-gray-400">Professional Identity</div>
+      <div className="space-y-6 border-b border-border pb-12">
+        <div className="caps-label text-muted-foreground">Professional Identity</div>
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">প্রফেশনাল আইডি বিল্ডার।</h1>
-        <p className="text-lg text-gray-500 max-w-2xl leading-relaxed font-medium">
+        <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed font-medium">
           আপনার ডিজিটাল বায়োডাটা বা সিভি তৈরি করুন। এই তথ্যগুলো নিয়োগকর্তাদের কাছে দৃশ্যমান হবে।
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-1 bg-gray-100 p-1 minimal-border">
+      <div className="flex flex-wrap gap-1 bg-muted p-1 minimal-border">
         <StepIndicator num={1} label="মৌলিক তথ্য" active={step === 1} />
         <StepIndicator num={2} label="শিক্ষাগত যোগ্যতা" active={step === 2} />
         <StepIndicator num={3} label="অভিজ্ঞতা" active={step === 3} />
         <StepIndicator num={4} label="প্রিভিউ" active={step === 4} />
       </div>
 
-      <div className="bg-white minimal-border p-8 md:p-16">
+      <div className="bg-card minimal-border p-8 md:p-16">
         {/* Step 1: Basic Info */}
         {step === 1 && (
           <div className="space-y-12 animate-fadeIn">
@@ -250,18 +250,18 @@ const ProfileBuilder: React.FC = () => {
               </h2>
               <button
                 onClick={addEducation}
-                className="flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-black"
+                className="flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground"
               >
                 <Plus size={18} /> আরও যোগ করুন
               </button>
             </div>
             <div className="space-y-8">
               {formData.education.map((edu, index) => (
-                <div key={index} className="p-6 bg-gray-50 minimal-border space-y-6 relative">
+                <div key={index} className="p-6 bg-muted minimal-border space-y-6 relative">
                   {formData.education.length > 1 && (
                     <button
                       onClick={() => removeEducation(index)}
-                      className="absolute top-4 right-4 text-gray-400 hover:text-black"
+                      className="absolute top-4 right-4 text-muted-foreground hover:text-foreground"
                     >
                       <Trash2 size={18} />
                     </button>
@@ -307,18 +307,18 @@ const ProfileBuilder: React.FC = () => {
               </h2>
               <button
                 onClick={addExperience}
-                className="flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-black"
+                className="flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground"
               >
                 <Plus size={18} /> আরও যোগ করুন
               </button>
             </div>
             <div className="space-y-8">
               {formData.experience.map((exp, index) => (
-                <div key={index} className="p-6 bg-gray-50 minimal-border space-y-6 relative">
+                <div key={index} className="p-6 bg-muted minimal-border space-y-6 relative">
                   {formData.experience.length > 1 && (
                     <button
                       onClick={() => removeExperience(index)}
-                      className="absolute top-4 right-4 text-gray-400 hover:text-black"
+                      className="absolute top-4 right-4 text-muted-foreground hover:text-foreground"
                     >
                       <Trash2 size={18} />
                     </button>
@@ -369,13 +369,13 @@ const ProfileBuilder: React.FC = () => {
               {/* Basic Info Preview */}
               <div className="space-y-4">
                 <h3 className="text-2xl font-bold">{formData.name}</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-muted-foreground">
                   {formData.phone && <p><strong>ফোন:</strong> {formData.phone}</p>}
                   {formData.district && <p><strong>জেলা:</strong> {formData.district}</p>}
                   {formData.maslak && <p><strong>মাসলাক:</strong> {formData.maslak}</p>}
                 </div>
                 {formData.bio && (
-                  <p className="text-gray-700 leading-relaxed mt-4">{formData.bio}</p>
+                  <p className="text-foreground leading-relaxed mt-4">{formData.bio}</p>
                 )}
               </div>
 
@@ -387,10 +387,10 @@ const ProfileBuilder: React.FC = () => {
                   </h3>
                   <div className="space-y-4">
                     {formData.education.filter(e => e.institution || e.degree).map((edu, i) => (
-                      <div key={i} className="p-4 bg-gray-50 minimal-border">
+                      <div key={i} className="p-4 bg-muted minimal-border">
                         <p className="font-bold">{edu.degree || 'N/A'}</p>
-                        <p className="text-gray-600">{edu.institution || 'N/A'}</p>
-                        <p className="text-sm text-gray-500">{edu.year} {edu.result && `• ${edu.result}`}</p>
+                        <p className="text-muted-foreground">{edu.institution || 'N/A'}</p>
+                        <p className="text-sm text-muted-foreground">{edu.year} {edu.result && `• ${edu.result}`}</p>
                       </div>
                     ))}
                   </div>
@@ -405,11 +405,11 @@ const ProfileBuilder: React.FC = () => {
                   </h3>
                   <div className="space-y-4">
                     {formData.experience.filter(e => e.title || e.organization).map((exp, i) => (
-                      <div key={i} className="p-4 bg-gray-50 minimal-border">
+                      <div key={i} className="p-4 bg-muted minimal-border">
                         <p className="font-bold">{exp.title || 'N/A'}</p>
-                        <p className="text-gray-600">{exp.organization || 'N/A'}</p>
-                        <p className="text-sm text-gray-500">{exp.duration}</p>
-                        {exp.description && <p className="text-gray-700 mt-2">{exp.description}</p>}
+                        <p className="text-muted-foreground">{exp.organization || 'N/A'}</p>
+                        <p className="text-sm text-muted-foreground">{exp.duration}</p>
+                        {exp.description && <p className="text-foreground mt-2">{exp.description}</p>}
                       </div>
                     ))}
                   </div>
@@ -420,11 +420,11 @@ const ProfileBuilder: React.FC = () => {
         )}
 
         {/* Navigation */}
-        <div className="pt-12 mt-12 border-t border-gray-100 flex justify-between items-center">
+        <div className="pt-12 mt-12 border-t border-border flex justify-between items-center">
            <button 
              onClick={() => setStep(s => Math.max(1, s-1))} 
              disabled={step === 1}
-             className={`text-sm font-black uppercase tracking-widest flex items-center gap-2 ${step === 1 ? 'text-gray-200 cursor-not-allowed' : 'text-gray-400 hover:text-black'}`}
+             className={`text-sm font-black uppercase tracking-widest flex items-center gap-2 ${step === 1 ? 'text-muted-foreground cursor-not-allowed' : 'text-muted-foreground hover:text-foreground'}`}
            >
              <ArrowLeft size={18} /> পূর্ববর্তী
            </button>
@@ -432,14 +432,14 @@ const ProfileBuilder: React.FC = () => {
              <button 
                onClick={handleSave}
                disabled={saving}
-               className="bg-black text-white px-12 py-5 font-bold text-sm flex items-center gap-3 hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+               className="bg-primary text-primary-foreground px-12 py-5 font-bold text-sm flex items-center gap-3 hover:bg-secondary transition-all disabled:opacity-50 disabled:cursor-not-allowed"
              >
                {saving ? 'সেভ হচ্ছে...' : 'সেভ করুন'} <CheckCircle size={20} />
              </button>
            ) : (
              <button 
                onClick={handleNext}
-               className="bg-black text-white px-12 py-5 font-bold text-sm flex items-center gap-3 hover:bg-gray-800 transition-all"
+               className="bg-primary text-primary-foreground px-12 py-5 font-bold text-sm flex items-center gap-3 hover:bg-secondary transition-all"
              >
                পরবর্তী ধাপ <ArrowRight size={20} />
              </button>
@@ -451,32 +451,32 @@ const ProfileBuilder: React.FC = () => {
 };
 
 const StepIndicator = ({ num, label, active }: any) => (
-  <div className={`flex items-center gap-4 px-4 md:px-8 py-4 transition-all ${active ? 'bg-black text-white' : 'text-gray-400 hover:text-black hover:bg-white'} flex-1 justify-center`}>
+  <div className={`flex items-center gap-4 px-4 md:px-8 py-4 transition-all ${active ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-card'} flex-1 justify-center`}>
     <span className="text-[10px] font-black uppercase tracking-widest">{num}. {label}</span>
   </div>
 );
 
 const Input = ({ label, placeholder, value, onChange }: any) => (
   <div className="space-y-3">
-    <label className="caps-label text-gray-400">{label}</label>
+    <label className="caps-label text-muted-foreground">{label}</label>
     <input 
       value={value} 
       onChange={onChange}
       placeholder={placeholder} 
-      className="w-full p-4 md:p-5 bg-gray-50 border border-gray-100 outline-none focus:ring-2 focus:ring-black font-medium text-base md:text-lg" 
+      className="w-full p-4 md:p-5 bg-muted border border-border outline-none focus:ring-2 focus:ring-ring font-medium text-base md:text-lg" 
     />
   </div>
 );
 
 const TextArea = ({ label, placeholder, value, onChange, rows = 3 }: any) => (
   <div className="space-y-3">
-    <label className="caps-label text-gray-400">{label}</label>
+    <label className="caps-label text-muted-foreground">{label}</label>
     <textarea 
       value={value} 
       onChange={onChange}
       placeholder={placeholder}
       rows={rows}
-      className="w-full p-4 md:p-5 bg-gray-50 border border-gray-100 outline-none focus:ring-2 focus:ring-black font-medium text-base md:text-lg resize-none"
+      className="w-full p-4 md:p-5 bg-muted border border-border outline-none focus:ring-2 focus:ring-ring font-medium text-base md:text-lg resize-none"
     />
   </div>
 );

@@ -64,27 +64,27 @@ const Competitions: React.FC = () => {
 
   return (
     <div className="space-y-24 animate-fadeIn pb-24">
-      <div className="space-y-6 border-b border-gray-100 pb-12">
-        <div className="caps-label text-gray-400">Events & Talent</div>
+      <div className="space-y-6 border-b border-border pb-12">
+        <div className="caps-label text-muted-foreground">Events & Talent</div>
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">মেধা অন্বেষণ ও <br />সম্মাননা।</h1>
-        <p className="text-xl text-gray-500 max-w-2xl leading-relaxed font-medium">
+        <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium">
           মাদ্রাসার শিক্ষার্থীদের প্রতিভা বিকাশের জন্য আমরা আয়োজন করছি বিশেষ সব ইভেন্ট এবং জাতীয় স্তরের প্রতিযোগিতা।
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 bg-gray-100 minimal-border">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 bg-muted minimal-border">
         {loading ? (
-          <div className="col-span-2 flex items-center justify-center py-32 text-gray-400 font-medium">
+          <div className="col-span-2 flex items-center justify-center py-32 text-muted-foreground font-medium">
             লোড হচ্ছে...
           </div>
         ) : competitions.length === 0 ? (
-          <div className="col-span-2 text-center py-32 text-gray-400 font-medium">
+          <div className="col-span-2 text-center py-32 text-muted-foreground font-medium">
             বর্তমানে কোনো সক্রিয় প্রতিযোগিতা নেই
           </div>
         ) : competitions.map((comp, i) => {
           const isRegistered = registeredIds.includes(comp.id);
           return (
-            <div key={i} className="bg-white p-12 group transition-all hover:bg-gray-50 flex flex-col h-full">
+            <div key={i} className="bg-card p-12 group transition-all hover:bg-muted flex flex-col h-full">
               <div className="aspect-[16/9] mb-10 overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-1000">
                  <ImageWithFallback 
                    src={comp.imageUrl || `https://picsum.photos/seed/comp${i}/800/600`} 
@@ -96,22 +96,22 @@ const Competitions: React.FC = () => {
               
               <div className="space-y-8 flex-1 flex flex-col">
                  <div className="flex justify-between items-start">
-                    <div className="caps-label text-black">{isRegistered ? 'REGISTERED' : 'OPEN REGISTRATION'}</div>
-                    <div className="text-[10px] font-black bg-black text-white px-3 py-1 uppercase tracking-widest">
+                    <div className="caps-label text-foreground">{isRegistered ? 'REGISTERED' : 'OPEN REGISTRATION'}</div>
+                    <div className="text-[10px] font-black bg-primary text-primary-foreground px-3 py-1 uppercase tracking-widest">
                       {new Date(comp.deadline).toLocaleDateString('bn-BD', {day: 'numeric', month: 'long'})}
                     </div>
                  </div>
                  
                  <h3 className="text-3xl font-extrabold tracking-tight leading-tight flex-1">{comp.title}</h3>
                  
-                 <div className="pt-10 mt-auto border-t border-gray-100 space-y-8">
+                 <div className="pt-10 mt-auto border-t border-border space-y-8">
                     <div className="flex justify-between items-center">
                        <div className="space-y-1">
-                          <div className="caps-label text-gray-400">Prize Pool</div>
+                          <div className="caps-label text-muted-foreground">Prize Pool</div>
                           <div className="text-xl font-black">{comp.prize}</div>
                        </div>
                        <div className="text-right space-y-1">
-                          <div className="caps-label text-gray-400">Participants</div>
+                          <div className="caps-label text-muted-foreground">Participants</div>
                           <div className="text-xl font-black">{comp.participantCount}+</div>
                        </div>
                     </div>
@@ -120,8 +120,8 @@ const Competitions: React.FC = () => {
                       disabled={isRegistered}
                       className={`w-full py-5 font-bold text-sm flex items-center justify-center gap-3 transition-all ${
                         isRegistered 
-                          ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                          : 'bg-black text-white hover:bg-black'
+                          ? 'bg-muted text-muted-foreground cursor-not-allowed' 
+                          : 'bg-primary text-primary-foreground hover:bg-primary'
                       }`}
                     >
                        {isRegistered ? '✓ নিবন্ধিত' : 'অংশগ্রহণ করুন'} <ArrowRight size={20} />
@@ -133,22 +133,22 @@ const Competitions: React.FC = () => {
         })}
       </div>
 
-      <div className="bg-black text-white p-20 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+      <div className="bg-primary text-primary-foreground p-20 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
          <div className="space-y-8">
-            <div className="w-16 h-16 bg-white text-black flex items-center justify-center font-bold text-2xl">H</div>
+            <div className="w-16 h-16 bg-card text-foreground flex items-center justify-center font-bold text-2xl">H</div>
             <h2 className="text-5xl font-extrabold tracking-tight leading-tight">হল অফ ফেম (Hall of Fame)।</h2>
-            <p className="text-xl text-gray-500 font-medium leading-relaxed">
+            <p className="text-xl text-primary-foreground font-medium leading-relaxed">
               বিগত বছরের সেরা ফলাফলকারী শিক্ষার্থী ও সফল শিক্ষকদের সম্মাননা তালিকা এবং তাদের সাফল্যের গল্পসমূহ।
             </p>
-            <button className="text-sm font-bold border-b-2 border-white pb-0.5 hover:text-black hover:border-black transition-all">বিজয়ীদের তালিকা দেখুন</button>
+            <button className="text-sm font-bold border-b-2 border-white/60 pb-0.5 hover:border-white transition-all">বিজয়ীদের তালিকা দেখুন</button>
          </div>
-         <div className="grid grid-cols-2 gap-1 bg-gray-900 minimal-border">
+         <div className="grid grid-cols-2 gap-1 bg-secondary minimal-border">
             {[1,2,3,4].map(i => (
-              <div key={i} className="bg-black p-10 flex flex-col items-center text-center space-y-4 border border-gray-900">
-                 <div className="w-16 h-16 bg-gray-900 border border-gray-800 rounded-full"></div>
+              <div key={i} className="bg-foreground text-background p-10 flex flex-col items-center text-center space-y-4">
+                 <div className="w-16 h-16 bg-secondary rounded-full"></div>
                  <div className="space-y-1">
-                    <p className="text-sm font-black uppercase tracking-widest text-black">RANK #{i}</p>
-                    <p className="text-xs font-bold text-gray-400">মাওলানা সাঈদ বিন নূর</p>
+                    <p className="text-sm font-black uppercase tracking-widest">RANK #{i}</p>
+                    <p className="text-xs font-bold text-muted-foreground">মাওলানা সাঈদ বিন নূর</p>
                  </div>
               </div>
             ))}
@@ -158,10 +158,10 @@ const Competitions: React.FC = () => {
       {/* Competition Registration Modal */}
       {showRegModal && selectedComp && (
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={() => setShowRegModal(false)}>
-          <div className="bg-white p-8 max-w-md w-full border border-gray-200 animate-fadeIn" onClick={e => e.stopPropagation()}>
+          <div className="bg-card p-8 max-w-md w-full border border-border animate-fadeIn" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xl font-black">প্রতিযোগিতায় নিবন্ধন</h3>
-              <button onClick={() => setShowRegModal(false)} className="text-gray-400 hover:text-black p-1">
+              <button onClick={() => setShowRegModal(false)} className="text-muted-foreground hover:text-foreground p-1">
                 <X size={20} />
               </button>
             </div>
@@ -169,7 +169,7 @@ const Competitions: React.FC = () => {
             <div className="space-y-6">
               <div>
                 <h4 className="text-lg font-bold mb-2">{selectedComp.title}</h4>
-                <div className="flex items-center gap-4 text-sm text-gray-500">
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
                   <span>পুরস্কার: {selectedComp.prize}</span>
                   <span>•</span>
                   <span>শেষ তারিখ: {new Date(selectedComp.deadline).toLocaleDateString('bn-BD')}</span>
@@ -177,14 +177,14 @@ const Competitions: React.FC = () => {
               </div>
 
               {selectedComp.requirements && (
-                <div className="bg-gray-50 border border-gray-200 p-4">
-                  <p className="text-xs font-bold text-gray-900 mb-2 uppercase tracking-widest">প্রয়োজনীয়তা</p>
-                  <p className="text-sm text-gray-900 font-medium">{selectedComp.requirements}</p>
+                <div className="bg-muted border border-border p-4">
+                  <p className="text-xs font-bold text-foreground mb-2 uppercase tracking-widest">প্রয়োজনীয়তা</p>
+                  <p className="text-sm text-foreground font-medium">{selectedComp.requirements}</p>
                 </div>
               )}
 
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">
+                <label className="block text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2">
                   সাবমিশন URL (ঐচ্ছিক)
                 </label>
                 <input
@@ -192,42 +192,42 @@ const Competitions: React.FC = () => {
                   value={submissionUrl}
                   onChange={(e) => setSubmissionUrl(e.target.value)}
                   placeholder="https://drive.google.com/... অথবা YouTube লিঙ্ক"
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium"
+                  className="w-full px-4 py-3 border border-border outline-none focus:ring-2 focus:ring-ring font-medium"
                 />
-                <p className="text-xs text-gray-400 mt-2 font-medium">
+                <p className="text-xs text-muted-foreground mt-2 font-medium">
                   আপনার কাজ Google Drive, YouTube বা অন্যান্য প্ল্যাটফর্মে আপলোড করে লিঙ্ক দিন।
                 </p>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">
+                <label className="block text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2">
                   অতিরিক্ত মন্তব্য (ঐচ্ছিক)
                 </label>
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="আপনার সম্পর্কে কিছু লিখুন..."
-                  className="w-full px-4 py-3 border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium min-h-[100px] resize-none"
+                  className="w-full px-4 py-3 border border-border outline-none focus:ring-2 focus:ring-ring font-medium min-h-[100px] resize-none"
                 />
               </div>
 
-              <div className="bg-gray-50 border border-gray-200 p-4">
-                <p className="text-xs text-gray-900 font-medium">
+              <div className="bg-muted border border-border p-4">
+                <p className="text-xs text-foreground font-medium">
                   নিবন্ধনের পর আপনি আপনার সাবমিশন আপডেট করতে পারবেন। চূড়ান্ত সাবমিশন শেষ তারিখের আগে জমা দিন।
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-3 justify-end mt-6 pt-6 border-t border-gray-100">
+            <div className="flex gap-3 justify-end mt-6 pt-6 border-t border-border">
               <button
                 onClick={() => setShowRegModal(false)}
-                className="px-6 py-3 border border-gray-200 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all"
+                className="px-6 py-3 border border-border text-muted-foreground font-bold text-sm hover:bg-muted transition-all"
               >
                 বাতিল
               </button>
               <button
                 onClick={handleRegister}
-                className="px-6 py-3 bg-black text-white font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2"
+                className="px-6 py-3 bg-primary text-primary-foreground font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2"
               >
                 <Trophy size={18} /> নিবন্ধন নিশ্চিত করুন
               </button>

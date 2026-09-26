@@ -199,17 +199,17 @@ const SeerahTimeline: React.FC = () => {
 
   return (
     <div className="space-y-24 animate-fadeIn pb-24">
-      <div className="space-y-6 border-b border-gray-100 pb-12">
-        <div className="caps-label text-gray-400">History & Heritage</div>
+      <div className="space-y-6 border-b border-border pb-12">
+        <div className="caps-label text-muted-foreground">History & Heritage</div>
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05]">সীরাত ও ইসলামি <br /> ইতিহাসের কালরেখা।</h1>
-        <p className="text-xl text-gray-500 max-w-2xl leading-relaxed font-medium">
+        <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium">
           রাসূলুল্লাহ (সা.)-এর পবিত্র জীবন এবং খুলাফায়ে রাশেদীনের সোনালী অধ্যায়সমূহ নির্ভরযোগ্য সূত্রের আলোকে।
         </p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6 sticky top-20 z-20 bg-white py-6 border-b border-gray-100">
+      <div className="flex flex-col md:flex-row gap-6 sticky top-20 z-20 bg-card py-6 border-b border-border">
         <div className="relative flex-1">
-          <Search className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+          <Search className="absolute left-0 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
           <input
             type="text"
             placeholder="ঘটনা বা বছর লিখে খুঁজুন..."
@@ -225,8 +225,8 @@ const SeerahTimeline: React.FC = () => {
               onClick={() => setActiveTab(tab)}
               className={`px-6 py-2.5 text-[10px] font-black uppercase tracking-widest transition-all border ${
                 activeTab === tab
-                ? 'bg-black text-white border-black'
-                : 'bg-white text-gray-400 border-gray-200 hover:border-black'
+                ? 'bg-primary text-primary-foreground border-primary'
+                : 'bg-card text-muted-foreground border-border hover:border-primary'
               }`}
             >
               {tab === 'All' ? 'সম্পূর্ণ' : tab === 'Makkah' ? 'মক্কা যুগ' : tab === 'Madinah' ? 'মদিনা যুগ' : 'খিলাফাহ'}
@@ -236,7 +236,7 @@ const SeerahTimeline: React.FC = () => {
       </div>
 
       <div className="relative">
-        <div className="absolute left-8 md:left-1/2 -translate-x-1/2 w-[1px] h-full bg-gray-200"></div>
+        <div className="absolute left-8 md:left-1/2 -translate-x-1/2 w-[1px] h-full bg-muted"></div>
 
         <div className="space-y-32">
           {filteredEvents.length > 0 ? (
@@ -246,14 +246,14 @@ const SeerahTimeline: React.FC = () => {
                 className={`relative flex flex-col md:flex-row items-start md:items-center gap-12 ${index % 2 === 0 ? 'md:flex-row-reverse md:text-right' : 'md:flex-row'}`}
               >
                 <div className="flex-1 w-full pl-20 md:pl-0">
-                  <div className={`p-10 minimal-border bg-white hover:bg-black hover:text-white transition-all group h-full`}>
+                  <div className={`p-10 minimal-border bg-card hover:bg-primary hover:text-primary-foreground transition-all group h-full`}>
                     <div className={`flex items-center gap-4 mb-6 ${index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'}`}>
                       {event.importance === 'High' && (
-                        <div className="p-1 bg-black text-white">
+                        <div className="p-1 bg-primary text-primary-foreground">
                           <Star size={10} fill="currentColor" />
                         </div>
                       )}
-                      <div className="caps-label text-black group-hover:text-gray-400">
+                      <div className="caps-label text-foreground group-hover:text-muted-foreground">
                         {event.category === 'Makkah' ? 'MAKKAH PHASE' : event.category === 'Madinah' ? 'MADINAH PHASE' : 'CALIPHATE'}
                       </div>
                     </div>
@@ -262,7 +262,7 @@ const SeerahTimeline: React.FC = () => {
                       {event.title}
                     </h3>
 
-                    <p className="text-gray-500 group-hover:text-gray-300 leading-relaxed font-medium text-lg">
+                    <p className="text-muted-foreground group-hover:text-muted-foreground leading-relaxed font-medium text-lg">
                       {event.desc}
                     </p>
 
@@ -274,8 +274,8 @@ const SeerahTimeline: React.FC = () => {
                       ))}
                     </div>
 
-                    <div className={`mt-8 pt-8 border-t border-gray-100 group-hover:border-gray-800 flex items-center gap-4 ${index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'}`}>
-                      <button className="text-sm font-bold flex items-center gap-2 group-hover:text-black transition-all">
+                    <div className={`mt-8 pt-8 border-t border-border group-hover:border-border flex items-center gap-4 ${index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'}`}>
+                      <button className="text-sm font-bold flex items-center gap-2 group-hover:text-foreground transition-all">
                         বিস্তারিত <ArrowRight size={18} />
                       </button>
                     </div>
@@ -283,14 +283,14 @@ const SeerahTimeline: React.FC = () => {
                 </div>
 
                 <div className="absolute left-8 md:left-1/2 -translate-x-1/2 z-10 flex flex-col items-center">
-                  <div className="w-12 h-12 bg-white minimal-border flex items-center justify-center group">
-                    <div className="text-black group-hover:text-black transition-colors">
+                  <div className="w-12 h-12 bg-card minimal-border flex items-center justify-center group">
+                    <div className="text-foreground group-hover:text-foreground transition-colors">
                       {React.cloneElement(event.icon as React.ReactElement, { size: 24 })}
                     </div>
                   </div>
-                  <div className="mt-4 bg-black text-white px-4 py-1 text-[10px] font-black uppercase tracking-widest whitespace-nowrap">
+                  <div className="mt-4 bg-primary text-primary-foreground px-4 py-1 text-[10px] font-black uppercase tracking-widest whitespace-nowrap">
                     {event.year}
-                    {event.hijriYear && <span className="block text-[8px] text-gray-500">({event.hijriYear})</span>}
+                    {event.hijriYear && <span className="block text-[8px] text-muted-foreground">({event.hijriYear})</span>}
                   </div>
                 </div>
 
@@ -298,9 +298,9 @@ const SeerahTimeline: React.FC = () => {
               </div>
             ))
           ) : (
-            <div className="text-center py-40 bg-gray-50 border border-dashed border-gray-200">
-              <History size={48} className="text-gray-200 mx-auto mb-6" />
-              <p className="text-xl font-bold text-gray-400">ম্যাচিং ইভেন্ট খুঁজে পাওয়া যায়নি।</p>
+            <div className="text-center py-40 bg-muted border border-dashed border-border">
+              <History size={48} className="text-muted-foreground mx-auto mb-6" />
+              <p className="text-xl font-bold text-muted-foreground">ম্যাচিং ইভেন্ট খুঁজে পাওয়া যায়নি।</p>
             </div>
           )}
         </div>
@@ -313,21 +313,21 @@ const SeerahTimeline: React.FC = () => {
           data set; the curated card timeline above is the "editorial" view.
           --------------------------------------------------------------------- */}
       <section className="space-y-8" id="complete-timeline">
-        <div className="border-t border-gray-100 pt-16 space-y-3">
-          <div className="caps-label text-black">M14.3 · Sourced Dataset</div>
+        <div className="border-t border-border pt-16 space-y-3">
+          <div className="caps-label text-foreground">M14.3 · Sourced Dataset</div>
           <h2 className="text-3xl md:text-4xl font-extrabold">সম্পূর্ণ সীরাত কালরেখা</h2>
-          <p className="text-gray-500 max-w-2xl leading-relaxed">
+          <p className="text-muted-foreground max-w-2xl leading-relaxed">
             জন্ম থেকে ওফাত পর্যন্ত {SEERAH_EVENTS.length}টি প্রধান ঘটনা — প্রতিটির সাথে কুরআন / সহীহ হাদিসের সরাসরি রেফারেন্স।
           </p>
         </div>
         <ol className="space-y-6">
           {SEERAH_EVENTS.map((e: SeerahEvent) => (
-            <li key={e.id} className="bg-white border border-gray-100 p-6 md:p-8 grid grid-cols-1 md:grid-cols-[120px_1fr] gap-6">
+            <li key={e.id} className="bg-card border border-border p-6 md:p-8 grid grid-cols-1 md:grid-cols-[120px_1fr] gap-6">
               <div className="space-y-1">
                 <div className="text-xl font-extrabold">{e.gregorianYear}</div>
-                {e.hijriYear && <div className="text-xs font-bold text-black">{e.hijriYear}</div>}
+                {e.hijriYear && <div className="text-xs font-bold text-foreground">{e.hijriYear}</div>}
                 {e.approxAge !== undefined && (
-                  <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                  <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                     বয়স {e.approxAge}
                   </div>
                 )}
@@ -335,18 +335,18 @@ const SeerahTimeline: React.FC = () => {
               <div className="space-y-3">
                 <div>
                   <h3 className="text-lg font-extrabold leading-snug">{e.titleBn}</h3>
-                  <p className="text-xs text-gray-500 font-medium">
+                  <p className="text-xs text-muted-foreground font-medium">
                     {e.titleEn}
                     {e.titleAr && <> · <span dir="rtl" lang="ar">{e.titleAr}</span></>}
                   </p>
                 </div>
                 {e.location && (
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
                     📍 {e.location}
                   </p>
                 )}
-                <p className="text-sm text-gray-700 leading-relaxed">{e.descriptionBn}</p>
-                <div className="flex flex-wrap gap-3 pt-2 border-t border-gray-50">
+                <p className="text-sm text-foreground leading-relaxed">{e.descriptionBn}</p>
+                <div className="flex flex-wrap gap-3 pt-2 border-t border-border">
                   {e.citations.map((c, i) => (
                     c.url ? (
                       <a
@@ -354,7 +354,7 @@ const SeerahTimeline: React.FC = () => {
                         href={c.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-black hover:underline"
+                        className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-foreground hover:underline"
                       >
                         {c.reference} <ExternalLink size={10} />
                       </a>
@@ -369,12 +369,12 @@ const SeerahTimeline: React.FC = () => {
         </ol>
       </section>
 
-      <div className="bg-black text-white p-16 flex flex-col md:flex-row items-center gap-12">
-        <div className="w-16 h-16 bg-white text-black flex items-center justify-center font-bold text-2xl">S</div>
+      <div className="bg-primary text-primary-foreground p-16 flex flex-col md:flex-row items-center gap-12">
+        <div className="w-16 h-16 bg-card text-foreground flex items-center justify-center font-bold text-2xl">S</div>
         <div className="flex-1 space-y-4">
-          <div className="caps-label text-gray-500">Sources & Research</div>
+          <div className="caps-label text-primary-foreground">Sources & Research</div>
           <h3 className="text-2xl font-bold">নির্ভরযোগ্য তথ্য সূত্র।</h3>
-          <p className="text-gray-400 font-medium leading-relaxed">
+          <p className="text-primary-foreground font-medium leading-relaxed">
             উক্ত কালরেখার তথ্যাবলী প্রধানত 'আর-রাহীকুল মাখতূম' (সফিউর রহমান মুবারকপুরী) এবং 'সীরাতে ইবনে হিশাম' থেকে সংগৃহীত। প্রতিটি ঘটনা কুরআন ও সহীহ হাদিস দ্বারা সমর্থিত।
           </p>
         </div>

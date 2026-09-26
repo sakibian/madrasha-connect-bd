@@ -42,10 +42,10 @@ const PostJob: React.FC = () => {
   if (!user || user.role === 'USER') {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center text-center space-y-6">
-        <ShieldCheck size={64} className="text-gray-200" />
+        <ShieldCheck size={64} className="text-muted-foreground" />
         <h2 className="text-3xl font-extrabold">অনুমতি নেই</h2>
-        <p className="text-gray-500 max-w-sm">শুধুমাত্র নিবন্ধিত মাদ্রাসা বা প্রতিষ্ঠান প্রধানগণ নিয়োগ বিজ্ঞপ্তি পোস্ট করতে পারবেন।</p>
-        <Link to="/dashboard" className="text-sm font-bold border-b-2 border-black pb-1">ড্যাশবোর্ডে ফিরে যান</Link>
+        <p className="text-muted-foreground max-w-sm">শুধুমাত্র নিবন্ধিত মাদ্রাসা বা প্রতিষ্ঠান প্রধানগণ নিয়োগ বিজ্ঞপ্তি পোস্ট করতে পারবেন।</p>
+        <Link to="/dashboard" className="text-sm font-bold border-b-2 border-primary pb-1">ড্যাশবোর্ডে ফিরে যান</Link>
       </div>
     );
   }
@@ -102,39 +102,39 @@ const PostJob: React.FC = () => {
   if (success) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center text-center space-y-8 animate-fadeIn">
-        <div className="w-24 h-24 bg-black text-white flex items-center justify-center rounded-full">
+        <div className="w-24 h-24 bg-primary text-primary-foreground flex items-center justify-center rounded-full">
           <CheckCircle size={48} />
         </div>
         <div className="space-y-4">
           <h2 className="text-4xl font-extrabold tracking-tight">সফলভাবে জমা হয়েছে।</h2>
-          <p className="text-xl text-gray-500 max-w-md mx-auto">
+          <p className="text-xl text-muted-foreground max-w-md mx-auto">
             আপনার সার্কুলারটি মডারেশন টিমের কাছে পাঠানো হয়েছে। যাচাইকরণের পর এটি পাবলিকলি প্রকাশিত হবে।
           </p>
         </div>
-        <div className="caps-label text-gray-400 animate-pulse">Redirecting to Professional Hub...</div>
+        <div className="caps-label text-muted-foreground animate-pulse">Redirecting to Professional Hub...</div>
       </div>
     );
   }
 
   return (
     <div className="max-w-4xl mx-auto space-y-16 animate-fadeIn pb-24">
-      <div className="space-y-6 border-b border-gray-100 pb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+      <div className="space-y-6 border-b border-border pb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div className="space-y-4">
-          <div className="caps-label text-gray-400">Recruitment Portal</div>
+          <div className="caps-label text-muted-foreground">Recruitment Portal</div>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">নিয়োগ বিজ্ঞপ্তি পোস্ট করুন।</h1>
-          <p className="text-lg text-gray-500 max-w-xl leading-relaxed font-medium">
+          <p className="text-lg text-muted-foreground max-w-xl leading-relaxed font-medium">
             সঠিক ও নির্ভুল তথ্য প্রদানের মাধ্যমে আপনার প্রতিষ্ঠানের জন্য যোগ্য শিক্ষক বা স্টাফ খুঁজে নিন।
           </p>
         </div>
-        <Link to="/professional" className="inline-flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest hover:text-black transition-all">
+        <Link to="/professional" className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-widest hover:text-foreground transition-all">
           <ArrowLeft size={14} /> Back to Hub
         </Link>
       </div>
 
-      <div className="bg-white minimal-border p-12 md:p-20 shadow-sm">
+      <div className="bg-card minimal-border p-12 md:p-20 shadow-sm">
         <form onSubmit={handleSubmit} className="space-y-12">
           {error && (
-            <div className="p-6 bg-gray-100 border border-gray-200 text-gray-900 space-y-2 flex items-start gap-4 animate-slideDown">
+            <div className="p-6 bg-muted border border-border text-foreground space-y-2 flex items-start gap-4 animate-slideDown">
               <ShieldCheck className="shrink-0 mt-1" />
               <div>
                 <p className="font-bold">সতর্কতা!</p>
@@ -147,7 +147,7 @@ const PostJob: React.FC = () => {
             {/* Essential Info */}
             <div className="space-y-8">
                <h2 className="text-2xl font-extrabold tracking-tight flex items-center gap-3">
-                 <FileText size={24} className="text-black" /> পদের বিবরণ
+                 <FileText size={24} className="text-foreground" /> পদের বিবরণ
                </h2>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <FormInput 
@@ -158,9 +158,9 @@ const PostJob: React.FC = () => {
                     required
                   />
                   <div className="space-y-3">
-                    <label className="caps-label text-gray-400">পদের ধরণ (Category)</label>
+                    <label className="caps-label text-muted-foreground">পদের ধরণ (Category)</label>
                     <select 
-                      className="w-full p-5 bg-gray-50 border border-gray-100 outline-none focus:ring-2 focus:ring-black font-bold text-lg"
+                      className="w-full p-5 bg-muted border border-border outline-none focus:ring-2 focus:ring-ring font-bold text-lg"
                       value={formData.type}
                       onChange={e => setFormData({...formData, type: e.target.value as any})}
                     >
@@ -174,9 +174,9 @@ const PostJob: React.FC = () => {
             </div>
 
             {/* Location & Compensation */}
-            <div className="space-y-8 pt-10 border-t border-gray-50">
+            <div className="space-y-8 pt-10 border-t border-border">
                <h2 className="text-2xl font-extrabold tracking-tight flex items-center gap-3">
-                 <MapPin size={24} className="text-black" /> এলাকা ও সম্মানী
+                 <MapPin size={24} className="text-foreground" /> এলাকা ও সম্মানী
                </h2>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <FormInput 
@@ -211,14 +211,14 @@ const PostJob: React.FC = () => {
             </div>
 
             {/* Detailed Description */}
-            <div className="space-y-8 pt-10 border-t border-gray-50">
+            <div className="space-y-8 pt-10 border-t border-border">
                <h2 className="text-2xl font-extrabold tracking-tight flex items-center gap-3">
-                 <Building2 size={24} className="text-black" /> বিস্তারিত বর্ণনা
+                 <Building2 size={24} className="text-foreground" /> বিস্তারিত বর্ণনা
                </h2>
                <div className="space-y-3">
-                 <label className="caps-label text-gray-400">যোগ্যতা ও শর্তাবলী</label>
+                 <label className="caps-label text-muted-foreground">যোগ্যতা ও শর্তাবলী</label>
                  <textarea 
-                    className="w-full p-5 bg-gray-50 border border-gray-100 outline-none focus:ring-2 focus:ring-black font-medium text-lg min-h-[200px]"
+                    className="w-full p-5 bg-muted border border-border outline-none focus:ring-2 focus:ring-ring font-medium text-lg min-h-[200px]"
                     placeholder="প্রার্থীর শিক্ষাগত যোগ্যতা, অভিজ্ঞতা এবং অন্যান্য শর্তাবলী এখানে বিস্তারিত লিখুন..."
                     value={formData.description}
                     onChange={e => setFormData({...formData, description: e.target.value})}
@@ -232,14 +232,14 @@ const PostJob: React.FC = () => {
              <button 
                type="submit" 
                disabled={loading}
-               className="flex-1 py-6 bg-black text-white font-extrabold text-xl flex items-center justify-center gap-4 hover:bg-gray-800 transition-all disabled:opacity-50"
+               className="flex-1 py-6 bg-primary text-primary-foreground font-extrabold text-xl flex items-center justify-center gap-4 hover:bg-secondary transition-all disabled:opacity-50"
              >
                {loading ? <Loader2 className="animate-spin" size={24} /> : <>বিজ্ঞপ্তি পাবলিশ করুন <ArrowRight size={24} /></>}
              </button>
              <button 
                type="button" 
                onClick={() => navigate(-1)}
-               className="px-12 py-6 border border-gray-200 text-gray-400 font-bold hover:text-black hover:border-black transition-all"
+               className="px-12 py-6 border border-border text-muted-foreground font-bold hover:text-foreground hover:border-primary transition-all"
              >
                বাতিল করুন
              </button>
@@ -247,13 +247,13 @@ const PostJob: React.FC = () => {
         </form>
       </div>
 
-      <div className="p-12 bg-gray-50 minimal-border flex items-center gap-8">
-        <div className="w-16 h-16 bg-white flex items-center justify-center text-black shadow-sm">
+      <div className="p-12 bg-muted minimal-border flex items-center gap-8">
+        <div className="w-16 h-16 bg-card flex items-center justify-center text-foreground shadow-sm">
           <ShieldCheck size={32} />
         </div>
         <div className="space-y-1">
-          <p className="font-bold text-gray-800">নিরাপত্তা ও যাচাইকরণ</p>
-          <p className="text-sm text-gray-500 font-medium leading-relaxed">
+          <p className="font-bold text-foreground">নিরাপত্তা ও যাচাইকরণ</p>
+          <p className="text-sm text-muted-foreground font-medium leading-relaxed">
             মাদ্রাসা কানেক্ট একটি দ্বীনি প্ল্যাটফর্ম। সকল পোস্ট এআই এবং হিউম্যান মডারেটর দ্বারা যাচাই করা হয়। ভুল বা বিভ্রান্তিকর তথ্য প্রদান থেকে বিরত থাকুন।
           </p>
         </div>
@@ -264,12 +264,12 @@ const PostJob: React.FC = () => {
 
 const FormInput = ({ label, placeholder, value, onChange, required, readOnly }: any) => (
   <div className="space-y-3">
-    <label className="caps-label text-gray-400">{label}</label>
+    <label className="caps-label text-muted-foreground">{label}</label>
     <input 
       required={required}
       readOnly={readOnly}
       placeholder={placeholder}
-      className={`w-full p-5 bg-gray-50 border border-gray-100 outline-none focus:ring-2 focus:ring-black font-bold text-lg transition-all ${readOnly ? 'opacity-50 cursor-not-allowed' : ''}`}
+      className={`w-full p-5 bg-muted border border-border outline-none focus:ring-2 focus:ring-ring font-bold text-lg transition-all ${readOnly ? 'opacity-50 cursor-not-allowed' : ''}`}
       value={value}
       onChange={e => onChange(e.target.value)}
     />

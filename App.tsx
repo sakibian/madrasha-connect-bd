@@ -121,8 +121,6 @@ const Shell: React.FC = () => {
 
   const authPaths = ['/login', '/register-user', '/register-institution', '/forgot-password', '/verify-email'];
   const isAuthPage = authPaths.includes(location.pathname);
-  const isLandingPage = location.pathname === '/';
-
   if (isAuthPage) {
     if (currentUser) return <Navigate to="/dashboard" replace />;
     return (
@@ -138,7 +136,14 @@ const Shell: React.FC = () => {
     );
   }
 
-  if (isLandingPage && !currentUser) return <LandingPage />;
+  const guestLinks = [
+    { to: '/about', label: t('nav.about') },
+    { to: '/institutions', label: t('nav.directory') },
+    { to: '/knowledge', label: t('nav.education') },
+    { to: '/community', label: t('nav.community') },
+    { to: '/events', label: t('nav.events') },
+    { to: '/professional', label: t('nav.careers') },
+  ];
 
   return (
     <div className="min-h-screen flex flex-row bg-background">
@@ -154,28 +159,41 @@ const Shell: React.FC = () => {
         {currentUser && (
           <Header onMenuToggle={() => setSidebarOpen(s => !s)} isSidebarOpen={isSidebarOpen} />
         )}
-        {!currentUser && !isLandingPage && (
+        {!currentUser && (
           <nav className="bg-background border-b border-border py-6 sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
               <Link to="/" className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-primary flex items-center justify-center text-primary-foreground font-bold">M</div>
+                <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center text-primary-foreground font-bold">M</div>
                 <span className="text-xl font-bold tracking-tight">কওমি</span>
               </Link>
               <div className="hidden lg:flex items-center gap-8">
-                <Link to="/about" className="text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">{t('nav.about')}</Link>
-                <Link to="/institutions" className="text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">{t('nav.directory')}</Link>
-                <Link to="/knowledge" className="text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">{t('nav.education')}</Link>
-                <Link to="/community" className="text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">{t('nav.community')}</Link>
-                <Link to="/events" className="text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">{t('nav.events')}</Link>
-                <Link to="/professional" className="text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">{t('nav.careers')}</Link>
+                {guestLinks.map((l) => (
+                  <Link key={l.to} to={l.to} className="text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">{l.label}</Link>
+                ))}
                 <ThemeToggle />
                 <LanguageSwitcher />
                 <Link to="/login" className="text-sm font-bold border-b-2 border-primary pb-0.5">{t('nav.login')}</Link>
               </div>
-              <button className="lg:hidden" onClick={() => setSidebarOpen(s => !s)}>
+              <button className="lg:hidden" onClick={() => setSidebarOpen(s => !s)} aria-label={isSidebarOpen ? 'Close menu' : 'Open menu'}>
                 {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
+            {/* Guest mobile menu */}
+            {isSidebarOpen && (
+              <div className="lg:hidden border-t border-border mt-6 px-6 pt-4 pb-6 flex flex-col gap-5 bg-background animate-slideDown">
+                {guestLinks.map((l) => (
+                  <Link key={l.to} to={l.to} onClick={() => setSidebarOpen(false)} className="font-bold text-lg text-foreground">{l.label}</Link>
+                ))}
+                <div className="pt-4 border-t border-border flex flex-col gap-4">
+                  <div className="flex items-center gap-3">
+                    <ThemeToggle />
+                    <LanguageSwitcher />
+                  </div>
+                  <Link to="/login" onClick={() => setSidebarOpen(false)} className="font-bold text-lg">{t('nav.login')}</Link>
+                  <Link to="/register-user" onClick={() => setSidebarOpen(false)} className="bg-primary text-primary-foreground rounded-md px-6 py-4 text-center font-bold">শুরু করুন</Link>
+                </div>
+              </div>
+            )}
           </nav>
         )}
         <div aria-live="polite" aria-atomic="true" className="sr-only"></div>
@@ -217,6 +235,7 @@ const Shell: React.FC = () => {
               <Route path="/post-job" element={<ProtectedRoute requiredRole="INSTITUTION"><PostJob /></ProtectedRoute>} />
               <Route path="/erp-preview" element={<ProtectedRoute requiredRole="INSTITUTION"><ERPPreview /></ProtectedRoute>} />
               {currentUser && <Route path="/" element={<Home />} />}
+              {!currentUser && <Route path="/" element={<LandingPage />} />}
               <Route path="*" element={currentUser ? <Navigate to="/dashboard" replace /> : <Navigate to="/" replace />} />
             </Routes>
           </Suspense>

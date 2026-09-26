@@ -18,9 +18,9 @@ const InstitutionDirectory: React.FC = () => {
 
   return (
     <div className="space-y-12 animate-fadeIn">
-      <div className="flex flex-col md:flex-row justify-between items-start gap-6 border-b border-gray-100 pb-12">
+      <div className="flex flex-col md:flex-row justify-between items-start gap-6 border-b border-border pb-12">
         <div className="space-y-2">
-          <div className="caps-label text-gray-400">Directory</div>
+          <div className="caps-label text-muted-foreground">Directory</div>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">প্রতিষ্ঠান ডিরেক্টরি</h1>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -43,9 +43,9 @@ const InstitutionDirectory: React.FC = () => {
         placeholder="প্রতিষ্ঠানের নাম বা এলাকা লিখুন..."
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 bg-gray-100 minimal-border">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 bg-muted minimal-border">
         {filtered.map(inst => (
-          <div key={inst.id} className="bg-white p-8 group transition-all hover:bg-gray-50">
+          <div key={inst.id} className="bg-card p-8 group transition-all hover:bg-muted">
              <div className="flex flex-col h-full space-y-8">
                 <div className="aspect-[16/9] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700">
                    <ImageWithFallback src={inst.image} name={inst.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={inst.name} />
@@ -53,26 +53,26 @@ const InstitutionDirectory: React.FC = () => {
                 
                 <div className="space-y-4 flex-1">
                    <div className="flex justify-between items-start">
-                      <div className="caps-label text-black">{inst.type}</div>
-                      {inst.verified && <CheckCircle size={18} className="text-black" />}
+                      <div className="caps-label text-foreground">{inst.type}</div>
+                      {inst.verified && <CheckCircle size={18} className="text-foreground" />}
                    </div>
                    <h3 className="text-3xl font-extrabold">{inst.name}</h3>
-                   <div className="flex items-center gap-2 text-gray-500 font-medium">
+                   <div className="flex items-center gap-2 text-muted-foreground font-medium">
                       <MapPin size={16} /> {inst.location}
                    </div>
-                   <div className="grid grid-cols-2 gap-4 py-4 border-t border-gray-100">
+                   <div className="grid grid-cols-2 gap-4 py-4 border-t border-border">
                       <div className="space-y-1">
-                         <div className="caps-label text-gray-400">Established</div>
+                         <div className="caps-label text-muted-foreground">Established</div>
                          <div className="font-bold">{inst.established}</div>
                       </div>
                       <div className="space-y-1">
-                         <div className="caps-label text-gray-400">Students</div>
+                         <div className="caps-label text-muted-foreground">Students</div>
                          <div className="font-bold">{inst.studentCount || 'N/A'}</div>
                       </div>
                    </div>
                 </div>
 
-                <Link to={`/institution/${inst.id}`} className="flex items-center justify-between font-bold text-sm border-t border-gray-100 pt-6 group-hover:text-black">
+                <Link to={`/institution/${inst.id}`} className="flex items-center justify-between font-bold text-sm border-t border-border pt-6 group-hover:text-foreground">
                    বিস্তারিত প্রোফাইল <ArrowRight size={18} />
                 </Link>
              </div>

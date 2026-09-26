@@ -12,16 +12,16 @@ import { ArrowLeft } from 'lucide-react';
  */
 const TermsOfService: React.FC = () => (
   <article className="max-w-3xl mx-auto space-y-10 animate-fadeIn">
-    <header className="space-y-4 border-b border-gray-100 pb-10">
+    <header className="space-y-4 border-b border-border pb-10">
       <Link
         to="/"
-        className="inline-flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest hover:text-black"
+        className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-widest hover:text-foreground"
       >
         <ArrowLeft size={14} /> হোমপেজে ফিরুন
       </Link>
-      <div className="caps-label text-gray-400">Legal • Last Updated: 01 Aug 2026</div>
+      <div className="caps-label text-muted-foreground">Legal • Last Updated: 01 Aug 2026</div>
       <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">সেবার শর্তাবলী।</h1>
-      <p className="text-gray-500 font-medium leading-relaxed">
+      <p className="text-muted-foreground font-medium leading-relaxed">
         মাদ্রাসা কানেক্ট বাংলাদেশ (“প্ল্যাটফর্ম”) ব্যবহারের পূর্বে অনুগ্রহ করে এই শর্তাবলী মনোযোগ সহকারে পড়ুন। প্ল্যাটফর্মে অ্যাকাউন্ট
         তৈরি বা ব্যবহারের মাধ্যমে আপনি এই শর্তাবলী মেনে চলতে সম্মত হচ্ছেন।
       </p>
@@ -40,7 +40,7 @@ const TermsOfService: React.FC = () => (
 
     <Section title="৩. গ্রহণযোগ্য ব্যবহার">
       নিম্নলিখিত কাজগুলো কঠোরভাবে নিষিদ্ধ:
-      <ul className="list-disc ml-6 mt-3 space-y-2 text-gray-500">
+      <ul className="list-disc ml-6 mt-3 space-y-2 text-muted-foreground">
         <li>মাযহাবী বিদ্বেষ, তাকফির, বা কোনো ব্যক্তি/গোষ্ঠীর প্রতি বিদ্বেষমূলক কন্টেন্ট প্রকাশ</li>
         <li>ভুয়া চাকরির বিজ্ঞপ্তি, প্রতারণামূলক অর্থ সংগ্রহ, বা প্রতারণা</li>
         <li>ইসলামী শরিয়া বা বাংলাদেশের আইন লঙ্ঘন করে এমন কন্টেন্ট</li>
@@ -70,10 +70,10 @@ const TermsOfService: React.FC = () => (
     </Section>
 
     <Section title="৮. যোগাযোগ">
-      এই শর্তাবলী সম্পর্কে কোনো প্রশ্ন থাকলে অনুগ্রহ করে <a className="font-bold text-black underline" href="mailto:support@madrasaconnectbd.org">support@madrasaconnectbd.org</a> এ যোগাযোগ করুন।
+      এই শর্তাবলী সম্পর্কে কোনো প্রশ্ন থাকলে অনুগ্রহ করে <a className="font-bold text-foreground underline" href="mailto:support@madrasaconnectbd.org">support@madrasaconnectbd.org</a> এ যোগাযোগ করুন।
     </Section>
 
-    <footer className="pt-10 border-t border-gray-100 text-xs font-bold text-gray-400 uppercase tracking-widest">
+    <footer className="pt-10 border-t border-border text-xs font-bold text-muted-foreground uppercase tracking-widest">
       এই দস্তাবেজ একটি খসড়া। প্রকৃত আইনি চূড়ান্ত সংস্করণ প্রকাশের পূর্বে আইনজীবী দ্বারা পর্যালোচিত হবে।
     </footer>
   </article>
@@ -82,7 +82,7 @@ const TermsOfService: React.FC = () => (
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
   <section className="space-y-4">
     <h2 className="text-2xl font-extrabold tracking-tight">{title}</h2>
-    <div className="text-gray-600 leading-relaxed font-medium">{children}</div>
+    <div className="text-muted-foreground leading-relaxed font-medium">{children}</div>
   </section>
 );
 

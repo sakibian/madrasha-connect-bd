@@ -55,16 +55,16 @@ const FatwaArchive: React.FC = () => {
   if (loading) {
     return (
       <div className="space-y-12 animate-fadeIn">
-        <div className="space-y-4 border-b border-gray-100 pb-12">
-          <div className="caps-label text-gray-400">Fatwa Archive</div>
+        <div className="space-y-4 border-b border-border pb-12">
+          <div className="caps-label text-muted-foreground">Fatwa Archive</div>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">ফতোয়া সংরক্ষণাগার।</h1>
         </div>
-        <div className="space-y-1 bg-gray-100 minimal-border">
+        <div className="space-y-1 bg-muted minimal-border">
           {[1, 2, 3].map(i => (
-            <div key={i} className="bg-white p-10 space-y-6">
-              <div className="h-4 w-24 bg-gray-100 animate-pulse" />
-              <div className="h-8 w-3/4 bg-gray-100 animate-pulse" />
-              <div className="h-4 w-1/2 bg-gray-100 animate-pulse" />
+            <div key={i} className="bg-card p-10 space-y-6">
+              <div className="h-4 w-24 bg-muted animate-pulse" />
+              <div className="h-8 w-3/4 bg-muted animate-pulse" />
+              <div className="h-4 w-1/2 bg-muted animate-pulse" />
             </div>
           ))}
         </div>
@@ -74,11 +74,11 @@ const FatwaArchive: React.FC = () => {
 
   return (
     <div className="space-y-12 animate-fadeIn">
-      <div className="space-y-4 border-b border-gray-100 pb-12">
-        <div className="caps-label text-gray-400">Fatwa Archive</div>
+      <div className="space-y-4 border-b border-border pb-12">
+        <div className="caps-label text-muted-foreground">Fatwa Archive</div>
         <div className="flex justify-between items-end">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">ফতোয়া সংরক্ষণাগার।</h1>
-          <Link to="/fatwa" className="text-sm font-bold border-b-2 border-black flex items-center gap-2">
+          <Link to="/fatwa" className="text-sm font-bold border-b-2 border-primary flex items-center gap-2">
             নতুন প্রশ্ন <ArrowRight size={16} />
           </Link>
         </div>
@@ -95,7 +95,7 @@ const FatwaArchive: React.FC = () => {
         <select
           value={sourceFilter}
           onChange={e => setSourceFilter(e.target.value)}
-          className="px-6 py-4 border border-gray-200 bg-white font-bold text-sm outline-none focus:border-black"
+          className="px-6 py-4 border border-border bg-card font-bold text-sm outline-none focus:border-primary"
         >
           <option value="">সব সোর্স</option>
           <option value="quran">কুরআন</option>
@@ -120,17 +120,17 @@ const FatwaArchive: React.FC = () => {
         ))}
       </div>
 
-      <div className="space-y-1 bg-gray-100 minimal-border">
+      <div className="space-y-1 bg-muted minimal-border">
         {filtered.length === 0 ? (
-          <div className="bg-white p-20 text-center">
+          <div className="bg-card p-20 text-center">
             <EmptyState icon={<Shield size={48} />} title="কোনো ফতোয়া পাওয়া যায়নি" />
           </div>
         ) : (
           filtered.map(fatwa => (
-            <div key={fatwa.id} className="bg-white p-10 space-y-6 group hover:bg-gray-50 transition-all">
+            <div key={fatwa.id} className="bg-card p-10 space-y-6 group hover:bg-muted transition-all">
               <div className="flex justify-between items-start">
-                <div className="caps-label text-black">{fatwa.category}</div>
-                <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400">
+                <div className="caps-label text-foreground">{fatwa.category}</div>
+                <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground">
                   <Clock size={12} /> {fatwa.answeredAt || fatwa.askedAt}
                 </div>
               </div>
@@ -138,15 +138,15 @@ const FatwaArchive: React.FC = () => {
               <h3 className="text-2xl font-extrabold leading-tight">{fatwa.question}</h3>
 
               {fatwa.answer && (
-                <div className="pl-6 border-l-4 border-black space-y-3">
-                  <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-gray-500">
+                <div className="pl-6 border-l-4 border-primary space-y-3">
+                  <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-muted-foreground">
                     <User size={14} /> উত্তর
                   </div>
-                  <p className="text-gray-600 leading-relaxed font-medium">{fatwa.answer}</p>
+                  <p className="text-muted-foreground leading-relaxed font-medium">{fatwa.answer}</p>
                 </div>
               )}
 
-              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-gray-100">
+              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-border">
                 {fatwaSources[fatwa.id]?.map(s => (
                   <CitationBadge key={s.id} source={s} />
                 ))}
@@ -156,11 +156,11 @@ const FatwaArchive: React.FC = () => {
         )}
       </div>
 
-      <div className="bg-black text-white p-12 flex items-center gap-8">
-        <Shield size={32} className="text-black" />
+      <div className="bg-primary text-primary-foreground p-12 flex items-center gap-8">
+        <Shield size={32} className="text-primary-foreground" />
         <div className="space-y-2">
           <h3 className="text-xl font-bold">একটি প্রশ্ন আছে?</h3>
-          <p className="text-gray-400 font-medium">আপনার দ্বীনি মাসআলা জিজ্ঞেস করুন এবং নির্ভরযোগ্য সোর্স সহ উত্তর পান।</p>
+          <p className="text-primary-foreground font-medium">আপনার দ্বীনি মাসআলা জিজ্ঞেস করুন এবং নির্ভরযোগ্য সোর্স সহ উত্তর পান।</p>
         </div>
         <Link to="/fatwa" className="ml-auto">
           <Button variant="white" size="lg">প্রশ্ন করুন <ArrowRight size={18} /></Button>

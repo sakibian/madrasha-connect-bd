@@ -23,15 +23,15 @@ interface FAQItemProps {
 
 const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onClick }) => {
   return (
-    <div className={`border-b border-gray-100 last:border-0 transition-all ${isOpen ? 'bg-gray-50' : 'bg-white'}`}>
+    <div className={`border-b border-border last:border-0 transition-all ${isOpen ? 'bg-muted' : 'bg-card'}`}>
       <button
         onClick={onClick}
         className="w-full py-10 px-8 flex items-center justify-between text-left group focus:outline-none"
       >
-        <span className={`text-xl md:text-2xl font-extrabold tracking-tight transition-colors ${isOpen ? 'text-black' : 'text-gray-800 group-hover:text-black'}`}>
+        <span className={`text-xl md:text-2xl font-extrabold tracking-tight transition-colors ${isOpen ? 'text-foreground' : 'text-foreground group-hover:text-foreground'}`}>
           {question}
         </span>
-        <div className={`p-2 transition-all ${isOpen ? 'bg-black text-white' : 'text-gray-300 group-hover:text-black'}`}>
+        <div className={`p-2 transition-all ${isOpen ? 'bg-primary text-primary-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}>
           {isOpen ? <Minus size={20} /> : <Plus size={20} />}
         </div>
       </button>
@@ -41,7 +41,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onClick }) 
         }`}
       >
         <div className="px-8 pb-10 max-w-3xl">
-          <p className="text-lg text-gray-500 leading-relaxed font-medium">
+          <p className="text-lg text-muted-foreground leading-relaxed font-medium">
             {answer}
           </p>
         </div>
@@ -107,10 +107,10 @@ const FAQ: React.FC = () => {
   return (
     <div className="space-y-24 animate-fadeIn pb-24">
       {/* Header */}
-      <div className="space-y-6 border-b border-gray-100 pb-12">
-        <div className="caps-label text-gray-400">Support Center</div>
+      <div className="space-y-6 border-b border-border pb-12">
+        <div className="caps-label text-muted-foreground">Support Center</div>
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05]">সাধারণ জিজ্ঞাসা <br /> (FAQ)।</h1>
-        <p className="text-xl text-gray-500 max-w-2xl leading-relaxed font-medium">
+        <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium">
           মাদ্রাসা কানেক্ট বিডি প্ল্যাটফর্ম ব্যবহারের নিয়মাবলী এবং সচরাচর জিজ্ঞাসিত প্রশ্নগুলোর উত্তর এখানে পাবেন।
         </p>
       </div>
@@ -120,12 +120,12 @@ const FAQ: React.FC = () => {
         {faqData.map((section, sIndex) => (
           <div key={sIndex} className="space-y-8">
             <div className="flex items-center gap-4">
-               <div className="h-px bg-gray-200 flex-1"></div>
-               <h2 className="caps-label text-black whitespace-nowrap">{section.category}</h2>
-               <div className="h-px bg-gray-200 flex-1"></div>
+               <div className="h-px bg-muted flex-1"></div>
+               <h2 className="caps-label text-foreground whitespace-nowrap">{section.category}</h2>
+               <div className="h-px bg-muted flex-1"></div>
             </div>
             
-            <div className="bg-white minimal-border overflow-hidden divide-y divide-gray-100">
+            <div className="bg-card minimal-border overflow-hidden divide-y divide-gray-100">
               {section.items.map((item, iIndex) => {
                 const globalIndex = sIndex * 10 + iIndex;
                 return (
@@ -144,32 +144,32 @@ const FAQ: React.FC = () => {
       </div>
 
       {/* CTA Section */}
-      <section className="bg-black text-white p-12 md:p-20 flex flex-col md:flex-row items-center justify-between gap-12 group">
+      <section className="bg-primary text-primary-foreground p-12 md:p-20 flex flex-col md:flex-row items-center justify-between gap-12 group">
         <div className="space-y-6">
-          <div className="caps-label text-black">Help & Contact</div>
+          <div className="caps-label text-primary-foreground">Help & Contact</div>
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight">আরও কিছু জানতে চান?</h2>
-          <p className="text-xl text-gray-400 max-w-md font-medium">
+          <p className="text-xl text-primary-foreground max-w-md font-medium">
             আমাদের সাপোর্ট টিম আপনাকে সাহায্য করতে প্রস্তুত। যেকোনো প্রয়োজনে সরাসরি যোগাযোগ করুন।
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-          <button className="bg-white text-black px-10 py-5 font-bold text-lg flex items-center justify-center gap-3 hover:bg-gray-100 transition-all">
+          <button className="bg-card text-foreground px-10 py-5 font-bold text-lg flex items-center justify-center gap-3 hover:bg-muted transition-all">
              মেসেজ দিন <MessageCircle size={20} />
           </button>
-          <Link to="/about" className="border border-gray-800 text-white px-10 py-5 font-bold text-lg flex items-center justify-center gap-3 hover:bg-gray-900 transition-all">
+          <Link to="/about" className="border border-border text-primary-foreground px-10 py-5 font-bold text-lg flex items-center justify-center gap-3 hover:bg-secondary transition-all">
              লক্ষ্য ও উদ্দেশ্য <ArrowRight size={20} />
           </Link>
         </div>
       </section>
 
       {/* Minimal Footer Info */}
-      <div className="flex flex-col md:flex-row justify-between items-center py-12 border-t border-gray-100 gap-6">
-         <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400">
-            <ShieldCheck size={14} className="text-black" /> Last Updated: February 2025
+      <div className="flex flex-col md:flex-row justify-between items-center py-12 border-t border-border gap-6">
+         <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+            <ShieldCheck size={14} className="text-foreground" /> Last Updated: February 2025
          </div>
          <div className="flex gap-8">
-            <Link to="/tools" className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-black">Terms of Service</Link>
-            <Link to="/tools" className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-black">Privacy Policy</Link>
+            <Link to="/tools" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-foreground">Terms of Service</Link>
+            <Link to="/tools" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-foreground">Privacy Policy</Link>
          </div>
       </div>
     </div>
