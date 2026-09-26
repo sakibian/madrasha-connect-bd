@@ -13,7 +13,7 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-09-26 · **Latest work: theme sweep + unified guest nav (session 26)**
+**Last updated:** 2026-09-26 · **Latest work: design audit + layout fixes (session 27)**
 
 ### 2026-08-02 (session 18 — Fix broken public-facing form submissions)
 
@@ -968,3 +968,24 @@ guest navbar inconsistency, harden prerender for CI
   rewritten in bn/en/ar to "Muslim community platform" framing;
   index.html title, manifest name/description, LandingPage hero/philosophy/
   footer copy updated (madrasa-specific → community-inclusive).
+
+### 2026-09-26 (session 27 — design system audit + layout fixes)
+
+**Design**: First design-principles audit (Playwright visual review of
+landing + directory), fixes applied
+
+- **CSP bugs found + fixed** — `img-src` missing `fastly.picsum.photos`
+  (picsum redirects there → every card image was a gray box); `script-src`
+  missing `va.vercel-scripts.com` (Vercel Analytics silently dead in prod).
+- **Guest nav register CTA restored** — "শুরু করুন" primary button (lost
+  during nav unification).
+- **Card anatomy standardized** — ServiceCard: removed h-[400px] dead
+  space → bordered rounded-lg card + icon chip + hover accent; institution
+  cards: 2→3-col grid, full-bleed rounded image, p-6 compact content,
+  whole-card clickable, type/verified accents in primary.
+- **Green-flood reduction** — 11 decorative bg-primary sections flipped to
+  bg-foreground (auth panels, info heroes, showcase blocks); emerald kept
+  only for real CTAs + badges + active states.
+- Design principles documented for future pages: density over
+  monumentality, one card recipe, radius = rounded-lg cards / rounded-md
+  controls, primary = action-only, 5-step type scale.

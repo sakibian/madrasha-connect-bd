@@ -1,0 +1,108 @@
+- generic [ref=f3e3]:
+  - main [ref=f3e4]:
+    - navigation [ref=f3e5]:
+      - generic [ref=f3e6]:
+        - link "Q কওমি" [ref=f3e7] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f3e8]: Q
+          - generic [ref=f3e9]: কওমি
+        - generic [ref=f3e10]:
+          - link "Mission" [ref=f3e11] [cursor=pointer]:
+            - /url: /about
+          - link "Directory" [ref=f3e12] [cursor=pointer]:
+            - /url: /institutions
+          - link "Education" [ref=f3e13] [cursor=pointer]:
+            - /url: /knowledge
+          - link "Community" [ref=f3e14] [cursor=pointer]:
+            - /url: /community
+          - link "Events" [ref=f3e15] [cursor=pointer]:
+            - /url: /events
+          - link "Careers Hub" [ref=f3e16] [cursor=pointer]:
+            - /url: /professional
+          - button "Switch to dark mode" [ref=f3e17] [cursor=pointer]
+          - button "Switch language" [ref=f3e21] [cursor=pointer]:
+            - generic [ref=f3e25]: English
+          - link "Login" [ref=f3e28] [cursor=pointer]:
+            - /url: /login
+          - link "শুরু করুন" [ref=f3e29] [cursor=pointer]:
+            - /url: /register-user
+    - generic [ref=f3e32]:
+      - generic [ref=f3e33]:
+        - generic [ref=f3e34]:
+          - generic [ref=f3e35]: Directory
+          - heading "প্রতিষ্ঠান ডিরেক্টরি" [level=1] [ref=f3e36]
+        - generic [ref=f3e37]:
+          - button "সব" [ref=f3e38] [cursor=pointer]
+          - button "কওমি" [ref=f3e39] [cursor=pointer]
+          - button "আলিয়া" [ref=f3e40] [cursor=pointer]
+          - button "মসজিদ" [ref=f3e41] [cursor=pointer]
+      - textbox "প্রতিষ্ঠানের নাম বা এলাকা লিখুন..." [ref=f3e46]
+      - generic [ref=f3e47]:
+        - link "দারুল উলুম হাটহাজারী Qawmi দারুল উলুম হাটহাজারী হাটহাজারী, চট্টগ্রাম Established ১৯০১ Students 7000 বিস্তারিত প্রোফাইল" [ref=f3e48] [cursor=pointer]:
+          - /url: /institution/inst-1
+          - img "দারুল উলুম হাটহাজারী" [ref=f3e50]
+          - generic [ref=f3e51]:
+            - generic [ref=f3e52]: Qawmi
+            - heading "দারুল উলুম হাটহাজারী" [level=3] [ref=f3e57]
+            - generic [ref=f3e58]: হাটহাজারী, চট্টগ্রাম
+            - generic [ref=f3e62]:
+              - generic [ref=f3e63]:
+                - generic [ref=f3e64]: Established
+                - generic [ref=f3e65]: ১৯০১
+              - generic [ref=f3e66]:
+                - generic [ref=f3e67]: Students
+                - generic [ref=f3e68]: "7000"
+            - generic [ref=f3e69]: বিস্তারিত প্রোফাইল
+        - link "সরকারি আলিয়া মাদ্রাসা Alia সরকারি আলিয়া মাদ্রাসা বখশীবাজার, ঢাকা Established ১৭৮০ Students 5000 বিস্তারিত প্রোফাইল" [ref=f3e72] [cursor=pointer]:
+          - /url: /institution/inst-2
+          - img "সরকারি আলিয়া মাদ্রাসা" [ref=f3e74]
+          - generic [ref=f3e75]:
+            - generic [ref=f3e76]: Alia
+            - heading "সরকারি আলিয়া মাদ্রাসা" [level=3] [ref=f3e81]
+            - generic [ref=f3e82]: বখশীবাজার, ঢাকা
+            - generic [ref=f3e86]:
+              - generic [ref=f3e87]:
+                - generic [ref=f3e88]: Established
+                - generic [ref=f3e89]: ১৭৮০
+              - generic [ref=f3e90]:
+                - generic [ref=f3e91]: Students
+                - generic [ref=f3e92]: "5000"
+            - generic [ref=f3e93]: বিস্তারিত প্রোফাইল
+        - link "জামেয়া কাসেমিয়া কামিল মাদ্রাসা Alia জামেয়া কাসেমিয়া কামিল মাদ্রাসা নরসিংদী Established ১৯৭৬ Students 3000 বিস্তারিত প্রোফাইল" [ref=f3e96] [cursor=pointer]:
+          - /url: /institution/inst-3
+          - img "জামেয়া কাসেমিয়া কামিল মাদ্রাসা" [ref=f3e98]
+          - generic [ref=f3e99]:
+            - generic [ref=f3e100]: Alia
+            - heading "জামেয়া কাসেমিয়া কামিল মাদ্রাসা" [level=3] [ref=f3e105]
+            - generic [ref=f3e106]: নরসিংদী
+            - generic [ref=f3e110]:
+              - generic [ref=f3e111]:
+                - generic [ref=f3e112]: Established
+                - generic [ref=f3e113]: ১৯৭৬
+              - generic [ref=f3e114]:
+                - generic [ref=f3e115]: Students
+                - generic [ref=f3e116]: "3000"
+            - generic [ref=f3e117]: বিস্তারিত প্রোফাইল
+        - link "বায়তুল মোকাররম জাতীয় মসজিদ Mosque বায়তুল মোকাররম জাতীয় মসজিদ পল্টন, ঢাকা Established ১৯৬৮ Students N/A বিস্তারিত প্রোফাইল" [ref=f3e120] [cursor=pointer]:
+          - /url: /institution/inst-4
+          - img "বায়তুল মোকাররম জাতীয় মসজিদ" [ref=f3e122]
+          - generic [ref=f3e123]:
+            - generic [ref=f3e124]: Mosque
+            - heading "বায়তুল মোকাররম জাতীয় মসজিদ" [level=3] [ref=f3e129]
+            - generic [ref=f3e130]: পল্টন, ঢাকা
+            - generic [ref=f3e134]:
+              - generic [ref=f3e135]:
+                - generic [ref=f3e136]: Established
+                - generic [ref=f3e137]: ১৯৬৮
+              - generic [ref=f3e138]:
+                - generic [ref=f3e139]: Students
+                - generic [ref=f3e140]: N/A
+            - generic [ref=f3e141]: বিস্তারিত প্রোফাইল
+  - button "Send feedback" [ref=f3e144] [cursor=pointer]:
+    - generic [ref=f3e147]: Feedback
+  - generic [ref=f3e149]:
+    - heading "হোম স্ক্রীনে অ্যাড করুন — অফলাইনেও পাবেন সব ফিচার" [level=3] [ref=f3e150]
+    - generic [ref=f3e151]:
+      - button "ইনস্টল করুন" [ref=f3e152] [cursor=pointer]
+      - button "পরে" [ref=f3e153] [cursor=pointer]
+  - region "Notifications alt+T"

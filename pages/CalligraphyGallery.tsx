@@ -12,10 +12,10 @@ const CalligraphyGallery: React.FC = () => {
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">ভেক্টর ক্যালিগ্রাফি আর্ট।</h1>
       </div>
 
-      <div className="bg-primary text-primary-foreground p-16 space-y-8">
-         <div className="caps-label text-primary-foreground">High Resolution</div>
+      <div className="bg-foreground text-background p-16 space-y-8">
+         <div className="caps-label text-background">High Resolution</div>
          <h2 className="text-5xl font-extrabold leading-tight">ডিজিটাল ক্যালিগ্রাফি <br /> সংগ্রহশালা।</h2>
-         <p className="text-primary-foreground text-xl max-w-2xl font-medium">৫০০+ হাই-রেজোলিউশন আরবি ক্যালিগ্রাফি। গ্রাফিক ডিজাইনার এবং শিক্ষার্থীদের জন্য একদম ফ্রিতে ডাউনলোডযোগ্য।</p>
+         <p className="text-background text-xl max-w-2xl font-medium">৫০০+ হাই-রেজোলিউশন আরবি ক্যালিগ্রাফি। গ্রাফিক ডিজাইনার এবং শিক্ষার্থীদের জন্য একদম ফ্রিতে ডাউনলোডযোগ্য।</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 bg-muted minimal-border">

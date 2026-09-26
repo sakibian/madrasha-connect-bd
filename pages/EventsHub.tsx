@@ -42,20 +42,20 @@ const EventsHub: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-10 animate-fadeIn">
       {/* Hero: black bg + black accents + minimal-border (M23 brand refresh) */}
-      <div className="bg-primary text-primary-foreground p-10 border border-border relative overflow-hidden">
+      <div className="bg-foreground text-background p-10 border border-secondary relative overflow-hidden">
         <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
           <div className="w-32 h-32 bg-white/5 flex items-center justify-center border border-white/10">
-             <Moon size={64} className="text-primary-foreground" fill="currentColor" />
+             <Moon size={64} className="text-background" fill="currentColor" />
           </div>
           <div className="space-y-4 text-center md:text-left">
             <h1 className="text-3xl font-black tracking-tight">ইসলামী ক্যালেন্ডার ও ইভেন্ট</h1>
             <div className="flex flex-wrap gap-4 justify-center md:justify-start">
                <div className="bg-white/5 px-4 py-2 border border-white/10">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-primary-foreground">আজকের হিজরি তারিখ</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-background">আজকের হিজরি তারিখ</p>
                   <p className="text-xl font-bold">{hijriDate}</p>
                </div>
                <div className="bg-white/5 px-4 py-2 border border-white/10">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-primary-foreground">ইংরেজি তারিখ</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-background">ইংরেজি তারিখ</p>
                   <p className="text-xl font-bold">{today.toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                </div>
             </div>

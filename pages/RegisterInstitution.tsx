@@ -69,7 +69,7 @@ const RegisterInstitution: React.FC = () => {
   return (
     <div className="min-h-screen bg-card flex flex-col lg:flex-row animate-fadeIn">
       {/* Left Visualization Side */}
-      <div className="lg:w-1/3 bg-primary text-primary-foreground p-12 md:p-16 flex flex-col justify-between border-r border-border relative overflow-hidden">
+      <div className="lg:w-1/3 bg-foreground text-background p-12 md:p-16 flex flex-col justify-between border-r border-secondary relative overflow-hidden">
         <div className="z-10">
           <Link to="/" className="flex items-center gap-3">
             <div className="w-8 h-8 bg-card text-foreground flex items-center justify-center font-bold">Q</div>
@@ -78,17 +78,17 @@ const RegisterInstitution: React.FC = () => {
         </div>
 
         <div className="z-10 space-y-8">
-           <div className="caps-label text-primary-foreground">Institutional Registration</div>
+           <div className="caps-label text-background">Institutional Registration</div>
            <h1 className="text-5xl font-extrabold leading-tight tracking-tight">মাদ্রাসা ও মসজিদ <br />ব্যবস্থাপনার নতুন যুগ।</h1>
-           <p className="text-primary-foreground text-lg font-medium leading-relaxed">
+           <p className="text-background text-lg font-medium leading-relaxed">
              আপনার প্রতিষ্ঠানের জন্য একটি ডিজিটাল প্রোফাইল তৈরি করুন এবং নিয়োগ বিজ্ঞপ্তি থেকে শুরু করে ফান্ড ম্যানেজমেন্ট পর্যন্ত সব ফিচার ব্যবহার করুন।
            </p>
         </div>
 
         <div className="z-10">
-           <div className="caps-label text-primary-foreground mb-4">Official Verification</div>
+           <div className="caps-label text-background mb-4">Official Verification</div>
            <div className="p-6 bg-secondary border border-border space-y-2">
-              <p className="text-xs text-primary-foreground font-bold uppercase tracking-widest leading-relaxed">
+              <p className="text-xs text-background font-bold uppercase tracking-widest leading-relaxed">
                 প্রতিষ্ঠান নিবন্ধনের পর আমাদের ভেরিফিকেশন টিম আপনার তথ্যাদি যাচাই করবে। সঠিক তথ্য প্রদান বাধ্যতামূলক।
               </p>
            </div>

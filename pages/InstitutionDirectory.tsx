@@ -43,40 +43,37 @@ const InstitutionDirectory: React.FC = () => {
         placeholder="প্রতিষ্ঠানের নাম বা এলাকা লিখুন..."
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 bg-muted minimal-border">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filtered.map(inst => (
-          <div key={inst.id} className="bg-card p-8 group transition-all hover:bg-muted">
-             <div className="flex flex-col h-full space-y-8">
-                <div className="aspect-[16/9] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700">
-                   <ImageWithFallback src={inst.image} name={inst.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={inst.name} />
-                </div>
-                
-                <div className="space-y-4 flex-1">
-                   <div className="flex justify-between items-start">
-                      <div className="caps-label text-foreground">{inst.type}</div>
-                      {inst.verified && <CheckCircle size={18} className="text-foreground" />}
-                   </div>
-                   <h3 className="text-3xl font-extrabold">{inst.name}</h3>
-                   <div className="flex items-center gap-2 text-muted-foreground font-medium">
-                      <MapPin size={16} /> {inst.location}
-                   </div>
-                   <div className="grid grid-cols-2 gap-4 py-4 border-t border-border">
-                      <div className="space-y-1">
-                         <div className="caps-label text-muted-foreground">Established</div>
-                         <div className="font-bold">{inst.established}</div>
-                      </div>
-                      <div className="space-y-1">
-                         <div className="caps-label text-muted-foreground">Students</div>
-                         <div className="font-bold">{inst.studentCount || 'N/A'}</div>
-                      </div>
-                   </div>
-                </div>
-
-                <Link to={`/institution/${inst.id}`} className="flex items-center justify-between font-bold text-sm border-t border-border pt-6 group-hover:text-foreground">
-                   বিস্তারিত প্রোফাইল <ArrowRight size={18} />
-                </Link>
+          <Link key={inst.id} to={`/institution/${inst.id}`} className="bg-card rounded-lg border border-border overflow-hidden group hover:shadow-md hover:border-primary transition-all flex flex-col">
+             <div className="aspect-[16/9] overflow-hidden bg-muted grayscale group-hover:grayscale-0 transition-all duration-700">
+                <ImageWithFallback src={inst.image} name={inst.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={inst.name} />
              </div>
-          </div>
+
+             <div className="p-6 flex flex-col gap-4 flex-1">
+                <div className="flex justify-between items-start">
+                   <div className="caps-label text-primary">{inst.type}</div>
+                   {inst.verified && <CheckCircle size={18} className="text-primary" />}
+                </div>
+                <h3 className="text-2xl font-extrabold">{inst.name}</h3>
+                <div className="flex items-center gap-2 text-muted-foreground text-sm font-medium">
+                   <MapPin size={16} /> {inst.location}
+                </div>
+                <div className="grid grid-cols-2 gap-4 py-3 border-t border-border mt-auto">
+                   <div className="space-y-1">
+                      <div className="caps-label text-muted-foreground">Established</div>
+                      <div className="text-sm font-bold">{inst.established}</div>
+                   </div>
+                   <div className="space-y-1">
+                      <div className="caps-label text-muted-foreground">Students</div>
+                      <div className="text-sm font-bold">{inst.studentCount || 'N/A'}</div>
+                   </div>
+                </div>
+                <div className="flex items-center justify-between font-bold text-sm border-t border-border pt-4 group-hover:text-primary">
+                   বিস্তারিত প্রোফাইল <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </div>
+             </div>
+          </Link>
         ))}
       </div>
     </div>

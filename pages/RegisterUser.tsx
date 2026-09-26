@@ -69,23 +69,23 @@ const RegisterUser: React.FC = () => {
   return (
     <div className="min-h-screen bg-card flex flex-col lg:flex-row animate-fadeIn">
       {/* Left Branding Side */}
-      <div className="lg:w-1/3 bg-primary text-primary-foreground p-12 md:p-16 flex flex-col justify-between border-r border-border">
+      <div className="lg:w-1/3 bg-foreground text-background p-12 md:p-16 flex flex-col justify-between border-r border-secondary">
         <Link to="/" className="flex items-center gap-3">
           <div className="w-8 h-8 bg-card text-foreground flex items-center justify-center font-bold">Q</div>
           <span className="text-xl font-bold tracking-tight">কওমি</span>
         </Link>
 
         <div className="space-y-8">
-           <div className="caps-label text-primary-foreground">Join Community</div>
+           <div className="caps-label text-background">Join Community</div>
            <h1 className="text-5xl font-extrabold leading-tight tracking-tight">শুরু হোক নতুন ডিজিটাল পথচলা।</h1>
-           <p className="text-primary-foreground text-lg font-medium leading-relaxed">
+           <p className="text-background text-lg font-medium leading-relaxed">
              বাংলাদেশের মাদ্রাসা নেটওয়ার্কের অংশ হোন। রিসোর্স ডাউনলোড, ক্যারিয়ার আপডেট এবং কমিউনিটি আলোচনার সুবিধা পান।
            </p>
         </div>
 
         <div className="space-y-4">
-           <div className="caps-label text-primary-foreground">Already a member?</div>
-           <Link to="/login" className="inline-flex items-center gap-2 font-bold text-sm hover:text-primary-foreground transition-colors">
+           <div className="caps-label text-background">Already a member?</div>
+           <Link to="/login" className="inline-flex items-center gap-2 font-bold text-sm hover:text-background transition-colors">
              লগইন করুন <ArrowRight size={18} />
            </Link>
         </div>

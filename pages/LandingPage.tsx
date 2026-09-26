@@ -57,7 +57,7 @@ const LandingPage: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 bg-muted minimal-border">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <ServiceCard 
               icon={<Briefcase size={28} />} 
               title="নিয়োগ পোর্টাল" 
@@ -160,14 +160,16 @@ const StatItem = ({ label, value }: { label: string, value: string }) => (
 );
 
 const ServiceCard = ({ icon, title, desc, link }: any) => (
-  <Link to={link} className="bg-card p-12 hover:bg-primary hover:text-primary-foreground transition-all group h-[400px] flex flex-col justify-between">
-    <div className="text-foreground group-hover:text-primary-foreground transition-colors">{icon}</div>
-    <div className="space-y-4">
+  <Link to={link} className="bg-card rounded-lg border border-border p-8 transition-all group flex flex-col gap-6 hover:border-primary hover:shadow-md">
+    <div className="w-12 h-12 rounded-md bg-muted flex items-center justify-center text-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+      {icon}
+    </div>
+    <div className="space-y-3">
       <h3 className="text-2xl font-bold">{title}</h3>
-      <p className="text-muted-foreground group-hover:text-primary-foreground leading-relaxed font-medium text-sm">{desc}</p>
-      <div className="pt-4 flex items-center gap-2 text-sm font-bold opacity-0 group-hover:opacity-100 transition-all translate-x-[-10px] group-hover:translate-x-0">
-        Open Portal <ArrowRight size={16} />
-      </div>
+      <p className="text-muted-foreground leading-relaxed font-medium text-sm">{desc}</p>
+    </div>
+    <div className="mt-auto pt-2 flex items-center gap-2 text-sm font-bold text-primary opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0">
+      Open Portal <ArrowRight size={16} />
     </div>
   </Link>
 );

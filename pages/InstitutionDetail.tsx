@@ -112,8 +112,8 @@ const InstitutionDetail: React.FC = () => {
 
         {/* Sidebar Info */}
         <div className="space-y-8">
-           <div className="bg-primary text-primary-foreground p-12 space-y-10">
-              <div className="caps-label text-primary-foreground">Contact Details</div>
+           <div className="bg-foreground text-background p-12 space-y-10">
+              <div className="caps-label text-background">Contact Details</div>
               <div className="space-y-8">
                  <ContactBlock icon={<Phone size={20} />} label="ফোন নম্বর" value="+৮৮০ ১৭XXXXXXXX" />
                  <ContactBlock icon={<Mail size={20} />} label="ইমেইল অ্যাড্রেস" value="info@madrasa.bd" />

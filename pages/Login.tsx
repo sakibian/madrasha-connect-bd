@@ -104,7 +104,7 @@ const Login: React.FC = () => {
   return (
     <div className="min-h-screen bg-card flex flex-col lg:flex-row animate-fadeIn">
       {/* Visual Side */}
-      <div className="lg:w-1/2 bg-primary text-primary-foreground p-16 flex flex-col justify-between relative overflow-hidden">
+      <div className="lg:w-1/2 bg-foreground text-background p-16 flex flex-col justify-between relative overflow-hidden">
         <div className="z-10">
           <Link to="/" className="flex items-center gap-3 group">
             <div className="w-10 h-10 bg-card text-foreground flex items-center justify-center font-bold text-xl group-hover:rotate-6 transition-transform">Q</div>
@@ -113,22 +113,22 @@ const Login: React.FC = () => {
         </div>
         
         <div className="z-10 space-y-8 max-w-lg">
-           <div className="caps-label text-primary-foreground">Security First</div>
+           <div className="caps-label text-background">Security First</div>
            <h1 className="text-6xl md:text-8xl font-extrabold leading-[1.05] tracking-tight">
              নিরাপদ <br />পোর্টালে <br />স্বাগতম।
            </h1>
-           <p className="text-xl text-primary-foreground leading-relaxed font-medium">
+           <p className="text-xl text-background leading-relaxed font-medium">
              আপনার ইমেইল ও পাসওয়ার্ড ব্যবহার করে লগইন করুন। প্ল্যাটফর্ম আপনার তথ্যের সর্বোচ্চ নিরাপত্তা নিশ্চিত করে।
            </p>
         </div>
 
         <div className="z-10 space-y-4">
-           <Link to="/about" className="inline-flex items-center gap-2 text-sm font-bold text-primary-foreground hover:text-primary-foreground transition-colors">
+           <Link to="/about" className="inline-flex items-center gap-2 text-sm font-bold text-background hover:text-background transition-colors">
               <ArrowLeft size={18} /> আমাদের সম্পর্কে জানুন
            </Link>
            <div className="pt-4">
               {import.meta.env.VITE_ENABLE_DEMO === 'true' && (
-                <p className="text-xs text-primary-foreground font-mono">Demo password: <span className="text-primary-foreground">{DEMO_PASSWORD}</span></p>
+                <p className="text-xs text-background font-mono">Demo password: <span className="text-background">{DEMO_PASSWORD}</span></p>
               )}
            </div>
         </div>

@@ -1,0 +1,37 @@
+- generic [ref=f1e3]:
+  - main [ref=f1e4]:
+    - navigation [ref=f1e5]:
+      - generic [ref=f1e6]:
+        - link "Q কওমি" [ref=f1e7] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f1e8]: Q
+          - generic [ref=f1e9]: কওমি
+        - generic [ref=f1e10]:
+          - link "Mission" [ref=f1e11] [cursor=pointer]:
+            - /url: /about
+          - link "Directory" [ref=f1e12] [cursor=pointer]:
+            - /url: /institutions
+          - link "Education" [ref=f1e13] [cursor=pointer]:
+            - /url: /knowledge
+          - link "Community" [ref=f1e14] [cursor=pointer]:
+            - /url: /community
+          - link "Events" [ref=f1e15] [cursor=pointer]:
+            - /url: /events
+          - link "Careers Hub" [ref=f1e16] [cursor=pointer]:
+            - /url: /professional
+          - button "Switch to dark mode" [ref=f1e17] [cursor=pointer]
+          - button "Switch language" [ref=f1e21] [cursor=pointer]:
+            - generic [ref=f1e25]: English
+          - link "Login" [ref=f1e28] [cursor=pointer]:
+            - /url: /login
+    - generic [ref=f1e31]:
+      - generic [ref=f1e32]: Q
+      - generic [ref=f1e33]: Loading...
+  - button "Send feedback" [ref=f1e34] [cursor=pointer]:
+    - generic [ref=f1e37]: Feedback
+  - generic [ref=f1e39]:
+    - heading "হোম স্ক্রীনে অ্যাড করুন — অফলাইনেও পাবেন সব ফিচার" [level=3] [ref=f1e40]
+    - generic [ref=f1e41]:
+      - button "ইনস্টল করুন" [ref=f1e42] [cursor=pointer]
+      - button "পরে" [ref=f1e43] [cursor=pointer]
+  - region "Notifications alt+T"

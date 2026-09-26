@@ -355,20 +355,20 @@ const PublicProfile: React.FC = () => {
                 <h3 className="text-lg font-black">অ্যাচিভমেন্ট কার্ড</h3>
                 <button onClick={() => setShowShareCard(false)} className="text-primary-foreground hover:text-primary-foreground p-1"><X size={20} /></button>
               </div>
-              <div className="bg-primary p-8 text-primary-foreground space-y-4 text-center">
+              <div className="bg-foreground p-8 text-background space-y-4 text-center">
                 <div className="w-16 h-16 bg-white/10 mx-auto rounded-full flex items-center justify-center text-2xl font-black border-2 border-white/20">
                   {profile.name.charAt(0)}
                 </div>
                 <div>
                   <p className="text-xl font-black">{profile.name}</p>
-                  <p className="text-primary-foreground text-sm font-bold">{scholar?.title || profile.role}</p>
+                  <p className="text-background text-sm font-bold">{scholar?.title || profile.role}</p>
                 </div>
                 {xp && (
                   <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm space-y-2">
                     <div className="flex justify-center items-center gap-4">
                       <div>
                         <div className="text-3xl font-black">{xp.level}</div>
-                        <div className="text-[10px] font-bold text-primary-foreground uppercase tracking-widest">Level</div>
+                        <div className="text-[10px] font-bold text-background uppercase tracking-widest">Level</div>
                       </div>
                       <div className="w-px h-10 bg-white/20" />
                       <div>

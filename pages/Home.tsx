@@ -54,10 +54,10 @@ const Home: React.FC = () => {
       </div>
 
       {/* Daily Deen: Minimalist Banner */}
-      <section className="bg-primary text-primary-foreground p-12 space-y-6">
+      <section className="bg-foreground text-background p-12 space-y-6">
         <div className="flex items-center gap-3">
-          <Sparkles className="text-primary-foreground" size={20} />
-          <div className="caps-label text-primary-foreground">Daily Wisdom</div>
+          <Sparkles className="text-background" size={20} />
+          <div className="caps-label text-background">Daily Wisdom</div>
         </div>
         <div className="max-w-3xl space-y-4">
            <p className="text-3xl font-extrabold leading-tight">
@@ -67,7 +67,7 @@ const Home: React.FC = () => {
              {dailySource ? (
                <CitationBadge source={dailySource} />
              ) : (
-               <p className="text-sm font-bold text-primary-foreground">— {dailyDeen?.source}</p>
+               <p className="text-sm font-bold text-background">— {dailyDeen?.source}</p>
              )}
            </div>
         </div>

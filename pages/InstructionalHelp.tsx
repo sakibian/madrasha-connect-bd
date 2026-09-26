@@ -53,9 +53,9 @@ const InstructionalHelp: React.FC = () => {
         ))}
       </div>
 
-      <div className="bg-primary text-primary-foreground p-20 space-y-12">
+      <div className="bg-foreground text-background p-20 space-y-12">
         <h2 className="text-3xl font-extrabold tracking-tight flex items-center gap-4">
-          <ShieldCheck className="text-primary-foreground" size={32} /> প্রায়শই জিজ্ঞাসিত সহায়তা
+          <ShieldCheck className="text-background" size={32} /> প্রায়শই জিজ্ঞাসিত সহায়তা
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-4">
            <HelpRow text="ভেরিফাইড অ্যাকাউন্টের সুবিধা কী কী?" />

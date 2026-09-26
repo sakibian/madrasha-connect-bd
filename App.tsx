@@ -173,6 +173,7 @@ const Shell: React.FC = () => {
                 <ThemeToggle />
                 <LanguageSwitcher />
                 <Link to="/login" className="text-sm font-bold border-b-2 border-primary pb-0.5">{t('nav.login')}</Link>
+                <Link to="/register-user" className="bg-primary text-primary-foreground rounded-md px-5 py-2.5 text-sm font-bold hover:opacity-90 transition-all">শুরু করুন</Link>
               </div>
               <button className="lg:hidden" onClick={() => setSidebarOpen(s => !s)} aria-label={isSidebarOpen ? 'Close menu' : 'Open menu'}>
                 {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}

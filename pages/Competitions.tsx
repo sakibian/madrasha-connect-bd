@@ -133,11 +133,11 @@ const Competitions: React.FC = () => {
         })}
       </div>
 
-      <div className="bg-primary text-primary-foreground p-20 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+      <div className="bg-foreground text-background p-20 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
          <div className="space-y-8">
             <div className="w-16 h-16 bg-card text-foreground flex items-center justify-center font-bold text-2xl">H</div>
             <h2 className="text-5xl font-extrabold tracking-tight leading-tight">হল অফ ফেম (Hall of Fame)।</h2>
-            <p className="text-xl text-primary-foreground font-medium leading-relaxed">
+            <p className="text-xl text-background font-medium leading-relaxed">
               বিগত বছরের সেরা ফলাফলকারী শিক্ষার্থী ও সফল শিক্ষকদের সম্মাননা তালিকা এবং তাদের সাফল্যের গল্পসমূহ।
             </p>
             <button className="text-sm font-bold border-b-2 border-white/60 pb-0.5 hover:border-white transition-all">বিজয়ীদের তালিকা দেখুন</button>

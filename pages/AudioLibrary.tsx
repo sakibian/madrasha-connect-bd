@@ -58,10 +58,10 @@ const AudioLibrary: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         {/* Sidebar Controls */}
         <div className="lg:col-span-4 space-y-12">
-           <div className="bg-primary text-primary-foreground p-12 space-y-8 h-full flex flex-col justify-between">
+           <div className="bg-foreground text-background p-12 space-y-8 h-full flex flex-col justify-between">
               <div className="space-y-6">
-                <Disc size={48} className={`text-primary-foreground ${playing ? 'animate-spin-slow' : ''}`} />
-                <div className="caps-label text-primary-foreground">Currently Streaming</div>
+                <Disc size={48} className={`text-background ${playing ? 'animate-spin-slow' : ''}`} />
+                <div className="caps-label text-background">Currently Streaming</div>
                 <h3 className="text-2xl font-extrabold leading-tight">
                   {playing ? tracks.find(t => t.id === playing)?.title : 'কোনো অডিও সেশন চলছে না।'}
                 </h3>
@@ -74,7 +74,7 @@ const AudioLibrary: React.FC = () => {
                   বন্ধ করুন
                 </button>
               ) : (
-                <p className="text-sm font-bold text-primary-foreground">নিচের তালিকা থেকে একটি অডিও ট্র‍্যাক নির্বাচন করে শুরু করুন।</p>
+                <p className="text-sm font-bold text-background">নিচের তালিকা থেকে একটি অডিও ট্র‍্যাক নির্বাচন করে শুরু করুন।</p>
               )}
            </div>
            
