@@ -12,11 +12,11 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-black text-white hover:bg-gray-800',
-  ghost: 'bg-transparent text-gray-500 hover:bg-gray-50 hover:text-black',
-  outline: 'border border-gray-200 text-gray-700 hover:bg-gray-50',
-  danger: 'bg-black text-white hover:bg-black',
-  white: 'bg-white text-black hover:bg-gray-100',
+  primary: 'bg-primary text-primary-foreground hover:opacity-90',
+  ghost: 'bg-transparent text-muted-foreground hover:bg-muted hover:text-foreground',
+  outline: 'border border-border bg-card text-foreground hover:bg-muted',
+  danger: 'bg-destructive text-destructive-foreground hover:opacity-90',
+  white: 'bg-card text-foreground hover:bg-muted',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -38,7 +38,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       disabled={disabled || loading}
-      className={`font-bold uppercase tracking-widest transition-all disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+      className={`font-bold uppercase tracking-widest rounded-md transition-all disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed flex items-center justify-center gap-2 ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
       {...props}
     >
       {loading ? (

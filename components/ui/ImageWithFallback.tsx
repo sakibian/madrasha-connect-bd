@@ -22,7 +22,7 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
       ? name.split(' ').slice(0, 2).map(n => n[0]).join('').toUpperCase()
       : '?';
     return (
-      <div className={`bg-gray-100 flex items-center justify-center font-bold text-gray-400 text-sm ${className}`}>
+      <div className={`bg-muted flex items-center justify-center font-bold text-muted-foreground text-sm ${className}`}>
         {initials}
       </div>
     );

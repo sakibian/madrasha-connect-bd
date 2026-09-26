@@ -13,10 +13,10 @@ interface InstitutionCardProps {
 const InstitutionCard: React.FC<InstitutionCardProps> = ({ institution, onClick }) => (
   <div
     onClick={onClick}
-    className="bg-white p-8 minimal-border hover:border-gray-300 transition-all cursor-pointer space-y-4 group"
+    className="bg-card p-8 minimal-border hover:border-border transition-all cursor-pointer space-y-4 group"
   >
     <div className="flex items-start gap-6">
-      <div className="w-16 h-16 bg-gray-100 overflow-hidden grayscale flex-shrink-0">
+      <div className="w-16 h-16 bg-muted overflow-hidden grayscale flex-shrink-0">
         <ImageWithFallback src={institution.image} name={institution.name} className="w-full h-full object-cover" alt="" />
       </div>
       <div className="flex-1 min-w-0 space-y-3">
@@ -25,11 +25,11 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({ institution, onClick 
             <Badge variant={institution.verified ? 'success' : 'default'}>
               {institution.verified ? 'ভেরিফাইড' : 'পেন্ডিং'}
             </Badge>
-            <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">{institution.type}</span>
+            <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">{institution.type}</span>
           </div>
           <h3 className="text-xl font-extrabold leading-tight group-hover:underline">{institution.name}</h3>
         </div>
-        <div className="flex flex-wrap items-center gap-4 text-xs font-bold text-gray-400">
+        <div className="flex flex-wrap items-center gap-4 text-xs font-bold text-muted-foreground">
           <span className="flex items-center gap-1.5"><MapPin size={14} /> {institution.location}, {institution.district}</span>
           {institution.studentCount && (
             <span className="flex items-center gap-1.5"><Users size={14} /> {institution.studentCount} শিক্ষার্থী</span>

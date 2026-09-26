@@ -106,35 +106,35 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
       aria-labelledby="donation-title"
     >
       <div
-        className="bg-white w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl"
+        className="bg-card w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-6 border-b border-gray-100">
+        <div className="flex items-center justify-between p-6 border-b border-border">
           <div className="space-y-1">
-            <div className="caps-label text-gray-400">Sadaqah • bKash</div>
+            <div className="caps-label text-muted-foreground">Sadaqah • bKash</div>
             <h2 id="donation-title" className="text-2xl font-extrabold tracking-tight">
               সাদাকাহ দিন
             </h2>
             {projectTitle && (
-              <p className="text-sm text-gray-500 font-medium">{projectTitle}</p>
+              <p className="text-sm text-muted-foreground font-medium">{projectTitle}</p>
             )}
           </div>
-          <button type="button" onClick={onClose} className="p-2 hover:bg-gray-100" aria-label="বন্ধ করুন">
+          <button type="button" onClick={onClose} className="p-2 hover:bg-muted" aria-label="বন্ধ করুন">
             <X size={20} />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div className="space-y-3">
-            <label className="caps-label text-gray-400">পরিমাণ (৳)</label>
-            <div className="grid grid-cols-5 gap-1 bg-gray-100 minimal-border">
+            <label className="caps-label text-muted-foreground">পরিমাণ (৳)</label>
+            <div className="grid grid-cols-5 gap-1 bg-muted minimal-border">
               {AMOUNT_PRESETS.map((preset) => (
                 <button
                   key={preset}
                   type="button"
                   onClick={() => { setAmount(preset); setCustomAmount(''); }}
                   className={`py-3 text-sm font-black transition-all ${
-                    !customAmount && amount === preset ? 'bg-black text-white' : 'bg-white text-gray-500 hover:bg-gray-50'
+                    !customAmount && amount === preset ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-muted'
                   }`}
                 >
                   ৳{preset}
@@ -149,7 +149,7 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
               value={customAmount}
               onChange={(e) => setCustomAmount(e.target.value)}
               placeholder="অথবা কাস্টম পরিমাণ (৳)"
-              className="w-full p-4 bg-gray-50 border border-gray-100 outline-none focus:ring-2 focus:ring-black font-bold text-lg"
+              className="w-full p-4 bg-muted border border-border outline-none focus:ring-2 focus:ring-ring font-bold text-lg"
               aria-label="কাস্টম দান পরিমাণ"
             />
           </div>
@@ -160,7 +160,7 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
               value={donorName}
               onChange={(e) => setDonorName(e.target.value)}
               placeholder="আপনার নাম (ঐচ্ছিক)"
-              className="w-full p-4 bg-gray-50 border border-gray-100 outline-none focus:ring-2 focus:ring-black font-medium"
+              className="w-full p-4 bg-muted border border-border outline-none focus:ring-2 focus:ring-ring font-medium"
               aria-label="দাতার নাম"
             />
             <input
@@ -168,7 +168,7 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
               value={donorPhone}
               onChange={(e) => setDonorPhone(e.target.value)}
               placeholder="ফোন (ঐচ্ছিক)"
-              className="w-full p-4 bg-gray-50 border border-gray-100 outline-none focus:ring-2 focus:ring-black font-medium"
+              className="w-full p-4 bg-muted border border-border outline-none focus:ring-2 focus:ring-ring font-medium"
               aria-label="দাতার ফোন"
             />
           </div>
@@ -179,14 +179,14 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
             placeholder="বার্তা (ঐচ্ছিক) — যেমন 'পিতা মরহুম আব্দুল করিমের নামে'"
             rows={3}
             maxLength={280}
-            className="w-full p-4 bg-gray-50 border border-gray-100 outline-none focus:ring-2 focus:ring-black font-medium resize-none"
+            className="w-full p-4 bg-muted border border-border outline-none focus:ring-2 focus:ring-ring font-medium resize-none"
           />
 
           {error && (
-            <div className="p-4 bg-gray-100 border border-gray-200 text-gray-900 text-sm font-bold">{error}</div>
+            <div className="p-4 bg-muted border border-border text-foreground text-sm font-bold">{error}</div>
           )}
           {dryRun && (
-            <div className="p-4 bg-gray-50 border border-gray-200 text-gray-900 text-sm font-medium space-y-1">
+            <div className="p-4 bg-muted border border-border text-foreground text-sm font-medium space-y-1">
               <p className="font-bold">Sandbox mode — bKash credentials not set.</p>
               <p className="text-xs">
                 Ask ops to run <code>supabase secrets set BKASH_APP_KEY=… BKASH_APP_SECRET=…</code> etc.
@@ -196,30 +196,30 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
             </div>
           )}
           {personal && (
-            <div className="p-4 bg-black/10 border border-black/30 text-gray-900 text-sm space-y-3">
-              <p className="font-extrabold text-black uppercase tracking-widest text-xs">
+            <div className="p-4 bg-black/10 border border-black/30 text-foreground text-sm space-y-3">
+              <p className="font-extrabold text-foreground uppercase tracking-widest text-xs">
                 bKash Send Money — ম্যানুয়াল কনফার্মেশন
               </p>
-              <p className="text-xs text-gray-600">
+              <p className="text-xs text-muted-foreground">
                 merchant অ্যাকাউন্ট এখনো অনুমোদনের অপেক্ষায় — এই সময়ে অনুগ্রহ করে সংগঠনের
                 পারসোনাল bKash নম্বরে <strong>Send Money</strong> করুন। ২৪ ঘণ্টার মধ্যে অ্যাডমিন
                 কনফার্ম করবে।
               </p>
               <dl className="grid grid-cols-3 gap-2 text-sm">
-                <dt className="col-span-1 font-bold text-gray-500">নম্বর</dt>
+                <dt className="col-span-1 font-bold text-muted-foreground">নম্বর</dt>
                 <dd className="col-span-2 font-black text-lg tracking-wider">
                   {personal.personal_number}
                 </dd>
                 {personal.account_name && (
                   <>
-                    <dt className="col-span-1 font-bold text-gray-500">নাম</dt>
+                    <dt className="col-span-1 font-bold text-muted-foreground">নাম</dt>
                     <dd className="col-span-2 font-bold">{personal.account_name}</dd>
                   </>
                 )}
-                <dt className="col-span-1 font-bold text-gray-500">পরিমাণ</dt>
+                <dt className="col-span-1 font-bold text-muted-foreground">পরিমাণ</dt>
                 <dd className="col-span-2 font-black">৳{personal.amount_bdt}</dd>
-                <dt className="col-span-1 font-bold text-gray-500">Reference</dt>
-                <dd className="col-span-2 font-mono font-black bg-white px-2 py-1 border border-gray-200 inline-block">
+                <dt className="col-span-1 font-bold text-muted-foreground">Reference</dt>
+                <dd className="col-span-2 font-mono font-black bg-card px-2 py-1 border border-border inline-block">
                   {personal.invoice}
                 </dd>
               </dl>
@@ -227,28 +227,28 @@ const DonationModal: React.FC<Props> = ({ isOpen, onClose, projectId, projectTit
                 <button
                   type="button"
                   onClick={() => navigator.clipboard?.writeText(personal.invoice!)}
-                  className="text-xs font-bold underline text-black"
+                  className="text-xs font-bold underline text-foreground"
                 >
                   Reference কপি করুন
                 </button>
               )}
               {personal.instructions_bn && (
-                <p className="text-xs text-gray-700 border-t border-black/20 pt-2">
+                <p className="text-xs text-foreground border-t border-black/20 pt-2">
                   {personal.instructions_bn}
                 </p>
               )}
             </div>
           )}
 
-          <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-            <ShieldCheck size={12} className="text-black" />
+          <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+            <ShieldCheck size={12} className="text-foreground" />
             <span>SSL এনক্রিপ্টেড • ১০০% অলাভজনক • কোনো সেবা ফি নেই</span>
           </div>
 
           <button
             type="submit"
             disabled={submitting || !(effectiveAmount > 0)}
-            className="w-full py-5 bg-black text-white font-extrabold text-lg uppercase tracking-widest flex items-center justify-center gap-3 hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-5 bg-primary text-primary-foreground font-extrabold text-lg uppercase tracking-widest flex items-center justify-center gap-3 hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? (
               <Loader2 size={20} className="animate-spin" />

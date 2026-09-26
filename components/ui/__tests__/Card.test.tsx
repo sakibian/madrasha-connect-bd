@@ -21,12 +21,12 @@ describe('Card', () => {
 
   it('applies hover class when hover prop is true', () => {
     render(<Card hover>Hover</Card>);
-    expect(screen.getByText('Hover').className).toContain('hover:border-gray-300');
+    expect(screen.getByText('Hover').className).toContain('hover:border-muted-foreground');
   });
 
   it('does not apply hover class by default', () => {
     render(<Card>No hover</Card>);
-    expect(screen.getByText('No hover').parentElement?.className).not.toContain('hover:border-gray-300');
+    expect(screen.getByText('No hover').parentElement?.className).not.toContain('hover:border-muted-foreground');
   });
 
   it('renders Card.Header', () => {

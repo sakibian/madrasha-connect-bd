@@ -48,7 +48,8 @@ const Modal: React.FC<ModalProps> = ({ open, onClose, title, children, size = 'm
       */}
       <div
         className={`
-          bg-white w-full ${sizeStyles[size]}
+          bg-card text-card-foreground w-full ${sizeStyles[size]}
+          rounded-t-xl sm:rounded-lg
           p-6 sm:p-12 space-y-6 sm:space-y-8
           animate-slideUp
           max-h-[95vh] sm:max-h-[90vh] overflow-y-auto
@@ -57,12 +58,12 @@ const Modal: React.FC<ModalProps> = ({ open, onClose, title, children, size = 'm
         onClick={e => e.stopPropagation()}
       >
         {title && (
-          <div className="flex justify-between items-center border-b border-gray-100 pb-4 sm:pb-6 sticky top-0 bg-white -mx-6 sm:mx-0 px-6 sm:px-0 pt-1">
+          <div className="flex justify-between items-center border-b border-border pb-4 sm:pb-6 sticky top-0 bg-card -mx-6 sm:mx-0 px-6 sm:px-0 pt-1">
             <h2 className="text-xl sm:text-2xl font-extrabold">{title}</h2>
             <button
               onClick={onClose}
               aria-label="বন্ধ করুন"
-              className="text-gray-400 hover:text-black transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center -mr-2"
+              className="text-muted-foreground hover:text-foreground transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center -mr-2"
             >
               <X size={24} />
             </button>

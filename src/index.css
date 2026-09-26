@@ -2,23 +2,97 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --pure-black: #111827;
-  --pure-white: #ffffff;
-  --bd-green: #006a4e;
-  --soft-grey: #f9fafb;
-  --border-color: #e5e7eb;
-}
+@layer base {
+  :root {
+    --background: #fcfaf7;
+    --foreground: #0f172a;
+    --card: #fcfaf7;
+    --card-foreground: #0f172a;
+    --popover: #fcfaf7;
+    --popover-foreground: #0f172a;
+    --primary: #059669;
+    --primary-foreground: #ffffff;
+    --secondary: #334155;
+    --secondary-foreground: #f8fafc;
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
+    --accent: #059669;
+    --accent-foreground: #ffffff;
+    --destructive: #e11d48;
+    --destructive-foreground: #ffffff;
+    --border: #e2e8f0;
+    --input: #e2e8f0;
+    --ring: #059669;
+    --chart-1: #059669;
+    --chart-2: #334155;
+    --chart-3: #fbbf24;
+    --chart-4: #f43f5e;
+    --chart-5: #64748b;
+    --sidebar: #fcfaf7;
+    --sidebar-foreground: #0f172a;
+    --sidebar-primary: #059669;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #f1f5f9;
+    --sidebar-accent-foreground: #0f172a;
+    --sidebar-border: #e2e8f0;
+    --sidebar-ring: #059669;
+    --font-sans: Inter, sans-serif;
+    --font-serif: Georgia, serif;
+    --font-mono: JetBrains Mono, monospace;
+    --radius: 0.5rem;
+    --tracking-normal: 0.01em;
+    --spacing: 0.25rem;
+  }
 
-body {
-  font-family: 'Noto Sans Bengali', 'Inter', sans-serif;
-  background-color: var(--pure-white);
-  color: var(--pure-black);
-  -webkit-font-smoothing: antialiased;
-  /* 16 px base prevents iOS Safari zoom-on-focus for form inputs and
-     improves Bengali script legibility on small screens. */
-  font-size: 16px;
-  line-height: 1.5;
+  .dark {
+    --background: #0a0e1a;
+    --foreground: #f1f5f9;
+    --card: #0a0e1a;
+    --card-foreground: #f1f5f9;
+    --popover: #0a0e1a;
+    --popover-foreground: #f1f5f9;
+    --primary: #10b981;
+    --primary-foreground: #0a0e1a;
+    --secondary: #1e293b;
+    --secondary-foreground: #f1f5f9;
+    --muted: #1e293b;
+    --muted-foreground: #94a3b8;
+    --accent: #10b981;
+    --accent-foreground: #0a0e1a;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --border: #1e293b;
+    --input: #1e293b;
+    --ring: #10b981;
+    --chart-1: #10b981;
+    --chart-2: #334155;
+    --chart-3: #fbbf24;
+    --chart-4: #ef4444;
+    --chart-5: #64748b;
+    --sidebar: #0a0e1a;
+    --sidebar-foreground: #f1f5f9;
+    --sidebar-primary: #10b981;
+    --sidebar-primary-foreground: #0a0e1a;
+    --sidebar-accent: #1e293b;
+    --sidebar-accent-foreground: #f1f5f9;
+    --sidebar-border: #1e293b;
+    --sidebar-ring: #10b981;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Noto Sans Bengali', 'Inter', sans-serif;
+    letter-spacing: var(--tracking-normal);
+    -webkit-font-smoothing: antialiased;
+    /* 16 px base prevents iOS Safari zoom-on-focus for form inputs and
+       improves Bengali script legibility on small screens. */
+    font-size: 16px;
+    line-height: 1.5;
+  }
 }
 
 /* Bengali script needs slightly more line-height for the vertical marks
@@ -52,7 +126,7 @@ input, select, textarea {
 .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
 
 .minimal-border {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
 }
 
 .text-balanced {
@@ -64,8 +138,8 @@ input, select, textarea {
 }
 
 .hover-darken:hover {
-  background-color: var(--pure-black);
-  color: var(--pure-white);
+  background-color: var(--foreground);
+  color: var(--background);
 }
 
 h1, h2, h3 {
@@ -81,7 +155,7 @@ h1, h2, h3 {
 }
 
 *:focus-visible {
-  outline: 2px solid #111827;
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
@@ -90,7 +164,7 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #111827;
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
@@ -107,9 +181,9 @@ textarea:focus-visible {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--soft-grey);
+  background: var(--muted);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--pure-black);
+  background: var(--muted-foreground);
 }

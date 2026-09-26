@@ -53,7 +53,7 @@ const LanguageSwitcher: React.FC<Props> = ({ variant = 'light', align = 'right' 
   const triggerCls =
     variant === 'dark'
       ? 'text-white/80 hover:text-white hover:bg-white/10 border-white/20'
-      : 'text-gray-500 hover:text-black hover:bg-gray-50 border-gray-200';
+      : 'text-muted-foreground hover:text-foreground hover:bg-muted border-border';
 
   return (
     <div ref={rootRef} className="relative inline-block">
@@ -74,7 +74,7 @@ const LanguageSwitcher: React.FC<Props> = ({ variant = 'light', align = 'right' 
         <ul
           role="listbox"
           aria-label={t('language.label', 'Language')}
-          className={`absolute z-50 mt-2 min-w-[160px] bg-white border border-gray-200 shadow-xl overflow-hidden ${align === 'right' ? 'right-0' : 'left-0'}`}
+          className={`absolute z-50 mt-2 min-w-[160px] bg-card border border-border shadow-xl overflow-hidden ${align === 'right' ? 'right-0' : 'left-0'}`}
         >
           {SUPPORTED_LANGUAGES.map((lang) => {
             const isActive = lang.code === active.code;
@@ -87,7 +87,7 @@ const LanguageSwitcher: React.FC<Props> = ({ variant = 'light', align = 'right' 
                   onClick={() => change(lang.code)}
                   dir={lang.dir}
                   className={`w-full flex items-center justify-between gap-3 px-4 py-3 text-sm font-bold text-left transition-all ${
-                    isActive ? 'bg-black text-white' : 'text-gray-700 hover:bg-gray-50'
+                    isActive ? 'bg-primary text-primary-foreground' : 'text-foreground hover:bg-muted'
                   }`}
                 >
                   <span>{lang.label}</span>

@@ -7,3 +7,4 @@ export { useProductStore } from './useProductStore';
 export { useNotificationStore } from './useNotificationStore';
 export { useCourseStore } from './useCourseStore';
 export { useContentStore } from './useContentStore';
+export { useThemeStore } from './useThemeStore';

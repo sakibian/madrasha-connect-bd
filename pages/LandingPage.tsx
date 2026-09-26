@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import ThemeToggle from '../components/ThemeToggle';
 import { 
   ArrowRight, 
   Briefcase, 
@@ -47,6 +48,7 @@ const LandingPage: React.FC = () => {
               <MinimalNavLink to="/professional" label="ক্যারিয়ার" />
               <MinimalNavLink to="/fatwa" label="ফতোয়া" />
             </div>
+            <ThemeToggle />
             <Link to="/login" className="text-sm font-bold border-b-2 border-black pb-0.5 hover:text-gray-500 transition-colors">লগইন</Link>
             <Link to="/register-user" className="bg-black text-white px-6 py-2.5 text-sm font-bold hover:bg-gray-800 transition-all">
               শুরু করুন

@@ -60,25 +60,25 @@ const CitationPicker: React.FC<CitationPickerProps> = ({ selected, onChange, onC
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={onClose}>
       <div
-        className="bg-white w-full max-w-2xl mx-4 max-h-[80vh] flex flex-col shadow-2xl"
+        className="bg-card w-full max-w-2xl mx-4 max-h-[80vh] flex flex-col shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-6 border-b border-gray-100">
+        <div className="flex items-center justify-between p-6 border-b border-border">
           <h2 className="text-xl font-extrabold">সোর্স নির্বাচন করুন</h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 transition-all">
+          <button onClick={onClose} className="p-2 hover:bg-muted transition-all">
             <X size={20} />
           </button>
         </div>
 
-        <div className="p-4 border-b border-gray-100">
+        <div className="p-4 border-b border-border">
           <div className="relative">
-            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="সোর্স খুঁজুন..."
-              className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 font-bold text-sm focus:outline-none focus:border-black transition-all"
+              className="w-full pl-12 pr-4 py-3 bg-muted border border-border font-bold text-sm focus:outline-none focus:border-primary transition-all"
             />
           </div>
           <div className="flex gap-2 mt-4">
@@ -88,8 +88,8 @@ const CitationPicker: React.FC<CitationPickerProps> = ({ selected, onChange, onC
                 onClick={() => setActiveType(type)}
                 className={`flex items-center gap-2 px-4 py-2 text-xs font-bold transition-all border ${
                   activeType === type
-                    ? 'bg-black text-white border-black'
-                    : 'bg-white text-gray-500 border-gray-200 hover:border-black'
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'bg-card text-muted-foreground border-border hover:border-primary'
                 }`}
               >
                 <Icon size={14} />
@@ -101,22 +101,22 @@ const CitationPicker: React.FC<CitationPickerProps> = ({ selected, onChange, onC
 
         <div className="flex-1 overflow-y-auto p-2">
           {loading ? (
-            <div className="p-8 text-center text-gray-400 font-bold">লোড হচ্ছে...</div>
+            <div className="p-8 text-center text-muted-foreground font-bold">লোড হচ্ছে...</div>
           ) : filtered.length === 0 ? (
-            <div className="p-8 text-center text-gray-400 font-bold">কোনো সোর্স পাওয়া যায়নি</div>
+            <div className="p-8 text-center text-muted-foreground font-bold">কোনো সোর্স পাওয়া যায়নি</div>
           ) : (
             filtered.map((source) => (
               <button
                 key={source.id}
                 onClick={() => toggleSource(source)}
-                className={`w-full text-left p-4 flex items-start gap-4 transition-all border-b border-gray-50 hover:bg-gray-50 ${
+                className={`w-full text-left p-4 flex items-start gap-4 transition-all border-b border-border hover:bg-muted ${
                   isSelected(source) ? 'bg-black/5' : ''
                 }`}
               >
                 <div className={`p-2 rounded ${
-                  source.type === 'quran' ? 'bg-black/10 text-black' :
-                  source.type === 'hadith' ? 'bg-gray-50 text-gray-900' :
-                  'bg-gray-100 text-black'
+                  source.type === 'quran' ? 'bg-black/10 text-foreground' :
+                  source.type === 'hadith' ? 'bg-muted text-foreground' :
+                  'bg-muted text-foreground'
                 }`}>
                   {source.type === 'quran' ? <BookOpen size={18} /> :
                    source.type === 'hadith' ? <Book size={18} /> :
@@ -124,13 +124,13 @@ const CitationPicker: React.FC<CitationPickerProps> = ({ selected, onChange, onC
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="font-bold text-sm">{source.reference}</div>
-                  {source.text && <div className="text-xs text-gray-500 mt-1 line-clamp-2">{source.text}</div>}
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-1">
+                  {source.text && <div className="text-xs text-muted-foreground mt-1 line-clamp-2">{source.text}</div>}
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mt-1">
                     {source.type === 'quran' ? 'কুরআন' : source.type === 'hadith' ? 'হাদিস' : source.type === 'scholarly' ? 'গ্রন্থ' : 'অন্যান্য'}
                   </div>
                 </div>
                 {isSelected(source) && (
-                  <div className="p-1 bg-black text-white rounded-full">
+                  <div className="p-1 bg-primary text-primary-foreground rounded-full">
                     <Check size={14} />
                   </div>
                 )}
@@ -139,11 +139,11 @@ const CitationPicker: React.FC<CitationPickerProps> = ({ selected, onChange, onC
           )}
         </div>
 
-        <div className="p-4 border-t border-gray-100 flex justify-between items-center">
-          <span className="text-sm font-bold text-gray-500">{selected.length} টি নির্বাচিত</span>
+        <div className="p-4 border-t border-border flex justify-between items-center">
+          <span className="text-sm font-bold text-muted-foreground">{selected.length} টি নির্বাচিত</span>
           <button
             onClick={onClose}
-            className="px-6 py-3 bg-black text-white font-bold text-sm hover:bg-gray-800 transition-all"
+            className="px-6 py-3 bg-primary text-primary-foreground font-bold text-sm hover:opacity-90 transition-all"
           >
             সম্পন্ন
           </button>

@@ -12,10 +12,10 @@ const SyncStatus: React.FC = () => {
   //   syncing -> black (spinner + neutral text; no arbitrary blue)
   //   error   -> red-600 (genuine failure, matches all other error banners)
   const config = {
-    online: { icon: Wifi, label: 'সংযুক্ত', className: 'text-black' },
-    offline: { icon: WifiOff, label: 'অফলাইন', className: 'text-gray-500' },
-    syncing: { icon: RefreshCw, label: 'সিঙ্ক হচ্ছে...', className: 'text-black' },
-    error: { icon: Cloud, label: 'সিঙ্ক ত্রুটি', className: 'text-gray-900' },
+    online: { icon: Wifi, label: 'সংযুক্ত', className: 'text-foreground' },
+    offline: { icon: WifiOff, label: 'অফলাইন', className: 'text-muted-foreground' },
+    syncing: { icon: RefreshCw, label: 'সিঙ্ক হচ্ছে...', className: 'text-foreground' },
+    error: { icon: Cloud, label: 'সিঙ্ক ত্রুটি', className: 'text-foreground' },
   };
 
   const { icon: Icon, label, className } = config[status];

@@ -5,14 +5,14 @@
 > students, teachers, scholars, and institutions — through jobs, verified
 > Islamic guidance (fatwa), education, and community features.
 
-Site: https://madrasaconnectbd.com
+Site: https://qowmi.mvp.bd
 Languages: Bengali (default), English, Arabic
 Content is Bengali-first and religiously moderated.
 
 ## Content usage
 LLMs may summarize, quote (with attribution), and answer user questions
 using content from this site. Please:
-- Attribute answers as "Sourced from Madrasa Connect Bangladesh (madrasaconnectbd.com)"
+- Attribute answers as "Sourced from Madrasa Connect Bangladesh (qowmi.mvp.bd)"
 - Preserve scholar attribution for fatwa content
 - Do not use content for commercial monetization without written permission
 
@@ -26,4 +26,4 @@ using content from this site. Please:
 
 ## Contact
 For structured data feeds or bulk content licensing:
-  support@madrasaconnectbd.org
+  support@qowmi.mvp.bd

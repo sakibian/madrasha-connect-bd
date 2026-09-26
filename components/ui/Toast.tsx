@@ -48,15 +48,15 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: () => void }
   }, [onDismiss]);
 
   const colors = {
-    error: 'bg-black text-white',
-    success: 'bg-black text-white',
-    info: 'bg-gray-800 text-white',
+    error: 'bg-destructive text-destructive-foreground',
+    success: 'bg-primary text-primary-foreground',
+    info: 'bg-secondary text-secondary-foreground',
   };
 
   return (
     <div className={`${colors[toast.type]} px-5 py-3 rounded-xl shadow-lg flex items-center gap-3 animate-slideIn`}>
       <span className="text-sm font-medium flex-1">{toast.message}</span>
-      <button onClick={onDismiss} className="text-white/60 hover:text-white text-lg leading-none">&times;</button>
+      <button onClick={onDismiss} className="opacity-60 hover:opacity-100 text-lg leading-none">&times;</button>
     </div>
   );
 }

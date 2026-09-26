@@ -45,7 +45,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, name, size = 'md', online, classNa
         <img
           src={src}
           alt={name || ''}
-          className={`${box} object-cover minimal-border bg-gray-50`}
+          className={`${box} object-cover minimal-border bg-muted`}
           data-testid="avatar-photo"
           onError={(e) => {
             // Real photo failed to load — hide it, the initials fallback
@@ -72,7 +72,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, name, size = 'md', online, classNa
       {online !== undefined && (
         <span
           className={`absolute bottom-0 right-0 w-2.5 h-2.5 border-2 border-white ${
-            online ? 'bg-black' : 'bg-gray-300'
+            online ? 'bg-primary' : 'bg-muted'
           }`}
           aria-label={online ? 'Online' : 'Offline'}
         />

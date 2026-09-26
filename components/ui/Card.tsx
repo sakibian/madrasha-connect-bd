@@ -20,13 +20,13 @@ const Card: React.FC<CardProps> & { Header: typeof CardHeader; Body: typeof Card
   padding = 'md',
   hover = false,
 }) => (
-  <div className={`bg-white minimal-border ${paddings[padding]} ${hover ? 'hover:border-gray-300 transition-all' : ''} ${className}`}>
+  <div className={`bg-card text-card-foreground minimal-border rounded-lg ${paddings[padding]} ${hover ? 'hover:border-muted-foreground transition-all' : ''} ${className}`}>
     {children}
   </div>
 );
 
 const CardHeader: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
-  <div className={`border-b border-gray-100 pb-6 mb-6 ${className}`}>{children}</div>
+  <div className={`border-b border-border pb-6 mb-6 ${className}`}>{children}</div>
 );
 
 const CardBody: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
@@ -34,7 +34,7 @@ const CardBody: React.FC<{ children: React.ReactNode; className?: string }> = ({
 );
 
 const CardFooter: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
-  <div className={`border-t border-gray-100 pt-6 mt-6 ${className}`}>{children}</div>
+  <div className={`border-t border-border pt-6 mt-6 ${className}`}>{children}</div>
 );
 
 Card.Header = CardHeader;

@@ -35,18 +35,18 @@ describe('Avatar', () => {
 
   it('shows online indicator when online is true', () => {
     const { container } = render(<Avatar name="John" online />);
-    expect(container.querySelector('.bg-black')).toBeInTheDocument();
+    expect(container.querySelector('.bg-primary')).toBeInTheDocument();
   });
 
   it('shows offline indicator when online is false', () => {
     const { container } = render(<Avatar name="John" online={false} />);
-    expect(container.querySelector('.bg-gray-300')).toBeInTheDocument();
+    expect(container.querySelector('.bg-muted')).toBeInTheDocument();
   });
 
   it('does not show any indicator when online is undefined', () => {
     const { container } = render(<Avatar name="John" />);
-    expect(container.querySelector('.bg-black')).not.toBeInTheDocument();
-    expect(container.querySelector('.bg-gray-300')).not.toBeInTheDocument();
+    expect(container.querySelector('.bg-primary')).not.toBeInTheDocument();
+    expect(container.querySelector('.bg-muted')).not.toBeInTheDocument();
   });
 
   it('applies size classes to the outer box', () => {

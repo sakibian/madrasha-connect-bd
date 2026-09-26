@@ -58,9 +58,9 @@ const DailyIslamicWidget: React.FC<Props> = ({ city = 'Dhaka', ayahRef = '2:255'
   const hijri = prayers?.date?.hijri;
 
   return (
-    <div className={`bg-white border border-gray-100 p-6 space-y-6 ${className}`}>
+    <div className={`bg-card border border-border p-6 space-y-6 ${className}`}>
       {loading && (
-        <div className="flex items-center gap-2 text-gray-400 text-sm font-bold">
+        <div className="flex items-center gap-2 text-muted-foreground text-sm font-bold">
           <Loader2 size={16} className="animate-spin" />
           লোড হচ্ছে…
         </div>
@@ -69,11 +69,11 @@ const DailyIslamicWidget: React.FC<Props> = ({ city = 'Dhaka', ayahRef = '2:255'
       {/* Hijri date row */}
       {hijri && (
         <div className="space-y-1">
-          <div className="caps-label text-gray-400">আজকের হিজরি তারিখ</div>
+          <div className="caps-label text-muted-foreground">আজকের হিজরি তারিখ</div>
           <p className="text-2xl font-extrabold tracking-tight">
             {hijri.day} {hijri.month.en} {hijri.year} হি.
           </p>
-          <p className="text-sm text-gray-500 font-medium" dir="rtl">
+          <p className="text-sm text-muted-foreground font-medium" dir="rtl">
             {hijri.day} {hijri.month.ar} {hijri.year} هـ
           </p>
           <Citation source="Aladhan" url="https://aladhan.com" />
@@ -82,18 +82,18 @@ const DailyIslamicWidget: React.FC<Props> = ({ city = 'Dhaka', ayahRef = '2:255'
 
       {/* Next prayer */}
       {next && (
-        <div className="space-y-1 border-t border-gray-100 pt-4">
-          <div className="caps-label text-gray-400 flex items-center gap-1">
+        <div className="space-y-1 border-t border-border pt-4">
+          <div className="caps-label text-muted-foreground flex items-center gap-1">
             <Sunrise size={12} /> পরবর্তী নামাজ ({city})
           </div>
-          <p className="text-2xl font-extrabold text-black tracking-tight">
+          <p className="text-2xl font-extrabold text-foreground tracking-tight">
             {next.name} · {next.time}
           </p>
-          <ul className="grid grid-cols-3 gap-1 text-xs font-bold text-gray-500 pt-2">
+          <ul className="grid grid-cols-3 gap-1 text-xs font-bold text-muted-foreground pt-2">
             {PRAYER_ORDER.map(p => (
               <li key={p} className="flex items-center justify-between">
                 <span>{p}</span>
-                <span className="text-gray-400 font-mono">{prayers?.timings[p]?.slice(0, 5) ?? '—'}</span>
+                <span className="text-muted-foreground font-mono">{prayers?.timings[p]?.slice(0, 5) ?? '—'}</span>
               </li>
             ))}
           </ul>
@@ -102,15 +102,15 @@ const DailyIslamicWidget: React.FC<Props> = ({ city = 'Dhaka', ayahRef = '2:255'
 
       {/* Ayah of the day */}
       {ayah && (
-        <div className="space-y-2 border-t border-gray-100 pt-4">
-          <div className="caps-label text-gray-400 flex items-center gap-1">
+        <div className="space-y-2 border-t border-border pt-4">
+          <div className="caps-label text-muted-foreground flex items-center gap-1">
             <BookOpen size={12} /> আজকের আয়াত ({ayahRef})
           </div>
           <p className="text-lg leading-loose font-arabic" dir="rtl" lang="ar">
             {ayah.text}
           </p>
           {ayahBn && (
-            <p className="text-sm text-gray-600 leading-relaxed" lang="bn">
+            <p className="text-sm text-muted-foreground leading-relaxed" lang="bn">
               {ayahBn.text}
             </p>
           )}

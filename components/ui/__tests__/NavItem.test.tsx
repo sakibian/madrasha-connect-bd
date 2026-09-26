@@ -31,17 +31,17 @@ describe('NavItem', () => {
 
   it('applies active class when route matches', () => {
     renderNavItem({ to: '/jobs', label: 'Jobs' }, '/jobs');
-    expect(screen.getByText('Jobs').parentElement?.className).toContain('bg-black');
+    expect(screen.getByText('Jobs').parentElement?.className).toContain('bg-primary');
   });
 
   it('does not apply active class when route does not match', () => {
     renderNavItem({ to: '/jobs', label: 'Jobs' }, '/fatwa');
-    expect(screen.getByText('Jobs').parentElement?.className).not.toContain('bg-black');
+    expect(screen.getByText('Jobs').parentElement?.className).not.toContain('bg-primary');
   });
 
   it('uses exact matching when exact prop is true', () => {
     renderNavItem({ to: '/', label: 'Home', exact: true }, '/');
-    expect(screen.getByText('Home').parentElement?.className).toContain('bg-black');
+    expect(screen.getByText('Home').parentElement?.className).toContain('bg-primary');
   });
 
   it('calls onClick when clicked', async () => {

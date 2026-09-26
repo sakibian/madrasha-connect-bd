@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
           name: 'Qowmi',
           short_name: 'Qowmi',
           description: 'আধুনিক মাদ্রাসা ইকোসিস্টেম — চাকরি, শিক্ষা, ফতোয়া ও কমিউনিটি',
-          theme_color: '#111827',
+          theme_color: '#059669',
           background_color: '#ffffff',
           display: 'standalone',
           orientation: 'portrait-primary',
@@ -50,22 +50,6 @@ export default defineConfig(({ mode }) => {
               options: {
                 cacheName: 'gstatic-fonts-cache',
                 expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
-              },
-            },
-            {
-              urlPattern: /^https:\/\/cdn\.tailwindcss\.com\/.*/i,
-              handler: 'StaleWhileRevalidate',
-              options: {
-                cacheName: 'tailwind-cache',
-                expiration: { maxEntries: 5, maxAgeSeconds: 60 * 60 * 24 },
-              },
-            },
-            {
-              urlPattern: /^https:\/\/esm\.sh\/.*/i,
-              handler: 'StaleWhileRevalidate',
-              options: {
-                cacheName: 'esm-cache',
-                expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 7 },
               },
             },
             {

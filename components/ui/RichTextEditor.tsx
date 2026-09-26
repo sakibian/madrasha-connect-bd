@@ -23,7 +23,7 @@ const ToolbarButton: React.FC<{
     onClick={onClick}
     aria-label={label}
     className={`p-2 rounded-lg transition-all ${
-      active ? 'bg-black text-white' : 'text-gray-400 hover:text-black hover:bg-gray-100'
+      active ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted'
     }`}
   >
     {children}
@@ -55,15 +55,15 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   if (!editor) return null;
 
   return (
-    <div className={`border border-gray-200 rounded-2xl overflow-hidden focus-within:border-black transition-all ${className}`}>
-      <div className="flex items-center gap-1 px-3 py-2 border-b border-gray-100 bg-gray-50">
+    <div className={`border border-border rounded-2xl overflow-hidden focus-within:border-border transition-all ${className}`}>
+      <div className="flex items-center gap-1 px-3 py-2 border-b border-border bg-muted">
         <ToolbarButton onClick={toggleBold} active={editor.isActive('bold')} label="বোল্ড">
           <Bold size={16} />
         </ToolbarButton>
         <ToolbarButton onClick={toggleItalic} active={editor.isActive('italic')} label="ইটালিক">
           <Italic size={16} />
         </ToolbarButton>
-        <div className="w-px h-5 bg-gray-200 mx-1" />
+        <div className="w-px h-5 bg-muted mx-1" />
         <ToolbarButton onClick={toggleBulletList} active={editor.isActive('bulletList')} label="বুলেট লিস্ট">
           <List size={16} />
         </ToolbarButton>
@@ -71,7 +71,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           <ListOrdered size={16} />
         </ToolbarButton>
       </div>
-      <div className="px-4 py-3 min-h-[120px] prose prose-sm max-w-none [&_.ProseMirror]:outline-none [&_.ProseMirror]:min-h-[100px] [&_.ProseMirror_p]:text-gray-700 [&_.ProseMirror_p.is-editor-empty:first-child::before]:text-gray-300 [&_.ProseMirror_p.is-editor-empty:first-child::before]:content-[attr(data-placeholder)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:float-left [&_.ProseMirror_p.is-editor-empty:first-child::before]:pointer-events-none [&_.ProseMirror_p.is-editor-empty:first-child::before]:h-0">
+      <div className="px-4 py-3 min-h-[120px] prose prose-sm max-w-none [&_.ProseMirror]:outline-none [&_.ProseMirror]:min-h-[100px] [&_.ProseMirror_p]:text-foreground [&_.ProseMirror_p.is-editor-empty:first-child::before]:text-muted-foreground [&_.ProseMirror_p.is-editor-empty:first-child::before]:content-[attr(data-placeholder)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:float-left [&_.ProseMirror_p.is-editor-empty:first-child::before]:pointer-events-none [&_.ProseMirror_p.is-editor-empty:first-child::before]:h-0">
         <EditorContent editor={editor} />
       </div>
     </div>

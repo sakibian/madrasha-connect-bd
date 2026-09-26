@@ -11,11 +11,14 @@ import { registerServiceWorker } from './src/pwa/registerSW';
 // paint already speaks the correct language.
 import './i18n/config';
 import { bootstrapGeoLanguage } from './i18n/geoBootstrap';
+import { useThemeStore } from './stores/useThemeStore';
 import './src/index.css';
 
 initSentry();
 initPostHog();
 registerServiceWorker();
+// Applies persisted/system dark class + OS-preference listener.
+useThemeStore.getState().init();
 // IP-based language auto-detect (only fires when the user has no explicit
 // preference). Async; never blocks first paint. See i18n/geoBootstrap.ts.
 bootstrapGeoLanguage();

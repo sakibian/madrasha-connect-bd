@@ -34,8 +34,9 @@ interface SEOProps {
 }
 
 const DEFAULT_SITE_URL =
+  (import.meta.env?.VITE_SITE_URL as string | undefined) ||
   (typeof window !== 'undefined' && window.location?.origin) ||
-  'https://madrasaconnectbd.com';
+  'https://qowmi.mvp.bd';
 
 const DEFAULT_IMAGE = `${DEFAULT_SITE_URL}/icon.svg`;
 

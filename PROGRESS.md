@@ -13,7 +13,7 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-08-02 15:00 UTC · **Latest commit pushed to origin/main** (commit 0a6db83 — fix broken form submissions)
+**Last updated:** 2026-09-26 · **Latest work: shadcn theme tokens + dark mode (session 25, not yet committed)**
 
 ### 2026-08-02 (session 18 — Fix broken public-facing form submissions)
 
@@ -863,3 +863,76 @@ When you start work:
 
 When you get blocked:
 1. Move to `Blocked` with the reason and who owns unblocking.
+
+### 2026-09-26 (session 24 — SEO prerendering + per-route meta)
+
+**Theme**: Fix the audit's one real critical issue — empty HTML for crawlers (pure CSR SPA)
+
+- **scripts/prerender.mjs** — New post-build prerender pipeline
+  - Serves `dist/` locally with SPA fallback, drives headless Chrome (puppeteer)
+    through 28 public routes, waits for `#app-ready`, writes real HTML per route
+  - Forces `mc_language=bn` so captured HTML is Bangla-first
+  - Rewrites local origin → `https://qowmi.mvp.bd` in canonical/og:url/hreflang
+  - Fails soft (exit 0) if Chrome unavailable; `PRERENDER=false` escape hatch
+  - Result: 2.7 KB empty shell → 24–124 KB real pages with live Supabase data
+    (e.g. /institutions ships actual madrasa names in the initial HTML)
+- **components/RouteSEO.tsx** — New route→SEO mapping rendered once at app root
+  - Per-route `<title>` + description from `seo.*` i18n keys (bn/en/ar)
+  - Org + WebSite JSON-LD and keywords on `/`; page-level `<SEO>` still wins
+- **App.tsx** — `#app-ready` sentinel; removed Shell-level generic `<SEO>`
+  (its generic title serialized first, outranking per-page titles)
+- **components/SEO.tsx** — canonical origin now prefers `VITE_SITE_URL`;
+  stale `madrasaconnectbd.com` fallback → `qowmi.mvp.bd`
+- **locales/{bn,en,ar}/common.json** — new `seo` namespace (28 routes × 3 langs)
+- **index.html** — removed dead esm.sh importmap/preconnect (AI Studio scaffold),
+  dropped `https://esm.sh` from CSP script-src
+- **vite.config.ts** — removed dead workbox cache rules for esm.sh + tailwind CDN
+- **public/{robots.txt,sitemap.xml,llms.txt}** — old domain → `qowmi.mvp.bd`
+- **package.json** — `build` now runs vite + prerender; `build:spa` = old behavior;
+  added `puppeteer@25.11.0` devDependency
+- Total: 255 tests passing
+
+**Impact**: Every public route now returns fully rendered Bangla HTML with
+unique title, description, canonical, hreflang and JSON-LD — closing the
+"invisible to Google" gap flagged in the platform audit without a Next.js rewrite.
+
+### 2026-09-26 (session 25 — shadcn theme tokens + dark mode)
+
+**Theme**: Adopt the founder's shadcn-style palette (emerald primary, warm
+off-white, slate neutrals) as the design system — tokens + shared components
+
+- **src/index.css** — full `:root` + `.dark` CSS-var palette (background,
+  foreground, card, popover, primary #059669/#10b981, secondary, muted,
+  accent, destructive, border, input, ring, chart-1..5, sidebar set,
+  --radius 0.5rem, --tracking-normal). All existing helpers re-pointed to
+  theme vars (`.minimal-border`, `.hover-darken`, focus rings → `--ring`,
+  scrollbars → muted tokens).
+- **tailwind.config.js** — `darkMode: 'class'`; semantic color names mapped
+  to vars (`bg-primary`, `text-muted-foreground`, `border-border`, `bg-card`,
+  `bg-sidebar`, `text-destructive`, `ring-ring`, `chart-*`); `--radius`
+  drives rounded-sm/md/lg/xl; serif (Georgia) + mono (JetBrains Mono) stacks.
+  Legacy `brand-*`/`danger-*`/`warning-*`/`info-*` palettes kept for
+  unmigrated pages.
+- **stores/useThemeStore.ts** — new zustand store: light/dark/system pref,
+  `localStorage.mc_theme`, OS `prefers-color-scheme` listener, applies
+  `.dark` on `<html>`; `init()` called at boot in index.tsx. No-flash inline
+  script in index.html reads the same key before first paint.
+- **components/ThemeToggle.tsx** — Sun/Moon nav toggle (light↔dark),
+  placed in Header (authed), guest top nav (App.tsx), and LandingPage nav.
+- **components/ui/* + components/* migration** — all shared chrome now uses
+  semantic tokens: Button/Badge/Card/Input/Modal/NavItem/Sidebar/BottomNav/
+  Header/Toast/EmptyState/StatCard/StatusBadge/PageLoader/LoadingSkeleton/
+  LanguageSwitcher/NotificationBell/FeedbackWidget/DonationModal/
+  CitationPicker/FlagButton/PWAInstallPrompt/ErrorBoundary...
+  (`bg-black` CTAs → `bg-primary`, `bg-white` surfaces → `bg-card`,
+  grays → muted/foreground, borders → `border-border`, radius applied).
+- **index.html** — `theme-color` → `#059669`; vite.config manifest
+  `theme_color` → `#059669`.
+- **Tests** — Button/Badge/Card/Input/NavItem/StatusBadge/Avatar assertions
+  updated to token classes. 255 tests passing.
+
+**Notes**: hex CSS vars can't take Tailwind opacity modifiers
+(`bg-primary/50` invalid) — hovers use `hover:opacity-90` or solid tokens.
+Page-level `bg-white`/`text-gray-*` in pages/ are intentionally unmigrated
+(token + shared-components scope) — dark mode is partial on those pages
+until the page sweep.

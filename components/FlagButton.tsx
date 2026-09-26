@@ -38,7 +38,7 @@ const FlagButton: React.FC<FlagButtonProps> = ({ contentType, contentId }) => {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="p-2 text-gray-300 hover:text-gray-500 transition-all"
+        className="p-2 text-muted-foreground hover:text-muted-foreground transition-all"
         title="রিপোর্ট করুন"
       >
         <Flag size={14} />
@@ -46,23 +46,23 @@ const FlagButton: React.FC<FlagButtonProps> = ({ contentType, contentId }) => {
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={() => setOpen(false)}>
-          <div className="bg-white w-full max-w-md p-8 space-y-6" onClick={e => e.stopPropagation()}>
+          <div className="bg-card w-full max-w-md p-8 space-y-6" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center">
               <h3 className="font-extrabold text-lg">কন্টেন্ট রিপোর্ট করুন</h3>
-              <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-black"><X size={20} /></button>
+              <button onClick={() => setOpen(false)} className="text-muted-foreground hover:text-foreground"><X size={20} /></button>
             </div>
 
             {done ? (
               <div className="py-10 text-center space-y-4">
-                <div className="w-12 h-12 bg-black/10 text-black rounded-full flex items-center justify-center mx-auto">
+                <div className="w-12 h-12 bg-black/10 text-foreground rounded-full flex items-center justify-center mx-auto">
                   <Flag size={24} />
                 </div>
                 <p className="font-bold">রিপোর্ট করা হয়েছে</p>
-                <p className="text-xs text-gray-500">এডমিন দল শীঘ্রই এটি পর্যালোচনা করবে।</p>
+                <p className="text-xs text-muted-foreground">এডমিন দল শীঘ্রই এটি পর্যালোচনা করবে।</p>
               </div>
             ) : (
               <>
-                <p className="text-xs text-gray-500 font-medium">কেন আপনি এই কন্টেন্টটি রিপোর্ট করছেন?</p>
+                <p className="text-xs text-muted-foreground font-medium">কেন আপনি এই কন্টেন্টটি রিপোর্ট করছেন?</p>
                 <div className="space-y-2">
                   {reasons.map(r => (
                     <button
@@ -70,8 +70,8 @@ const FlagButton: React.FC<FlagButtonProps> = ({ contentType, contentId }) => {
                       onClick={() => setSelectedReason(r)}
                       className={`w-full text-left p-4 text-sm font-bold border transition-all ${
                         selectedReason === r
-                          ? 'bg-black text-white border-black'
-                          : 'bg-white text-gray-700 border-gray-100 hover:border-black'
+                          ? 'bg-primary text-primary-foreground border-primary'
+                          : 'bg-card text-foreground border-border hover:border-primary'
                       }`}
                     >
                       {r}
@@ -81,7 +81,7 @@ const FlagButton: React.FC<FlagButtonProps> = ({ contentType, contentId }) => {
                 <button
                   onClick={handleSubmit}
                   disabled={!selectedReason || submitting}
-                  className="w-full py-4 bg-black text-white font-bold text-sm hover:bg-gray-800 transition-all disabled:bg-gray-200 disabled:text-gray-400 flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-primary text-primary-foreground font-bold text-sm hover:opacity-90 transition-all disabled:bg-muted disabled:text-muted-foreground flex items-center justify-center gap-2"
                 >
                   {submitting ? <Loader2 size={18} className="animate-spin" /> : <Flag size={18} />}
                   রিপোর্ট জমা দিন

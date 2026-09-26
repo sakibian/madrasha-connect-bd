@@ -32,14 +32,14 @@ const PasswordInput = forwardRef<HTMLInputElement, Props>(function PasswordInput
   return (
     <div className="relative">
       {leadingIcon && (
-        <span className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+        <span className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
           {leadingIcon}
         </span>
       )}
       <input
         ref={ref}
         type={visible ? 'text' : 'password'}
-        className={`w-full ${leadingIcon ? 'pl-14' : 'pl-6'} pr-14 py-5 bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-black font-medium text-lg ${className}`}
+        className={`w-full ${leadingIcon ? 'pl-14' : 'pl-6'} pr-14 py-5 bg-card border border-border outline-none focus:ring-2 focus:ring-ring font-medium text-lg ${className}`}
         {...inputProps}
       />
       <button
@@ -47,7 +47,7 @@ const PasswordInput = forwardRef<HTMLInputElement, Props>(function PasswordInput
         onClick={() => setVisible((v) => !v)}
         aria-label={visible ? hideLabel : showLabel}
         aria-pressed={visible}
-        className="absolute right-2 top-1/2 -translate-y-1/2 min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-400 hover:text-black transition-colors"
+        className="absolute right-2 top-1/2 -translate-y-1/2 min-h-[44px] min-w-[44px] flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
         tabIndex={0}
       >
         {visible ? <EyeOff size={18} /> : <Eye size={18} />}

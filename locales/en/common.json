@@ -107,5 +107,119 @@
     "search": "Search",
     "next": "Next",
     "previous": "Previous"
+  },
+  "seo": {
+    "home": {
+      "title": "Qowmi — Islamic Education Platform of Bangladesh",
+      "description": "A digital platform for Qowmi madrasa students, scholars, and institutions — directory, fatwa, careers, community, and sadaqah in one place."
+    },
+    "about": {
+      "title": "Our Mission — Qowmi",
+      "description": "Our mission, vision, and approach to bringing Bangladesh’s madrasa education system into the digital age."
+    },
+    "faq": {
+      "title": "FAQ — Qowmi",
+      "description": "Common questions about the Qowmi platform, accounts, registration, and services."
+    },
+    "terms": {
+      "title": "Terms of Service — Qowmi",
+      "description": "Terms and responsibilities for using the Qowmi platform."
+    },
+    "privacy": {
+      "title": "Privacy Policy — Qowmi",
+      "description": "How your data is collected, stored, and protected on Qowmi."
+    },
+    "accessibility": {
+      "title": "Accessibility — Qowmi",
+      "description": "Our accessibility commitments and features for a platform usable by everyone."
+    },
+    "help": {
+      "title": "Help Center — Qowmi",
+      "description": "Guides, tutorials, and ways to get help using Qowmi."
+    },
+    "qawmiSystem": {
+      "title": "The Qowmi Education System — Qowmi",
+      "description": "A complete overview of the Qowmi madrasa curriculum, grade levels, boards, and examinations."
+    },
+    "deen101": {
+      "title": "Deen 101 — Qowmi",
+      "description": "Fundamentals of Islam — aqeedah, ibadah, and everyday fiqh in simple language."
+    },
+    "seerah": {
+      "title": "Seerah Timeline — Qowmi",
+      "description": "An interactive chronological timeline of the life of Prophet Muhammad (PBUH)."
+    },
+    "knowledge": {
+      "title": "Knowledge Hub — Qowmi",
+      "description": "A digital library of books, articles, and study materials organized by madrasa curriculum."
+    },
+    "institutions": {
+      "title": "Madrasa Directory — Qowmi",
+      "description": "Verified directory of Qowmi and Alia madrasas in Bangladesh — search, compare, and connect."
+    },
+    "scholars": {
+      "title": "Scholar Directory — Qowmi",
+      "description": "Verified scholars and muftis — specializations and contact information."
+    },
+    "fatwa": {
+      "title": "Fatwa Center — Qowmi",
+      "description": "Ask your mas’ala and receive answers from verified muftis."
+    },
+    "fatwaArchive": {
+      "title": "Fatwa Archive — Qowmi",
+      "description": "Browse previously published fatwas by topic."
+    },
+    "events": {
+      "title": "Events Hub — Qowmi",
+      "description": "Calendar of madrasa events, exam dates, admission deadlines, and community programs."
+    },
+    "sadaqah": {
+      "title": "Sadaqah Hub — Qowmi",
+      "description": "Transparent giving — see where every taka goes and sponsor students and projects."
+    },
+    "community": {
+      "title": "Community — Qowmi",
+      "description": "Discussions, posts, and a blood donor network for the madrasa community."
+    },
+    "marketplace": {
+      "title": "Marketplace — Qowmi",
+      "description": "Books, products, and services for the madrasa community."
+    },
+    "professional": {
+      "title": "Career Hub — Qowmi",
+      "description": "Jobs, skill development, and professional opportunities for madrasa graduates."
+    },
+    "audioLibrary": {
+      "title": "Audio Library — Qowmi",
+      "description": "A collection of bayans, dars, and Islamic audio content."
+    },
+    "tools": {
+      "title": "Utility Tools — Qowmi",
+      "description": "Prayer times, qibla, zakat calculator, and everyday utility tools."
+    },
+    "calligraphy": {
+      "title": "Calligraphy Gallery — Qowmi",
+      "description": "A gallery of Islamic calligraphy art by students."
+    },
+    "competitions": {
+      "title": "Competitions — Qowmi",
+      "description": "Quran recitation, hifz, and knowledge competitions — participate and win."
+    },
+    "leaderboard": {
+      "title": "Leaderboard — Qowmi",
+      "description": "Top community contributors and competition rankings."
+    },
+    "login": {
+      "title": "Login — Qowmi",
+      "description": "Log in to your Qowmi account."
+    },
+    "registerUser": {
+      "title": "Register — Qowmi",
+      "description": "Create your Qowmi account and access all madrasa community services."
+    },
+    "registerInstitution": {
+      "title": "Institution Registration — Qowmi",
+      "description": "Register your madrasa or institution on Qowmi and get listed in the directory."
+    }
   }
 }

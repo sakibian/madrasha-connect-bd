@@ -12,7 +12,7 @@ describe('Button', () => {
   it('applies default variant and size classes', () => {
     render(<Button>Hello</Button>);
     const btn = screen.getByRole('button');
-    expect(btn.className).toContain('bg-black');
+    expect(btn.className).toContain('bg-primary');
     expect(btn.className).toContain('px-6');
   });
 
@@ -24,10 +24,10 @@ describe('Button', () => {
     expect(screen.getByRole('button').className).toContain('border');
 
     rerender(<Button variant="danger">Danger</Button>);
-    expect(screen.getByRole('button').className).toContain('bg-black');
+    expect(screen.getByRole('button').className).toContain('bg-destructive');
 
     rerender(<Button variant="white">White</Button>);
-    expect(screen.getByRole('button').className).toContain('bg-white');
+    expect(screen.getByRole('button').className).toContain('bg-card');
   });
 
   it('applies size classes', () => {

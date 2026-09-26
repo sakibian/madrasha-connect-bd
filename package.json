@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender.mjs",
+    "build:spa": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -52,6 +53,7 @@
     "jsdom": "^29.1.1",
     "msw": "^2.15.0",
     "postcss": "^8.4.49",
+    "puppeteer": "^25.11.0",
     "rollup-plugin-visualizer": "^7.0.1",
     "simple-git-hooks": "^2.13.1",
     "tailwindcss": "^3.4.17",

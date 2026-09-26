@@ -37,4 +37,4 @@ User-agent: Applebot-Extended
 Allow: /
 
 # Sitemap
-Sitemap: https://madrasaconnectbd.com/sitemap.xml
+Sitemap: https://qowmi.mvp.bd/sitemap.xml

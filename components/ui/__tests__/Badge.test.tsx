@@ -10,34 +10,33 @@ describe('Badge', () => {
 
   it('applies default variant', () => {
     render(<Badge>Default</Badge>);
-    expect(screen.getByText('Default').className).toContain('bg-gray-100');
+    expect(screen.getByText('Default').className).toContain('bg-muted');
   });
 
-  // Badge variants now use the brand palette:
-  //   success -> black (Bangladesh national colour)
+  // Badge variants now use the theme token palette:
+  //   success -> primary (brand emerald)
   //   warning -> amber (only for genuine warnings)
-  //   error   -> red (destructive only)
-  //   info    -> black (no off-brand blues)
-  it('applies success variant with black', () => {
+  //   error   -> destructive (only for genuine danger)
+  //   info    -> secondary slate (no off-brand blues)
+  it('applies success variant with primary', () => {
     render(<Badge variant="success">Success</Badge>);
-    expect(screen.getByText('Success').className).toContain('bg-black/10');
-    expect(screen.getByText('Success').className).toContain('text-black');
+    expect(screen.getByText('Success').className).toContain('text-primary');
   });
 
   it('applies warning variant with amber', () => {
     render(<Badge variant="warning">Warning</Badge>);
-    expect(screen.getByText('Warning').className).toContain('bg-gray-50');
+    expect(screen.getByText('Warning').className).toContain('text-warning-700');
   });
 
   it('applies error variant with red', () => {
     render(<Badge variant="error">Error</Badge>);
-    expect(screen.getByText('Error').className).toContain('bg-gray-100');
+    expect(screen.getByText('Error').className).toContain('text-destructive');
   });
 
-  it('applies info variant with brand black (not off-brand blue)', () => {
+  it('applies info variant with secondary (not off-brand blue)', () => {
     render(<Badge variant="info">Info</Badge>);
-    expect(screen.getByText('Info').className).toContain('bg-gray-900');
-    expect(screen.getByText('Info').className).toContain('text-white');
+    expect(screen.getByText('Info').className).toContain('bg-secondary');
+    expect(screen.getByText('Info').className).toContain('text-secondary-foreground');
   });
 
   it('applies extra className', () => {

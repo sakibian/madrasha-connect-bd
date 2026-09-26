@@ -12,119 +12,119 @@
     xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>https://madrasaconnectbd.com/</loc>
+    <loc>https://qowmi.mvp.bd/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://madrasaconnectbd.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://madrasaconnectbd.com/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://madrasaconnectbd.com/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://madrasaconnectbd.com/" />
+    <xhtml:link rel="alternate" hreflang="bn" href="https://qowmi.mvp.bd/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qowmi.mvp.bd/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://qowmi.mvp.bd/?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qowmi.mvp.bd/" />
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/about</loc>
+    <loc>https://qowmi.mvp.bd/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/professional</loc>
+    <loc>https://qowmi.mvp.bd/professional</loc>
     <changefreq>hourly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/institutions</loc>
+    <loc>https://qowmi.mvp.bd/institutions</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/scholars</loc>
+    <loc>https://qowmi.mvp.bd/scholars</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/fatwa</loc>
+    <loc>https://qowmi.mvp.bd/fatwa</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/fatwa/archive</loc>
+    <loc>https://qowmi.mvp.bd/fatwa/archive</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/knowledge</loc>
+    <loc>https://qowmi.mvp.bd/knowledge</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/seerah</loc>
+    <loc>https://qowmi.mvp.bd/seerah</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/community</loc>
+    <loc>https://qowmi.mvp.bd/community</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/events</loc>
+    <loc>https://qowmi.mvp.bd/events</loc>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/sadaqah</loc>
+    <loc>https://qowmi.mvp.bd/sadaqah</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/marketplace</loc>
+    <loc>https://qowmi.mvp.bd/marketplace</loc>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/audio-library</loc>
+    <loc>https://qowmi.mvp.bd/audio-library</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/tools</loc>
+    <loc>https://qowmi.mvp.bd/tools</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/faq</loc>
+    <loc>https://qowmi.mvp.bd/faq</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/terms</loc>
+    <loc>https://qowmi.mvp.bd/terms</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/privacy</loc>
+    <loc>https://qowmi.mvp.bd/privacy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://madrasaconnectbd.com/accessibility</loc>
+    <loc>https://qowmi.mvp.bd/accessibility</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

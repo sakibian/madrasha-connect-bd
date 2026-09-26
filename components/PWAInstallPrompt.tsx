@@ -93,14 +93,14 @@ const PWAInstallPrompt: React.FC = () => {
   if (isIOS) {
     return (
       <div className="fixed bottom-24 md:bottom-6 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-40">
-        <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-4">
+        <div className="bg-card border border-border rounded-lg shadow-lg p-4">
           <div className="flex items-start gap-3">
-            <Share2 className="w-5 h-5 text-black mt-1 flex-shrink-0" />
+            <Share2 className="w-5 h-5 text-foreground mt-1 flex-shrink-0" />
             <div className="flex-1">
-              <h3 className="font-semibold text-gray-900">
+              <h3 className="font-semibold text-foreground">
                 {t('pwa.iosTitle', 'হোম স্ক্রীনে অ্যাড করুন')}
               </h3>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-sm text-muted-foreground mt-1">
                 {t(
                   'pwa.iosHint',
                   'শেয়ার আইকনে ট্যাপ করুন, তারপর "হোম স্ক্রীনে যোগ করুন" নির্বাচন করুন।'
@@ -109,7 +109,7 @@ const PWAInstallPrompt: React.FC = () => {
             </div>
             <button
               onClick={handleDismiss}
-              className="text-gray-400 hover:text-gray-600 flex-shrink-0"
+              className="text-muted-foreground hover:text-muted-foreground flex-shrink-0"
               aria-label="Dismiss"
             >
               <X className="w-5 h-5" />
@@ -123,8 +123,8 @@ const PWAInstallPrompt: React.FC = () => {
   // Android/other: show install button
   return (
     <div className="fixed bottom-24 md:bottom-6 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-40">
-      <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-4">
-        <h3 className="font-semibold text-gray-900 mb-3">
+      <div className="bg-card border border-border rounded-lg shadow-lg p-4">
+        <h3 className="font-semibold text-foreground mb-3">
           {t(
             'pwa.title',
             'হোম স্ক্রীনে অ্যাড করুন — অফলাইনেও পাবেন সব ফিচার'
@@ -133,13 +133,13 @@ const PWAInstallPrompt: React.FC = () => {
         <div className="flex gap-3">
           <button
             onClick={handleInstall}
-            className="flex-1 bg-black text-white px-4 py-2 rounded font-semibold hover:bg-opacity-90 transition-colors"
+            className="flex-1 bg-primary text-primary-foreground px-4 py-2 rounded font-semibold hover:bg-opacity-90 transition-colors"
           >
             {t('pwa.installButton', 'ইনস্টল করুন')}
           </button>
           <button
             onClick={handleDismiss}
-            className="flex-1 border border-gray-300 text-gray-700 px-4 py-2 rounded font-semibold hover:bg-gray-50 transition-colors"
+            className="flex-1 border border-border text-foreground px-4 py-2 rounded font-semibold hover:bg-muted transition-colors"
           >
             {t('pwa.laterButton', 'পরে')}
           </button>

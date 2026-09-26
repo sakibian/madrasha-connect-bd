@@ -46,7 +46,7 @@ const BottomNav: React.FC = () => {
     <nav
       className="
         md:hidden fixed inset-x-0 bottom-0 z-40
-        bg-white border-t border-gray-200
+        bg-card border-t border-border
         pb-[env(safe-area-inset-bottom)]
       "
       aria-label="Primary mobile navigation"
@@ -66,7 +66,7 @@ const BottomNav: React.FC = () => {
                     'min-h-[56px] py-2',
                     'text-[10px] font-bold uppercase tracking-widest',
                     'transition-colors',
-                    isActive ? 'text-black' : 'text-gray-500 hover:text-black',
+                    isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground',
                   ].join(' ')
                 }
                 aria-label={t(tab.labelKey, tab.fallback)}

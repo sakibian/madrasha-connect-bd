@@ -41,7 +41,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
 
   return (
     <div className={`relative ${className}`}>
-      <Search className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+      <Search className="absolute left-0 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
       <input
         type="text"
         value={internalValue}
@@ -54,7 +54,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         <button
           onClick={handleClear}
           aria-label="সার্চ মুছুন"
-          className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black"
+          className="absolute right-0 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
         >
           <X size={14} />
         </button>

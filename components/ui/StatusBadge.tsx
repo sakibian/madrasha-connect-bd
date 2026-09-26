@@ -25,14 +25,14 @@ interface StatusBadgeProps {
 }
 
 const STATUS_CONFIG: Record<StatusKind, { bn: string; en: string; cls: string }> = {
-  pending:  { bn: 'পেন্ডিং',   en: 'Pending',  cls: 'bg-gray-50  text-gray-900 border border-gray-300' },
-  approved: { bn: 'অনুমোদিত',  en: 'Approved', cls: 'bg-gray-50    text-black   border border-gray-300'   },
-  rejected: { bn: 'বাতিল',      en: 'Rejected', cls: 'bg-gray-100   text-black  border border-gray-300'  },
-  banned:   { bn: 'ব্যানড',    en: 'Banned',   cls: 'bg-gray-100   text-black  border border-gray-300'  },
-  draft:    { bn: 'ড্রাফট',    en: 'Draft',    cls: 'bg-gray-50     text-gray-900    border border-gray-300'    },
-  active:   { bn: 'সক্রিয়',    en: 'Active',   cls: 'bg-gray-50    text-black   border border-gray-300'   },
-  archived: { bn: 'আর্কাইভড',  en: 'Archived', cls: 'bg-gray-50     text-gray-900    border border-gray-300'    },
-  flagged:  { bn: 'ফ্ল্যাগড',  en: 'Flagged',  cls: 'bg-gray-50  text-gray-900 border border-gray-300' },
+  pending:  { bn: 'পেন্ডিং',   en: 'Pending',  cls: 'bg-muted text-warning-700 border border-warning-500' },
+  approved: { bn: 'অনুমোদিত',  en: 'Approved', cls: 'bg-muted text-primary border border-primary'   },
+  rejected: { bn: 'বাতিল',      en: 'Rejected', cls: 'bg-muted text-destructive border border-destructive'  },
+  banned:   { bn: 'ব্যানড',    en: 'Banned',   cls: 'bg-muted text-destructive border border-destructive'  },
+  draft:    { bn: 'ড্রাফট',    en: 'Draft',    cls: 'bg-muted text-muted-foreground border border-border'    },
+  active:   { bn: 'সক্রিয়',    en: 'Active',   cls: 'bg-muted text-primary border border-primary'   },
+  archived: { bn: 'আর্কাইভড',  en: 'Archived', cls: 'bg-muted text-muted-foreground border border-border'    },
+  flagged:  { bn: 'ফ্ল্যাগড',  en: 'Flagged',  cls: 'bg-muted text-warning-700 border border-warning-500' },
 };
 
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status, label, className = '' }) => {

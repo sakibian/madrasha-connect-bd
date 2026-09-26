@@ -62,17 +62,17 @@ const NotificationPermissionPrimer: React.FC<Props> = ({
     return (
       <div
         data-testid="notif-primer-denied"
-        className="fixed bottom-24 md:bottom-6 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-40 bg-white border border-gray-300 p-4 space-y-2"
+        className="fixed bottom-24 md:bottom-6 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-40 bg-card border border-border p-4 space-y-2"
       >
         <div className="flex justify-between items-start">
-          <p className="text-sm font-bold text-gray-900">
+          <p className="text-sm font-bold text-foreground">
             আপনি বিজ্ঞপ্তি ব্লক করেছেন
           </p>
-          <button onClick={onClose} aria-label="Dismiss" className="text-gray-400 hover:text-black">
+          <button onClick={onClose} aria-label="Dismiss" className="text-muted-foreground hover:text-foreground">
             <X size={16} />
           </button>
         </div>
-        <p className="text-xs text-gray-600">
+        <p className="text-xs text-muted-foreground">
           ব্রাউজার সেটিংস থেকে এই সাইটের জন্য "নোটিফিকেশন" অনুমোদন দিন।
         </p>
       </div>
@@ -115,24 +115,24 @@ const NotificationPermissionPrimer: React.FC<Props> = ({
       aria-modal="false"
       aria-label="Enable notifications"
       data-testid="notif-primer"
-      className="fixed bottom-24 md:bottom-6 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-40 bg-white border border-gray-200 shadow-2xl p-5 space-y-4 animate-fadeIn"
+      className="fixed bottom-24 md:bottom-6 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-40 bg-card border border-border shadow-2xl p-5 space-y-4 animate-fadeIn"
     >
       <div className="flex items-start gap-3">
-        <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-black shrink-0">
+        <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-foreground shrink-0">
           <BellRing size={20} />
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="text-base font-extrabold leading-snug">
             {title ?? 'বিজ্ঞপ্তি চালু করুন'}
           </h3>
-          <p className="text-xs text-gray-600 mt-1 leading-relaxed">
+          <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
             {description ?? 'আপনার ফতোয়ার উত্তর প্রস্তুত হলে বা প্রাসঙ্গিক চাকরি খুললে আমরা আপনাকে জানিয়ে দেব।'}
           </p>
         </div>
         <button
           onClick={handleDismiss}
           aria-label="Dismiss"
-          className="text-gray-400 hover:text-black -mt-1 -mr-1 min-h-[32px] min-w-[32px] flex items-center justify-center"
+          className="text-muted-foreground hover:text-foreground -mt-1 -mr-1 min-h-[32px] min-w-[32px] flex items-center justify-center"
         >
           <X size={16} />
         </button>
@@ -141,13 +141,13 @@ const NotificationPermissionPrimer: React.FC<Props> = ({
         <button
           onClick={handleAllow}
           disabled={busy}
-          className="flex-1 py-3 bg-black text-white font-bold text-sm hover:bg-black transition-colors disabled:opacity-60"
+          className="flex-1 py-3 bg-primary text-primary-foreground font-bold text-sm hover:bg-primary transition-colors disabled:opacity-60"
         >
           {busy ? 'অপেক্ষা করুন…' : 'হ্যাঁ, জানাতে চাই'}
         </button>
         <button
           onClick={handleDismiss}
-          className="px-4 py-3 border border-gray-200 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-colors"
+          className="px-4 py-3 border border-border text-muted-foreground font-bold text-sm hover:bg-muted transition-colors"
         >
           পরে
         </button>

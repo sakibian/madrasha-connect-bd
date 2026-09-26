@@ -12,14 +12,14 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => (
   <div
     onClick={onClick}
-    className="bg-white minimal-border overflow-hidden group cursor-pointer hover:border-gray-300 transition-all"
+    className="bg-card minimal-border overflow-hidden group cursor-pointer hover:border-border transition-all"
   >
-    <div className="aspect-square bg-gray-100 grayscale overflow-hidden">
+    <div className="aspect-square bg-muted grayscale overflow-hidden">
       <ImageWithFallback src={product.image} name={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={product.name} />
     </div>
     <div className="p-6 space-y-3">
-      <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">{product.category}</span>
-      <h3 className="font-extrabold text-gray-800">{product.name}</h3>
+      <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">{product.category}</span>
+      <h3 className="font-extrabold text-foreground">{product.name}</h3>
       <p className="font-black text-xl">৳{product.price}</p>
     </div>
   </div>

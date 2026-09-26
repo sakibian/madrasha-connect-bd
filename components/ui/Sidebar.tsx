@@ -30,12 +30,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   return (
     <>
       <aside className={`
-        fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-gray-200 transform transition-transform duration-300 md:relative md:translate-x-0
+        fixed inset-y-0 left-0 z-50 w-72 bg-sidebar text-sidebar-foreground border-r border-sidebar-border transform transition-transform duration-300 md:relative md:translate-x-0
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         <div className="h-full flex flex-col p-8">
           <Link to="/" onClick={onClose} className="flex items-center gap-3 mb-12">
-            <div className="w-8 h-8 bg-black text-white flex items-center justify-center font-bold text-sm">M</div>
+            <div className="w-8 h-8 bg-primary rounded-md text-primary-foreground flex items-center justify-center font-bold text-sm">M</div>
             <span className="text-xl font-bold tracking-tight">MCBD</span>
           </Link>
 
@@ -43,7 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <NavItem to="/dashboard" icon={<LayoutDashboard size={18} />} label={t('nav.dashboard')} onClick={onClose} />
 
             <div className="pt-8 pb-2">
-              <p className="caps-label text-gray-400 mb-4 px-2">{t('nav.community')}</p>
+              <p className="caps-label text-muted-foreground mb-4 px-2">{t('nav.community')}</p>
               <NavItem to="/community" icon={<Users size={18} />} label={t('nav.community')} onClick={onClose} />
               <NavItem to="/events" icon={<Calendar size={18} />} label={t('nav.events')} onClick={onClose} />
               <NavItem to="/professional" icon={<Briefcase size={18} />} label={t('nav.careers')} onClick={onClose} />
@@ -56,14 +56,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </div>
 
             <div className="pt-8 pb-2">
-              <p className="caps-label text-gray-400 mb-4 px-2">{t('nav.knowledge')}</p>
+              <p className="caps-label text-muted-foreground mb-4 px-2">{t('nav.knowledge')}</p>
               <NavItem to="/knowledge" icon={<BookOpen size={18} />} label={t('nav.knowledge')} onClick={onClose} />
               <NavItem to="/audio-library" icon={<Headset size={18} />} label={t('nav.audioLibrary')} onClick={onClose} />
               <NavItem to="/seerah" icon={<History size={18} />} label={t('nav.seerah')} onClick={onClose} />
             </div>
 
             <div className="pt-8 pb-2">
-              <p className="caps-label text-gray-400 mb-4 px-2">{t('nav.tools')}</p>
+              <p className="caps-label text-muted-foreground mb-4 px-2">{t('nav.tools')}</p>
               <NavItem to="/marketplace" icon={<ShoppingBag size={18} />} label={t('nav.marketplace')} onClick={onClose} />
               <NavItem to="/sadaqah" icon={<Heart size={18} />} label={t('nav.sadaqah')} onClick={onClose} />
               <NavItem to="/tools" icon={<Wrench size={18} />} label={t('nav.tools')} onClick={onClose} />
@@ -73,16 +73,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </div>
           </nav>
 
-          <div className="pt-8 border-t border-gray-100 space-y-4">
+          <div className="pt-8 border-t border-border space-y-4">
             <div className="flex items-center gap-3">
-              <ImageWithFallback src={currentUser?.avatar} name={currentUser?.name} className="w-10 h-10 minimal-border object-cover bg-gray-50" alt="" />
+              <ImageWithFallback src={currentUser?.avatar} name={currentUser?.name} className="w-10 h-10 minimal-border object-cover bg-muted" alt="" />
               <div className="flex-1 overflow-hidden">
                 <p className="text-sm font-bold truncate">{currentUser?.name}</p>
-                <p className="text-[9px] font-bold uppercase tracking-widest text-gray-400">{currentUser?.role}</p>
+                <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">{currentUser?.role}</p>
               </div>
             </div>
             <LanguageSwitcher align="left" />
-            <button onClick={handleLogout} className="w-full text-left text-xs font-bold text-gray-400 hover:text-black flex items-center gap-2">
+            <button onClick={handleLogout} className="w-full text-left text-xs font-bold text-muted-foreground hover:text-foreground flex items-center gap-2">
               <LogOut size={14} /> {t('nav.signOut')}
             </button>
           </div>

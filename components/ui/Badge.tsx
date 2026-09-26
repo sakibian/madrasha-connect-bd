@@ -16,15 +16,15 @@ interface BadgeProps {
 //   info              -> black/white on soft grey (no off-brand blues)
 //   default           -> neutral gray
 const variantStyles: Record<BadgeVariant, string> = {
-  success: 'bg-black/10 text-black',
-  warning: 'bg-gray-50 text-gray-900',
-  error: 'bg-gray-100 text-gray-900',
-  info: 'bg-gray-900 text-white',
-  default: 'bg-gray-100 text-gray-500',
+  success: 'bg-muted text-primary border border-primary',
+  warning: 'bg-muted text-warning-700 border border-warning-500',
+  error: 'bg-muted text-destructive border border-destructive',
+  info: 'bg-secondary text-secondary-foreground',
+  default: 'bg-muted text-muted-foreground border border-border',
 };
 
 const Badge: React.FC<BadgeProps> = ({ variant = 'default', children, className = '' }) => (
-  <span className={`text-[9px] font-black px-3 py-1 uppercase tracking-widest inline-block ${variantStyles[variant]} ${className}`}>
+  <span className={`text-[9px] font-black px-3 py-1 uppercase tracking-widest rounded-md inline-block ${variantStyles[variant]} ${className}`}>
     {children}
   </span>
 );
