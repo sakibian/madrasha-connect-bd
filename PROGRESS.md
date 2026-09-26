@@ -997,3 +997,8 @@ landing + directory), fixes applied
   p-16/20 → p-12, pt-48 → pt-24); dead-space heights removed
   (h-[350/450px] tool/job cards); square CTAs → rounded-md.
   Verified visually: marketplace, professional, community.
+- **Language detection fix** — removed `navigator` from i18n sync detection
+  order (most BD users run English-locale browsers → they got English
+  chrome over Bangla pages). Chain is now `?lang` → localStorage → IP geo
+  (async) → `bn` fallback. Dashboard leftovers: feedback modal rounded,
+  copy-button gray-400 → muted, PostJob icon card.

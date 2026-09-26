@@ -102,7 +102,7 @@ const UserDashboard: React.FC = () => {
             <button
               onClick={handleCopyReferral}
               className={`px-6 py-2.5 text-sm font-bold rounded-xl transition-all flex items-center gap-2 ${
-                copied ? 'bg-card text-foreground' : 'bg-gray-400 text-foreground hover:bg-card'
+                copied ? 'bg-card text-foreground' : 'bg-muted text-foreground hover:bg-card'
               }`}
             >
               {copied ? <Check size={16} /> : <Copy size={16} />}

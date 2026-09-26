@@ -218,7 +218,7 @@ const FeedbackDetail: React.FC<DetailProps> = ({ item, saving, notes, onNotesCha
     aria-labelledby="feedback-detail-title"
   >
     <div
-      className="bg-card w-full max-w-2xl max-h-[92vh] overflow-y-auto shadow-2xl"
+      className="bg-card rounded-lg border border-border w-full max-w-2xl max-h-[92vh] overflow-y-auto shadow-2xl"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex items-start justify-between p-6 border-b border-border">

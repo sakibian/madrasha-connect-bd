@@ -9,8 +9,12 @@
  * Detection priority (first-match wins):
  *   1. `?lang=xx` URL parameter (deep-linkable, useful for QR codes)
  *   2. localStorage `mc_language` (persisted user preference)
- *   3. Browser `navigator.language`
+ *   3. IP geo lookup (async, in i18n/geoBootstrap.ts)
  *   4. Fallback: `bn` (Bangladesh-first)
+ *
+ * `navigator.language` is intentionally NOT in the sync chain: most
+ * Bangladeshi users run English-locale browsers, so it produced English
+ * chrome over Bangla content for our core audience.
  *
  * Adding a new language later:
  *   1. Create locales/<code>/common.json (and other namespaces).
@@ -71,7 +75,7 @@ i18n
     detection: {
       // NOTE: geo detection is async so it runs OUTSIDE the sync detector
       // chain (see i18n/geoBootstrap.ts). Order below is the sync fallback.
-      order: ['querystring', 'localStorage', 'navigator', 'htmlTag'],
+      order: ['querystring', 'localStorage'],
       lookupQuerystring: 'lang',
       lookupLocalStorage: 'mc_language',
       caches: ['localStorage'],

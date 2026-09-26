@@ -248,7 +248,7 @@ const PostJob: React.FC = () => {
       </div>
 
       <div className="p-12 bg-muted minimal-border flex items-center gap-8">
-        <div className="w-16 h-16 bg-card flex items-center justify-center text-foreground shadow-sm">
+        <div className="w-16 h-16 bg-card rounded-lg border border-border flex items-center justify-center text-foreground shadow-sm">
           <ShieldCheck size={32} />
         </div>
         <div className="space-y-1">
