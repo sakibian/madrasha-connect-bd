@@ -187,3 +187,38 @@ textarea:focus-visible {
 ::-webkit-scrollbar-thumb {
   background: var(--muted-foreground);
 }
+
+/* ── Brand motif: khatam star pattern + mihrab arch + marquee ───────── */
+
+/* Faint repeating star pattern — tone-on-tone section texture.
+   Star tile is emerald at 5% so it works on any surface. */
+.pattern-star {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpolygon fill='%23059669' fill-opacity='0.035' points='24,8 26.9,19.5 38.5,17 28.3,26 36,36.5 24.9,30.2 18,40 19.5,28.5 8,29.5 18.5,22.5 12,12 22.5,17'/%3E%3C/svg%3E");
+}
+.dark .pattern-star {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpolygon fill='%2310b981' fill-opacity='0.05' points='24,8 26.9,19.5 38.5,17 28.3,26 36,36.5 24.9,30.2 18,40 19.5,28.5 8,29.5 18.5,22.5 12,12 22.5,17'/%3E%3C/svg%3E");
+}
+
+/* Faded variant — dissolves downward, for hero overlays. */
+.pattern-star-fade {
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 75%);
+          mask-image: linear-gradient(to bottom, black 0%, transparent 75%);
+}
+
+/* Mihrab arch — the prayer-niche silhouette. For feature images. */
+.mihrab-arch {
+  border-radius: 50% 50% var(--radius) var(--radius) / 32% 32% var(--radius) var(--radius);
+  overflow: hidden;
+}
+
+/* Editorial ticker — duplicate content, translate -50%. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none; }
+}

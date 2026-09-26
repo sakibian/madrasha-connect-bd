@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { StarOrnament, OrnamentDivider } from '../components/ui/Ornament';
 import {
   ArrowRight,
   Briefcase,
@@ -10,14 +11,22 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 
+const TICKER_ITEMS = [
+  'ফতোয়া পোর্টাল', 'মাদ্রাসা ডিরেক্টরি', 'কমিউনিটি', 'ক্যারিয়ার হাব',
+  'শিক্ষা রিসোর্স', 'সাদাকাহ', 'ইভেন্ট', 'সীরাত টাইমলাইন',
+  'অডিও লাইব্রেরি', 'মার্কেটপ্লেস',
+];
+
 const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero: Bold & Minimalist */}
-      <section className="pt-32 pb-24 px-6">
-        <div className="max-w-7xl mx-auto">
+      <section className="relative pt-32 pb-24 px-6 overflow-hidden">
+        <div className="absolute inset-0 pattern-star pattern-star-fade" aria-hidden="true" />
+        <StarOrnament size={120} className="absolute -top-6 -right-8 text-primary opacity-10 pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto">
           <div className="max-w-4xl space-y-12">
-            <div className="caps-label text-muted-foreground">Bangladesh Digital Initiative</div>
+            <div className="caps-label text-muted-foreground flex items-center gap-2"><StarOrnament size={12} className="text-primary" />Bangladesh Digital Initiative</div>
             <h1 className="text-6xl md:text-8xl font-extrabold text-foreground leading-[1.05] tracking-tight text-balanced">
               মুসলিম কমিউনিটির <br /> আধুনিক রূপান্তর।
             </h1>
@@ -36,8 +45,19 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Feature ticker — communicates breadth at a glance */}
+      <div className="border-y border-border py-5 overflow-hidden bg-muted/50" aria-hidden="true">
+        <div className="animate-marquee flex items-center gap-8 whitespace-nowrap w-max">
+          {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
+            <span key={i} className="flex items-center gap-8 text-sm font-bold uppercase tracking-widest text-muted-foreground">
+              {item} <StarOrnament size={10} className="text-primary" />
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* Modern Grid Split */}
-      <section className="border-y border-border grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         <StatItem label="নিবন্ধিত মাদ্রাসা" value="৩,০০০+" />
         <StatItem label="শিক্ষার্থী ও স্টাফ" value="২০০কে+" />
         <StatItem label="বর্তমান সার্কুলার" value="৫০০+" />
@@ -45,8 +65,9 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Core Services: Minimal Bento */}
-      <section className="py-24 px-6 bg-muted">
-        <div className="max-w-7xl mx-auto space-y-12">
+      <section className="py-24 px-6 bg-muted relative">
+        <div className="absolute inset-0 pattern-star pattern-star-fade" aria-hidden="true" />
+        <div className="relative max-w-7xl mx-auto space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-4">
               <div className="caps-label text-foreground">Services</div>
@@ -96,7 +117,7 @@ const LandingPage: React.FC = () => {
             </div>
           </div>
           <div className="lg:w-1/2 w-full">
-            <div className="aspect-[4/3] rounded-lg bg-muted relative overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000">
+            <div className="aspect-[4/3] mihrab-arch bg-muted relative grayscale hover:grayscale-0 transition-all duration-1000">
                <img 
                  src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=1200" 
                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
@@ -138,7 +159,8 @@ const LandingPage: React.FC = () => {
                </ul>
             </div>
           </div>
-          <div className="pt-10 border-t border-secondary flex flex-col md:flex-row justify-between items-center gap-6">
+          <OrnamentDivider className="pt-0" />
+          <div className="pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
              <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">© 2025 Qowmi. All rights reserved.</div>
              <div className="flex gap-10">
                 {['Facebook', 'Twitter', 'YouTube'].map(s => (
@@ -176,7 +198,7 @@ const ServiceCard = ({ icon, title, desc, link }: any) => (
 
 const CheckItem = ({ label }: { label: string }) => (
   <div className="flex items-center gap-4">
-    <div className="w-5 h-5 bg-primary flex items-center justify-center text-primary-foreground">
+    <div className="w-5 h-5 bg-primary flex items-center justify-center rounded-md text-primary-foreground">
       <Check size={14} strokeWidth={3} />
     </div>
     <span className="font-bold text-foreground">{label}</span>

@@ -13,7 +13,7 @@
 > should either update this file or reference it.
 > **Owner:** Engineering | **Founder-visible:** YES.
 
-**Last updated:** 2026-09-26 · **Latest work: design audit + layout fixes (session 27)**
+**Last updated:** 2026-09-26 · **Latest work: brand motif — khatam star, mihrab arch, ticker (session 28)**
 
 ### 2026-08-02 (session 18 — Fix broken public-facing form submissions)
 
@@ -1002,3 +1002,22 @@ landing + directory), fixes applied
   chrome over Bangla pages). Chain is now `?lang` → localStorage → IP geo
   (async) → `bn` fallback. Dashboard leftovers: feedback modal rounded,
   copy-button gray-400 → muted, PostJob icon card.
+
+### 2026-09-26 (session 28 — brand motif: khatam star + mihrab arch + ticker)
+
+**Design**: Signature Islamic-geometric identity layer — the platform
+stopped looking generic shadcn
+
+- **components/ui/Ornament.tsx** — `StarOrnament` (8-pointed khatam SVG)
+  + `OrnamentDivider` (hairline-star-hairline), exported via ui barrel.
+- **src/index.css** — `.pattern-star` (repeating emerald star tile at 3.5%,
+  dark-mode variant 5%), `.pattern-star-fade` (gradient mask dissolving
+  downward for hero overlays), `.mihrab-arch` (prayer-niche image mask:
+  elliptical top corners), `animate-marquee` (28s infinite, respects
+  prefers-reduced-motion).
+- **LandingPage** — hero gets faded star field + oversized corner star +
+  star-prefixed caps label; new feature ticker band (10 features scrolling
+  with star separators); services section gets star texture; philosophy
+  image now mihrab-arch masked; ornament divider above footer legal row;
+  check-item squares rounded.
+- **EmptyState** — star pattern + star icon default.

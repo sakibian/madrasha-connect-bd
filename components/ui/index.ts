@@ -18,3 +18,4 @@ export { default as Sidebar } from './Sidebar';
 export { default as PageLoader } from './PageLoader';
 export { default as ImageWithFallback } from './ImageWithFallback';
 export { default as RichTextEditor } from './RichTextEditor';
+export { StarOrnament, OrnamentDivider } from './Ornament';
