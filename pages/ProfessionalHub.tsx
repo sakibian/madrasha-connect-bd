@@ -102,13 +102,13 @@ const ProfessionalHub: React.FC = () => {
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 bg-muted minimal-border">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <LoadingSkeleton variant="card" count={6} />
         </div>
       ) : (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 bg-muted minimal-border">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredJobs.map(job => (
-          <div key={job.id} className="bg-card p-10 flex flex-col justify-between group hover:bg-muted transition-all h-[450px]">
+          <div key={job.id} className="bg-card p-10 flex flex-col justify-between group hover:bg-muted transition-all" rounded-lg border border-border>
             <div className="space-y-6">
               <div className="flex justify-between items-start">
                  <Badge variant="info">{job.type}</Badge>

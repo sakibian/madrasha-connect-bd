@@ -26,7 +26,7 @@ const VerifyEmail: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-card flex items-center justify-center p-8">
+    <div className="min-h-screen bg-card flex items-center justify-center p-8" rounded-lg border border-border>
       <div className="max-w-md w-full text-center space-y-10">
         <Link to="/" className="inline-flex items-center gap-3">
           <div className="w-8 h-8 bg-primary text-primary-foreground flex items-center justify-center font-bold">Q</div>

@@ -112,12 +112,12 @@ const FeedbackPanel: React.FC = () => {
 
       {/* List */}
       {loading ? (
-        <div className="bg-card p-20 text-center text-muted-foreground font-bold">
+        <div className="bg-card p-12 text-center text-muted-foreground font-bold" rounded-lg border border-border>
           <Loader2 size={24} className="animate-spin mx-auto mb-4" />
           লোড হচ্ছে...
         </div>
       ) : rows.length === 0 ? (
-        <div className="bg-card p-20 text-center text-muted-foreground font-bold">
+        <div className="bg-card p-12 text-center text-muted-foreground font-bold" rounded-lg border border-border>
           <MessageSquare size={32} className="mx-auto mb-4 text-muted-foreground" />
           এই ফিল্টারে কোনো ফিডব্যাক নেই
         </div>

@@ -97,7 +97,7 @@ const AudioLibrary: React.FC = () => {
              <div 
                key={i} 
                onClick={() => setPlaying(isPlaying ? null : track.id)}
-               className="bg-card p-10 flex items-center justify-between group hover:bg-primary hover:text-primary-foreground transition-all cursor-pointer"
+               className="bg-card p-10 flex items-center justify-between group hover:bg-primary hover:text-primary-foreground transition-all cursor-pointer" rounded-lg border border-border
              >
                 <div className="flex items-center gap-8">
                    <div className={`w-16 h-16 flex items-center justify-center transition-all ${

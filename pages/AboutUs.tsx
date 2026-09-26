@@ -51,9 +51,9 @@ const AboutUs: React.FC = () => {
         </section>
 
         {/* Values - Minimal Grid */}
-        <section className="space-y-20">
+        <section className="space-y-12">
            <div className="caps-label text-muted-foreground text-center">Core Values</div>
-           <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-muted minimal-border">
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <ValueCard icon={<ShieldCheck size={32} />} title="স্বচ্ছতা" desc="আমরা আমাদের প্রতিটি ডাটা এবং ফিচারে সর্বোচ্চ স্বচ্ছতা বজায় রাখি।" />
               <ValueCard icon={<Heart size={32} />} title="মর্যাদা" desc="মাদ্রাসা এবং আলেম সমাজের ধর্মীয় মর্যাদা রক্ষা আমাদের অগ্রাধিকার।" />
               <ValueCard icon={<UserCheck size={32} />} title="নিরাপত্তা" desc="আপনার ব্যক্তিগত তথ্য এবং প্রতিষ্ঠানের গোপনীয়তা আমাদের কাছে আমানত।" />
@@ -61,15 +61,15 @@ const AboutUs: React.FC = () => {
         </section>
 
         {/* Minimalist CTA */}
-        <section className="py-32 bg-primary text-primary-foreground px-12 text-center space-y-10">
+        <section className="py-24 bg-primary text-primary-foreground px-12 text-center space-y-10">
            <h2 className="text-4xl md:text-6xl font-extrabold leading-tight">
              আপনি কি এই যাত্রায় <br /> আমাদের সাথে আছেন?
            </h2>
            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link to="/register-user" className="bg-card text-foreground px-10 py-5 font-bold text-lg hover:bg-muted transition-all">
+              <Link to="/register-user" className="bg-card text-foreground px-10 py-5 font-bold rounded-md text-lg hover:bg-muted transition-all">
                 রেজিস্ট্রেশন করুন
               </Link>
-              <Link to="/contact" className="border border-border text-primary-foreground px-10 py-5 font-bold text-lg hover:bg-secondary transition-all">
+              <Link to="/contact" className="border border-border text-primary-foreground px-10 py-5 font-bold rounded-md text-lg hover:bg-secondary transition-all">
                 যোগাযোগ করুন
               </Link>
            </div>
@@ -84,7 +84,7 @@ const AboutUs: React.FC = () => {
 };
 
 const ValueCard = ({ icon, title, desc }: { icon: React.ReactNode, title: string, desc: string }) => (
-  <div className="bg-card p-16 space-y-6 hover:bg-muted transition-colors">
+  <div className="bg-card p-12 space-y-6 hover:bg-muted transition-colors" rounded-lg border border-border>
     <div className="text-foreground">{icon}</div>
     <h3 className="text-2xl font-bold">{title}</h3>
     <p className="text-muted-foreground leading-relaxed font-medium text-sm">{desc}</p>

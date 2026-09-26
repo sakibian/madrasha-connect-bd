@@ -46,7 +46,7 @@ const InstitutionDirectory: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filtered.map(inst => (
           <Link key={inst.id} to={`/institution/${inst.id}`} className="bg-card rounded-lg border border-border overflow-hidden group hover:shadow-md hover:border-primary transition-all flex flex-col">
-             <div className="aspect-[16/9] overflow-hidden bg-muted grayscale group-hover:grayscale-0 transition-all duration-700">
+             <div className="aspect-[16/9] rounded-lg overflow-hidden bg-muted grayscale group-hover:grayscale-0 transition-all duration-700">
                 <ImageWithFallback src={inst.image} name={inst.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={inst.name} />
              </div>
 

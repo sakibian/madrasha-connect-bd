@@ -84,7 +84,7 @@ const ScholarApply: React.FC = () => {
                 <h2 className="text-2xl font-extrabold">আবেদন পর্যালোচনাধীন</h2>
                 <p className="text-muted-foreground font-medium">আপনার আবেদনটি অ্যাডমিন পর্যালোচনার জন্য অপেক্ষা করছে। আমাদের টিম শীঘ্রই এটি পর্যালোচনা করবে।</p>
               </div>
-              <div className="p-4 bg-card space-y-2">
+              <div className="p-4 bg-card space-y-2" rounded-lg border border-border>
                 <div className="flex justify-between text-sm">
                   <span className="font-bold text-muted-foreground">পদবি</span>
                   <span className="font-bold">{existingApp.title}</span>
@@ -125,7 +125,7 @@ const ScholarApply: React.FC = () => {
                 <p className="text-muted-foreground font-medium">আপনার আবেদনটি প্রত্যাখ্যান করা হয়েছে।</p>
               </div>
               {existingApp.adminNotes && (
-                <div className="p-4 bg-card space-y-1">
+                <div className="p-4 bg-card space-y-1" rounded-lg border border-border>
                   <div className="caps-label text-muted-foreground">অ্যাডমিন নোট</div>
                   <p className="text-foreground font-medium">{existingApp.adminNotes}</p>
                 </div>
@@ -152,7 +152,7 @@ const ScholarApply: React.FC = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="max-w-3xl space-y-8">
-        <div className="bg-card p-12 minimal-border space-y-8">
+        <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
           <div className="space-y-2">
             <h2 className="text-xl font-extrabold">পদবি ও বিশেষজ্ঞতা</h2>
             <p className="text-sm text-muted-foreground font-medium">আপনার একাডেমিক বা পেশাগত পরিচয়</p>
@@ -222,7 +222,7 @@ const ScholarApply: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-card p-12 minimal-border space-y-8">
+        <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
           <div className="space-y-2">
             <h2 className="text-xl font-extrabold">যোগ্যতা ও সনদ</h2>
             <p className="text-sm text-muted-foreground font-medium">আপনার একাডেমিক সনদ ও প্রশিক্ষণ</p>
@@ -260,7 +260,7 @@ const ScholarApply: React.FC = () => {
           </button>
         </div>
 
-        <div className="bg-card p-12 minimal-border space-y-8">
+        <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
           <div className="space-y-2">
             <h2 className="text-xl font-extrabold">রেফারেন্স</h2>
             <p className="text-sm text-muted-foreground font-medium">আপনার সুপারিশকারীদের নাম ও পরিচিতি</p>

@@ -197,7 +197,7 @@ const FatwaCenter: React.FC = () => {
               {loading ? (
                 <LoadingSkeleton variant="card" count={3} />
               ) : filteredFatwas.map(fatwa => (
-                <div key={fatwa.id} className="minimal-border p-10 bg-card space-y-8 group">
+                <div key={fatwa.id} className="minimal-border p-10 bg-card space-y-8 group" rounded-lg border border-border>
                      <div className="flex justify-between items-start">
                         <div className="caps-label text-foreground">{fatwa.category}</div>
                         <div className="flex items-center gap-2">

@@ -15,7 +15,7 @@ const Tools: React.FC = () => {
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-1 bg-muted p-1 minimal-border w-fit">
+      <div className="flex flex-wrap gap-6 p-1 minimal-border w-fit">
         <ToolTab active={activeTool === 'zakat'} onClick={() => setActiveTool('zakat')} icon={<Calculator size={18} />} label="জাকাত ক্যালকুলেটর" />
         <ToolTab active={activeTool === 'khutbah'} onClick={() => setActiveTool('khutbah')} icon={<BookOpen size={18} />} label="খুতবাহ প্ল্যানার" />
         <ToolTab active={activeTool === 'results'} onClick={() => setActiveTool('results')} icon={<FileText size={18} />} label="বোর্ড রেজাল্ট" />
@@ -61,8 +61,8 @@ const ResultChecker = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 bg-muted minimal-border">
-       <div className="bg-card p-12 md:p-16 space-y-12">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+       <div className="bg-card p-12 md:p-12 space-y-12" rounded-lg border border-border>
           <div className="space-y-4">
             <div className="caps-label text-foreground">Portal Entrance</div>
             <h2 className="text-3xl font-extrabold tracking-tight">বোর্ড রেজাল্ট পোর্টাল।</h2>
@@ -90,7 +90,7 @@ const ResultChecker = () => {
           </form>
        </div>
        
-       <div className="bg-card p-12 md:p-16 flex flex-col items-center justify-center text-center">
+       <div className="bg-card p-12 md:p-12 flex flex-col items-center justify-center text-center" rounded-lg border border-border>
           {result ? (
             <div className="space-y-10 animate-fadeIn w-full max-w-sm">
                <div className="space-y-4">
@@ -140,8 +140,8 @@ const ZakatCalculator = () => {
   const zakat = total > 0 ? (total * 0.025) : 0;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 bg-muted minimal-border">
-      <div className="bg-card p-12 md:p-16 space-y-12">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="bg-card p-12 md:p-12 space-y-12" rounded-lg border border-border>
         <h2 className="text-3xl font-extrabold tracking-tight flex items-center gap-4">
            <Wallet size={32} /> সম্পদ বিবরণী
         </h2>
@@ -152,7 +152,7 @@ const ZakatCalculator = () => {
           <InputField label="ঋণ ও বকেয়া (৳)" value={debts} onChange={setDebts} negative />
         </div>
       </div>
-      <div className="bg-primary text-primary-foreground p-12 md:p-20 flex flex-col items-center justify-center text-center space-y-10">
+      <div className="bg-primary text-primary-foreground p-12 md:p-12 flex flex-col items-center justify-center text-center space-y-10">
         <div className="space-y-4">
            <div className="caps-label text-primary-foreground">Estimator</div>
            <p className="text-lg font-bold text-primary-foreground">আপনার প্রদেয় জাকাত (আনুমানিক)</p>
@@ -187,14 +187,14 @@ const InputField = ({ label, value, onChange, negative, placeholder }: any) => (
 
 const KhutbahPlanner = () => (
   <div className="space-y-12">
-    <div className="p-12 minimal-border bg-card flex justify-between items-center">
+    <div className="p-12 minimal-border bg-card flex justify-between items-center" rounded-lg border border-border>
       <div className="space-y-2">
          <h2 className="text-3xl font-extrabold tracking-tight">আসন্ন জুমুআহ এর বিষয়বস্তু।</h2>
          <p className="text-muted-foreground font-bold uppercase text-[10px] tracking-widest">১৫ ফেব্রুয়ারি ২০২৫ • শুক্রবার</p>
       </div>
       <button className="text-xs font-black uppercase tracking-widest border border-border px-6 py-3 hover:bg-primary hover:text-primary-foreground transition-all">গাইডলাইন ডাউনলোড</button>
     </div>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-muted minimal-border">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <KhutbahCard title="পবিত্রতা ও ঈমানের মজবুতি" board="বেফাক অনুমোদিত" active />
       <KhutbahCard title="ব্যবসায় ইসলামি আদর্শ" board="ইসলামিক ফাউন্ডেশন" />
       <KhutbahCard title="সামাজিক সম্প্রীতি" board="সাধারণ বিষয়বস্তু" />
@@ -203,7 +203,7 @@ const KhutbahPlanner = () => (
 );
 
 const KhutbahCard = ({ title, board, active }: any) => (
-  <div className={`p-12 flex flex-col justify-between group transition-all h-[350px] cursor-pointer ${active ? 'bg-primary text-primary-foreground' : 'bg-card hover:bg-muted'}`}>
+  <div className={`p-12 flex flex-col justify-between group transition-all cursor-pointer ${active ? 'bg-primary text-primary-foreground' : 'bg-card hover:bg-muted'}`}>
     <div className="space-y-6">
        <Star size={32} className={active ? 'text-primary-foreground' : 'text-gray-100 group-hover:text-primary-foreground'} fill="currentColor" />
        <div className="space-y-2">

@@ -14,7 +14,7 @@ const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero: Bold & Minimalist */}
-      <section className="pt-32 pb-32 px-6">
+      <section className="pt-32 pb-24 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-4xl space-y-12">
             <div className="caps-label text-muted-foreground">Bangladesh Digital Initiative</div>
@@ -28,7 +28,7 @@ const LandingPage: React.FC = () => {
               <Link to="/register-user" className="bg-primary text-primary-foreground px-10 py-5 rounded-md font-bold text-lg flex items-center justify-center gap-3 hover:opacity-90 transition-all group">
                 অংশ নিন <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link to="/about" className="border border-border px-10 py-5 font-bold text-lg hover:bg-muted transition-all text-center">
+              <Link to="/about" className="border border-border px-10 py-5 font-bold rounded-md text-lg hover:bg-muted transition-all text-center">
                 বিস্তারিত জানুন
               </Link>
             </div>
@@ -45,8 +45,8 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Core Services: Minimal Bento */}
-      <section className="py-32 px-6 bg-muted">
-        <div className="max-w-7xl mx-auto space-y-20">
+      <section className="py-24 px-6 bg-muted">
+        <div className="max-w-7xl mx-auto space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-4">
               <div className="caps-label text-foreground">Services</div>
@@ -81,7 +81,7 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Story & Philosophy */}
-      <section className="py-40 px-6">
+      <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-24 items-center">
           <div className="lg:w-1/2 space-y-12">
             <div className="caps-label text-muted-foreground">Our Philosophy</div>
@@ -96,7 +96,7 @@ const LandingPage: React.FC = () => {
             </div>
           </div>
           <div className="lg:w-1/2 w-full">
-            <div className="aspect-[4/3] bg-muted relative overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000">
+            <div className="aspect-[4/3] rounded-lg bg-muted relative overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000">
                <img 
                  src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=1200" 
                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
@@ -110,7 +110,7 @@ const LandingPage: React.FC = () => {
       {/* Minimal Footer */}
       <footer className="bg-foreground text-background pt-32 pb-12">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-20 pb-32">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pb-24">
             <div className="space-y-8 md:col-span-2">
                <div className="flex items-center gap-3 group">
                  <div className="w-6 h-6 bg-primary text-primary-foreground flex items-center justify-center font-bold text-xs group-hover:rotate-6 transition-transform">Q</div>

@@ -989,3 +989,11 @@ landing + directory), fixes applied
 - Design principles documented for future pages: density over
   monumentality, one card recipe, radius = rounded-lg cards / rounded-md
   controls, primary = action-only, 5-step type scale.
+- **All-pages design sweep (session 27 cont.)** — mechanical migration of
+  all 38 page files off the old monochrome hairline-grid look:
+  `gap-1 bg-muted minimal-border` grids → `gap-6` + `rounded-lg border`
+  cards (32 grids); bare bg-card cells → bordered rounded cards (~60);
+  image tiles → rounded-lg; extreme padding trimmed (py-40/32 → py-24,
+  p-16/20 → p-12, pt-48 → pt-24); dead-space heights removed
+  (h-[350/450px] tool/job cards); square CTAs → rounded-md.
+  Verified visually: marketplace, professional, community.

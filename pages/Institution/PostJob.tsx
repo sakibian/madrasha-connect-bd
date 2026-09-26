@@ -131,7 +131,7 @@ const PostJob: React.FC = () => {
         </Link>
       </div>
 
-      <div className="bg-card minimal-border p-12 md:p-20 shadow-sm">
+      <div className="bg-card minimal-border p-12 md:p-12 shadow-sm" rounded-lg border border-border>
         <form onSubmit={handleSubmit} className="space-y-12">
           {error && (
             <div className="p-6 bg-muted border border-border text-foreground space-y-2 flex items-start gap-4 animate-slideDown">

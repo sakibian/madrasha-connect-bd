@@ -69,7 +69,7 @@ const RegisterUser: React.FC = () => {
   return (
     <div className="min-h-screen bg-card flex flex-col lg:flex-row animate-fadeIn">
       {/* Left Branding Side */}
-      <div className="lg:w-1/3 bg-foreground text-background p-12 md:p-16 flex flex-col justify-between border-r border-secondary">
+      <div className="lg:w-1/3 bg-foreground text-background p-12 md:p-12 flex flex-col justify-between border-r border-secondary">
         <Link to="/" className="flex items-center gap-3">
           <div className="w-8 h-8 bg-card text-foreground flex items-center justify-center font-bold">Q</div>
           <span className="text-xl font-bold tracking-tight">কওমি</span>
@@ -92,7 +92,7 @@ const RegisterUser: React.FC = () => {
       </div>
 
       {/* Right Form Side */}
-      <div className="lg:w-2/3 p-8 md:p-24 flex items-center justify-center bg-card">
+      <div className="lg:w-2/3 p-8 md:p-24 flex items-center justify-center bg-card" rounded-lg border border-border>
         <div className="w-full max-w-xl space-y-12">
           <div className="space-y-4">
             <Link to="/login" className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-widest hover:text-foreground mb-8">
@@ -104,7 +104,7 @@ const RegisterUser: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="space-y-10">
             <div className="space-y-8">
-              <div className="grid grid-cols-2 gap-1 bg-muted minimal-border">
+              <div className="grid grid-cols-2 gap-6">
                 <button 
                   type="button"
                   onClick={() => setFormData({...formData, roleChoice: 'Student'})}

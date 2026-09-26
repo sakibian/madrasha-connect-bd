@@ -12,16 +12,16 @@ const CalligraphyGallery: React.FC = () => {
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">ভেক্টর ক্যালিগ্রাফি আর্ট।</h1>
       </div>
 
-      <div className="bg-foreground text-background p-16 space-y-8">
+      <div className="bg-foreground text-background p-12 space-y-8">
          <div className="caps-label text-background">High Resolution</div>
          <h2 className="text-5xl font-extrabold leading-tight">ডিজিটাল ক্যালিগ্রাফি <br /> সংগ্রহশালা।</h2>
          <p className="text-background text-xl max-w-2xl font-medium">৫০০+ হাই-রেজোলিউশন আরবি ক্যালিগ্রাফি। গ্রাফিক ডিজাইনার এবং শিক্ষার্থীদের জন্য একদম ফ্রিতে ডাউনলোডযোগ্য।</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 bg-muted minimal-border">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {MOCK_CALLIGRAPHY.map(item => (
-          <div key={item.id} className="bg-card p-10 flex flex-col group h-full">
-            <div className="aspect-square bg-muted mb-8 overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700">
+          <div key={item.id} className="bg-card p-10 flex flex-col group h-full" rounded-lg border border-border>
+            <div className="aspect-square rounded-lg bg-muted mb-8 overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700">
               <ImageWithFallback src={item.image} name={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={item.name} />
             </div>
             <div className="space-y-6 flex-1 flex flex-col">

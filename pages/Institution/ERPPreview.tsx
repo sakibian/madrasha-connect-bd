@@ -15,7 +15,7 @@ const ERPPreview: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-1 bg-muted minimal-border">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <ERPCard icon={<Users size={20} />} label="মোট ছাত্র" value="১২৫০" />
         <ERPCard icon={<Calendar size={20} />} label="উপস্থিতি (আজ)" value="৯৪%" />
         <ERPCard icon={<Wallet size={20} />} label="মাসিক সংগ্রহ" value="৳ ৮৫,৫০০" />
@@ -42,7 +42,7 @@ const ERPPreview: React.FC = () => {
                           <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">রোল: {100+i} • শাখা: ক</p>
                        </div>
                     </div>
-                    <div className="flex gap-1 bg-muted p-1">
+                    <div className="flex gap-6 p-1">
                        <button className="px-6 py-2 bg-card text-foreground font-black text-[10px] uppercase hover:bg-primary hover:text-primary-foreground transition-all">P</button>
                        <button className="px-6 py-2 bg-card text-foreground font-black text-[10px] uppercase hover:bg-primary hover:text-primary-foreground transition-all">A</button>
                     </div>
@@ -78,7 +78,7 @@ const ERPPreview: React.FC = () => {
 };
 
 const ERPCard = ({ icon, label, value }: any) => (
-  <div className="bg-card p-10 flex flex-col gap-6 group hover:bg-primary hover:text-primary-foreground transition-all">
+  <div className="bg-card p-10 flex flex-col gap-6 group hover:bg-primary hover:text-primary-foreground transition-all" rounded-lg border border-border>
     <div className="text-foreground group-hover:text-primary-foreground transition-colors">{icon}</div>
     <div className="space-y-1">
       <div className="text-3xl font-extrabold tracking-tight">{value}</div>

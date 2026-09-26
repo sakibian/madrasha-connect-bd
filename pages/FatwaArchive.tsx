@@ -61,7 +61,7 @@ const FatwaArchive: React.FC = () => {
         </div>
         <div className="space-y-1 bg-muted minimal-border">
           {[1, 2, 3].map(i => (
-            <div key={i} className="bg-card p-10 space-y-6">
+            <div key={i} className="bg-card p-10 space-y-6" rounded-lg border border-border>
               <div className="h-4 w-24 bg-muted animate-pulse" />
               <div className="h-8 w-3/4 bg-muted animate-pulse" />
               <div className="h-4 w-1/2 bg-muted animate-pulse" />
@@ -122,12 +122,12 @@ const FatwaArchive: React.FC = () => {
 
       <div className="space-y-1 bg-muted minimal-border">
         {filtered.length === 0 ? (
-          <div className="bg-card p-20 text-center">
+          <div className="bg-card p-12 text-center" rounded-lg border border-border>
             <EmptyState icon={<Shield size={48} />} title="কোনো ফতোয়া পাওয়া যায়নি" />
           </div>
         ) : (
           filtered.map(fatwa => (
-            <div key={fatwa.id} className="bg-card p-10 space-y-6 group hover:bg-muted transition-all">
+            <div key={fatwa.id} className="bg-card p-10 space-y-6 group hover:bg-muted transition-all" rounded-lg border border-border>
               <div className="flex justify-between items-start">
                 <div className="caps-label text-foreground">{fatwa.category}</div>
                 <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground">

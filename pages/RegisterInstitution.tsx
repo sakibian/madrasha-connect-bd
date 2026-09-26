@@ -69,7 +69,7 @@ const RegisterInstitution: React.FC = () => {
   return (
     <div className="min-h-screen bg-card flex flex-col lg:flex-row animate-fadeIn">
       {/* Left Visualization Side */}
-      <div className="lg:w-1/3 bg-foreground text-background p-12 md:p-16 flex flex-col justify-between border-r border-secondary relative overflow-hidden">
+      <div className="lg:w-1/3 bg-foreground text-background p-12 md:p-12 flex flex-col justify-between border-r border-secondary relative overflow-hidden">
         <div className="z-10">
           <Link to="/" className="flex items-center gap-3">
             <div className="w-8 h-8 bg-card text-foreground flex items-center justify-center font-bold">Q</div>
@@ -99,7 +99,7 @@ const RegisterInstitution: React.FC = () => {
       </div>
 
       {/* Right Form Side */}
-      <div className="lg:w-2/3 p-8 md:p-24 flex items-center justify-center bg-card overflow-y-auto">
+      <div className="lg:w-2/3 p-8 md:p-24 flex items-center justify-center bg-card overflow-y-auto" rounded-lg border border-border>
         <div className="w-full max-w-2xl space-y-12">
           <div className="space-y-4">
              <Link to="/login" className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-widest hover:text-foreground mb-8">
@@ -113,7 +113,7 @@ const RegisterInstitution: React.FC = () => {
             <div className="space-y-10">
               <div className="space-y-4">
                 <label className="caps-label text-muted-foreground">Institution Type</label>
-                <div className="grid grid-cols-3 gap-1 bg-muted minimal-border">
+                <div className="grid grid-cols-3 gap-6">
                   {(['Qawmi', 'Alia', 'Mosque'] as const).map(type => (
                     <button 
                       key={type}

@@ -72,20 +72,20 @@ const Competitions: React.FC = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 bg-muted minimal-border">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {loading ? (
-          <div className="col-span-2 flex items-center justify-center py-32 text-muted-foreground font-medium">
+          <div className="col-span-2 flex items-center justify-center py-24 text-muted-foreground font-medium">
             লোড হচ্ছে...
           </div>
         ) : competitions.length === 0 ? (
-          <div className="col-span-2 text-center py-32 text-muted-foreground font-medium">
+          <div className="col-span-2 text-center py-24 text-muted-foreground font-medium">
             বর্তমানে কোনো সক্রিয় প্রতিযোগিতা নেই
           </div>
         ) : competitions.map((comp, i) => {
           const isRegistered = registeredIds.includes(comp.id);
           return (
-            <div key={i} className="bg-card p-12 group transition-all hover:bg-muted flex flex-col h-full">
-              <div className="aspect-[16/9] mb-10 overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-1000">
+            <div key={i} className="bg-card p-12 group transition-all hover:bg-muted flex flex-col h-full" rounded-lg border border-border>
+              <div className="aspect-[16/9] rounded-lg mb-10 overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-1000">
                  <ImageWithFallback 
                    src={comp.imageUrl || `https://picsum.photos/seed/comp${i}/800/600`} 
                    name={comp.title} 
@@ -133,7 +133,7 @@ const Competitions: React.FC = () => {
         })}
       </div>
 
-      <div className="bg-foreground text-background p-20 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+      <div className="bg-foreground text-background p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
          <div className="space-y-8">
             <div className="w-16 h-16 bg-card text-foreground flex items-center justify-center font-bold text-2xl">H</div>
             <h2 className="text-5xl font-extrabold tracking-tight leading-tight">হল অফ ফেম (Hall of Fame)।</h2>
@@ -142,7 +142,7 @@ const Competitions: React.FC = () => {
             </p>
             <button className="text-sm font-bold border-b-2 border-white/60 pb-0.5 hover:border-white transition-all">বিজয়ীদের তালিকা দেখুন</button>
          </div>
-         <div className="grid grid-cols-2 gap-1 bg-secondary minimal-border">
+         <div className="grid grid-cols-2 gap-6">
             {[1,2,3,4].map(i => (
               <div key={i} className="bg-foreground text-background p-10 flex flex-col items-center text-center space-y-4">
                  <div className="w-16 h-16 bg-secondary rounded-full"></div>

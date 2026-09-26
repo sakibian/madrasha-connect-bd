@@ -52,12 +52,12 @@ const Marketplace: React.FC = () => {
         <h1 className="text-5xl font-extrabold tracking-tight">সুন্নাহ ও ক্যালিগ্রাফি।</h1>
       </div>
 
-      <section className="bg-primary text-primary-foreground p-16 flex flex-col md:flex-row items-center gap-16 relative overflow-hidden">
+      <section className="bg-primary text-primary-foreground p-12 flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
         <div className="md:w-1/2 z-10 space-y-8">
           <div className="caps-label text-primary-foreground">Featured</div>
           <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">ভেক্টর ক্যালিগ্রাফি সংগ্রহ।</h2>
           <p className="text-primary-foreground text-xl leading-relaxed">৫০০+ হাই-রেজোলিউশন আরবি ক্যালিগ্রাফি গ্রাফিক ডিজাইনার এবং শিক্ষার্থীদের জন্য একদম ফ্রিতে ডাউনলোডযোগ্য।</p>
-          <Link to="/calligraphy" className="bg-card text-foreground px-10 py-5 font-bold text-lg inline-flex items-center gap-3 hover:bg-muted transition-all">
+          <Link to="/calligraphy" className="bg-card text-foreground px-10 py-5 font-bold rounded-md text-lg inline-flex items-center gap-3 hover:bg-muted transition-all">
             গ্যালারি দেখুন <ArrowRight size={20} />
           </Link>
         </div>
@@ -67,14 +67,14 @@ const Marketplace: React.FC = () => {
       </section>
 
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 bg-muted minimal-border">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <LoadingSkeleton variant="card" count={8} />
         </div>
       ) : (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 bg-muted minimal-border">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map(product => (
-          <div key={product.id} className="bg-card p-8 flex flex-col group h-full">
-            <div className="relative aspect-square bg-muted mb-8 overflow-hidden">
+          <div key={product.id} className="bg-card p-8 flex flex-col group h-full" rounded-lg border border-border>
+            <div className="relative aspect-square rounded-lg bg-muted mb-8 overflow-hidden">
                <ImageWithFallback src={product.image} name={product.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" alt={product.name} />
                <button className="absolute top-4 right-4 p-3 bg-card text-muted-foreground hover:text-foreground border border-border"><Heart size={18} /></button>
                {product.isFree && <Badge variant="success" className="absolute bottom-4 left-4">Free</Badge>}
@@ -121,7 +121,7 @@ const Marketplace: React.FC = () => {
             </div>
             
             <div className="space-y-6">
-              <div className="aspect-square bg-muted overflow-hidden">
+              <div className="aspect-square rounded-lg bg-muted overflow-hidden">
                 <ImageWithFallback 
                   src={selectedProduct.image} 
                   name={selectedProduct.name} 
@@ -180,7 +180,7 @@ const Marketplace: React.FC = () => {
             </div>
             
             <div className="space-y-6">
-              <div className="aspect-square bg-muted overflow-hidden">
+              <div className="aspect-square rounded-lg bg-muted overflow-hidden">
                 <ImageWithFallback 
                   src={selectedProduct.image} 
                   name={selectedProduct.name} 

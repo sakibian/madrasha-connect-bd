@@ -124,7 +124,7 @@ const PublicProfile: React.FC = () => {
         </button>
       </div>
 
-      <div className="bg-card p-12 minimal-border space-y-8">
+      <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
         <div className="flex flex-col md:flex-row items-start gap-8">
           <div className="w-24 h-24 bg-muted overflow-hidden border-2 border-border">
             <ImageWithFallback src={profile.avatar || `https://picsum.photos/seed/${id}/200/200`} name={profile.name} className="w-full h-full object-cover" alt="" />
@@ -213,7 +213,7 @@ const PublicProfile: React.FC = () => {
       </div>
 
       {/* Skills & Endorsements */}
-      <div className="bg-card p-12 minimal-border space-y-6">
+      <div className="bg-card p-12 minimal-border space-y-6" rounded-lg border border-border>
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-extrabold flex items-center gap-2"><Star size={18} /> দক্ষতা</h2>
           {isOwnProfile && (
@@ -275,7 +275,7 @@ const PublicProfile: React.FC = () => {
       </div>
 
       {activity.length > 0 && (
-      <div className="bg-card p-12 minimal-border space-y-6">
+      <div className="bg-card p-12 minimal-border space-y-6" rounded-lg border border-border>
           <h2 className="text-lg font-extrabold flex items-center gap-2"><Clock size={18} /> সাম্প্রতিক কার্যকলাপ</h2>
           <div className="space-y-1">
             {activity.map(e => (
@@ -294,7 +294,7 @@ const PublicProfile: React.FC = () => {
       )}
 
       {scholar && (
-        <div className="bg-card p-12 minimal-border space-y-4">
+        <div className="bg-card p-12 minimal-border space-y-4" rounded-lg border border-border>
           <h2 className="text-lg font-extrabold">স্কলার তথ্য</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -322,7 +322,7 @@ const PublicProfile: React.FC = () => {
       )}
 
       {scholar && portfolio.length > 0 && (
-        <div className="bg-card p-12 minimal-border space-y-6">
+        <div className="bg-card p-12 minimal-border space-y-6" rounded-lg border border-border>
           <h2 className="text-lg font-extrabold flex items-center gap-2"><FolderOpen size={18} /> পোর্টফোলিও</h2>
           <div className="grid gap-4">
             {portfolio.map(item => (

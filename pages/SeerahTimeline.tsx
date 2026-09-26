@@ -207,7 +207,7 @@ const SeerahTimeline: React.FC = () => {
         </p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6 sticky top-20 z-20 bg-card py-6 border-b border-border">
+      <div className="flex flex-col md:flex-row gap-6 sticky top-12 z-20 bg-card py-6 border-b border-border">
         <div className="relative flex-1">
           <Search className="absolute left-0 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
           <input
@@ -298,7 +298,7 @@ const SeerahTimeline: React.FC = () => {
               </div>
             ))
           ) : (
-            <div className="text-center py-40 bg-muted border border-dashed border-border">
+            <div className="text-center py-24 bg-muted border border-dashed border-border">
               <History size={48} className="text-muted-foreground mx-auto mb-6" />
               <p className="text-xl font-bold text-muted-foreground">ম্যাচিং ইভেন্ট খুঁজে পাওয়া যায়নি।</p>
             </div>
@@ -369,7 +369,7 @@ const SeerahTimeline: React.FC = () => {
         </ol>
       </section>
 
-      <div className="bg-primary text-primary-foreground p-16 flex flex-col md:flex-row items-center gap-12">
+      <div className="bg-primary text-primary-foreground p-12 flex flex-col md:flex-row items-center gap-12">
         <div className="w-16 h-16 bg-card text-foreground flex items-center justify-center font-bold text-2xl">S</div>
         <div className="flex-1 space-y-4">
           <div className="caps-label text-primary-foreground">Sources & Research</div>

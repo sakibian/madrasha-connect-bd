@@ -36,7 +36,7 @@ const ForgotPassword: React.FC = () => {
         </Link>
 
         {sent ? (
-          <div className="bg-card p-12 minimal-border text-center space-y-6">
+          <div className="bg-card p-12 minimal-border text-center space-y-6" rounded-lg border border-border>
             <CheckCircle size={48} className="text-foreground mx-auto" />
             <div className="space-y-2">
               <h1 className="text-2xl font-extrabold">ইমেইল পাঠানো হয়েছে</h1>
@@ -44,7 +44,7 @@ const ForgotPassword: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="bg-card p-12 minimal-border space-y-8">
+          <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
             <div className="space-y-2">
               <h1 className="text-3xl font-extrabold">পাসওয়ার্ড রিসেট</h1>
               <p className="text-muted-foreground font-medium">আপনার নিবন্ধিত ইমেইল ঠিকানা দিন। আমরা একটি রিসেট লিংক পাঠাব।</p>

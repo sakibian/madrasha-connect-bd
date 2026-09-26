@@ -116,7 +116,7 @@ const FAQ: React.FC = () => {
       </div>
 
       {/* FAQ Sections */}
-      <div className="space-y-20">
+      <div className="space-y-12">
         {faqData.map((section, sIndex) => (
           <div key={sIndex} className="space-y-8">
             <div className="flex items-center gap-4">
@@ -144,7 +144,7 @@ const FAQ: React.FC = () => {
       </div>
 
       {/* CTA Section */}
-      <section className="bg-primary text-primary-foreground p-12 md:p-20 flex flex-col md:flex-row items-center justify-between gap-12 group">
+      <section className="bg-primary text-primary-foreground p-12 md:p-12 flex flex-col md:flex-row items-center justify-between gap-12 group">
         <div className="space-y-6">
           <div className="caps-label text-primary-foreground">Help & Contact</div>
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight">আরও কিছু জানতে চান?</h2>
@@ -153,10 +153,10 @@ const FAQ: React.FC = () => {
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-          <button className="bg-card text-foreground px-10 py-5 font-bold text-lg flex items-center justify-center gap-3 hover:bg-muted transition-all">
+          <button className="bg-card text-foreground px-10 py-5 font-bold rounded-md text-lg flex items-center justify-center gap-3 hover:bg-muted transition-all">
              মেসেজ দিন <MessageCircle size={20} />
           </button>
-          <Link to="/about" className="border border-border text-primary-foreground px-10 py-5 font-bold text-lg flex items-center justify-center gap-3 hover:bg-secondary transition-all">
+          <Link to="/about" className="border border-border text-primary-foreground px-10 py-5 font-bold rounded-md text-lg flex items-center justify-center gap-3 hover:bg-secondary transition-all">
              লক্ষ্য ও উদ্দেশ্য <ArrowRight size={20} />
           </Link>
         </div>

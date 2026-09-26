@@ -189,14 +189,14 @@ const ProfileBuilder: React.FC = () => {
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-1 bg-muted p-1 minimal-border">
+      <div className="flex flex-wrap gap-6 p-1 minimal-border">
         <StepIndicator num={1} label="মৌলিক তথ্য" active={step === 1} />
         <StepIndicator num={2} label="শিক্ষাগত যোগ্যতা" active={step === 2} />
         <StepIndicator num={3} label="অভিজ্ঞতা" active={step === 3} />
         <StepIndicator num={4} label="প্রিভিউ" active={step === 4} />
       </div>
 
-      <div className="bg-card minimal-border p-8 md:p-16">
+      <div className="bg-card minimal-border p-8 md:p-12" rounded-lg border border-border>
         {/* Step 1: Basic Info */}
         {step === 1 && (
           <div className="space-y-12 animate-fadeIn">

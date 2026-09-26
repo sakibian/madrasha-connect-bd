@@ -38,7 +38,7 @@ const Leaderboard: React.FC = () => {
         <p className="text-muted-foreground font-medium max-w-xl">সবচেয়ে সক্রিয় সদস্যরা — ফতোয়া উত্তর, চাকরি পোস্ট, কোর্স সম্পূর্ণ এবং আরও অনেক কিছুতে CP (কন্ট্রিবিউট পয়েন্ট) অর্জন করুন!</p>
       </div>
 
-      <div className="flex gap-1 bg-muted p-1 minimal-border w-fit">
+      <div className="flex gap-6 p-1 minimal-border w-fit">
         <button
           onClick={() => setTab('xp')}
           className={`px-6 py-3 text-xs font-bold uppercase tracking-widest transition-all ${tab === 'xp' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}
@@ -54,7 +54,7 @@ const Leaderboard: React.FC = () => {
       </div>
 
       {loading ? (
-        <div className="bg-card p-20 text-center text-muted-foreground font-bold"><Loader2 size={24} className="animate-spin mx-auto mb-4" />লোড হচ্ছে...</div>
+        <div className="bg-card p-12 text-center text-muted-foreground font-bold" rounded-lg border border-border><Loader2 size={24} className="animate-spin mx-auto mb-4" />লোড হচ্ছে...</div>
       ) : (
         <div className="bg-card minimal-border overflow-hidden">
           <table className="w-full text-left">

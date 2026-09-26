@@ -93,7 +93,7 @@ const InstitutionDashboard: React.FC = () => {
   return (
     <div className="space-y-12 animate-fadeIn">
       {/* Profile Header */}
-      <div className="p-12 minimal-border bg-card flex flex-col md:flex-row justify-between items-center gap-8">
+      <div className="p-12 minimal-border bg-card flex flex-col md:flex-row justify-between items-center gap-8" rounded-lg border border-border>
         <div className="flex items-center gap-8">
           <div className="w-20 h-20 bg-primary text-primary-foreground flex items-center justify-center font-bold text-3xl">
             {user?.institutionName?.substring(0, 1) || 'M'}
@@ -104,10 +104,10 @@ const InstitutionDashboard: React.FC = () => {
           </div>
         </div>
         <div className="flex gap-4">
-          <Link to="/post-job" className="bg-primary text-primary-foreground px-10 py-5 font-bold text-sm flex items-center gap-3 hover:bg-secondary transition-all">
+          <Link to="/post-job" className="bg-primary text-primary-foreground px-10 py-5 font-bold rounded-md text-sm flex items-center gap-3 hover:bg-secondary transition-all">
              <Plus size={20} /> নতুন বিজ্ঞপ্তি
           </Link>
-          <Link to="/erp-preview" className="border border-border px-10 py-5 font-bold text-sm flex items-center gap-3 hover:bg-muted transition-all">
+          <Link to="/erp-preview" className="border border-border px-10 py-5 font-bold rounded-md text-sm flex items-center gap-3 hover:bg-muted transition-all">
              <Layout size={20} /> ERP এক্সেস
           </Link>
         </div>
@@ -117,7 +117,7 @@ const InstitutionDashboard: React.FC = () => {
       {loading ? (
         <LoadingSkeleton variant="table" />
       ) : (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-muted minimal-border">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <DashCard icon={<Briefcase size={20} />} label="পোস্ট সংখ্যা" value={myJobs.length} />
         <DashCard icon={<Users size={20} />} label="আবেদন প্রাপ্ত" value={myJobs.length * 12} />
         <DashCard icon={<CheckCircle size={20} />} label="অনুমোদিত সার্কুলার" value={myJobs.filter(j => j.verified).length} />
@@ -176,7 +176,7 @@ const InstitutionDashboard: React.FC = () => {
               </table>
             </div>
             {myJobs.length === 0 && (
-              <div className="p-20 text-center space-y-4">
+              <div className="p-12 text-center space-y-4">
                  <Briefcase size={40} className="mx-auto text-muted-foreground mb-6" />
                  <p className="text-xl font-bold text-muted-foreground">আপনার কোনো সক্রিয় সার্কুলার নেই।</p>
                  <Link to="/post-job" className="text-sm font-bold border-b-2 border-primary">নতুন পোস্ট করুন</Link>
@@ -195,7 +195,7 @@ const InstitutionDashboard: React.FC = () => {
               </Link>
            </div>
 
-           <div className="p-10 bg-card minimal-border space-y-8">
+           <div className="p-10 bg-card minimal-border space-y-8" rounded-lg border border-border>
               <div className="caps-label text-muted-foreground">Support Center</div>
               <h3 className="text-xl font-bold">সহায়তা প্রয়োজন?</h3>
               <div className="space-y-2">
@@ -297,7 +297,7 @@ const InstitutionDashboard: React.FC = () => {
 };
 
 const DashCard = ({ icon, label, value }: any) => (
-  <div className="bg-card p-8 md:p-12 flex flex-col gap-4 md:gap-6 group hover:bg-primary hover:text-primary-foreground transition-all">
+  <div className="bg-card p-8 md:p-12 flex flex-col gap-4 md:gap-6 group hover:bg-primary hover:text-primary-foreground transition-all" rounded-lg border border-border>
     <div className="text-foreground group-hover:text-primary-foreground transition-colors">{icon}</div>
     <div className="space-y-1">
       <div className="text-3xl md:text-4xl font-extrabold tracking-tight">{value}</div>

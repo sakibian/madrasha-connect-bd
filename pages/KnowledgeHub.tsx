@@ -63,9 +63,9 @@ const KnowledgeHub: React.FC = () => {
           <div className="caps-label text-muted-foreground">Resources</div>
           <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight">জ্ঞান ও শিক্ষা কেন্দ্র।</h1>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-muted minimal-border">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[1, 2, 3].map(i => (
-            <div key={i} className="bg-card p-8">
+            <div key={i} className="bg-card p-8" rounded-lg border border-border>
               <div className="aspect-video bg-muted mb-8 animate-pulse" />
               <div className="space-y-3">
                 <div className="h-3 w-16 bg-muted animate-pulse" />
@@ -91,13 +91,13 @@ const KnowledgeHub: React.FC = () => {
           <h2 className="text-3xl font-extrabold">Deen-101 মডিউল</h2>
           <Link to="/deen101" className="text-sm font-bold border-b-2 border-primary">সবগুলো দেখুন</Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-muted minimal-border">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {courses.map(course => {
             const isEnrolled = enrolledCourses.includes(course.id);
             const sources = courseSources[course.id] || [];
             return (
-              <div key={course.id} className="bg-card p-8 group flex flex-col h-full">
-                <div className="aspect-video bg-muted mb-8 overflow-hidden relative">
+              <div key={course.id} className="bg-card p-8 group flex flex-col h-full" rounded-lg border border-border>
+                <div className="aspect-video rounded-lg bg-muted mb-8 overflow-hidden relative">
                   <ImageWithFallback src={course.thumbnail} name={course.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt={course.title} />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
                     <div className="w-12 h-12 bg-card flex items-center justify-center">
@@ -135,8 +135,8 @@ const KnowledgeHub: React.FC = () => {
         </div>
       </section>
 
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-1 bg-muted minimal-border">
-        <div className="bg-card p-12 space-y-10">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-card p-12 space-y-10" rounded-lg border border-border>
           <h2 className="text-3xl font-extrabold border-l-4 border-primary pl-6">কওমি সিলেবাস</h2>
           <div className="space-y-4">
             <ListResource title="মেশকাত (দাওয়াতে হাদিস)" sub="বেফাকুল মাদারিস" />
@@ -144,7 +144,7 @@ const KnowledgeHub: React.FC = () => {
             <ListResource title="হিদায়াতুন্নাহু (মুতাওয়াসসিতাহ)" sub="বেফাকুল মাদারিস" />
           </div>
         </div>
-        <div className="bg-card p-12 space-y-10">
+        <div className="bg-card p-12 space-y-10" rounded-lg border border-border>
           <h2 className="text-3xl font-extrabold border-l-4 border-primary pl-6">আলিয়া সিলেবাস</h2>
           <div className="space-y-4">
             <ListResource title="কামিল (হাদিস বিভাগ)" sub="আরবি বিশ্ববিদ্যালয়" />

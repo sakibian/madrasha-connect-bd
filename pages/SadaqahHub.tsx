@@ -126,12 +126,12 @@ const SadaqahHub: React.FC = () => {
         </div>
       )}
 
-      <div className="bg-primary text-primary-foreground p-16 space-y-8">
+      <div className="bg-primary text-primary-foreground p-12 space-y-8">
          <div className="caps-label text-primary-foreground">Digital Sadaqah</div>
          <h2 className="text-5xl font-extrabold leading-tight">আপনার দান, <br /> মাদ্রাসার সমৃদ্ধি।</h2>
          <p className="text-primary-foreground text-xl max-w-2xl font-medium">আমরা সরাসরি দাতাদের সাথে প্রতিষ্ঠানের যোগাযোগ করিয়ে দিই। কোনো অতিরিক্ত ফি ছাড়াই আপনার পূর্ণ দান পৌঁছাবে কাঙ্ক্ষিত লক্ষ্যে।</p>
          <div className="flex gap-4 pt-6">
-            <button onClick={() => openDonate()} className="bg-card text-foreground px-10 py-5 font-bold text-lg hover:bg-muted transition-all flex items-center gap-3">
+            <button onClick={() => openDonate()} className="bg-card text-foreground px-10 py-5 font-bold rounded-md text-lg hover:bg-muted transition-all flex items-center gap-3">
               <Heart size={20} /> অনদান দিন
             </button>
             <button 
@@ -146,7 +146,7 @@ const SadaqahHub: React.FC = () => {
                 }
                 setShowFundingModal(true);
               }}
-              className="border border-border text-primary-foreground px-10 py-5 font-bold text-lg hover:bg-secondary transition-all"
+              className="border border-border text-primary-foreground px-10 py-5 font-bold rounded-md text-lg hover:bg-secondary transition-all"
             >
               তহবিল আবেদন
             </button>
@@ -154,20 +154,20 @@ const SadaqahHub: React.FC = () => {
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center py-32">
+        <div className="flex items-center justify-center py-24">
           <Loader2 size={32} className="animate-spin text-muted-foreground" />
         </div>
       ) : projects.length === 0 ? (
-        <div className="text-center py-32 text-muted-foreground font-medium">
+        <div className="text-center py-24 text-muted-foreground font-medium">
           এখনো কোনো সাদাকাহ প্রকল্প নেই
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-muted minimal-border">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {projects.map(proj => {
             const progress = Math.min(100, (proj.raised / proj.goal) * 100);
             return (
-              <div key={proj.id} className="bg-card p-10 flex flex-col group h-full">
-                  <div className="aspect-[4/3] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700 mb-8">
+              <div key={proj.id} className="bg-card p-10 flex flex-col group h-full" rounded-lg border border-border>
+                  <div className="aspect-[4/3] rounded-lg overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700 mb-8">
                      <ImageWithFallback src={proj.image} name={proj.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={proj.title} />
                   </div>
                   <div className="space-y-6 flex-1 flex flex-col">

@@ -18,7 +18,7 @@ const AccessibilityStatement: React.FC = () => {
         </p>
       </div>
 
-      <div className="bg-card p-12 minimal-border space-y-8">
+      <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
         <h2 className="text-xl font-extrabold flex items-center gap-3">
           <ShieldCheck size={20} className="text-foreground" /> আমাদের প্রতিশ্রুতি
         </h2>
@@ -27,7 +27,7 @@ const AccessibilityStatement: React.FC = () => {
         </p>
       </div>
 
-      <div className="bg-card p-12 minimal-border space-y-8">
+      <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
         <h2 className="text-xl font-extrabold flex items-center gap-3">
           <Eye size={20} className="text-foreground" /> দৃশ্যমানতা
         </h2>
@@ -51,7 +51,7 @@ const AccessibilityStatement: React.FC = () => {
         </ul>
       </div>
 
-      <div className="bg-card p-12 minimal-border space-y-8">
+      <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
         <h2 className="text-xl font-extrabold flex items-center gap-3">
           <Keyboard size={20} className="text-foreground" /> কীবোর্ড নেভিগেশন
         </h2>
@@ -75,7 +75,7 @@ const AccessibilityStatement: React.FC = () => {
         </ul>
       </div>
 
-      <div className="bg-card p-12 minimal-border space-y-8">
+      <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
         <h2 className="text-xl font-extrabold flex items-center gap-3">
           <Monitor size={20} className="text-foreground" /> স্ক্রিন রিডার সাপোর্ট
         </h2>
@@ -95,7 +95,7 @@ const AccessibilityStatement: React.FC = () => {
         </ul>
       </div>
 
-      <div className="bg-card p-12 minimal-border space-y-8">
+      <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
         <h2 className="text-xl font-extrabold flex items-center gap-3">
           <Smartphone size={20} className="text-foreground" /> মোবাইল ও রেসপন্সিভ
         </h2>
@@ -115,7 +115,7 @@ const AccessibilityStatement: React.FC = () => {
         </ul>
       </div>
 
-      <div className="bg-card p-12 minimal-border space-y-8">
+      <div className="bg-card p-12 minimal-border space-y-8" rounded-lg border border-border>
         <h2 className="text-xl font-extrabold">যোগাযোগ</h2>
         <p className="text-muted-foreground leading-relaxed">
           আপনি যদি কোনো প্রবেশযোগ্যতা সমস্যার সম্মুখীন হন, অনুগ্রহ করে আমাদের সাথে যোগাযোগ করুন:

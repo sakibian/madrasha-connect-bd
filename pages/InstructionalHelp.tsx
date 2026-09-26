@@ -21,16 +21,16 @@ const InstructionalHelp: React.FC = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 bg-muted minimal-border">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {tutorials.map((video, i) => (
-          <div key={i} className="bg-card p-12 group transition-all hover:bg-primary hover:text-primary-foreground">
+          <div key={i} className="bg-card p-12 group transition-all hover:bg-primary hover:text-primary-foreground" rounded-lg border border-border>
             <div className="flex items-center justify-between mb-8">
                <div className="caps-label text-foreground group-hover:text-muted-foreground">{video.category}</div>
                <div className="text-xs font-bold text-muted-foreground">ভলিউম ০১</div>
             </div>
             
             <div className="space-y-10">
-               <div className="relative aspect-video bg-muted grayscale group-hover:grayscale-0 transition-all duration-700 overflow-hidden">
+               <div className="relative aspect-video rounded-lg bg-muted grayscale group-hover:grayscale-0 transition-all duration-700 overflow-hidden">
                    <ImageWithFallback src={`https://picsum.photos/seed/tut${i}/800/450`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt="" />
                   <div className="absolute inset-0 flex items-center justify-center">
                      <div className="w-16 h-16 bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
@@ -53,7 +53,7 @@ const InstructionalHelp: React.FC = () => {
         ))}
       </div>
 
-      <div className="bg-foreground text-background p-20 space-y-12">
+      <div className="bg-foreground text-background p-12 space-y-12">
         <h2 className="text-3xl font-extrabold tracking-tight flex items-center gap-4">
           <ShieldCheck className="text-background" size={32} /> প্রায়শই জিজ্ঞাসিত সহায়তা
         </h2>

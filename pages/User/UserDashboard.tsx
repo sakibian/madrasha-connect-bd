@@ -59,7 +59,7 @@ const UserDashboard: React.FC = () => {
   return (
     <div className="space-y-16 animate-fadeIn">
       {/* Profile Header */}
-      <div className="p-12 minimal-border bg-card flex flex-col md:flex-row justify-between items-center gap-8">
+      <div className="p-12 minimal-border bg-card flex flex-col md:flex-row justify-between items-center gap-8" rounded-lg border border-border>
         <div className="flex items-center gap-8">
           <div className="relative">
             <ImageWithFallback src={user?.avatar} name={user?.name} className="w-24 h-24 border-4 border-border shadow-sm object-cover bg-muted" alt="Profile" />
@@ -70,7 +70,7 @@ const UserDashboard: React.FC = () => {
             <p className="caps-label text-muted-foreground">Community Member • {user?.role}</p>
           </div>
         </div>
-        <Link to="/profile-builder" className="bg-primary text-primary-foreground px-10 py-5 font-bold text-sm hover:bg-secondary transition-all">
+        <Link to="/profile-builder" className="bg-primary text-primary-foreground px-10 py-5 font-bold rounded-md text-sm hover:bg-secondary transition-all">
            প্রোফাইল আপডেট
         </Link>
       </div>
@@ -113,7 +113,7 @@ const UserDashboard: React.FC = () => {
       )}
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-muted minimal-border">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatCard icon={<Briefcase size={20} />} label="আবেদনকৃত চাকরি" value="৪টি" />
         <StatCard icon={<BookOpen size={20} />} label="বুকমার্ক রিসোর্স" value="৮টি" />
         <StatCard icon={<CheckCircle size={20} />} label="প্রোফাইল পূর্ণতা" value="৭৫%" />
@@ -136,13 +136,13 @@ const UserDashboard: React.FC = () => {
 
           {/* Quick Access Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-             <Link to="/audio-library" className="p-10 bg-card minimal-border group hover:bg-primary hover:text-primary-foreground transition-all">
+             <Link to="/audio-library" className="p-10 bg-card minimal-border group hover:bg-primary hover:text-primary-foreground transition-all" rounded-lg border border-border>
                 <Headset size={32} className="text-foreground mb-6 transition-colors group-hover:text-primary-foreground" />
                 <h3 className="text-xl font-bold mb-2">অডিও লাইব্রেরি</h3>
                 <p className="text-sm text-muted-foreground group-hover:text-muted-foreground font-medium">তিলাওয়াত ও বয়ান শুনুন এক জায়গায়।</p>
                 <div className="mt-6 flex items-center gap-2 text-xs font-bold border-b border-primary group-hover:border-white w-fit pb-1">লাইব্রেরি দেখুন <ChevronRight size={14} /></div>
              </Link>
-             <Link to="/competitions" className="p-10 bg-card minimal-border group hover:bg-primary hover:text-primary-foreground transition-all">
+             <Link to="/competitions" className="p-10 bg-card minimal-border group hover:bg-primary hover:text-primary-foreground transition-all" rounded-lg border border-border>
                 <Trophy size={32} className="text-foreground mb-6 transition-colors group-hover:text-primary-foreground" />
                 <h3 className="text-xl font-bold mb-2">প্রতিযোগিতা</h3>
                 <p className="text-sm text-muted-foreground group-hover:text-muted-foreground font-medium">জাতীয় মেধা প্রতিযোগিতায় অংশ নিন।</p>
@@ -169,7 +169,7 @@ const UserDashboard: React.FC = () => {
 };
 
 const StatCard = ({ icon, label, value }: any) => (
-  <div className="bg-card p-12 flex flex-col gap-6 group hover:bg-primary hover:text-primary-foreground transition-all">
+  <div className="bg-card p-12 flex flex-col gap-6 group hover:bg-primary hover:text-primary-foreground transition-all" rounded-lg border border-border>
     <div className="text-foreground group-hover:text-primary-foreground transition-colors">{icon}</div>
     <div className="space-y-1">
       <div className="text-4xl font-extrabold tracking-tight">{value}</div>
@@ -186,7 +186,7 @@ const ApplicationItem = ({ title, inst, status, date }: any) => {
   };
   const s = statusLabels[status];
   return (
-    <div className="bg-card p-8 flex justify-between items-center group transition-all">
+    <div className="bg-card p-8 flex justify-between items-center group transition-all" rounded-lg border border-border>
        <div className="space-y-1">
           <h3 className="font-extrabold text-lg group-hover:text-primary-foreground transition-colors">{title}</h3>
           <p className="text-sm font-bold text-primary-foreground">{inst}</p>
@@ -198,7 +198,7 @@ const ApplicationItem = ({ title, inst, status, date }: any) => {
 };
 
 const SavedItem = ({ to, title, category, type }: any) => (
-  <Link to={to} className="block p-8 minimal-border bg-card group hover:bg-primary hover:text-primary-foreground transition-all">
+  <Link to={to} className="block p-8 minimal-border bg-card group hover:bg-primary hover:text-primary-foreground transition-all" rounded-lg border border-border>
      <div className="flex justify-between items-start mb-6">
         <div className="caps-label text-foreground group-hover:text-muted-foreground">{type}</div>
         <button className="text-muted-foreground group-hover:text-primary-foreground"><Heart size={20} fill="currentColor" /></button>

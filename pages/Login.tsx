@@ -104,7 +104,7 @@ const Login: React.FC = () => {
   return (
     <div className="min-h-screen bg-card flex flex-col lg:flex-row animate-fadeIn">
       {/* Visual Side */}
-      <div className="lg:w-1/2 bg-foreground text-background p-16 flex flex-col justify-between relative overflow-hidden">
+      <div className="lg:w-1/2 bg-foreground text-background p-12 flex flex-col justify-between relative overflow-hidden">
         <div className="z-10">
           <Link to="/" className="flex items-center gap-3 group">
             <div className="w-10 h-10 bg-card text-foreground flex items-center justify-center font-bold text-xl group-hover:rotate-6 transition-transform">Q</div>
@@ -146,7 +146,7 @@ const Login: React.FC = () => {
           </div>
 
           {/* Auth method tabs — Bangladesh-first: phone OTP is the default. */}
-          <div className="grid grid-cols-2 gap-1 bg-muted minimal-border">
+          <div className="grid grid-cols-2 gap-6">
             <button
               type="button"
               onClick={() => { setTab('phone'); setError(''); }}

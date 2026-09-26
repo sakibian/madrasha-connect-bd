@@ -62,7 +62,7 @@ const AdminDashboard: React.FC = () => {
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">অ্যাডমিন প্যানেল।</h1>
       </div>
 
-      <div className="flex gap-1 bg-muted p-1 minimal-border w-fit">
+      <div className="flex gap-6 p-1 minimal-border w-fit">
         <TabButton active={activeTab === 'overview'} onClick={() => setActiveTab('overview')} icon={<LayoutDashboard size={16} />} label="ওভারভিউ" />
         <TabButton active={activeTab === 'jobs'} onClick={() => setActiveTab('jobs')} icon={<Briefcase size={16} />} label="চাকরি" />
         <TabButton active={activeTab === 'products'} onClick={() => setActiveTab('products')} icon={<ShoppingBag size={16} />} label="মার্কেটপ্লেস" />
@@ -74,11 +74,11 @@ const AdminDashboard: React.FC = () => {
 
       {activeTab === 'overview' && (
         loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 bg-muted minimal-border">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <LoadingSkeleton variant="card" count={4} />
           </div>
         ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 bg-muted minimal-border">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard icon={<Briefcase size={20} />} label="মোট সার্কুলার" value={stats.jobs} />
           <StatCard icon={<ShoppingBag size={20} />} label="পণ্য সংখ্যা" value={stats.products} />
           <StatCard icon={<Users size={20} />} label="নিবন্ধিত ইউজার" value={stats.users} />
@@ -169,7 +169,7 @@ const ManageProducts: React.FC = () => {
       </div>
       
       {isAdding && (
-        <div className="bg-card p-10 minimal-border space-y-8 animate-slideDown">
+        <div className="bg-card p-10 minimal-border space-y-8 animate-slideDown" rounded-lg border border-border>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-2">
               <label className="caps-label text-muted-foreground">Name</label>
@@ -250,7 +250,7 @@ const ManageUsers: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex gap-1 bg-muted p-1 minimal-border w-fit">
+      <div className="flex gap-6 p-1 minimal-border w-fit">
         <SubTabButton active={userSubTab === 'users'} onClick={() => setUserSubTab('users')} label="ইউজার ম্যানেজমেন্ট" />
         <SubTabButton active={userSubTab === 'institutions'} onClick={() => setUserSubTab('institutions')} label="প্রতিষ্ঠান অনুমোদন" />
       </div>
@@ -452,13 +452,13 @@ const ManageModeration: React.FC = () => {
       </div>
 
       {loading ? (
-        <div className="bg-card p-20 text-center text-muted-foreground font-bold">লোড হচ্ছে...</div>
+        <div className="bg-card p-12 text-center text-muted-foreground font-bold" rounded-lg border border-border>লোড হচ্ছে...</div>
       ) : fatwas.length === 0 ? (
-        <div className="bg-card p-20 text-center text-muted-foreground font-bold">কোনো পেন্ডিং ফতোয়া নেই</div>
+        <div className="bg-card p-12 text-center text-muted-foreground font-bold" rounded-lg border border-border>কোনো পেন্ডিং ফতোয়া নেই</div>
       ) : (
         <div className="space-y-1 bg-muted minimal-border">
           {fatwas.map(fatwa => (
-            <div key={fatwa.id} className="bg-card p-10 space-y-6">
+            <div key={fatwa.id} className="bg-card p-10 space-y-6" rounded-lg border border-border>
               <div className="flex justify-between items-start">
                 <div className="space-y-2">
                   <div className="caps-label text-foreground">{fatwa.category}</div>
@@ -495,7 +495,7 @@ const ManageModeration: React.FC = () => {
 
       {answering && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm" onClick={() => setAnswering(null)}>
-          <div className="bg-card w-full max-w-2xl p-12 space-y-8 animate-slideUp max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+          <div className="bg-card w-full max-w-2xl p-12 space-y-8 animate-slideUp max-h-[90vh] overflow-y-auto" rounded-lg border border-border onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center border-b border-border pb-6">
               <div className="space-y-1">
                 <h2 className="text-2xl font-extrabold">ফতোয়ার উত্তর</h2>
@@ -572,7 +572,7 @@ const ModerationHub: React.FC = () => {
   const [subTab, setSubTab] = useState<'fatwas' | 'flags' | 'scholars'>('fatwas');
   return (
     <div className="space-y-8">
-      <div className="flex gap-1 bg-muted p-1 minimal-border w-fit">
+      <div className="flex gap-6 p-1 minimal-border w-fit">
         <SubTabButton active={subTab === 'fatwas'} onClick={() => setSubTab('fatwas')} label="পেন্ডিং ফতোয়া" />
         <SubTabButton active={subTab === 'flags'} onClick={() => setSubTab('flags')} label="রিপোর্ট করা কন্টেন্ট" />
         <SubTabButton active={subTab === 'scholars'} onClick={() => setSubTab('scholars')} label="স্কলার আবেদন" />
@@ -606,9 +606,9 @@ const ManageFlags: React.FC = () => {
       </div>
 
       {loading ? (
-        <div className="bg-card p-20 text-center text-muted-foreground font-bold">লোড হচ্ছে...</div>
+        <div className="bg-card p-12 text-center text-muted-foreground font-bold" rounded-lg border border-border>লোড হচ্ছে...</div>
       ) : flags.length === 0 ? (
-        <div className="bg-card p-20 text-center text-muted-foreground font-bold">কোনো রিপোর্ট নেই</div>
+        <div className="bg-card p-12 text-center text-muted-foreground font-bold" rounded-lg border border-border>কোনো রিপোর্ট নেই</div>
       ) : (
         <div className="bg-card minimal-border overflow-hidden">
           <table className="w-full text-left">
@@ -696,13 +696,13 @@ const ManageScholarApplications: React.FC = () => {
       </div>
 
       {loading ? (
-        <div className="bg-card p-20 text-center text-muted-foreground font-bold">লোড হচ্ছে...</div>
+        <div className="bg-card p-12 text-center text-muted-foreground font-bold" rounded-lg border border-border>লোড হচ্ছে...</div>
       ) : apps.length === 0 ? (
-        <div className="bg-card p-20 text-center text-muted-foreground font-bold">কোনো পেন্ডিং আবেদন নেই</div>
+        <div className="bg-card p-12 text-center text-muted-foreground font-bold" rounded-lg border border-border>কোনো পেন্ডিং আবেদন নেই</div>
       ) : (
         <div className="space-y-1 bg-muted minimal-border">
           {apps.map(app => (
-            <div key={app.id} className="bg-card p-10 space-y-6">
+            <div key={app.id} className="bg-card p-10 space-y-6" rounded-lg border border-border>
               <div className="flex justify-between items-start">
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
@@ -747,7 +747,7 @@ const ManageScholarApplications: React.FC = () => {
 
       {reviewing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm" onClick={() => setReviewing(null)}>
-          <div className="bg-card w-full max-w-2xl p-12 space-y-8 animate-slideUp" onClick={e => e.stopPropagation()}>
+          <div className="bg-card w-full max-w-2xl p-12 space-y-8 animate-slideUp" rounded-lg border border-border onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center border-b border-border pb-6">
               <div className="space-y-1">
                 <div className="flex items-center gap-3">
@@ -875,9 +875,9 @@ const AuditLogViewer: React.FC = () => {
       </div>
 
       {loading ? (
-        <div className="bg-card p-20 text-center text-muted-foreground font-bold">লোড হচ্ছে...</div>
+        <div className="bg-card p-12 text-center text-muted-foreground font-bold" rounded-lg border border-border>লোড হচ্ছে...</div>
       ) : logs.length === 0 ? (
-        <div className="bg-card p-20 text-center text-muted-foreground font-bold">কোনো অডিট লগ নেই</div>
+        <div className="bg-card p-12 text-center text-muted-foreground font-bold" rounded-lg border border-border>কোনো অডিট লগ নেই</div>
       ) : (
         <div className="bg-card minimal-border overflow-hidden">
           <table className="w-full text-left">

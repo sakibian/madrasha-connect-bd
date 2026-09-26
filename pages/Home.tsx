@@ -74,7 +74,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Grid: Live prayer + Hijri + Ayah widget + Stats */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-1 bg-muted minimal-border">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
          {/* Real-time Islamic widget — Hijri date + next prayer + ayah-of-the-day.
              Fetched live from Aladhan + Al-Quran Cloud via services/content/*. */}
          <div className="lg:col-span-8">
@@ -130,7 +130,7 @@ const SmallStat = ({ label, value }: any) => (
 );
 
 const JobRow = ({ title, inst, salary }: any) => (
-  <div className="bg-card p-8 flex justify-between items-center hover:bg-muted transition-all group">
+  <div className="bg-card p-8 flex justify-between items-center hover:bg-muted transition-all group" rounded-lg border border-border>
      <div className="space-y-1">
         <h4 className="text-xl font-bold">{title}</h4>
         <p className="text-sm text-muted-foreground font-medium">{inst}</p>

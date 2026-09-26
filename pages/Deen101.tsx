@@ -134,7 +134,7 @@ const Deen101: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-1 bg-muted minimal-border">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-4 bg-card divide-y divide-gray-100">
           {modules.map((m, i) => (
             <button
@@ -151,7 +151,7 @@ const Deen101: React.FC = () => {
           ))}
         </div>
 
-        <div className="lg:col-span-8 bg-card p-12 md:p-20 flex flex-col min-h-[600px]">
+        <div className="lg:col-span-8 bg-card p-12 md:p-12 flex flex-col min-h-[600px]" rounded-lg border border-border>
           {!showQuiz ? (
             <div className="space-y-12 animate-fadeIn flex-1">
               <div className="space-y-4">

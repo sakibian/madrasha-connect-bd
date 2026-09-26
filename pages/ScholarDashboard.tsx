@@ -96,10 +96,10 @@ const ScholarDashboard: React.FC = () => {
       </div>
 
       {loading ? (
-        <div className="bg-card p-20 text-center text-muted-foreground font-bold">লোড হচ্ছে...</div>
+        <div className="bg-card p-12 text-center text-muted-foreground font-bold" rounded-lg border border-border>লোড হচ্ছে...</div>
       ) : (
         <>
-          <div className="flex gap-1 bg-muted p-1 minimal-border w-fit">
+          <div className="flex gap-6 p-1 minimal-border w-fit">
             <Button
               variant={activeTab === 'fatwas' ? 'primary' : 'ghost'}
               size="sm"
@@ -120,7 +120,7 @@ const ScholarDashboard: React.FC = () => {
 
           {activeTab === 'fatwas' && (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-muted minimal-border">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <StatCard icon={<MessageCircle size={24} />} label="পেন্ডিং ফতোয়া" value={pendingFatwas.length} />
                 <StatCard icon={<CheckCircle size={24} />} label="উত্তর দেওয়া হয়েছে" value={answersGiven} />
                 <StatCard icon={<GraduationCap size={24} />} label="ভেরিফিকেশন" value={myProfile?.verified ? 1 : 0} />
@@ -137,7 +137,7 @@ const ScholarDashboard: React.FC = () => {
                 ) : (
                   <div className="space-y-1 bg-muted minimal-border">
                     {pendingFatwas.map(fatwa => (
-                      <div key={fatwa.id} className="bg-card p-10 space-y-6">
+                      <div key={fatwa.id} className="bg-card p-10 space-y-6" rounded-lg border border-border>
                         <div className="flex justify-between items-start">
                           <div className="space-y-2">
                             <div className="caps-label text-foreground">{fatwa.category}</div>
@@ -177,7 +177,7 @@ const ScholarDashboard: React.FC = () => {
               </div>
 
               {showAddPortfolio && (
-                <div className="bg-card p-8 minimal-border space-y-6 animate-slideDown">
+                <div className="bg-card p-8 minimal-border space-y-6 animate-slideDown" rounded-lg border border-border>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2 md:col-span-2">
                       <label className="caps-label text-muted-foreground">শিরোনাম</label>
@@ -243,7 +243,7 @@ const ScholarDashboard: React.FC = () => {
               ) : (
                 <div className="grid gap-4">
                   {portfolio.map(item => (
-                    <div key={item.id} className="bg-card p-8 minimal-border flex items-start justify-between gap-6 group hover:border-border transition-all">
+                    <div key={item.id} className="bg-card p-8 minimal-border flex items-start justify-between gap-6 group hover:border-border transition-all" rounded-lg border border-border>
                       <div className="space-y-2 flex-1">
                         <div className="flex items-center gap-3">
                           <Badge variant="default">{TYPE_LABELS[item.type] || item.type}</Badge>

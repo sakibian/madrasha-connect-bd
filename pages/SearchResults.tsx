@@ -57,7 +57,7 @@ const SearchResults: React.FC = () => {
       </div>
 
       {totalResults === 0 ? (
-        <div className="py-40 text-center space-y-6 bg-muted border border-border">
+        <div className="py-24 text-center space-y-6 bg-muted border border-border">
            <p className="text-xl text-muted-foreground font-medium">দুঃখিত, কোনো ফলাফল পাওয়া যায়নি।</p>
            <Link to="/" className="text-sm font-bold border-b-2 border-primary pb-1">অন্য কিছু লিখে চেষ্টা করুন</Link>
         </div>
@@ -69,9 +69,9 @@ const SearchResults: React.FC = () => {
                <h2 className="text-2xl font-bold flex items-center gap-3">
                   <Briefcase size={20} /> নিয়োগ বিজ্ঞপ্তি
                </h2>
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-1 bg-muted minimal-border">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {results.jobs.map((job: any) => (
-                    <Link to="/professional" key={job.id} className="bg-card p-8 flex justify-between items-center group hover:bg-primary hover:text-primary-foreground transition-all">
+                    <Link to="/professional" key={job.id} className="bg-card p-8 flex justify-between items-center group hover:bg-primary hover:text-primary-foreground transition-all" rounded-lg border border-border>
                       <div className="space-y-1">
                         <h3 className="text-xl font-bold">{job.title}</h3>
                         <p className="text-sm text-muted-foreground group-hover:text-muted-foreground font-medium">{job.institution}</p>
@@ -89,10 +89,10 @@ const SearchResults: React.FC = () => {
                <h2 className="text-2xl font-bold flex items-center gap-3">
                   <ShoppingBag size={20} /> মার্কেটপ্লেস পণ্য
                </h2>
-               <div className="grid grid-cols-2 md:grid-cols-4 gap-1 bg-muted minimal-border">
+               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                   {results.products.map((prod: any) => (
-                    <Link to="/marketplace" key={prod.id} className="bg-card p-6 space-y-4 group transition-all hover:bg-muted">
-                      <div className="aspect-square bg-muted overflow-hidden grayscale group-hover:grayscale-0">
+                    <Link to="/marketplace" key={prod.id} className="bg-card p-6 space-y-4 group transition-all hover:bg-muted" rounded-lg border border-border>
+                      <div className="aspect-square rounded-lg bg-muted overflow-hidden grayscale group-hover:grayscale-0">
                           <ImageWithFallback src={prod.image} name={prod.name} className="w-full h-full object-cover" alt={prod.name} />
                       </div>
                       <div className="space-y-1">

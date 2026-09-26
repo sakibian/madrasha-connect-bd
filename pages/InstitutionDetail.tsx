@@ -18,7 +18,7 @@ const InstitutionDetail: React.FC = () => {
 
   if (!institution) {
     return (
-      <div className="text-center py-40 space-y-8">
+      <div className="text-center py-24 space-y-8">
         <h2 className="text-3xl font-extrabold tracking-tight">প্রতিষ্ঠানটি খুঁজে পাওয়া যায়নি।</h2>
         <Link to="/institutions" className="text-sm font-bold border-b-2 border-primary pb-1">ডিরেক্টরি দেখুন</Link>
       </div>
@@ -26,7 +26,7 @@ const InstitutionDetail: React.FC = () => {
   }
 
   return (
-    <div className="space-y-16 animate-fadeIn pb-32">
+    <div className="space-y-16 animate-fadeIn pb-24">
       {/* Navigation */}
       <div className="flex justify-between items-center border-b border-border pb-8">
         <Link to="/institutions" className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-widest hover:text-foreground transition-all">
@@ -42,8 +42,8 @@ const InstitutionDetail: React.FC = () => {
       </div>
 
       {/* Hero Header */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-1 bg-muted minimal-border">
-         <div className="lg:col-span-7 bg-card p-12 md:p-16 space-y-12 flex flex-col justify-center">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+         <div className="lg:col-span-7 bg-card p-12 md:p-12 space-y-12 flex flex-col justify-center" rounded-lg border border-border>
             <div className="space-y-6">
                <div className="caps-label text-foreground">{institution.type} • Established {institution.established}</div>
                <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05]">{institution.name}।</h1>
@@ -67,7 +67,7 @@ const InstitutionDetail: React.FC = () => {
                </div>
             </div>
          </div>
-         <div className="lg:col-span-5 aspect-square lg:aspect-auto bg-muted overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000">
+         <div className="lg:col-span-5 aspect-square rounded-lg lg:aspect-auto rounded-lg bg-muted overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000">
             <ImageWithFallback src={institution.image} name={institution.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt={institution.name} />
          </div>
       </div>
@@ -81,7 +81,7 @@ const InstitutionDetail: React.FC = () => {
                <h2 className="text-3xl font-extrabold tracking-tight">প্রতিষ্ঠানের বিবরণ</h2>
                <div className="h-px bg-muted flex-1"></div>
             </div>
-            <div className="bg-card minimal-border p-10 md:p-12 space-y-8">
+            <div className="bg-card minimal-border p-10 md:p-12 space-y-8" rounded-lg border border-border>
               <p className="text-xl text-muted-foreground leading-relaxed font-medium">
                 {institution.name} বাংলাদেশের একটি স্বনামধন্য {institution.type} দ্বীনি শিক্ষা প্রতিষ্ঠান। দীর্ঘ সময় ধরে এই প্রতিষ্ঠানটি ইসলামের মৌলিক শিক্ষা ও আদর্শ প্রচারের কেন্দ্রবিন্দু হিসেবে কাজ করছে। বর্তমানে আধুনিক কারিকুলাম ও ধর্মীয় জ্ঞানের সমন্বয়ে এখানে দক্ষ আলেম তৈরি করা হচ্ছে।
               </p>
@@ -127,7 +127,7 @@ const InstitutionDetail: React.FC = () => {
               </button>
            </div>
 
-           <div className="bg-card minimal-border p-10 space-y-8">
+           <div className="bg-card minimal-border p-10 space-y-8" rounded-lg border border-border>
               <div className="caps-label text-muted-foreground">Quick Actions</div>
               <div className="space-y-4">
                  <SideAction icon={<FileText size={18} />} text="ভর্তি নির্দেশিকা" />
@@ -157,7 +157,7 @@ const FeatureItem = ({ icon, text }: any) => (
 );
 
 const OpportunityRow = ({ title, type, date }: any) => (
-  <div className="bg-card p-8 flex justify-between items-center group cursor-pointer hover:bg-muted transition-all">
+  <div className="bg-card p-8 flex justify-between items-center group cursor-pointer hover:bg-muted transition-all" rounded-lg border border-border>
      <div>
         <h4 className="text-xl font-bold group-hover:text-foreground transition-colors">{title}</h4>
         <div className="flex items-center gap-4 mt-1">

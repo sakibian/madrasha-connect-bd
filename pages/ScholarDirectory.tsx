@@ -61,9 +61,9 @@ const ScholarDirectory: React.FC = () => {
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 bg-muted minimal-border">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3].map(i => (
-            <div key={i} className="bg-card p-10 text-center">
+            <div key={i} className="bg-card p-10 text-center" rounded-lg border border-border>
               <div className="w-32 h-32 bg-muted rounded-full mx-auto mb-8 animate-pulse" />
               <div className="space-y-3">
                 <div className="h-4 w-20 bg-muted animate-pulse mx-auto" />
@@ -74,9 +74,9 @@ const ScholarDirectory: React.FC = () => {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 bg-muted minimal-border">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map(scholar => (
-            <div key={scholar.id} className="bg-card p-10 group transition-all hover:bg-muted h-full flex flex-col items-center text-center">
+            <div key={scholar.id} className="bg-card p-10 group transition-all hover:bg-muted h-full flex flex-col items-center text-center" rounded-lg border border-border>
               <div className="relative mb-8">
                 <div className="w-32 h-32 bg-muted overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700">
                   <ImageWithFallback src={scholar.image} name={scholar.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={scholar.name} />
